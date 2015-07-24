@@ -2,9 +2,9 @@
 """This is a generated class and is not intended for modification!
 TODO: Point to Github contribution instructions
 """
-from util.configuration import Configuration
 from util.http import HttpClient
 
+# SMS API
 
 class get_received_sms_logs(object):
 
@@ -13,10 +13,10 @@ class get_received_sms_logs(object):
         self.configuration = configuration
 
     def execute(self, context):
-        from infobip_api.models.mo.logs.MOLogsResponse import MOLogsResponse
+        from infobip_api_python_client.api.model.sms.mo.logs.MOLogsResponse import MOLogsResponse
 
         http_client = HttpClient()
-        return unicode(http_client.getValue("GET", self.configuration, "/sms/1/inbox/logs", None, context, None, MOLogsResponse))
+        return http_client.getValue("GET", self.configuration, "/sms/1/inbox/logs", None, context, None, MOLogsResponse)
 
 
 class get_received_messages(object):
@@ -26,10 +26,10 @@ class get_received_messages(object):
         self.configuration = configuration
 
     def execute(self, context):
-        from infobip_api.models.mo.reports.MOReportResponse import MOReportResponse
+        from infobip_api_python_client.api.model.sms.mo.reports.MOReportResponse import MOReportResponse
 
         http_client = HttpClient()
-        return unicode(http_client.getValue("GET", self.configuration, "/sms/1/inbox/reports", None, context, None, MOReportResponse))
+        return http_client.getValue("GET", self.configuration, "/sms/1/inbox/reports", None, context, None, MOReportResponse)
 
 
 class get_sent_sms_logs(object):
@@ -39,10 +39,10 @@ class get_sent_sms_logs(object):
         self.configuration = configuration
 
     def execute(self, context):
-        from infobip_api.models.mt.logs.SMSLogsResponse import SMSLogsResponse
+        from infobip_api_python_client.api.model.sms.mt.logs.SMSLogsResponse import SMSLogsResponse
 
         http_client = HttpClient()
-        return unicode(http_client.getValue("GET", self.configuration, "/sms/1/logs", None, context, None, SMSLogsResponse))
+        return http_client.getValue("GET", self.configuration, "/sms/1/logs", None, context, None, SMSLogsResponse)
 
 
 class get_sent_sms_delivery_reports(object):
@@ -52,10 +52,10 @@ class get_sent_sms_delivery_reports(object):
         self.configuration = configuration
 
     def execute(self, context):
-        from infobip_api.models.mt.reports.SMSReportResponse import SMSReportResponse
+        from infobip_api_python_client.api.model.sms.mt.reports.SMSReportResponse import SMSReportResponse
 
         http_client = HttpClient()
-        return unicode(http_client.getValue("GET", self.configuration, "/sms/1/reports", None, context, None, SMSReportResponse))
+        return http_client.getValue("GET", self.configuration, "/sms/1/reports", None, context, None, SMSReportResponse)
 
 
 class send_single_textual_sms(object):
@@ -65,10 +65,10 @@ class send_single_textual_sms(object):
         self.configuration = configuration
 
     def execute(self, textual):
-        from infobip_api.models.mt.send.SMSResponse import SMSResponse
+        from infobip_api_python_client.api.model.sms.mt.send.SMSResponse import SMSResponse
 
         http_client = HttpClient()
-        return unicode(http_client.getValue("POST", self.configuration, "/sms/1/text/single", None, None, textual, SMSResponse))
+        return http_client.getValue("POST", self.configuration, "/sms/1/text/single", None, None, textual, SMSResponse)
 
 
 class send_multiple_textual_sms_advanced(object):
@@ -78,10 +78,10 @@ class send_multiple_textual_sms_advanced(object):
         self.configuration = configuration
 
     def execute(self, textual):
-        from infobip_api.models.mt.send.SMSResponse import SMSResponse
+        from infobip_api_python_client.api.model.sms.mt.send.SMSResponse import SMSResponse
 
         http_client = HttpClient()
-        return unicode(http_client.getValue("POST", self.configuration, "/sms/1/text/advanced", None, None, textual, SMSResponse))
+        return http_client.getValue("POST", self.configuration, "/sms/1/text/advanced", None, None, textual, SMSResponse)
 
 
 class send_multiple_sms_textual(object):
@@ -91,10 +91,10 @@ class send_multiple_sms_textual(object):
         self.configuration = configuration
 
     def execute(self, textual):
-        from infobip_api.models.mt.send.SMSResponse import SMSResponse
+        from infobip_api_python_client.api.model.sms.mt.send.SMSResponse import SMSResponse
 
         http_client = HttpClient()
-        return unicode(http_client.getValue("POST", self.configuration, "/sms/1/text/multi", None, None, textual, SMSResponse))
+        return http_client.getValue("POST", self.configuration, "/sms/1/text/multi", None, None, textual, SMSResponse)
 
 
 class send_singe_binary_sms(object):
@@ -104,10 +104,10 @@ class send_singe_binary_sms(object):
         self.configuration = configuration
 
     def execute(self, binary):
-        from infobip_api.models.mt.send.SMSResponse import SMSResponse
+        from infobip_api_python_client.api.model.sms.mt.send.SMSResponse import SMSResponse
 
         http_client = HttpClient()
-        return unicode(http_client.getValue("POST", self.configuration, "/sms/1/binary/single", None, None, binary, SMSResponse))
+        return http_client.getValue("POST", self.configuration, "/sms/1/binary/single", None, None, binary, SMSResponse)
 
 
 class send_multiple_sms_binary_advanced(object):
@@ -117,10 +117,10 @@ class send_multiple_sms_binary_advanced(object):
         self.configuration = configuration
 
     def execute(self, binary):
-        from infobip_api.models.mt.send.SMSResponse import SMSResponse
+        from infobip_api_python_client.api.model.sms.mt.send.SMSResponse import SMSResponse
 
         http_client = HttpClient()
-        return unicode(http_client.getValue("POST", self.configuration, "/sms/1/binary/advanced", None, None, binary, SMSResponse))
+        return http_client.getValue("POST", self.configuration, "/sms/1/binary/advanced", None, None, binary, SMSResponse)
 
 
 class send_multiple_binary_sms(object):
@@ -130,10 +130,10 @@ class send_multiple_binary_sms(object):
         self.configuration = configuration
 
     def execute(self, binary):
-        from infobip_api.models.mt.send.SMSResponse import SMSResponse
+        from infobip_api_python_client.api.model.sms.mt.send.SMSResponse import SMSResponse
 
         http_client = HttpClient()
-        return unicode(http_client.getValue("POST", self.configuration, "/sms/1/binary/multi", None, None, binary, SMSResponse))
+        return http_client.getValue("POST", self.configuration, "/sms/1/binary/multi", None, None, binary, SMSResponse)
 
 
 class number_context_query(object):
@@ -143,10 +143,10 @@ class number_context_query(object):
         self.configuration = configuration
 
     def execute(self, n_c_request):
-        from infobip_api.models.nc.lookup.sync.NCResponse import NCResponse
+        from infobip_api_python_client.api.model.sms.nc.lookup.sync.NCResponse import NCResponse
 
         http_client = HttpClient()
-        return unicode(http_client.getValue("POST", self.configuration, "/number/1/query", None, None, n_c_request, NCResponse))
+        return http_client.getValue("POST", self.configuration, "/number/1/query", None, None, n_c_request, NCResponse)
 
 
 class number_context_notify(object):
@@ -156,10 +156,10 @@ class number_context_notify(object):
         self.configuration = configuration
 
     def execute(self, n_c_request_async):
-        from infobip_api.models.nc.lookup.async.NCResponseAsync import NCResponseAsync
+        from infobip_api_python_client.api.model.sms.nc.lookup.async.NCResponseAsync import NCResponseAsync
 
         http_client = HttpClient()
-        return unicode(http_client.getValue("POST", self.configuration, "/number/1/notify", None, None, n_c_request_async, NCResponseAsync))
+        return http_client.getValue("POST", self.configuration, "/number/1/notify", None, None, n_c_request_async, NCResponseAsync)
 
 
 class get_number_context_logs(object):
@@ -169,7 +169,22 @@ class get_number_context_logs(object):
         self.configuration = configuration
 
     def execute(self, context):
-        from infobip_api.models.nc.logs.NCLogsResponse import NCLogsResponse
+        from infobip_api_python_client.api.model.sms.nc.logs.NCLogsResponse import NCLogsResponse
 
         http_client = HttpClient()
-        return unicode(http_client.getValue("GET", self.configuration, "/number/1/logs", None, context, None, NCLogsResponse))
+        return http_client.getValue("GET", self.configuration, "/number/1/logs", None, context, None, NCLogsResponse)
+
+
+# CUSTOMER API
+
+class get_account_balance(object):
+
+    def __init__(self, configuration):
+        super(get_account_balance, self).__init__()
+        self.configuration = configuration
+
+    def execute(self):
+        from infobip_api_python_client.api.model.account.AccountBalance import AccountBalance
+
+        http_client = HttpClient()
+        return http_client.getValue("GET", self.configuration, "/account/1/balance", None, None, None, AccountBalance)

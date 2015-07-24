@@ -1,6 +1,6 @@
 __author__ = 'mmatosevic'
 
-from infobip_api_python_client.infobip_api.models.mt.reports.SMSReportResponse import SMSReportResponse
+from infobip_api_python_client.api.model.sms.mt.reports.SMSReportResponse import SMSReportResponse
 
 response_body = """{
   "results": [

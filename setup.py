@@ -31,12 +31,13 @@ my_packages = find_packages()
 
 mod_distutilscore.setup(
     name='infobip-api-python-client',
-    version='0.0.3',
+    version='0.1.1',
     description='Infobip SMS API client library in Python',
     long_description=long_description,
     license='Apache License, Version 2.0',
-    author='Infobip Ltd.',
+    author='Infobip Ltd. - Plugins Team (SMS API client)',
     author_email='plugins@infobip.com',
+    maintainer='Infobip Ltd. - Plugins Team (SMS API client)',
     maintainer_email='plugins@infobip.com',
     url='https://github.com/infobip/infobip-api-python-client',
     packages=my_packages,

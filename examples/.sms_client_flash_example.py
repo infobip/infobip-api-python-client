@@ -1,9 +1,8 @@
 from infobip_api_python_client.clients import send_multiple_textual_sms_advanced
-from infobip_api_python_client.infobip_api.models.mt.send.textual.SMSAdvancedTextualRequest import \
-    SMSAdvancedTextualRequest
-from infobip_api_python_client.infobip_api.models.mt.send.SMSData import SMSData
-from infobip_api_python_client.infobip_api.models.mt.send.IsFlash import IsFlash
-from infobip_api_python_client.infobip_api.models.Destination import Destination
+from infobip_api_python_client.api.model.sms.mt.send.textual.SMSAdvancedTextualRequest import SMSAdvancedTextualRequest
+from infobip_api_python_client.api.model.sms.mt.send.SMSData import SMSData
+from infobip_api_python_client.api.model.sms.mt.send.IsFlash import IsFlash
+from infobip_api_python_client.api.model.sms.Destination import Destination
 from __init__ import configuration
 
 send_sms_client = send_multiple_textual_sms_advanced(configuration)
