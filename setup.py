@@ -31,7 +31,7 @@ my_packages = find_packages()
 
 mod_distutilscore.setup(
     name='infobip-api-python-client',
-    version='0.2.0',
+    version='0.3.0',
     description='Infobip SMS API client library in Python',
     long_description=long_description,
     license='Apache License, Version 2.0',

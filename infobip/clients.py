@@ -97,10 +97,10 @@ class send_multiple_sms_textual(object):
         return http_client.getValue("POST", self.configuration, "/sms/1/text/multi", None, None, textual, SMSResponse)
 
 
-class send_singe_binary_sms(object):
+class send_single_binary_sms(object):
 
     def __init__(self, configuration):
-        super(send_singe_binary_sms, self).__init__()
+        super(send_single_binary_sms, self).__init__()
         self.configuration = configuration
 
     def execute(self, binary):
