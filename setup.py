@@ -31,7 +31,7 @@ my_packages = find_packages()
 
 mod_distutilscore.setup(
     name='infobip-api-python-client',
-    version='0.1.2',
+    version='0.2.0',
     description='Infobip SMS API client library in Python',
     long_description=long_description,
     license='Apache License, Version 2.0',
@@ -41,7 +41,7 @@ mod_distutilscore.setup(
     maintainer_email='plugins@infobip.com',
     url='https://github.com/infobip/infobip-api-python-client',
     packages=my_packages,
-    package_dir={'infobip_api_python_client': 'infobip_api_python_client'},
+    package_dir={'infobip': 'infobip'},
     keywords=[
         'infobip',
         'sms',

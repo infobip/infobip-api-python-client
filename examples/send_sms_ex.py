@@ -1,5 +1,5 @@
-from infobip_api_python_client.clients import send_single_textual_sms
-from infobip_api_python_client.api.model.sms.mt.send.textual.SMSTextualRequest import SMSTextualRequest
+from infobip.clients import send_single_textual_sms
+from infobip.api.model.sms.mt.send.textual.SMSTextualRequest import SMSTextualRequest
 from __init__ import configuration
 
 send_sms_client = send_single_textual_sms(configuration)
