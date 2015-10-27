@@ -13,7 +13,7 @@ Basic messaging example
 
 First, initialize the messaging client using your username and password:
 
-    send_sms_client = send_single_textual_sms(Configuration("https://api.infobip.com", "username", "password"))
+    send_sms_client = send_single_textual_sms(Configuration("username", "password"))
 
 Prepare the message:
 
@@ -27,7 +27,7 @@ Send the message:
 
 Later you can query for the delivery status of the message:
 
-    get_delivery_reports_client = get_sent_sms_delivery_reports(Configuration("https://api.infobip.com", "username", "password"))
+    get_delivery_reports_client = get_sent_sms_delivery_reports(Configuration("username", "password"))
     response = get_delivery_reports_client.execute({"limit": 5})
 
 Messaging with delivery report push to notification URL example
@@ -35,7 +35,7 @@ Messaging with delivery report push to notification URL example
 
 Similar to standard messaging example, but when preparing your message, use `SMSAdvancedTextualRequest`:
 
-    send_sms_client = send_multiple_textual_sms_advanced(Configuration("https://api.infobip.com", "username", "password"))
+    send_sms_client = send_multiple_textual_sms_advanced(Configuration("username", "password"))
     
     dest = Destination()
     dest.message_id = "message_111"
