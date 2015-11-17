@@ -8,8 +8,8 @@ from datetime import datetime
 from infobip.util.models import DefaultObject, serializable
 from infobip.api.model.sms.mt.send.binary.BinaryContent import BinaryContent
 from infobip.api.model.sms.mt.send.Language import Language
-from infobip.api.model.sms.mt.send.IsFlash import IsFlash
 from infobip.api.model.sms.Destination import Destination
+from infobip.api.model.sms.mt.send.IsFlash import IsFlash
 
 class SMSData(DefaultObject):
     @property
@@ -237,4 +237,17 @@ class SMSData(DefaultObject):
 
     def set_flash(self, flash):
         self.flash = flash
+        return self
+
+    @property
+    @serializable(name="intermediateReport", type=bool)
+    def intermediate_report(self):
+        return self.get_field_value("intermediate_report")
+
+    @intermediate_report.setter
+    def intermediate_report(self, intermediate_report):
+        self.set_field_value("intermediate_report", intermediate_report)
+
+    def set_intermediate_report(self, intermediate_report):
+        self.intermediate_report = intermediate_report
         return self

@@ -6,6 +6,7 @@ TODO: Point to Github contribution instructions
 
 from datetime import datetime
 from infobip.util.models import DefaultObject, serializable
+from infobip.api.model.sms.mt.send.Tracking import Tracking
 from infobip.api.model.sms.mt.send.SMSData import SMSData
 
 class SMSAdvancedTextualRequest(DefaultObject):
@@ -49,4 +50,17 @@ class SMSAdvancedTextualRequest(DefaultObject):
         for i in messages:
             self.messages.remove(i)
 
+        return self
+
+    @property
+    @serializable(name="tracking", type=Tracking)
+    def tracking(self):
+        return self.get_field_value("tracking")
+
+    @tracking.setter
+    def tracking(self, tracking):
+        self.set_field_value("tracking", tracking)
+
+    def set_tracking(self, tracking):
+        self.tracking = tracking
         return self

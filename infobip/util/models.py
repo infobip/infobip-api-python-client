@@ -197,6 +197,8 @@ class DefaultObject(object):
     @classmethod
     def from_JSON(cls, s):
         vals = json.JSONDecoder().decode(s)
+        if vals == None:
+            return None
 
         o = cls()
         for p in dir(type(o)):
@@ -208,6 +210,8 @@ class DefaultObject(object):
             k = serializable.name
             if not k:
                 k = attr.fget.__name__
+            if isinstance(vals, list):
+                return vals
             v = vals.get(k)
 
             cls.set_value(p, serializable, o, v)

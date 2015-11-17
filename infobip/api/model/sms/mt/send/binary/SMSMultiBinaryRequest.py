@@ -10,6 +10,19 @@ from infobip.api.model.sms.mt.send.SMSData import SMSData
 
 class SMSMultiBinaryRequest(DefaultObject):
     @property
+    @serializable(name="bulkId", type=unicode)
+    def bulk_id(self):
+        return self.get_field_value("bulk_id")
+
+    @bulk_id.setter
+    def bulk_id(self, bulk_id):
+        self.set_field_value("bulk_id", bulk_id)
+
+    def set_bulk_id(self, bulk_id):
+        self.bulk_id = bulk_id
+        return self
+
+    @property
     @serializable(name="messages", type=SMSData, list=True)
     def messages(self):
         return self.get_field_value("messages")

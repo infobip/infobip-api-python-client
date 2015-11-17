@@ -74,3 +74,16 @@ class SMSTextualRequest(DefaultObject):
     def set_text(self, text):
         self.text = text
         return self
+
+    @property
+    @serializable(name="transliteration", type=unicode)
+    def transliteration(self):
+        return self.get_field_value("transliteration")
+
+    @transliteration.setter
+    def transliteration(self, transliteration):
+        self.set_field_value("transliteration", transliteration)
+
+    def set_transliteration(self, transliteration):
+        self.transliteration = transliteration
+        return self
