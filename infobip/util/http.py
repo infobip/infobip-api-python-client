@@ -73,6 +73,7 @@ class HttpClient:
             headers["Accept"] = "application/json"
 
         headers["Content-Type"] = "application/json"
+        headers["User-Agent"] = "Python-Client-Library"
 
         connection.request(httpMethod, url, body_content, headers)
         response = connection.getresponse()
