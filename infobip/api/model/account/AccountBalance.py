@@ -1,13 +1,13 @@
-__author__ = 'nmaric'
+# -*- coding: utf-8 -*-
+"""This is a generated class and is not intended for modification!
+"""
 
-from decimal import Decimal
 
+from datetime import datetime
 from infobip.util.models import DefaultObject, serializable
-
-
 class AccountBalance(DefaultObject):
     @property
-    @serializable(name="balance", type=Decimal)
+    @serializable(name="balance", type=float)
     def balance(self):
         return self.get_field_value("balance")
 

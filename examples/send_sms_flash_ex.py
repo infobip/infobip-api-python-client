@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from infobip.api.model.sms.mt.send.Language import Language
 from infobip.clients import send_multiple_textual_sms_advanced
 from infobip.api.model.sms.mt.send.textual.SMSAdvancedTextualRequest import SMSAdvancedTextualRequest
 from infobip.api.model.sms.mt.send.Message import Message
@@ -10,19 +7,13 @@ from __init__ import configuration
 send_sms_client = send_multiple_textual_sms_advanced(configuration)
 
 dest = Destination()
-dest.message_id = "message_111"
+dest.message_id = "message_123"
 dest.to = "number1aaa"
 
-language = Language()
-language.language_code = "TR"
-language.single_shift = True
-language.locking_shift = False
-
 message = Message()
-message.from_ = "sender1"
-message.text = "Artık Ulusal Dil Tanımlayıcısı ile Türkçe karakterli smslerinizi rahatlıkla iletebilirsiniz."
+message.flash = True
+message.text = "This is an example message."
 message.destinations = [dest]
-message.language = language
 
 request = SMSAdvancedTextualRequest()
 request.messages = [message]

@@ -9,7 +9,6 @@ import urllib
 from urlparse import urlparse
 import json
 
-
 class HttpClient:
 
     def deserialize(self, s, cls):
@@ -74,6 +73,7 @@ class HttpClient:
 
         headers["Content-Type"] = "application/json"
         headers["User-Agent"] = "Python-Client-Library"
+
 
         connection.request(httpMethod, url, body_content, headers)
         response = connection.getresponse()

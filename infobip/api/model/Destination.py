@@ -5,22 +5,7 @@
 
 from datetime import datetime
 from infobip.util.models import DefaultObject, serializable
-from infobip.api.model.Status import Status
-
-class SMSResponseDetails(DefaultObject):
-    @property
-    @serializable(name="smsCount", type=int)
-    def sms_count(self):
-        return self.get_field_value("sms_count")
-
-    @sms_count.setter
-    def sms_count(self, sms_count):
-        self.set_field_value("sms_count", sms_count)
-
-    def set_sms_count(self, sms_count):
-        self.sms_count = sms_count
-        return self
-
+class Destination(DefaultObject):
     @property
     @serializable(name="messageId", type=unicode)
     def message_id(self):
@@ -45,17 +30,4 @@ class SMSResponseDetails(DefaultObject):
 
     def set_to(self, to):
         self.to = to
-        return self
-
-    @property
-    @serializable(name="status", type=Status)
-    def status(self):
-        return self.get_field_value("status")
-
-    @status.setter
-    def status(self, status):
-        self.set_field_value("status", status)
-
-    def set_status(self, status):
-        self.status = status
         return self

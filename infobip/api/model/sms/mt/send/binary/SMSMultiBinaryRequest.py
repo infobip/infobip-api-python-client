@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 """This is a generated class and is not intended for modification!
-TODO: Point to Github contribution instructions
 """
 
 
 from datetime import datetime
 from infobip.util.models import DefaultObject, serializable
-from infobip.api.model.sms.mt.send.SMSData import SMSData
+from infobip.api.model.sms.mt.send.Message import Message
 
 class SMSMultiBinaryRequest(DefaultObject):
     @property
@@ -23,7 +22,7 @@ class SMSMultiBinaryRequest(DefaultObject):
         return self
 
     @property
-    @serializable(name="messages", type=SMSData, list=True)
+    @serializable(name="messages", type=Message, list=True)
     def messages(self):
         return self.get_field_value("messages")
 

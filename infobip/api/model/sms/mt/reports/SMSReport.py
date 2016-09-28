@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 """This is a generated class and is not intended for modification!
-TODO: Point to Github contribution instructions
 """
 
 
 from datetime import datetime
 from infobip.util.models import DefaultObject, serializable
-from infobip.api.model.sms.Price import Price
-from infobip.api.model.sms.Error import Error
-from infobip.api.model.sms.Status import Status
+from infobip.api.model.Error import Error
+from infobip.api.model.Status import Status
+from infobip.api.model.Price import Price
 
 class SMSReport(DefaultObject):
     @property
@@ -103,16 +102,16 @@ class SMSReport(DefaultObject):
         return self
 
     @property
-    @serializable(name="mccmnc", type=unicode)
-    def mccmnc(self):
-        return self.get_field_value("mccmnc")
+    @serializable(name="mccMnc", type=unicode)
+    def mcc_mnc(self):
+        return self.get_field_value("mcc_mnc")
 
-    @mccmnc.setter
-    def mccmnc(self, mccmnc):
-        self.set_field_value("mccmnc", mccmnc)
+    @mcc_mnc.setter
+    def mcc_mnc(self, mcc_mnc):
+        self.set_field_value("mcc_mnc", mcc_mnc)
 
-    def set_mccmnc(self, mccmnc):
-        self.mccmnc = mccmnc
+    def set_mcc_mnc(self, mcc_mnc):
+        self.mcc_mnc = mcc_mnc
         return self
 
     @property

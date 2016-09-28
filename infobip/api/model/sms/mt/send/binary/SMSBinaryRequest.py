@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """This is a generated class and is not intended for modification!
-TODO: Point to Github contribution instructions
 """
 
 
@@ -9,6 +8,19 @@ from infobip.util.models import DefaultObject, serializable
 from infobip.api.model.sms.mt.send.binary.BinaryContent import BinaryContent
 
 class SMSBinaryRequest(DefaultObject):
+    @property
+    @serializable(name="operatorClientId", type=unicode)
+    def operator_client_id(self):
+        return self.get_field_value("operator_client_id")
+
+    @operator_client_id.setter
+    def operator_client_id(self, operator_client_id):
+        self.set_field_value("operator_client_id", operator_client_id)
+
+    def set_operator_client_id(self, operator_client_id):
+        self.operator_client_id = operator_client_id
+        return self
+
     @property
     @serializable(name="campaignId", type=unicode)
     def campaign_id(self):

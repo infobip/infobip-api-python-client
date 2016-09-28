@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
 """This is a generated class and is not intended for modification!
-TODO: Point to Github contribution instructions
 """
 
 
 from datetime import datetime
 from infobip.util.models import DefaultObject, serializable
-from infobip.api.model.sms.mt.send.binary.BinaryContent import BinaryContent
+from infobip.api.model.Destination import Destination
 from infobip.api.model.sms.mt.send.Language import Language
-from infobip.api.model.sms.Destination import Destination
-from infobip.api.model.sms.mt.send.IsFlash import IsFlash
+from infobip.api.model.sms.mt.send.binary.BinaryContent import BinaryContent
 
-class SMSData(DefaultObject):
+class Message(DefaultObject):
     @property
     @serializable(name="campaignId", type=unicode)
     def campaign_id(self):
@@ -117,6 +115,19 @@ class SMSData(DefaultObject):
 
     def set_validity_period(self, validity_period):
         self.validity_period = validity_period
+        return self
+
+    @property
+    @serializable(name="operatorClientId", type=unicode)
+    def operator_client_id(self):
+        return self.get_field_value("operator_client_id")
+
+    @operator_client_id.setter
+    def operator_client_id(self, operator_client_id):
+        self.set_field_value("operator_client_id", operator_client_id)
+
+    def set_operator_client_id(self, operator_client_id):
+        self.operator_client_id = operator_client_id
         return self
 
     @property
@@ -227,7 +238,7 @@ class SMSData(DefaultObject):
         return self
 
     @property
-    @serializable(name="flash", type=IsFlash)
+    @serializable(name="flash", type=bool)
     def flash(self):
         return self.get_field_value("flash")
 

@@ -5,11 +5,11 @@
 
 from datetime import datetime
 from infobip.util.models import DefaultObject, serializable
-from infobip.api.model.sms.mt.logs.SMSLog import SMSLog
+from infobip.api.model.nc.logs.NumberContextLog import NumberContextLog
 
-class SMSLogsResponse(DefaultObject):
+class NumberContextLogsResponse(DefaultObject):
     @property
-    @serializable(name="results", type=SMSLog, list=True)
+    @serializable(name="results", type=NumberContextLog, list=True)
     def results(self):
         return self.get_field_value("results")
 

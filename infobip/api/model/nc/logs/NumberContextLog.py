@@ -9,7 +9,7 @@ from infobip.api.model.Error import Error
 from infobip.api.model.Status import Status
 from infobip.api.model.Price import Price
 
-class SMSLog(DefaultObject):
+class NumberContextLog(DefaultObject):
     @property
     @serializable(name="doneAt", type=datetime)
     def done_at(self):
@@ -50,19 +50,6 @@ class SMSLog(DefaultObject):
         return self
 
     @property
-    @serializable(name="smsCount", type=int)
-    def sms_count(self):
-        return self.get_field_value("sms_count")
-
-    @sms_count.setter
-    def sms_count(self, sms_count):
-        self.set_field_value("sms_count", sms_count)
-
-    def set_sms_count(self, sms_count):
-        self.sms_count = sms_count
-        return self
-
-    @property
     @serializable(name="price", type=Price)
     def price(self):
         return self.get_field_value("price")
@@ -73,19 +60,6 @@ class SMSLog(DefaultObject):
 
     def set_price(self, price):
         self.price = price
-        return self
-
-    @property
-    @serializable(name="from", type=unicode)
-    def from_(self):
-        return self.get_field_value("from_")
-
-    @from_.setter
-    def from_(self, from_):
-        self.set_field_value("from_", from_)
-
-    def set_from_(self, from_):
-        self.from_ = from_
         return self
 
     @property
@@ -112,19 +86,6 @@ class SMSLog(DefaultObject):
 
     def set_to(self, to):
         self.to = to
-        return self
-
-    @property
-    @serializable(name="text", type=unicode)
-    def text(self):
-        return self.get_field_value("text")
-
-    @text.setter
-    def text(self, text):
-        self.set_field_value("text", text)
-
-    def set_text(self, text):
-        self.text = text
         return self
 
     @property
