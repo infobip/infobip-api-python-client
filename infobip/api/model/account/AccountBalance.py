@@ -5,9 +5,11 @@
 
 from datetime import datetime
 from infobip.util.models import DefaultObject, serializable
+from decimal import Decimal
+
 class AccountBalance(DefaultObject):
     @property
-    @serializable(name="balance", type=float)
+    @serializable(name="balance", type=Decimal)
     def balance(self):
         return self.get_field_value("balance")
 
