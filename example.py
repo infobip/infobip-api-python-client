@@ -12,7 +12,7 @@ if sys.argv.__len__() < 2:
     files = glob.glob("examples/*.py")
     for file_ in files:
         if not file_.startswith("examples/__"):
-            print "* " + file_.split("/")[1].rstrip(".py")
+            print "* " + file_.split(os.path.sep)[1].rstrip(".py")
     print
     exit(1)
 
