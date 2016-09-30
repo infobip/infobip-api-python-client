@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 """This is a generated class and is not intended for modification!
-TODO: Point to Github contribution instructions
 """
 
 
 from datetime import datetime
 from infobip.util.models import DefaultObject, serializable
-class NCRequest(DefaultObject):
+class NumberContextRequest(DefaultObject):
     @property
     @serializable(name="to", type=unicode, list=True)
     def to(self):

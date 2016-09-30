@@ -1,9 +1,11 @@
-__author__ = 'nmaric'
+# -*- coding: utf-8 -*-
+"""This is a generated class and is not intended for modification!
+"""
 
-from decimal import Decimal
 
+from datetime import datetime
 from infobip.util.models import DefaultObject, serializable
-
+from decimal import Decimal
 
 class AccountBalance(DefaultObject):
     @property

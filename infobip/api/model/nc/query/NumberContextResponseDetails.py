@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 """This is a generated class and is not intended for modification!
-TODO: Point to Github contribution instructions
 """
 
 
 from datetime import datetime
 from infobip.util.models import DefaultObject, serializable
-from infobip.api.model.sms.nc.lookup.Network import Network
-from infobip.api.model.sms.Error import Error
-from infobip.api.model.sms.Status import Status
+from infobip.api.model.Error import Error
+from infobip.api.model.nc.Network import Network
+from infobip.api.model.Status import Status
 
-class NCResponseDetails(DefaultObject):
+class NumberContextResponseDetails(DefaultObject):
     @property
     @serializable(name="ported", type=bool)
     def ported(self):

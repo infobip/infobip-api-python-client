@@ -1,29 +1,15 @@
 # -*- coding: utf-8 -*-
 """This is a generated class and is not intended for modification!
-TODO: Point to Github contribution instructions
 """
 
 
 from datetime import datetime
 from infobip.util.models import DefaultObject, serializable
-from infobip.api.model.sms.nc.lookup.sync.NCResponseDetails import NCResponseDetails
+from infobip.api.model.nc.logs.NumberContextLog import NumberContextLog
 
-class NCResponse(DefaultObject):
+class NumberContextLogsResponse(DefaultObject):
     @property
-    @serializable(name="bulkId", type=unicode)
-    def bulk_id(self):
-        return self.get_field_value("bulk_id")
-
-    @bulk_id.setter
-    def bulk_id(self, bulk_id):
-        self.set_field_value("bulk_id", bulk_id)
-
-    def set_bulk_id(self, bulk_id):
-        self.bulk_id = bulk_id
-        return self
-
-    @property
-    @serializable(name="results", type=NCResponseDetails, list=True)
+    @serializable(name="results", type=NumberContextLog, list=True)
     def results(self):
         return self.get_field_value("results")
 

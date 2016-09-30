@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 """This is a generated class and is not intended for modification!
-TODO: Point to Github contribution instructions
 """
 
 
 from datetime import datetime
 from infobip.util.models import DefaultObject, serializable
-from infobip.api.model.sms.nc.lookup.async.NCResponseDetailsAsync import NCResponseDetailsAsync
+from infobip.api.model.nc.notify.NumberContextResponseDetails import NumberContextResponseDetails
 
-class NCResponseAsync(DefaultObject):
+class NumberContextResponse(DefaultObject):
     @property
     @serializable(name="bulkId", type=unicode)
     def bulk_id(self):
@@ -23,7 +22,7 @@ class NCResponseAsync(DefaultObject):
         return self
 
     @property
-    @serializable(name="results", type=NCResponseDetailsAsync, list=True)
+    @serializable(name="results", type=NumberContextResponseDetails, list=True)
     def results(self):
         return self.get_field_value("results")
 
