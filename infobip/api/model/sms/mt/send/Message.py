@@ -8,6 +8,7 @@ from infobip.util.models import DefaultObject, serializable
 from infobip.api.model.Destination import Destination
 from infobip.api.model.sms.mt.send.Language import Language
 from infobip.api.model.sms.mt.send.binary.BinaryContent import BinaryContent
+from infobip.api.model.sms.mt.send.DeliveryTimeWindow import DeliveryTimeWindow
 
 class Message(DefaultObject):
     @property
@@ -76,6 +77,19 @@ class Message(DefaultObject):
 
     def set_language(self, language):
         self.language = language
+        return self
+
+    @property
+    @serializable(name="deliveryTimeWindow", type=DeliveryTimeWindow)
+    def delivery_time_window(self):
+        return self.get_field_value("delivery_time_window")
+
+    @delivery_time_window.setter
+    def delivery_time_window(self, delivery_time_window):
+        self.set_field_value("delivery_time_window", delivery_time_window)
+
+    def set_delivery_time_window(self, delivery_time_window):
+        self.delivery_time_window = delivery_time_window
         return self
 
     @property
