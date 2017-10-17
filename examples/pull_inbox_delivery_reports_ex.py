@@ -1,5 +1,3 @@
-__author__ = 'mmatosevic'
-
 from infobip.clients import get_received_messages
 from __init__ import configuration
 
