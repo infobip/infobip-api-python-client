@@ -148,7 +148,7 @@ class DefaultObject(object):
             attr1 = getattr(self, p)
 
             # Do not serialize None values
-            if not attr1:
+            if attr1 is None:
                 continue
 
             if isinstance(attr1, list):
