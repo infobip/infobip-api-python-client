@@ -3,7 +3,6 @@
 """
 
 
-from infobip.util.models import serializable
 from enum import Enum
 
 
