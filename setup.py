@@ -42,6 +42,9 @@ mod_distutilscore.setup(
     url='https://github.com/infobip/infobip-api-python-client',
     packages=my_packages,
     package_dir={'infobip': 'infobip'},
+    install_requires=[
+        'enum',
+    ],
     keywords=[
         'infobip',
         'sms',
