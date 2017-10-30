@@ -22,6 +22,19 @@ class SMSResponse(DefaultObject):
         return self
 
     @property
+    @serializable(name="trackingProcessKey", type=unicode)
+    def tracking_process_key(self):
+        return self.get_field_value("tracking_process_key")
+
+    @tracking_process_key.setter
+    def tracking_process_key(self, tracking_process_key):
+        self.set_field_value("tracking_process_key", tracking_process_key)
+
+    def set_tracking_process_key(self, tracking_process_key):
+        self.tracking_process_key = tracking_process_key
+        return self
+
+    @property
     @serializable(name="messages", type=SMSResponseDetails, list=True)
     def messages(self):
         return self.get_field_value("messages")

@@ -4,7 +4,11 @@ Infobip API Python client
 Running examples
 ----------------
 
-First, setup your username and password in `examples/__init__.py`. Then, you can run provided examples in `examples` folder by running:
+When you clone the repository and before you start exploring the examples, be sure to execute the `setup.py` file with
+the `python setup.py install`. This way you will set up all dependencies needed for the examples to run properly.
+
+Then, setup your username and password in `examples/__init__.py`.
+Now you can run provided examples in `examples` folder by running:
 
     python example.py deserialize_dr_example # provided argument is <file_name_of_example>
 
@@ -61,7 +65,8 @@ Similar to standard messaging example, but when preparing your message, use `SMS
     response = send_sms_client.execute(request)
 
 
-When the delivery notification is pushed to your server as a HTTP POST request, you can process the body of the message with the following code:
+When the delivery notification is pushed to your server as a HTTP POST request, you can process the body of the message
+with the following code:
 
     delivery_status = reports = SMSReportResponse.from_JSON(http_body)
 

@@ -23,6 +23,7 @@ message.from_ = "sender1"
 message.text = "Artık Ulusal Dil Tanımlayıcısı ile Türkçe karakterli smslerinizi rahatlıkla iletebilirsiniz."
 message.destinations = [dest]
 message.language = language
+message.transliteration = "TURKISH"
 
 request = SMSAdvancedTextualRequest()
 request.messages = [message]

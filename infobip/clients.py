@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """This is a generated class and is not intended for modification!
 """
+
 from util.http import HttpClient
 
 
@@ -28,6 +29,58 @@ class get_received_messages(object):
 
         http_client = HttpClient()
         return http_client.getValue("GET", self.configuration, "/sms/1/inbox/reports", None, context, None, MOReportResponse)
+
+
+class get_bulks(object):
+
+    def __init__(self, configuration):
+        super(get_bulks, self).__init__()
+        self.configuration = configuration
+
+    def execute(self, context):
+        from infobip.api.model.sms.mt.bulks.BulkResponse import BulkResponse
+
+        http_client = HttpClient()
+        return http_client.getValue("GET", self.configuration, "/sms/1/bulks", None, context, None, BulkResponse)
+
+
+class reschedule_bulk(object):
+
+    def __init__(self, configuration):
+        super(reschedule_bulk, self).__init__()
+        self.configuration = configuration
+
+    def execute(self, context, bulk_request):
+        from infobip.api.model.sms.mt.bulks.BulkResponse import BulkResponse
+
+        http_client = HttpClient()
+        return http_client.getValue("PUT", self.configuration, "/sms/1/bulks", None, context, bulk_request, BulkResponse)
+
+
+class get_bulk_status(object):
+
+    def __init__(self, configuration):
+        super(get_bulk_status, self).__init__()
+        self.configuration = configuration
+
+    def execute(self, context):
+        from infobip.api.model.sms.mt.bulks.status.BulkStatusResponse import BulkStatusResponse
+
+        http_client = HttpClient()
+        return http_client.getValue("GET", self.configuration, "/sms/1/bulks/status", None, context, None, BulkStatusResponse)
+
+
+class manage_bulk_status(object):
+
+    def __init__(self, configuration):
+        super(manage_bulk_status, self).__init__()
+        self.configuration = configuration
+
+    def execute(self, context, update_status_request):
+        from infobip.api.model.sms.mt.bulks.status.BulkStatusResponse import BulkStatusResponse
+
+        http_client = HttpClient()
+        return http_client.getValue("PUT", self.configuration, "/sms/1/bulks/status", None, context, update_status_request, BulkStatusResponse)
 
 
 class get_sent_sms_logs(object):
@@ -93,6 +146,19 @@ class send_single_binary_sms(object):
 
         http_client = HttpClient()
         return http_client.getValue("POST", self.configuration, "/sms/1/binary/single", None, None, s_m_s_binary_request, SMSResponse)
+
+
+class preview_sms(object):
+
+    def __init__(self, configuration):
+        super(preview_sms, self).__init__()
+        self.configuration = configuration
+
+    def execute(self, preview_request):
+        from infobip.api.model.sms.mt.send.preview.PreviewResponse import PreviewResponse
+
+        http_client = HttpClient()
+        return http_client.getValue("POST", self.configuration, "/sms/1/preview", None, None, preview_request, PreviewResponse)
 
 
 class send_multiple_textual_sms_advanced(object):

@@ -1,5 +1,3 @@
-__author__ = 'mmatosevic'
-
 from infobip.clients import get_received_sms_logs
 from __init__ import configuration
 

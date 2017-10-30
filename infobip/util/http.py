@@ -61,7 +61,7 @@ class HttpClient:
             headers["Authorization"] = "Basic %s" % auth
 
         if api_key:
-            headers["Authorization"] = "ApiKey %s" % api_key
+            headers["Authorization"] = "App %s" % api_key
 
         if token:
             headers["Authorization"] = "IBSSO %s" % token

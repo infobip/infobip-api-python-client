@@ -1,5 +1,3 @@
-__author__ = 'nmaric'
-
 from infobip.clients import get_account_balance
 from __init__ import configuration
 

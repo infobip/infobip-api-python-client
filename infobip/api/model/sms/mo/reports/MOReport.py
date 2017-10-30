@@ -5,6 +5,8 @@
 
 from datetime import datetime
 from infobip.util.models import DefaultObject, serializable
+from infobip.api.model.Price import Price
+
 class MOReport(DefaultObject):
     @property
     @serializable(name="cleanText", type=unicode)
@@ -33,6 +35,19 @@ class MOReport(DefaultObject):
         return self
 
     @property
+    @serializable(name="price", type=Price)
+    def price(self):
+        return self.get_field_value("price")
+
+    @price.setter
+    def price(self, price):
+        self.set_field_value("price", price)
+
+    def set_price(self, price):
+        self.price = price
+        return self
+
+    @property
     @serializable(name="from", type=unicode)
     def from_(self):
         return self.get_field_value("from_")
@@ -43,6 +58,19 @@ class MOReport(DefaultObject):
 
     def set_from_(self, from_):
         self.from_ = from_
+        return self
+
+    @property
+    @serializable(name="callbackData", type=unicode)
+    def callback_data(self):
+        return self.get_field_value("callback_data")
+
+    @callback_data.setter
+    def callback_data(self, callback_data):
+        self.set_field_value("callback_data", callback_data)
+
+    def set_callback_data(self, callback_data):
+        self.callback_data = callback_data
         return self
 
     @property

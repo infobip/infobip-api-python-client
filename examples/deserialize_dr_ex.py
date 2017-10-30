@@ -1,5 +1,3 @@
-__author__ = 'mmatosevic'
-
 from infobip.api.model.sms.mt.reports.SMSReportResponse import SMSReportResponse
 
 response_body = """{
