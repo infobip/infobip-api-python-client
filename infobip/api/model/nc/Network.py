@@ -5,27 +5,21 @@
 
 from datetime import datetime
 from infobip.util.models import DefaultObject, serializable
+
 class Network(DefaultObject):
-    @property
-    @serializable(name="countryPrefix", type=unicode)
-    def country_prefix(self):
-        return self.get_field_value("country_prefix")
-
-    @country_prefix.setter
-    def country_prefix(self, country_prefix):
-        self.set_field_value("country_prefix", country_prefix)
-
-    def set_country_prefix(self, country_prefix):
-        self.country_prefix = country_prefix
-        return self
-
     @property
     @serializable(name="networkName", type=unicode)
     def network_name(self):
+        """
+        Property is of type: unicode
+        """
         return self.get_field_value("network_name")
 
     @network_name.setter
     def network_name(self, network_name):
+        """
+        Property is of type: unicode
+        """
         self.set_field_value("network_name", network_name)
 
     def set_network_name(self, network_name):
@@ -33,12 +27,37 @@ class Network(DefaultObject):
         return self
 
     @property
+    @serializable(name="networkPrefix", type=unicode)
+    def network_prefix(self):
+        """
+        Property is of type: unicode
+        """
+        return self.get_field_value("network_prefix")
+
+    @network_prefix.setter
+    def network_prefix(self, network_prefix):
+        """
+        Property is of type: unicode
+        """
+        self.set_field_value("network_prefix", network_prefix)
+
+    def set_network_prefix(self, network_prefix):
+        self.network_prefix = network_prefix
+        return self
+
+    @property
     @serializable(name="countryName", type=unicode)
     def country_name(self):
+        """
+        Property is of type: unicode
+        """
         return self.get_field_value("country_name")
 
     @country_name.setter
     def country_name(self, country_name):
+        """
+        Property is of type: unicode
+        """
         self.set_field_value("country_name", country_name)
 
     def set_country_name(self, country_name):
@@ -46,14 +65,20 @@ class Network(DefaultObject):
         return self
 
     @property
-    @serializable(name="networkPrefix", type=unicode)
-    def network_prefix(self):
-        return self.get_field_value("network_prefix")
+    @serializable(name="countryPrefix", type=unicode)
+    def country_prefix(self):
+        """
+        Property is of type: unicode
+        """
+        return self.get_field_value("country_prefix")
 
-    @network_prefix.setter
-    def network_prefix(self, network_prefix):
-        self.set_field_value("network_prefix", network_prefix)
+    @country_prefix.setter
+    def country_prefix(self, country_prefix):
+        """
+        Property is of type: unicode
+        """
+        self.set_field_value("country_prefix", country_prefix)
 
-    def set_network_prefix(self, network_prefix):
-        self.network_prefix = network_prefix
+    def set_country_prefix(self, country_prefix):
+        self.country_prefix = country_prefix
         return self

@@ -1,6 +1,6 @@
 from datetime import datetime
 import json
-
+import jsonpickle
 __author__ = 'mstipanov'
 
 
@@ -42,10 +42,9 @@ class DateFormatIso8601(object):
 
 
 class serializable(object):
-    def __init__(self, name=None, type=None, list=False, date_format=DateFormatIso8601):
+    def __init__(self, name=None, type=None, date_format=DateFormatIso8601):
         self.name = name
         self.type = type
-        self.list = list
         self.date_format = date_format
 
     def __call__(self, method):
@@ -111,6 +110,8 @@ class DefaultObject(object):
         if isinstance(v, dict):
             if serializable.type == basestring:
                 return unicode(v)
+            if serializable.type == dict:
+                return v
             o = serializable.type()
             for p in dir(type(o)):
                 attr = getattr(type(o), p)
@@ -160,23 +161,19 @@ class DefaultObject(object):
                         dict[k].append(self.get_value(serializable, a))
             else:
                 if hasattr(attr1, "to_dict"):
-                    dict[k] = attr1.to_dict()
+                    attr_dict = attr1.to_dict()
                 else:
-                    dict[k] = self.get_value(serializable, attr1)
+                    attr_dict = self.get_value(serializable, attr1)
+
+                if hasattr(attr_dict, "__len__") and len(attr_dict) is 1 and k in attr_dict:
+                    attr_dict = attr_dict[k]
+
+                dict[k] = attr_dict
+
         return dict
 
     def to_JSON(self):
-        dict = self.to_dict()
-        return json.dumps(self, default=lambda o: dict, check_circular=False)
-
-    def islist(self, fieldName):
-        attr = getattr(type(self), fieldName)
-        serializable = attr.fget.func_dict['serializable']
-        is_list = serializable and serializable.list
-        if not is_list:
-            return False
-
-        return is_list
+        return jsonpickle.encode(self.to_dict(), unpicklable=False)
 
     @classmethod
     def isdate(cls, fieldName):

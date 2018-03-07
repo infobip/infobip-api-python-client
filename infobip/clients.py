@@ -255,6 +255,177 @@ class log_end_tag(object):
         return http_client.getValue("POST", self.configuration, "/ct/1/log/end/{messageId}", pathParams, None, None, EndTagResponse)
 
 
+class add_destination(object):
+
+    def __init__(self, configuration):
+        super(add_destination, self).__init__()
+        self.configuration = configuration
+
+    def execute(self, campaignKey, destination):
+        from infobip.api.model.omni.campaign.Campaign import Campaign
+
+        pathParams = {
+            "campaignKey": campaignKey
+        }
+        http_client = HttpClient()
+        return http_client.getValue("PUT", self.configuration, "/omni/1/campaigns/{campaignKey}/destinations", pathParams, None, destination, Campaign)
+
+
+class add_destination(object):
+
+    def __init__(self, configuration):
+        super(add_destination, self).__init__()
+        self.configuration = configuration
+
+    def execute(self, campaignKey, destinations):
+        from infobip.api.model.omni.campaign.Campaign import Campaign
+
+        pathParams = {
+            "campaignKey": campaignKey
+        }
+        http_client = HttpClient()
+        return http_client.getValue("PUT", self.configuration, "/omni/2/campaigns/{campaignKey}/destinations", pathParams, None, destinations, Campaign)
+
+
+class get_campaign_details(object):
+
+    def __init__(self, configuration):
+        super(get_campaign_details, self).__init__()
+        self.configuration = configuration
+
+    def execute(self, campaignKey):
+        from infobip.api.model.omni.campaign.Campaign import Campaign
+
+        pathParams = {
+            "campaignKey": campaignKey
+        }
+        http_client = HttpClient()
+        return http_client.getValue("GET", self.configuration, "/omni/1/campaigns/{campaignKey}", pathParams, None, None, Campaign)
+
+
+class get_campaigns(object):
+
+    def __init__(self, configuration):
+        super(get_campaigns, self).__init__()
+        self.configuration = configuration
+
+    def execute(self, context):
+        from infobip.api.model.omni.campaign.CampaignsResponse import CampaignsResponse
+
+        http_client = HttpClient()
+        return http_client.getValue("GET", self.configuration, "/omni/1/campaigns", None, context, None, CampaignsResponse)
+
+
+class get_omni_logs(object):
+
+    def __init__(self, configuration):
+        super(get_omni_logs, self).__init__()
+        self.configuration = configuration
+
+    def execute(self, context):
+        from infobip.api.model.omni.logs.OmniLogsResponse import OmniLogsResponse
+
+        http_client = HttpClient()
+        return http_client.getValue("GET", self.configuration, "/omni/1/logs", None, context, None, OmniLogsResponse)
+
+
+class get_o_m_n_i_reports(object):
+
+    def __init__(self, configuration):
+        super(get_o_m_n_i_reports, self).__init__()
+        self.configuration = configuration
+
+    def execute(self, context):
+        from infobip.api.model.omni.reports.OMNIReportsResponse import OMNIReportsResponse
+
+        http_client = HttpClient()
+        return http_client.getValue("GET", self.configuration, "/omni/1/reports", None, context, None, OMNIReportsResponse)
+
+
+class get_scenarios(object):
+
+    def __init__(self, configuration):
+        super(get_scenarios, self).__init__()
+        self.configuration = configuration
+
+    def execute(self, context):
+        from infobip.api.model.omni.scenarios.ScenariosResponse import ScenariosResponse
+
+        http_client = HttpClient()
+        return http_client.getValue("GET", self.configuration, "/omni/1/scenarios", None, context, None, ScenariosResponse)
+
+
+class get_specific_scenario(object):
+
+    def __init__(self, configuration):
+        super(get_specific_scenario, self).__init__()
+        self.configuration = configuration
+
+    def execute(self, scenarioKey):
+        from infobip.api.model.omni.scenarios.Scenario import Scenario
+
+        pathParams = {
+            "scenarioKey": scenarioKey
+        }
+        http_client = HttpClient()
+        return http_client.getValue("GET", self.configuration, "/omni/1/scenarios/{scenarioKey}", pathParams, None, None, Scenario)
+
+
+class create_scenario(object):
+
+    def __init__(self, configuration):
+        super(create_scenario, self).__init__()
+        self.configuration = configuration
+
+    def execute(self, scenario):
+        from infobip.api.model.omni.scenarios.Scenario import Scenario
+
+        http_client = HttpClient()
+        return http_client.getValue("POST", self.configuration, "/omni/1/scenarios", None, None, scenario, Scenario)
+
+
+class update_scenario(object):
+
+    def __init__(self, configuration):
+        super(update_scenario, self).__init__()
+        self.configuration = configuration
+
+    def execute(self, scenarioKey, scenario):
+        from infobip.api.model.omni.scenarios.Scenario import Scenario
+
+        pathParams = {
+            "scenarioKey": scenarioKey
+        }
+        http_client = HttpClient()
+        return http_client.getValue("PUT", self.configuration, "/omni/1/scenarios/{scenarioKey}", pathParams, None, scenario, Scenario)
+
+
+class send_advanced_omni_message(object):
+
+    def __init__(self, configuration):
+        super(send_advanced_omni_message, self).__init__()
+        self.configuration = configuration
+
+    def execute(self, omni_advanced_request):
+        from infobip.api.model.omni.send.OmniResponse import OmniResponse
+
+        http_client = HttpClient()
+        return http_client.getValue("POST", self.configuration, "/omni/1/advanced", None, None, omni_advanced_request, OmniResponse)
+
+
+class send_simple_omni_message(object):
+
+    def __init__(self, configuration):
+        super(send_simple_omni_message, self).__init__()
+        self.configuration = configuration
+
+    def execute(self, omni_simple_request):
+        from infobip.api.model.omni.send.OmniResponse import OmniResponse
+
+        http_client = HttpClient()
+        return http_client.getValue("POST", self.configuration, "/omni/1/text", None, None, omni_simple_request, OmniResponse)
+
+
 class get_account_balance(object):
 
     def __init__(self, configuration):
