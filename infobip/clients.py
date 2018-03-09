@@ -115,11 +115,11 @@ class send_multiple_sms_binary_advanced(object):
         super(send_multiple_sms_binary_advanced, self).__init__()
         self.configuration = configuration
 
-    def execute(self, s_m_s_advanced_binary_request):
+    def execute(self, sms_advanced_binary_request):
         from infobip.api.model.sms.mt.send.SMSResponse import SMSResponse
 
         http_client = HttpClient()
-        return http_client.getValue("POST", self.configuration, "/sms/1/binary/advanced", None, None, s_m_s_advanced_binary_request, SMSResponse)
+        return http_client.getValue("POST", self.configuration, "/sms/1/binary/advanced", None, None, sms_advanced_binary_request, SMSResponse)
 
 
 class send_multiple_binary_sms(object):
@@ -128,11 +128,11 @@ class send_multiple_binary_sms(object):
         super(send_multiple_binary_sms, self).__init__()
         self.configuration = configuration
 
-    def execute(self, s_m_s_multi_binary_request):
+    def execute(self, sms_multi_binary_request):
         from infobip.api.model.sms.mt.send.SMSResponse import SMSResponse
 
         http_client = HttpClient()
-        return http_client.getValue("POST", self.configuration, "/sms/1/binary/multi", None, None, s_m_s_multi_binary_request, SMSResponse)
+        return http_client.getValue("POST", self.configuration, "/sms/1/binary/multi", None, None, sms_multi_binary_request, SMSResponse)
 
 
 class send_single_binary_sms(object):
@@ -141,11 +141,11 @@ class send_single_binary_sms(object):
         super(send_single_binary_sms, self).__init__()
         self.configuration = configuration
 
-    def execute(self, s_m_s_binary_request):
+    def execute(self, sms_binary_request):
         from infobip.api.model.sms.mt.send.SMSResponse import SMSResponse
 
         http_client = HttpClient()
-        return http_client.getValue("POST", self.configuration, "/sms/1/binary/single", None, None, s_m_s_binary_request, SMSResponse)
+        return http_client.getValue("POST", self.configuration, "/sms/1/binary/single", None, None, sms_binary_request, SMSResponse)
 
 
 class preview_sms(object):
@@ -167,11 +167,11 @@ class send_multiple_textual_sms_advanced(object):
         super(send_multiple_textual_sms_advanced, self).__init__()
         self.configuration = configuration
 
-    def execute(self, s_m_s_advanced_textual_request):
+    def execute(self, sms_advanced_textual_request):
         from infobip.api.model.sms.mt.send.SMSResponse import SMSResponse
 
         http_client = HttpClient()
-        return http_client.getValue("POST", self.configuration, "/sms/1/text/advanced", None, None, s_m_s_advanced_textual_request, SMSResponse)
+        return http_client.getValue("POST", self.configuration, "/sms/1/text/advanced", None, None, sms_advanced_textual_request, SMSResponse)
 
 
 class send_multiple_sms_textual(object):
@@ -180,11 +180,24 @@ class send_multiple_sms_textual(object):
         super(send_multiple_sms_textual, self).__init__()
         self.configuration = configuration
 
-    def execute(self, s_m_s_multi_textual_request):
+    def execute(self, sms_multi_textual_request):
         from infobip.api.model.sms.mt.send.SMSResponse import SMSResponse
 
         http_client = HttpClient()
-        return http_client.getValue("POST", self.configuration, "/sms/1/text/multi", None, None, s_m_s_multi_textual_request, SMSResponse)
+        return http_client.getValue("POST", self.configuration, "/sms/1/text/multi", None, None, sms_multi_textual_request, SMSResponse)
+
+
+class send_sms_textual_query_post(object):
+
+    def __init__(self, configuration):
+        super(send_sms_textual_query_post, self).__init__()
+        self.configuration = configuration
+
+    def execute(self, context):
+        from infobip.api.model.sms.mt.send.SMSResponse import SMSResponse
+
+        http_client = HttpClient()
+        return http_client.getValue("POST", self.configuration, "/sms/1/text/query", None, context, None, SMSResponse)
 
 
 class send_single_textual_sms(object):
@@ -193,11 +206,11 @@ class send_single_textual_sms(object):
         super(send_single_textual_sms, self).__init__()
         self.configuration = configuration
 
-    def execute(self, s_m_s_textual_request):
+    def execute(self, sms_textual_request):
         from infobip.api.model.sms.mt.send.SMSResponse import SMSResponse
 
         http_client = HttpClient()
-        return http_client.getValue("POST", self.configuration, "/sms/1/text/single", None, None, s_m_s_textual_request, SMSResponse)
+        return http_client.getValue("POST", self.configuration, "/sms/1/text/single", None, None, sms_textual_request, SMSResponse)
 
 
 class get_number_context_logs(object):
@@ -329,10 +342,10 @@ class get_omni_logs(object):
         return http_client.getValue("GET", self.configuration, "/omni/1/logs", None, context, None, OmniLogsResponse)
 
 
-class get_o_m_n_i_reports(object):
+class get_omni_reports(object):
 
     def __init__(self, configuration):
-        super(get_o_m_n_i_reports, self).__init__()
+        super(get_omni_reports, self).__init__()
         self.configuration = configuration
 
     def execute(self, context):
