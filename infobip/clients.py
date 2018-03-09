@@ -187,6 +187,19 @@ class send_multiple_sms_textual(object):
         return http_client.getValue("POST", self.configuration, "/sms/1/text/multi", None, None, s_m_s_multi_textual_request, SMSResponse)
 
 
+class send_sms_textual_query_post(object):
+
+    def __init__(self, configuration):
+        super(send_sms_textual_query_post, self).__init__()
+        self.configuration = configuration
+
+    def execute(self, context):
+        from infobip.api.model.sms.mt.send.SMSResponse import SMSResponse
+
+        http_client = HttpClient()
+        return http_client.getValue("POST", self.configuration, "/sms/1/text/query", None, context, None, SMSResponse)
+
+
 class send_single_textual_sms(object):
 
     def __init__(self, configuration):
@@ -329,10 +342,10 @@ class get_omni_logs(object):
         return http_client.getValue("GET", self.configuration, "/omni/1/logs", None, context, None, OmniLogsResponse)
 
 
-class get_o_m_n_i_reports(object):
+class get_omni_reports(object):
 
     def __init__(self, configuration):
-        super(get_o_m_n_i_reports, self).__init__()
+        super(get_omni_reports, self).__init__()
         self.configuration = configuration
 
     def execute(self, context):
