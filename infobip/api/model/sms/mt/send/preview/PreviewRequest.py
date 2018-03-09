@@ -5,14 +5,21 @@
 
 from datetime import datetime
 from infobip.util.models import DefaultObject, serializable
+
 class PreviewRequest(DefaultObject):
     @property
     @serializable(name="text", type=unicode)
     def text(self):
+        """
+        Property is of type: unicode
+        """
         return self.get_field_value("text")
 
     @text.setter
     def text(self, text):
+        """
+        Property is of type: unicode
+        """
         self.set_field_value("text", text)
 
     def set_text(self, text):
@@ -22,10 +29,16 @@ class PreviewRequest(DefaultObject):
     @property
     @serializable(name="languageCode", type=unicode)
     def language_code(self):
+        """
+        Property is of type: unicode
+        """
         return self.get_field_value("language_code")
 
     @language_code.setter
     def language_code(self, language_code):
+        """
+        Property is of type: unicode
+        """
         self.set_field_value("language_code", language_code)
 
     def set_language_code(self, language_code):
@@ -35,10 +48,16 @@ class PreviewRequest(DefaultObject):
     @property
     @serializable(name="transliteration", type=unicode)
     def transliteration(self):
+        """
+        Property is of type: unicode
+        """
         return self.get_field_value("transliteration")
 
     @transliteration.setter
     def transliteration(self, transliteration):
+        """
+        Property is of type: unicode
+        """
         self.set_field_value("transliteration", transliteration)
 
     def set_transliteration(self, transliteration):

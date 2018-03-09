@@ -5,32 +5,23 @@
 
 from datetime import datetime
 from infobip.util.models import DefaultObject, serializable
+
 class NumberContextRequest(DefaultObject):
     @property
-    @serializable(name="to", type=unicode, list=True)
+    @serializable(name="to", type=unicode)
     def to(self):
+        """
+        Property is a list of: unicode
+        """
         return self.get_field_value("to")
 
     @to.setter
     def to(self, to):
+        """
+        Property is a list of: unicode
+        """
         self.set_field_value("to", to)
 
     def set_to(self, to):
         self.to = to
-        return self
-
-    def add_to(self, *to):
-        if not self.to:
-            self.to = []
-
-        self.to.extend(to)
-        return self
-
-    def remove_to(self, *to):
-        if not self.to:
-            return self
-
-        for i in to:
-            self.to.remove(i)
-
         return self
