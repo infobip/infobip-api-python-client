@@ -7,40 +7,21 @@ from datetime import datetime
 from infobip.util.models import DefaultObject, serializable
 from infobip.api.model.sms.mt.send.binary.BinaryContent import BinaryContent
 
+
 class SMSBinaryRequest(DefaultObject):
-    @property
-    @serializable(name="operatorClientId", type=unicode)
-    def operator_client_id(self):
-        return self.get_field_value("operator_client_id")
-
-    @operator_client_id.setter
-    def operator_client_id(self, operator_client_id):
-        self.set_field_value("operator_client_id", operator_client_id)
-
-    def set_operator_client_id(self, operator_client_id):
-        self.operator_client_id = operator_client_id
-        return self
-
-    @property
-    @serializable(name="campaignId", type=unicode)
-    def campaign_id(self):
-        return self.get_field_value("campaign_id")
-
-    @campaign_id.setter
-    def campaign_id(self, campaign_id):
-        self.set_field_value("campaign_id", campaign_id)
-
-    def set_campaign_id(self, campaign_id):
-        self.campaign_id = campaign_id
-        return self
-
     @property
     @serializable(name="from", type=unicode)
     def from_(self):
+        """
+        Property is of type: unicode
+        """
         return self.get_field_value("from_")
 
     @from_.setter
     def from_(self, from_):
+        """
+        Property is of type: unicode
+        """
         self.set_field_value("from_", from_)
 
     def set_from_(self, from_):
@@ -48,12 +29,37 @@ class SMSBinaryRequest(DefaultObject):
         return self
 
     @property
+    @serializable(name="to", type=unicode)
+    def to(self):
+        """
+        Property is a list of: unicode
+        """
+        return self.get_field_value("to")
+
+    @to.setter
+    def to(self, to):
+        """
+        Property is a list of: unicode
+        """
+        self.set_field_value("to", to)
+
+    def set_to(self, to):
+        self.to = to
+        return self
+
+    @property
     @serializable(name="binary", type=BinaryContent)
     def binary(self):
+        """
+        Property is of type: BinaryContent
+        """
         return self.get_field_value("binary")
 
     @binary.setter
     def binary(self, binary):
+        """
+        Property is of type: BinaryContent
+        """
         self.set_field_value("binary", binary)
 
     def set_binary(self, binary):
@@ -61,30 +67,39 @@ class SMSBinaryRequest(DefaultObject):
         return self
 
     @property
-    @serializable(name="to", type=unicode, list=True)
-    def to(self):
-        return self.get_field_value("to")
+    @serializable(name="campaignId", type=unicode)
+    def campaign_id(self):
+        """
+        Property is of type: unicode
+        """
+        return self.get_field_value("campaign_id")
 
-    @to.setter
-    def to(self, to):
-        self.set_field_value("to", to)
+    @campaign_id.setter
+    def campaign_id(self, campaign_id):
+        """
+        Property is of type: unicode
+        """
+        self.set_field_value("campaign_id", campaign_id)
 
-    def set_to(self, to):
-        self.to = to
+    def set_campaign_id(self, campaign_id):
+        self.campaign_id = campaign_id
         return self
 
-    def add_to(self, *to):
-        if not self.to:
-            self.to = []
+    @property
+    @serializable(name="operatorClientId", type=unicode)
+    def operator_client_id(self):
+        """
+        Property is of type: unicode
+        """
+        return self.get_field_value("operator_client_id")
 
-        self.to.extend(to)
-        return self
+    @operator_client_id.setter
+    def operator_client_id(self, operator_client_id):
+        """
+        Property is of type: unicode
+        """
+        self.set_field_value("operator_client_id", operator_client_id)
 
-    def remove_to(self, *to):
-        if not self.to:
-            return self
-
-        for i in to:
-            self.to.remove(i)
-
+    def set_operator_client_id(self, operator_client_id):
+        self.operator_client_id = operator_client_id
         return self

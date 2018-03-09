@@ -8,58 +8,61 @@ from infobip.util.models import DefaultObject, serializable
 from infobip.api.model.sms.mt.send.Message import Message
 from infobip.api.model.sms.mt.send.Tracking import Tracking
 
+
 class SMSAdvancedTextualRequest(DefaultObject):
     @property
-    @serializable(name="bulkId", type=unicode)
-    def bulk_id(self):
-        return self.get_field_value("bulk_id")
+    @serializable(name="tracking", type=Tracking)
+    def tracking(self):
+        """
+        Property is of type: Tracking
+        """
+        return self.get_field_value("tracking")
 
-    @bulk_id.setter
-    def bulk_id(self, bulk_id):
-        self.set_field_value("bulk_id", bulk_id)
+    @tracking.setter
+    def tracking(self, tracking):
+        """
+        Property is of type: Tracking
+        """
+        self.set_field_value("tracking", tracking)
 
-    def set_bulk_id(self, bulk_id):
-        self.bulk_id = bulk_id
+    def set_tracking(self, tracking):
+        self.tracking = tracking
         return self
 
     @property
-    @serializable(name="messages", type=Message, list=True)
+    @serializable(name="messages", type=Message)
     def messages(self):
+        """
+        Property is a list of: Message
+        """
         return self.get_field_value("messages")
 
     @messages.setter
     def messages(self, messages):
+        """
+        Property is a list of: Message
+        """
         self.set_field_value("messages", messages)
 
     def set_messages(self, messages):
         self.messages = messages
         return self
 
-    def add_messages(self, *messages):
-        if not self.messages:
-            self.messages = []
-
-        self.messages.extend(messages)
-        return self
-
-    def remove_messages(self, *messages):
-        if not self.messages:
-            return self
-
-        for i in messages:
-            self.messages.remove(i)
-
-        return self
-
     @property
-    @serializable(name="tracking", type=Tracking)
-    def tracking(self):
-        return self.get_field_value("tracking")
+    @serializable(name="bulkId", type=unicode)
+    def bulk_id(self):
+        """
+        Property is of type: unicode
+        """
+        return self.get_field_value("bulk_id")
 
-    @tracking.setter
-    def tracking(self, tracking):
-        self.set_field_value("tracking", tracking)
+    @bulk_id.setter
+    def bulk_id(self, bulk_id):
+        """
+        Property is of type: unicode
+        """
+        self.set_field_value("bulk_id", bulk_id)
 
-    def set_tracking(self, tracking):
-        self.tracking = tracking
+    def set_bulk_id(self, bulk_id):
+        self.bulk_id = bulk_id
         return self
