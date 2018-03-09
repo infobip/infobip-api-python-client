@@ -1,6 +1,6 @@
 from infobip.util.configuration import Configuration
 
-infobip_username = "wildcard"
-infobip_password = "Wildcards4life"
+infobip_username = "USERNAME"
+infobip_password = "PASSWORD"
 
 configuration = Configuration(infobip_username, infobip_password)
