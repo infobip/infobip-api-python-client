@@ -5,7 +5,7 @@ from exception import ApiException, ApiRequestError, ApiRequestErrorDetails
 __author__ = 'mstipanov'
 
 import httplib
-import urllib
+import urllib.request, urllib.parse, urllib.error
 from urlparse import urlparse
 import json
 
@@ -44,9 +44,9 @@ class HttpClient:
 
         if context:
             if isinstance(context, dict):
-                params = urllib.urlencode(context)
+                params = urllib.parse.urlencode(context)
             else:
-                params = urllib.urlencode(context.to_dict())
+                params = urllib.parse.urlencode(context.to_dict())
             url = url + ("?%s" % params)
 
         u = urlparse(url)
