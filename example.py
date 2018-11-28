@@ -8,12 +8,12 @@ import glob
 myfolder = os.path.dirname(__file__)
 
 if sys.argv.__len__() < 2:
-    print 'Please choose example to run:'
+    print('Please choose example to run:')
     files = glob.glob("examples/*.py")
     for file_ in files:
         if not file_.startswith("examples/__"):
-            print "* " + file_.split(os.path.sep)[1].rstrip(".py")
-    print
+            print("* " + file_.split(os.path.sep)[1].rstrip(".py"))
+    print()
     exit(1)
 
 sys.path.append(myfolder)

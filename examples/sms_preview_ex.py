@@ -12,10 +12,10 @@ preview_request.transliteration = "TURKISH"
 
 preview_response = preview_sms_client.execute(preview_request)
 
-print "Original message: " + preview_response.original_text + "\n"
+print("Original message: " + preview_response.original_text + "\n")
 
-print "Your previews: "
+print("Your previews: ")
 for preview in preview_response.previews:
-    print "\t" + preview.text_preview
-    print "\tNumber of messages: " + str(preview.message_count)
-    print "\tCharacters remaining: " + str(preview.characters_remaining) + "\n"
+    print("\t" + preview.text_preview)
+    print("\tNumber of messages: " + str(preview.message_count))
+    print("\tCharacters remaining: " + str(preview.characters_remaining) + "\n")

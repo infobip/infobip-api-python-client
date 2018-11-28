@@ -60,51 +60,51 @@ response = send_scheduled_message()
 context = {"bulkId": response.bulk_id}
 sent_message_info = response.messages[0]
 
-print "------------------------------------------------"
-print "Scheduled SMS"
-print "Message ID: " + sent_message_info.message_id
-print "Bulk ID: " + response.bulk_id
-print "Receiver: " + sent_message_info.to
-print "Message status: " + sent_message_info.status.name
-print "------------------------------------------------"
+print("------------------------------------------------")
+print("Scheduled SMS")
+print("Message ID: " + sent_message_info.message_id)
+print("Bulk ID: " + response.bulk_id)
+print("Receiver: " + sent_message_info.to)
+print("Message status: " + sent_message_info.status.name)
+print("------------------------------------------------")
 
 # Fetching bulk via bulkId
 bulk_response = get_bulk()
-print "Fetched scheduling date."
-print "Bulk ID: " + bulk_response.bulk_id
-print "SendAt: " + bulk_response.send_at.isoformat()
-print "------------------------------------------------"
+print("Fetched scheduling date.")
+print("Bulk ID: " + bulk_response.bulk_id)
+print("SendAt: " + bulk_response.send_at.isoformat())
+print("------------------------------------------------")
 
 # Rescheduling the message via the bulkId
 reschedule_message()
-print "Rescheduling message."
-print "------------------------------------------------"
+print("Rescheduling message.")
+print("------------------------------------------------")
 
 # Fetching bulk via bulkId after rescheduling
 bulk_response = get_bulk()
-print "Fetched scheduling date after rescheduling."
-print "Bulk ID: " + bulk_response.bulk_id
-print "SendAt: " + bulk_response.send_at.isoformat()
-print "------------------------------------------------"
+print("Fetched scheduling date after rescheduling.")
+print("Bulk ID: " + bulk_response.bulk_id)
+print("SendAt: " + bulk_response.send_at.isoformat())
+print("------------------------------------------------")
 
 # Fetching bulk status via bulkId
 status_response = get_bulk_status()
-print "Fetched bulk status."
-print "Bulk status: " + status_response.status
-print "------------------------------------------------"
+print("Fetched bulk status.")
+print("Bulk status: " + status_response.status)
+print("------------------------------------------------")
 
 # Change the PENDING status of the scheduled message bulk to CANCELED to cancel the scheduled message
 if status_response.status == BulkStatus.PENDING:
-    print "Fetched bulk is in PENDING status, attempting to cancel bulk."
-    print "------------------------------------------------"
+    print("Fetched bulk is in PENDING status, attempting to cancel bulk.")
+    print("------------------------------------------------")
 
     cancel_bulk_status()
 
     status_response = get_bulk_status()
-    print "Fetched bulk status after update."
-    print "Bulk status: " + status_response.status
+    print("Fetched bulk status after update.")
+    print("Bulk status: " + status_response.status)
 
 else:
-    print "Fetched bulk is not in PENDING status, aborting update."
+    print("Fetched bulk is not in PENDING status, aborting update.")
 
-print "------------------------------------------------"
+print("------------------------------------------------")

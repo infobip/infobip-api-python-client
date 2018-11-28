@@ -3,4 +3,4 @@ from __init__ import configuration
 
 get_account_balance_client = get_account_balance(configuration)
 balance = get_account_balance_client.execute()
-print balance
+print(balance)

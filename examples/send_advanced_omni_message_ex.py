@@ -46,4 +46,4 @@ request.viber = get_viber_data()
 client = send_advanced_omni_message(configuration)
 response = client.execute(request)
 
-print response
+print(response)
