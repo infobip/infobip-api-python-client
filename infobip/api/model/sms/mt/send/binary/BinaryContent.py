@@ -8,7 +8,7 @@ from infobip.util.models import DefaultObject, serializable
 
 class BinaryContent(DefaultObject):
     @property
-    @serializable(name="hex", type=unicode)
+    @serializable(name="hex", type=str)
     def hex(self):
         """
         Property is of type: unicode

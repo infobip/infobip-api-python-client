@@ -38,7 +38,7 @@ class OmniAdvancedRequest(DefaultObject):
         return self
 
     @property
-    @serializable(name="bulkId", type=unicode)
+    @serializable(name="bulkId", type=str)
     def bulk_id(self):
         """
         Property is of type: unicode
@@ -57,7 +57,7 @@ class OmniAdvancedRequest(DefaultObject):
         return self
 
     @property
-    @serializable(name="scenarioKey", type=unicode)
+    @serializable(name="scenarioKey", type=str)
     def scenario_key(self):
         """
         Property is of type: unicode
@@ -285,7 +285,7 @@ class OmniAdvancedRequest(DefaultObject):
         return self
 
     @property
-    @serializable(name="notifyUrl", type=unicode)
+    @serializable(name="notifyUrl", type=str)
     def notify_url(self):
         """
         Property is of type: unicode
@@ -304,7 +304,7 @@ class OmniAdvancedRequest(DefaultObject):
         return self
 
     @property
-    @serializable(name="notifyContentType", type=unicode)
+    @serializable(name="notifyContentType", type=str)
     def notify_content_type(self):
         """
         Property is of type: unicode
@@ -323,7 +323,7 @@ class OmniAdvancedRequest(DefaultObject):
         return self
 
     @property
-    @serializable(name="callbackData", type=unicode)
+    @serializable(name="callbackData", type=str)
     def callback_data(self):
         """
         Property is of type: unicode

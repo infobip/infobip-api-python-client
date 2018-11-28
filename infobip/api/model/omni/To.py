@@ -8,7 +8,7 @@ from infobip.util.models import DefaultObject, serializable
 
 class To(DefaultObject):
     @property
-    @serializable(name="phoneNumber", type=unicode)
+    @serializable(name="phoneNumber", type=str)
     def phone_number(self):
         """
         Property is of type: unicode
@@ -27,7 +27,7 @@ class To(DefaultObject):
         return self
 
     @property
-    @serializable(name="emailAddress", type=unicode)
+    @serializable(name="emailAddress", type=str)
     def email_address(self):
         """
         Property is of type: unicode
@@ -46,7 +46,7 @@ class To(DefaultObject):
         return self
 
     @property
-    @serializable(name="pushRegistrationId", type=unicode)
+    @serializable(name="pushRegistrationId", type=str)
     def push_registration_id(self):
         """
         Property is of type: unicode
@@ -65,7 +65,7 @@ class To(DefaultObject):
         return self
 
     @property
-    @serializable(name="facebookUserKey", type=unicode)
+    @serializable(name="facebookUserKey", type=str)
     def facebook_user_key(self):
         """
         Property is of type: unicode
@@ -84,7 +84,7 @@ class To(DefaultObject):
         return self
 
     @property
-    @serializable(name="lineUserKey", type=unicode)
+    @serializable(name="lineUserKey", type=str)
     def line_user_key(self):
         """
         Property is of type: unicode

@@ -10,7 +10,7 @@ from infobip.api.model.omni.scenarios.Step import Step
 
 class Scenario(DefaultObject):
     @property
-    @serializable(name="key", type=unicode)
+    @serializable(name="key", type=str)
     def key(self):
         """
         Property is of type: unicode
@@ -29,7 +29,7 @@ class Scenario(DefaultObject):
         return self
 
     @property
-    @serializable(name="name", type=unicode)
+    @serializable(name="name", type=str)
     def name(self):
         """
         Property is of type: unicode

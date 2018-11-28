@@ -46,7 +46,7 @@ class Language(DefaultObject):
         return self
 
     @property
-    @serializable(name="languageCode", type=unicode)
+    @serializable(name="languageCode", type=str)
     def language_code(self):
         """
         Property is of type: unicode

@@ -10,7 +10,7 @@ from infobip.api.model.omni.send.OmniResponseDetails import OmniResponseDetails
 
 class OmniResponse(DefaultObject):
     @property
-    @serializable(name="bulkId", type=unicode)
+    @serializable(name="bulkId", type=str)
     def bulk_id(self):
         """
         Property is of type: unicode

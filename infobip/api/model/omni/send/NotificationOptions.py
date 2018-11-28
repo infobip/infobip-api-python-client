@@ -46,7 +46,7 @@ class NotificationOptions(DefaultObject):
         return self
 
     @property
-    @serializable(name="soundName", type=unicode)
+    @serializable(name="soundName", type=str)
     def sound_name(self):
         """
         Property is of type: unicode
@@ -84,7 +84,7 @@ class NotificationOptions(DefaultObject):
         return self
 
     @property
-    @serializable(name="contentUrl", type=unicode)
+    @serializable(name="contentUrl", type=str)
     def content_url(self):
         """
         Property is of type: unicode
@@ -103,7 +103,7 @@ class NotificationOptions(DefaultObject):
         return self
 
     @property
-    @serializable(name="category", type=unicode)
+    @serializable(name="category", type=str)
     def category(self):
         """
         Property is of type: unicode

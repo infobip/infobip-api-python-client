@@ -10,7 +10,7 @@ from infobip.api.model.sms.mt.send.preview.Configuration import Configuration
 
 class Preview(DefaultObject):
     @property
-    @serializable(name="textPreview", type=unicode)
+    @serializable(name="textPreview", type=str)
     def text_preview(self):
         """
         Property is of type: unicode

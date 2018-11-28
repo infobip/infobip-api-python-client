@@ -8,7 +8,7 @@ from infobip.util.models import DefaultObject, serializable
 
 class Campaign(DefaultObject):
     @property
-    @serializable(name="key", type=unicode)
+    @serializable(name="key", type=str)
     def key(self):
         """
         Property is of type: unicode
@@ -27,7 +27,7 @@ class Campaign(DefaultObject):
         return self
 
     @property
-    @serializable(name="name", type=unicode)
+    @serializable(name="name", type=str)
     def name(self):
         """
         Property is of type: unicode

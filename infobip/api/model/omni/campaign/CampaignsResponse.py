@@ -29,7 +29,7 @@ class CampaignsResponse(DefaultObject):
         return self
 
     @property
-    @serializable(name="campaignCount", type=long)
+    @serializable(name="campaignCount", type=int)
     def campaign_count(self):
         """
         Property is of type: long

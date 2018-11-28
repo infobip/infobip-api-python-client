@@ -29,7 +29,7 @@ class OmniSimpleRequest(DefaultObject):
         return self
 
     @property
-    @serializable(name="bulkId", type=unicode)
+    @serializable(name="bulkId", type=str)
     def bulk_id(self):
         """
         Property is of type: unicode
@@ -48,7 +48,7 @@ class OmniSimpleRequest(DefaultObject):
         return self
 
     @property
-    @serializable(name="scenarioKey", type=unicode)
+    @serializable(name="scenarioKey", type=str)
     def scenario_key(self):
         """
         Property is of type: unicode
@@ -67,7 +67,7 @@ class OmniSimpleRequest(DefaultObject):
         return self
 
     @property
-    @serializable(name="text", type=unicode)
+    @serializable(name="text", type=str)
     def text(self):
         """
         Property is of type: unicode
@@ -86,7 +86,7 @@ class OmniSimpleRequest(DefaultObject):
         return self
 
     @property
-    @serializable(name="mailSubject", type=unicode)
+    @serializable(name="mailSubject", type=str)
     def mail_subject(self):
         """
         Property is of type: unicode

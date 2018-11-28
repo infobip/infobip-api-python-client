@@ -10,7 +10,7 @@ from infobip.api.model.omni.OmniChannel import OmniChannel
 
 class Step(DefaultObject):
     @property
-    @serializable(name="from", type=unicode)
+    @serializable(name="from", type=str)
     def from_(self):
         """
         Property is of type: unicode

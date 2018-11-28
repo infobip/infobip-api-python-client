@@ -21,7 +21,7 @@ def get_destinations():
 
 def get_sms_data():
     sms_data = SmsData()
-    sms_data.text = u"Artık Ulusal Dil Tanımlayıcısı ile Türkçe karakterli smslerinizi rahatlıkla iletebilirsiniz."
+    sms_data.text = "Artık Ulusal Dil Tanımlayıcısı ile Türkçe karakterli smslerinizi rahatlıkla iletebilirsiniz."
     language = Language()
     language.language_code = "TR"
     sms_data.language = language

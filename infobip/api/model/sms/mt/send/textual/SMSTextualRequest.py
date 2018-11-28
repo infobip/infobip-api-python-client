@@ -8,7 +8,7 @@ from infobip.util.models import DefaultObject, serializable
 
 class SMSTextualRequest(DefaultObject):
     @property
-    @serializable(name="from", type=unicode)
+    @serializable(name="from", type=str)
     def from_(self):
         """
         Property is of type: unicode
@@ -27,7 +27,7 @@ class SMSTextualRequest(DefaultObject):
         return self
 
     @property
-    @serializable(name="to", type=unicode)
+    @serializable(name="to", type=str)
     def to(self):
         """
         Property is a list of: unicode
@@ -46,7 +46,7 @@ class SMSTextualRequest(DefaultObject):
         return self
 
     @property
-    @serializable(name="text", type=unicode)
+    @serializable(name="text", type=str)
     def text(self):
         """
         Property is of type: unicode
@@ -65,7 +65,7 @@ class SMSTextualRequest(DefaultObject):
         return self
 
     @property
-    @serializable(name="campaignId", type=unicode)
+    @serializable(name="campaignId", type=str)
     def campaign_id(self):
         """
         Property is of type: unicode
@@ -84,7 +84,7 @@ class SMSTextualRequest(DefaultObject):
         return self
 
     @property
-    @serializable(name="operatorClientId", type=unicode)
+    @serializable(name="operatorClientId", type=str)
     def operator_client_id(self):
         """
         Property is of type: unicode
@@ -103,7 +103,7 @@ class SMSTextualRequest(DefaultObject):
         return self
 
     @property
-    @serializable(name="transliteration", type=unicode)
+    @serializable(name="transliteration", type=str)
     def transliteration(self):
         """
         Property is of type: unicode

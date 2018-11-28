@@ -10,7 +10,7 @@ from infobip.util.TimeUnit import TimeUnit
 
 class EmailData(DefaultObject):
     @property
-    @serializable(name="subject", type=unicode)
+    @serializable(name="subject", type=str)
     def subject(self):
         """
         Property is of type: unicode
@@ -29,7 +29,7 @@ class EmailData(DefaultObject):
         return self
 
     @property
-    @serializable(name="text", type=unicode)
+    @serializable(name="text", type=str)
     def text(self):
         """
         Property is of type: unicode
@@ -48,7 +48,7 @@ class EmailData(DefaultObject):
         return self
 
     @property
-    @serializable(name="validityPeriod", type=long)
+    @serializable(name="validityPeriod", type=int)
     def validity_period(self):
         """
         Property is of type: long

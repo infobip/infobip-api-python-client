@@ -8,7 +8,7 @@ from infobip.util.models import DefaultObject, serializable
 
 class PreviewRequest(DefaultObject):
     @property
-    @serializable(name="text", type=unicode)
+    @serializable(name="text", type=str)
     def text(self):
         """
         Property is of type: unicode
@@ -27,7 +27,7 @@ class PreviewRequest(DefaultObject):
         return self
 
     @property
-    @serializable(name="languageCode", type=unicode)
+    @serializable(name="languageCode", type=str)
     def language_code(self):
         """
         Property is of type: unicode
@@ -46,7 +46,7 @@ class PreviewRequest(DefaultObject):
         return self
 
     @property
-    @serializable(name="transliteration", type=unicode)
+    @serializable(name="transliteration", type=str)
     def transliteration(self):
         """
         Property is of type: unicode

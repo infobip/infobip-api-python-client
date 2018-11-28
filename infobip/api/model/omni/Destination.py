@@ -10,7 +10,7 @@ from infobip.api.model.omni.To import To
 
 class Destination(DefaultObject):
     @property
-    @serializable(name="messageId", type=unicode)
+    @serializable(name="messageId", type=str)
     def message_id(self):
         """
         Property is of type: unicode

@@ -29,7 +29,7 @@ class Configuration(DefaultObject):
         return self
 
     @property
-    @serializable(name="transliteration", type=unicode)
+    @serializable(name="transliteration", type=str)
     def transliteration(self):
         """
         Property is of type: unicode

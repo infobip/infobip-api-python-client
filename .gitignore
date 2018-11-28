@@ -58,6 +58,8 @@ docs/_build/
 # PyBuilder
 target/
 
+# backup files
+*.bak
 
 
 # Created by https://www.gitignore.io

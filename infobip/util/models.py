@@ -59,31 +59,31 @@ class DefaultObject(object):
         self._field_map = dict()
 
     def __str__(self):
-        s = u"%s {" % type(self).__name__
+        s = "%s {" % type(self).__name__
         first = True
         property_names = [p for p in dir(type(self)) if isinstance(getattr(type(self), p), property)]
         for k in property_names:
             if not first:
-                s += u", "
+                s += ", "
             else:
                 first = False
 
             v = getattr(self, k)
             if isinstance(v, list):
-                s += u"%s=[" % k
+                s += "%s=[" % k
                 f = True
                 for o in v:
                     if not f:
-                        s += u", "
+                        s += ", "
                     f = False
-                    s += u"%s" % o
-                s += u"]"
-            elif isinstance(v, unicode):
-                s += k + u"=\"" + v + u"\""
+                    s += "%s" % o
+                s += "]"
+            elif isinstance(v, str):
+                s += k + "=\"" + v + "\""
             else:
-                s += unicode(k) + u"=" + unicode(v)
+                s += str(k) + "=" + str(v)
 
-        s += u"}"
+        s += "}"
 
         return s
 
@@ -110,7 +110,7 @@ class DefaultObject(object):
 
         if isinstance(v, dict):
             if serializable.type == basestring:
-                return unicode(v)
+                return str(v)
             if serializable.type == dict:
                 return v
             o = serializable.type()

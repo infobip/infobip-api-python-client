@@ -8,7 +8,7 @@ from infobip.util.models import DefaultObject, serializable
 
 class Network(DefaultObject):
     @property
-    @serializable(name="networkName", type=unicode)
+    @serializable(name="networkName", type=str)
     def network_name(self):
         """
         Property is of type: unicode
@@ -27,7 +27,7 @@ class Network(DefaultObject):
         return self
 
     @property
-    @serializable(name="networkPrefix", type=unicode)
+    @serializable(name="networkPrefix", type=str)
     def network_prefix(self):
         """
         Property is of type: unicode
@@ -46,7 +46,7 @@ class Network(DefaultObject):
         return self
 
     @property
-    @serializable(name="countryName", type=unicode)
+    @serializable(name="countryName", type=str)
     def country_name(self):
         """
         Property is of type: unicode
@@ -65,7 +65,7 @@ class Network(DefaultObject):
         return self
 
     @property
-    @serializable(name="countryPrefix", type=unicode)
+    @serializable(name="countryPrefix", type=str)
     def country_prefix(self):
         """
         Property is of type: unicode

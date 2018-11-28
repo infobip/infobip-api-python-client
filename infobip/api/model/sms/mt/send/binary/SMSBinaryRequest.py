@@ -10,7 +10,7 @@ from infobip.api.model.sms.mt.send.binary.BinaryContent import BinaryContent
 
 class SMSBinaryRequest(DefaultObject):
     @property
-    @serializable(name="from", type=unicode)
+    @serializable(name="from", type=str)
     def from_(self):
         """
         Property is of type: unicode
@@ -29,7 +29,7 @@ class SMSBinaryRequest(DefaultObject):
         return self
 
     @property
-    @serializable(name="to", type=unicode)
+    @serializable(name="to", type=str)
     def to(self):
         """
         Property is a list of: unicode
@@ -67,7 +67,7 @@ class SMSBinaryRequest(DefaultObject):
         return self
 
     @property
-    @serializable(name="campaignId", type=unicode)
+    @serializable(name="campaignId", type=str)
     def campaign_id(self):
         """
         Property is of type: unicode
@@ -86,7 +86,7 @@ class SMSBinaryRequest(DefaultObject):
         return self
 
     @property
-    @serializable(name="operatorClientId", type=unicode)
+    @serializable(name="operatorClientId", type=str)
     def operator_client_id(self):
         """
         Property is of type: unicode

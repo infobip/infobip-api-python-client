@@ -29,7 +29,7 @@ class NumberContextResponse(DefaultObject):
         return self
 
     @property
-    @serializable(name="bulkId", type=unicode)
+    @serializable(name="bulkId", type=str)
     def bulk_id(self):
         """
         Property is of type: unicode

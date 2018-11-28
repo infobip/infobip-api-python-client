@@ -10,7 +10,7 @@ from infobip.api.model.sms.mt.send.SMSResponseDetails import SMSResponseDetails
 
 class SMSResponse(DefaultObject):
     @property
-    @serializable(name="bulkId", type=unicode)
+    @serializable(name="bulkId", type=str)
     def bulk_id(self):
         """
         Property is of type: unicode
@@ -29,7 +29,7 @@ class SMSResponse(DefaultObject):
         return self
 
     @property
-    @serializable(name="trackingProcessKey", type=unicode)
+    @serializable(name="trackingProcessKey", type=str)
     def tracking_process_key(self):
         """
         Property is of type: unicode

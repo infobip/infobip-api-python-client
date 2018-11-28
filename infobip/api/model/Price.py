@@ -48,7 +48,7 @@ class Price(DefaultObject):
         return self
 
     @property
-    @serializable(name="currency", type=unicode)
+    @serializable(name="currency", type=str)
     def currency(self):
         """
         Property is of type: unicode

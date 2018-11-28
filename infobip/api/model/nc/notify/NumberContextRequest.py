@@ -8,7 +8,7 @@ from infobip.util.models import DefaultObject, serializable
 
 class NumberContextRequest(DefaultObject):
     @property
-    @serializable(name="to", type=unicode)
+    @serializable(name="to", type=str)
     def to(self):
         """
         Property is a list of: unicode
@@ -27,7 +27,7 @@ class NumberContextRequest(DefaultObject):
         return self
 
     @property
-    @serializable(name="notifyUrl", type=unicode)
+    @serializable(name="notifyUrl", type=str)
     def notify_url(self):
         """
         Property is of type: unicode
@@ -46,7 +46,7 @@ class NumberContextRequest(DefaultObject):
         return self
 
     @property
-    @serializable(name="notifyContentType", type=unicode)
+    @serializable(name="notifyContentType", type=str)
     def notify_content_type(self):
         """
         Property is of type: unicode

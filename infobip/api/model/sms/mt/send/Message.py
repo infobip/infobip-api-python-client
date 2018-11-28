@@ -13,7 +13,7 @@ from infobip.api.model.sms.mt.send.DeliveryTimeWindow import DeliveryTimeWindow
 
 class Message(DefaultObject):
     @property
-    @serializable(name="from", type=unicode)
+    @serializable(name="from", type=str)
     def from_(self):
         """
         Property is of type: unicode
@@ -32,7 +32,7 @@ class Message(DefaultObject):
         return self
 
     @property
-    @serializable(name="to", type=unicode)
+    @serializable(name="to", type=str)
     def to(self):
         """
         Property is a list of: unicode
@@ -70,7 +70,7 @@ class Message(DefaultObject):
         return self
 
     @property
-    @serializable(name="text", type=unicode)
+    @serializable(name="text", type=str)
     def text(self):
         """
         Property is of type: unicode
@@ -146,7 +146,7 @@ class Message(DefaultObject):
         return self
 
     @property
-    @serializable(name="transliteration", type=unicode)
+    @serializable(name="transliteration", type=str)
     def transliteration(self):
         """
         Property is of type: unicode
@@ -203,7 +203,7 @@ class Message(DefaultObject):
         return self
 
     @property
-    @serializable(name="notifyUrl", type=unicode)
+    @serializable(name="notifyUrl", type=str)
     def notify_url(self):
         """
         Property is of type: unicode
@@ -222,7 +222,7 @@ class Message(DefaultObject):
         return self
 
     @property
-    @serializable(name="notifyContentType", type=unicode)
+    @serializable(name="notifyContentType", type=str)
     def notify_content_type(self):
         """
         Property is of type: unicode
@@ -241,7 +241,7 @@ class Message(DefaultObject):
         return self
 
     @property
-    @serializable(name="callbackData", type=unicode)
+    @serializable(name="callbackData", type=str)
     def callback_data(self):
         """
         Property is of type: unicode
@@ -260,7 +260,7 @@ class Message(DefaultObject):
         return self
 
     @property
-    @serializable(name="validityPeriod", type=long)
+    @serializable(name="validityPeriod", type=int)
     def validity_period(self):
         """
         Property is of type: long
@@ -317,7 +317,7 @@ class Message(DefaultObject):
         return self
 
     @property
-    @serializable(name="campaignId", type=unicode)
+    @serializable(name="campaignId", type=str)
     def campaign_id(self):
         """
         Property is of type: unicode
@@ -336,7 +336,7 @@ class Message(DefaultObject):
         return self
 
     @property
-    @serializable(name="operatorClientId", type=unicode)
+    @serializable(name="operatorClientId", type=str)
     def operator_client_id(self):
         """
         Property is of type: unicode

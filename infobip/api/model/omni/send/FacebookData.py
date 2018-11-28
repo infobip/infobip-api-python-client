@@ -30,7 +30,7 @@ class FacebookData(DefaultObject):
         return self
 
     @property
-    @serializable(name="url", type=unicode)
+    @serializable(name="url", type=str)
     def url(self):
         """
         Property is of type: unicode
@@ -49,7 +49,7 @@ class FacebookData(DefaultObject):
         return self
 
     @property
-    @serializable(name="text", type=unicode)
+    @serializable(name="text", type=str)
     def text(self):
         """
         Property is of type: unicode
@@ -68,7 +68,7 @@ class FacebookData(DefaultObject):
         return self
 
     @property
-    @serializable(name="validityPeriod", type=long)
+    @serializable(name="validityPeriod", type=int)
     def validity_period(self):
         """
         Property is of type: long

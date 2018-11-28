@@ -8,7 +8,7 @@ from infobip.util.models import DefaultObject, serializable
 
 class NumberContextRequest(DefaultObject):
     @property
-    @serializable(name="to", type=unicode)
+    @serializable(name="to", type=str)
     def to(self):
         """
         Property is a list of: unicode

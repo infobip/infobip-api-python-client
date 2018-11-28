@@ -10,7 +10,7 @@ from infobip.api.model.omni.campaign.Gender import Gender
 
 class Destination(DefaultObject):
     @property
-    @serializable(name="firstName", type=unicode)
+    @serializable(name="firstName", type=str)
     def first_name(self):
         """
         Property is of type: unicode
@@ -29,7 +29,7 @@ class Destination(DefaultObject):
         return self
 
     @property
-    @serializable(name="lastName", type=unicode)
+    @serializable(name="lastName", type=str)
     def last_name(self):
         """
         Property is of type: unicode
@@ -48,7 +48,7 @@ class Destination(DefaultObject):
         return self
 
     @property
-    @serializable(name="middleName", type=unicode)
+    @serializable(name="middleName", type=str)
     def middle_name(self):
         """
         Property is of type: unicode
@@ -67,7 +67,7 @@ class Destination(DefaultObject):
         return self
 
     @property
-    @serializable(name="gsm", type=unicode)
+    @serializable(name="gsm", type=str)
     def gsm(self):
         """
         Property is of type: unicode
@@ -86,7 +86,7 @@ class Destination(DefaultObject):
         return self
 
     @property
-    @serializable(name="landline", type=unicode)
+    @serializable(name="landline", type=str)
     def landline(self):
         """
         Property is of type: unicode
@@ -105,7 +105,7 @@ class Destination(DefaultObject):
         return self
 
     @property
-    @serializable(name="email", type=unicode)
+    @serializable(name="email", type=str)
     def email(self):
         """
         Property is of type: unicode
@@ -124,7 +124,7 @@ class Destination(DefaultObject):
         return self
 
     @property
-    @serializable(name="address", type=unicode)
+    @serializable(name="address", type=str)
     def address(self):
         """
         Property is of type: unicode
@@ -143,7 +143,7 @@ class Destination(DefaultObject):
         return self
 
     @property
-    @serializable(name="city", type=unicode)
+    @serializable(name="city", type=str)
     def city(self):
         """
         Property is of type: unicode
@@ -162,7 +162,7 @@ class Destination(DefaultObject):
         return self
 
     @property
-    @serializable(name="country", type=unicode)
+    @serializable(name="country", type=str)
     def country(self):
         """
         Property is of type: unicode
@@ -200,7 +200,7 @@ class Destination(DefaultObject):
         return self
 
     @property
-    @serializable(name="birthday", type=unicode)
+    @serializable(name="birthday", type=str)
     def birthday(self):
         """
         Property is of type: unicode

@@ -8,7 +8,7 @@ from infobip.util.models import DefaultObject, serializable
 
 class Tracking(DefaultObject):
     @property
-    @serializable(name="track", type=unicode)
+    @serializable(name="track", type=str)
     def track(self):
         """
         Property is of type: unicode
@@ -27,7 +27,7 @@ class Tracking(DefaultObject):
         return self
 
     @property
-    @serializable(name="processKey", type=unicode)
+    @serializable(name="processKey", type=str)
     def process_key(self):
         """
         Property is of type: unicode
@@ -46,7 +46,7 @@ class Tracking(DefaultObject):
         return self
 
     @property
-    @serializable(name="type", type=unicode)
+    @serializable(name="type", type=str)
     def type(self):
         """
         Property is of type: unicode
@@ -65,7 +65,7 @@ class Tracking(DefaultObject):
         return self
 
     @property
-    @serializable(name="baseUrl", type=unicode)
+    @serializable(name="baseUrl", type=str)
     def base_url(self):
         """
         Property is of type: unicode

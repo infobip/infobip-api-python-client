@@ -12,7 +12,7 @@ from infobip.api.model.Status import Status
 
 class NumberContextResponseDetails(DefaultObject):
     @property
-    @serializable(name="to", type=unicode)
+    @serializable(name="to", type=str)
     def to(self):
         """
         Property is of type: unicode
@@ -31,7 +31,7 @@ class NumberContextResponseDetails(DefaultObject):
         return self
 
     @property
-    @serializable(name="mccMnc", type=unicode)
+    @serializable(name="mccMnc", type=str)
     def mcc_mnc(self):
         """
         Property is of type: unicode
@@ -50,7 +50,7 @@ class NumberContextResponseDetails(DefaultObject):
         return self
 
     @property
-    @serializable(name="imsi", type=unicode)
+    @serializable(name="imsi", type=str)
     def imsi(self):
         """
         Property is of type: unicode
@@ -164,7 +164,7 @@ class NumberContextResponseDetails(DefaultObject):
         return self
 
     @property
-    @serializable(name="servingMSC", type=unicode)
+    @serializable(name="servingMSC", type=str)
     def serving_m_s_c(self):
         """
         Property is of type: unicode

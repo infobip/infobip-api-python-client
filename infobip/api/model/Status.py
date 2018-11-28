@@ -27,7 +27,7 @@ class Status(DefaultObject):
         return self
 
     @property
-    @serializable(name="groupName", type=unicode)
+    @serializable(name="groupName", type=str)
     def group_name(self):
         """
         Property is of type: unicode
@@ -65,7 +65,7 @@ class Status(DefaultObject):
         return self
 
     @property
-    @serializable(name="name", type=unicode)
+    @serializable(name="name", type=str)
     def name(self):
         """
         Property is of type: unicode
@@ -84,7 +84,7 @@ class Status(DefaultObject):
         return self
 
     @property
-    @serializable(name="description", type=unicode)
+    @serializable(name="description", type=str)
     def description(self):
         """
         Property is of type: unicode
@@ -103,7 +103,7 @@ class Status(DefaultObject):
         return self
 
     @property
-    @serializable(name="action", type=unicode)
+    @serializable(name="action", type=str)
     def action(self):
         """
         Property is of type: unicode

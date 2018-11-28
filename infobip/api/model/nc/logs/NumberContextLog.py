@@ -12,7 +12,7 @@ from infobip.api.model.Price import Price
 
 class NumberContextLog(DefaultObject):
     @property
-    @serializable(name="bulkId", type=unicode)
+    @serializable(name="bulkId", type=str)
     def bulk_id(self):
         """
         Property is of type: unicode
@@ -31,7 +31,7 @@ class NumberContextLog(DefaultObject):
         return self
 
     @property
-    @serializable(name="messageId", type=unicode)
+    @serializable(name="messageId", type=str)
     def message_id(self):
         """
         Property is of type: unicode
@@ -50,7 +50,7 @@ class NumberContextLog(DefaultObject):
         return self
 
     @property
-    @serializable(name="to", type=unicode)
+    @serializable(name="to", type=str)
     def to(self):
         """
         Property is of type: unicode
@@ -107,7 +107,7 @@ class NumberContextLog(DefaultObject):
         return self
 
     @property
-    @serializable(name="mccMnc", type=unicode)
+    @serializable(name="mccMnc", type=str)
     def mcc_mnc(self):
         """
         Property is of type: unicode

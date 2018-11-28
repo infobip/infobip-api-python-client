@@ -10,7 +10,7 @@ from infobip.api.model.Price import Price
 
 class MOReport(DefaultObject):
     @property
-    @serializable(name="messageId", type=unicode)
+    @serializable(name="messageId", type=str)
     def message_id(self):
         """
         Property is of type: unicode
@@ -29,7 +29,7 @@ class MOReport(DefaultObject):
         return self
 
     @property
-    @serializable(name="from", type=unicode)
+    @serializable(name="from", type=str)
     def from_(self):
         """
         Property is of type: unicode
@@ -48,7 +48,7 @@ class MOReport(DefaultObject):
         return self
 
     @property
-    @serializable(name="to", type=unicode)
+    @serializable(name="to", type=str)
     def to(self):
         """
         Property is of type: unicode
@@ -67,7 +67,7 @@ class MOReport(DefaultObject):
         return self
 
     @property
-    @serializable(name="text", type=unicode)
+    @serializable(name="text", type=str)
     def text(self):
         """
         Property is of type: unicode
@@ -86,7 +86,7 @@ class MOReport(DefaultObject):
         return self
 
     @property
-    @serializable(name="cleanText", type=unicode)
+    @serializable(name="cleanText", type=str)
     def clean_text(self):
         """
         Property is of type: unicode
@@ -105,7 +105,7 @@ class MOReport(DefaultObject):
         return self
 
     @property
-    @serializable(name="keyword", type=unicode)
+    @serializable(name="keyword", type=str)
     def keyword(self):
         """
         Property is of type: unicode
@@ -181,7 +181,7 @@ class MOReport(DefaultObject):
         return self
 
     @property
-    @serializable(name="callbackData", type=unicode)
+    @serializable(name="callbackData", type=str)
     def callback_data(self):
         """
         Property is of type: unicode

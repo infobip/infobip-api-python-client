@@ -8,7 +8,7 @@ from infobip.util.models import DefaultObject, serializable
 
 class EndTagResponse(DefaultObject):
     @property
-    @serializable(name="processKey", type=unicode)
+    @serializable(name="processKey", type=str)
     def process_key(self):
         """
         Property is of type: unicode

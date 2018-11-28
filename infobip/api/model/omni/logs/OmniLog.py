@@ -12,7 +12,7 @@ from infobip.api.model.omni.OmniChannel import OmniChannel
 
 class OmniLog(DefaultObject):
     @property
-    @serializable(name="bulkId", type=unicode)
+    @serializable(name="bulkId", type=str)
     def bulk_id(self):
         """
         Property is of type: unicode
@@ -31,7 +31,7 @@ class OmniLog(DefaultObject):
         return self
 
     @property
-    @serializable(name="messageId", type=unicode)
+    @serializable(name="messageId", type=str)
     def message_id(self):
         """
         Property is of type: unicode
@@ -50,7 +50,7 @@ class OmniLog(DefaultObject):
         return self
 
     @property
-    @serializable(name="to", type=unicode)
+    @serializable(name="to", type=str)
     def to(self):
         """
         Property is of type: unicode
@@ -69,7 +69,7 @@ class OmniLog(DefaultObject):
         return self
 
     @property
-    @serializable(name="from", type=unicode)
+    @serializable(name="from", type=str)
     def from_(self):
         """
         Property is of type: unicode
@@ -88,7 +88,7 @@ class OmniLog(DefaultObject):
         return self
 
     @property
-    @serializable(name="text", type=unicode)
+    @serializable(name="text", type=str)
     def text(self):
         """
         Property is of type: unicode
@@ -164,7 +164,7 @@ class OmniLog(DefaultObject):
         return self
 
     @property
-    @serializable(name="mccMnc", type=unicode)
+    @serializable(name="mccMnc", type=str)
     def mcc_mnc(self):
         """
         Property is of type: unicode
