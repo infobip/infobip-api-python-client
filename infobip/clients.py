@@ -2,7 +2,7 @@
 """This is a generated class and is not intended for modification!
 """
 
-from util.http import HttpClient
+from .util.http import HttpClient
 
 
 class get_received_sms_logs(object):

@@ -1,6 +1,6 @@
 import base64
 
-from exception import ApiException, ApiRequestError, ApiRequestErrorDetails
+from .exception import ApiException, ApiRequestError, ApiRequestErrorDetails
 
 __author__ = 'mstipanov'
 

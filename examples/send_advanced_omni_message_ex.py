@@ -7,7 +7,7 @@ from infobip.api.model.omni.send.OmniAdvancedRequest import OmniAdvancedRequest
 from infobip.api.model.omni.send.SmsData import SmsData
 from infobip.api.model.omni.send.ViberData import ViberData
 from infobip.clients import send_advanced_omni_message
-from __init__ import configuration
+from .__init__ import configuration
 
 
 def get_destinations():

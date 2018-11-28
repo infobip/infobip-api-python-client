@@ -5,7 +5,7 @@ from infobip.clients import send_multiple_textual_sms_advanced
 from infobip.api.model.sms.mt.send.textual.SMSAdvancedTextualRequest import SMSAdvancedTextualRequest
 from infobip.api.model.sms.mt.send.Message import Message
 from infobip.api.model.Destination import Destination
-from __init__ import configuration
+from .__init__ import configuration
 
 send_sms_client = send_multiple_textual_sms_advanced(configuration)
 

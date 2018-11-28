@@ -1,6 +1,6 @@
 from infobip.clients import number_context_notify
 from infobip.api.model.nc.notify.NumberContextRequest import NumberContextRequest
-from __init__ import configuration
+from .__init__ import configuration
 
 number_context_client = number_context_notify(configuration)
 

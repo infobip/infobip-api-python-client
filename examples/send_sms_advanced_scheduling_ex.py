@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from __init__ import configuration
+from .__init__ import configuration
 from infobip.api.model.Destination import Destination
 from infobip.api.model.sms.mt.bulks.BulkRequest import BulkRequest
 from infobip.api.model.sms.mt.bulks.status.UpdateStatusRequest import UpdateStatusRequest
