@@ -57,7 +57,8 @@ class HttpClient:
 
         headers = {}
         if username:
-            auth = base64.encodestring('%s:%s' % (username, password)).replace('\n', '')
+            auth_bytes = ('%s:%s' % (username, password)).encode()
+            auth = base64.encodestring(auth_bytes).replace(b'\n', b'').decode()
             headers["Authorization"] = "Basic %s" % auth
 
         if api_key:
@@ -79,7 +80,7 @@ class HttpClient:
         response = connection.getresponse()
 
         statusCode = response.status
-        response_content = response.read()
+        response_content = response.read().decode('utf8')
         if (statusCode < 200 or statusCode >= 300):
             contentType = response.getheader("Content-Type")
             if contentType and contentType.startswith("application/json"):
