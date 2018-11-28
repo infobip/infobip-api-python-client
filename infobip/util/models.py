@@ -109,7 +109,7 @@ class DefaultObject(object):
             return res
 
         if isinstance(v, dict):
-            if serializable.type == basestring:
+            if serializable.type == str:
                 return str(v)
             if serializable.type == dict:
                 return v

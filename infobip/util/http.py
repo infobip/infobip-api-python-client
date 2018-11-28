@@ -88,7 +88,7 @@ class HttpClient:
             raise ApiException(ApiRequestError(None, ApiRequestErrorDetails(response.reason + " - " + response_content)))
 
         contentType = response.getheader("Content-Type")
-        if contentType and contentType.startswith("application/json") and not basestring == valueType:
+        if contentType and contentType.startswith("application/json") and not str == valueType:
             return valueType.from_JSON(response_content)
 
         return response_content
