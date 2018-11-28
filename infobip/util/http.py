@@ -4,9 +4,9 @@ from .exception import ApiException, ApiRequestError, ApiRequestErrorDetails
 
 __author__ = 'mstipanov'
 
-import httplib
+import http.client
 import urllib.request, urllib.parse, urllib.error
-from urlparse import urlparse
+from urllib.parse import urlparse
 import json
 
 class HttpClient:
@@ -33,7 +33,7 @@ class HttpClient:
 
     def getValue(self, httpMethod, configuration, methodPath, pathParams, context, bodyObject, valueType):
         if (pathParams):
-            for key, value in pathParams.items():
+            for key, value in list(pathParams.items()):
                 methodPath = methodPath.replace("{" + key + "}", str(value))
 
         url = configuration.base_url + methodPath
@@ -51,9 +51,9 @@ class HttpClient:
 
         u = urlparse(url)
         if (u.scheme == "https"):
-            connection = httplib.HTTPSConnection(u.netloc)
+            connection = http.client.HTTPSConnection(u.netloc)
         else:
-            connection = httplib.HTTPConnection(u.netloc)
+            connection = http.client.HTTPConnection(u.netloc)
 
         headers = {}
         if username:
