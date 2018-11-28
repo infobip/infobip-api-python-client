@@ -21,7 +21,7 @@ class HttpClient:
         if not hasattr(vals, 'items'):
             return vals
 
-        for key, val in vals.items():
+        for key, val in list(vals.items()):
             t = type(getattr(obj, key, None))
             value = self.deserialize_map(val, t)
             setattr(obj, key, value)
@@ -33,7 +33,7 @@ class HttpClient:
 
     def getValue(self, httpMethod, configuration, methodPath, pathParams, context, bodyObject, valueType):
         if (pathParams):
-            for key, value in pathParams.iteritems():
+            for key, value in pathParams.items():
                 methodPath = methodPath.replace("{" + key + "}", str(value))
 
         url = configuration.base_url + methodPath

@@ -15,12 +15,12 @@ class BulkStatus(Enum):
     FAILED = "FAILED"
 
     def __init__(self, value):
-        if value not in BulkStatus.values():
+        if value not in list(BulkStatus.values()):
             raise NotImplementedError('Constructing a BulkStatus is not supported!')
 
     @staticmethod
     def get_by_name(name):
-        return BulkStatus.values().intersection({name}).pop()
+        return list(BulkStatus.values()).intersection({name}).pop()
 
     @staticmethod
     def values():

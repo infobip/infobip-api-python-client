@@ -18,12 +18,12 @@ class OmniChannel(Enum):
     VKONTAKTE = "VKONTAKTE"
 
     def __init__(self, value):
-        if value not in OmniChannel.values():
+        if value not in list(OmniChannel.values()):
             raise NotImplementedError('Constructing a OmniChannel is not supported!')
 
     @staticmethod
     def get_by_name(name):
-        return OmniChannel.values().intersection({name}).pop()
+        return list(OmniChannel.values()).intersection({name}).pop()
 
     @staticmethod
     def values():

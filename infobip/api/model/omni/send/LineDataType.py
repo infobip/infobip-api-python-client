@@ -14,12 +14,12 @@ class LineDataType(Enum):
     STICKER = "STICKER"
 
     def __init__(self, value):
-        if value not in LineDataType.values():
+        if value not in list(LineDataType.values()):
             raise NotImplementedError('Constructing a LineDataType is not supported!')
 
     @staticmethod
     def get_by_name(name):
-        return LineDataType.values().intersection({name}).pop()
+        return list(LineDataType.values()).intersection({name}).pop()
 
     @staticmethod
     def values():

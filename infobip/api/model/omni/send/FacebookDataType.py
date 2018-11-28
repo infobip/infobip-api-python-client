@@ -14,12 +14,12 @@ class FacebookDataType(Enum):
     FILE = "FILE"
 
     def __init__(self, value):
-        if value not in FacebookDataType.values():
+        if value not in list(FacebookDataType.values()):
             raise NotImplementedError('Constructing a FacebookDataType is not supported!')
 
     @staticmethod
     def get_by_name(name):
-        return FacebookDataType.values().intersection({name}).pop()
+        return list(FacebookDataType.values()).intersection({name}).pop()
 
     @staticmethod
     def values():

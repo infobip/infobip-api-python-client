@@ -16,12 +16,12 @@ class DeliveryDay(Enum):
     SUNDAY = "SUNDAY"
 
     def __init__(self, value):
-        if value not in DeliveryDay.values():
+        if value not in list(DeliveryDay.values()):
             raise NotImplementedError('Constructing a DeliveryDay is not supported!')
 
     @staticmethod
     def get_by_name(name):
-        return DeliveryDay.values().intersection({name}).pop()
+        return list(DeliveryDay.values()).intersection({name}).pop()
 
     @staticmethod
     def values():

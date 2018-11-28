@@ -11,12 +11,12 @@ class TimeUnit(Enum):
     DAYS = "DAYS"
 
     def __init__(self, value):
-        if value not in TimeUnit.values():
+        if value not in list(TimeUnit.values()):
             raise NotImplementedError('Constructing a FacebookDataType is not supported!')
 
     @staticmethod
     def get_by_name(name):
-        return TimeUnit.values().intersection({name}).pop()
+        return list(TimeUnit.values()).intersection({name}).pop()
 
     @staticmethod
     def values():

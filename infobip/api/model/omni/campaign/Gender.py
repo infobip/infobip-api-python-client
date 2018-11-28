@@ -11,12 +11,12 @@ class Gender(Enum):
     MALE = "MALE"
 
     def __init__(self, value):
-        if value not in Gender.values():
+        if value not in list(Gender.values()):
             raise NotImplementedError('Constructing a Gender is not supported!')
 
     @staticmethod
     def get_by_name(name):
-        return Gender.values().intersection({name}).pop()
+        return list(Gender.values()).intersection({name}).pop()
 
     @staticmethod
     def values():
