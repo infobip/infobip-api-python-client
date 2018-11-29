@@ -60,5 +60,5 @@ response_body = """{
 }"""
 
 reports = SMSReportResponse.from_JSON(response_body)
-print((reports.results[0].status.name))
-print((reports.results[0]))
+print(reports.results[0].status.name)
+print(reports.results[0])
