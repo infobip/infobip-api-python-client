@@ -5,6 +5,8 @@
 
 from datetime import datetime
 from infobip.util.models import DefaultObject, serializable
+from infobip.api.model.sms.mt.send.RegionalOptions import RegionalOptions
+
 
 class SMSTextualRequest(DefaultObject):
     @property
@@ -119,4 +121,22 @@ class SMSTextualRequest(DefaultObject):
 
     def set_transliteration(self, transliteration):
         self.transliteration = transliteration
+        return self
+    @property
+    @serializable(name="regional", type=RegionalOptions)
+    def regional(self):
+        """
+        Property is of type: RegionalOptions
+        """
+        return self.get_field_value("regional")
+
+    @regional.setter
+    def regional(self, regional):
+        """
+        Property is of type: RegionalOptions
+        """
+        self.set_field_value("regional", regional)
+
+    def set_regional(self, regional):
+        self.regional = regional
         return self
