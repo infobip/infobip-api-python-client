@@ -5,6 +5,7 @@
 
 from datetime import datetime
 from infobip.util.models import DefaultObject, serializable
+from infobip.api.model.sms.mt.send.RegionalOptions import RegionalOptions
 from infobip.api.model.sms.mt.send.binary.BinaryContent import BinaryContent
 
 
@@ -102,4 +103,23 @@ class SMSBinaryRequest(DefaultObject):
 
     def set_operator_client_id(self, operator_client_id):
         self.operator_client_id = operator_client_id
+        return self
+
+    @property
+    @serializable(name="regional", type=RegionalOptions)
+    def regional(self):
+        """
+        Property is of type: RegionalOptions
+        """
+        return self.get_field_value("regional")
+
+    @regional.setter
+    def regional(self, regional):
+        """
+        Property is of type: RegionalOptions
+        """
+        self.set_field_value("regional", regional)
+
+    def set_regional(self, regional):
+        self.regional = regional
         return self
