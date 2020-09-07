@@ -34,6 +34,7 @@ mod_distutilscore.setup(
     version='2.3.0',
     description='Infobip SMS API client library in Python',
     long_description=long_description,
+    long_description_content_type="text/markdown",
     license='Apache License, Version 2.0',
     author='Infobip Ltd. - Plugins Team (SMS API client)',
     author_email='plugins@infobip.com',
