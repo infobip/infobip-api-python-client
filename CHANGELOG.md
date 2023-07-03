@@ -5,6 +5,11 @@ All notable changes to the library will be documented in this file.
 The format of the file is based on [Keep a Changelog](http://keepachangelog.com/)
 and this library adheres to [Semantic Versioning](http://semver.org/) as mentioned in [README.md][readme] file.
 
+## [ [3.0.2](https://github.com/infobip/infobip-api-python-client/releases/tag/3.0.2) ] - 2023-07-03
+
+### Fixed
+- ApiAttributeError when deserializing response that contains unknown fields
+
 ## [ [3.0.0](https://github.com/infobip/infobip-api-python-client/releases/tag/3.0.0) ] - 2021-07-14
 
 🎉 **NEW Major Version of `infobip_api_client`.**
