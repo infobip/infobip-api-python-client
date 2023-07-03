@@ -55,7 +55,7 @@ setup(
     ],
     python_requires=">=3.6",
     install_requires=REQUIRES,
-    packages=find_packages(),
+    packages=find_packages(exclude=["test", "tests"]),
     include_package_data=True,
     license="MIT",
     long_description=long_description,
