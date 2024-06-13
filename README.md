@@ -1,5 +1,7 @@
 # Infobip API Python Client
 
+<img src="https://cdn-web.infobip.com/uploads/2023/01/Infobip-logo.svg" height="93px" alt="Infobip" />
+
 [![Pypi index](https://badgen.net/pypi/v/infobip-api-python-client)](https://pypi.org/project/infobip-api-python-client/)
 [![MIT License](https://badgen.net/github/license/infobip/infobip-api-python-client)](https://opensource.org/licenses/MIT)
 
@@ -8,7 +10,6 @@ To use the package you'll need an Infobip account. If you don't already have one
 
 We use [OpenAPI Generator](https://openapi-generator.tech/) to generate the package code from the OpenAPI specification.
 
-<img src="https://udesigncss.com/wp-content/uploads/2020/01/Infobip-logo-transparent.png" height="124px" alt="Infobip" />
 
 #### Table of contents:
 * [API documentation](#documentation)
@@ -19,14 +20,22 @@ We use [OpenAPI Generator](https://openapi-generator.tech/) to generate the pack
 
 ## API documentation
 
-Infobip API Documentation can be found [here][apidocs].
+Detailed documentation about Infobip API can be found here. The current version of this library includes this subset of Infobip products:
+
+* [SMS](https://www.infobip.com/docs/api/channels/sms)
+  * [SMS Messaging](https://www.infobip.com/docs/api/channels/sms/sms-messaging)
+  * [2FA](https://www.infobip.com/docs/api/channels/sms/2fa)
+* [Voice](https://www.infobip.com/docs/api/channels/voice)
+  * [Calls](https://www.infobip.com/docs/api/channels/voice/calls)
+  * [Click To Call](https://www.infobip.com/docs/api/channels/voice/click-to-call)
+  * [Call Routing](https://www.infobip.com/docs/api/channels/voice/routing)
 
 ## General Info
 For `infobip-api-python-client` versioning we use [Semantic Versioning][semver] scheme.
 
 Published under [MIT License][license].
 
-Python 3.6 is minimum supported version by this library.
+Python 3.7 is minimum supported version by this library.
 
 ## Installation
 Pull the library by using the following command:
@@ -40,11 +49,11 @@ Before initializing the client first thing you need to do is to set configuratio
 
 #### Configuration
 
-Let's first set the configuration. For that you will need your specific URL. 
+Let's first set the configuration. For that you will need your specific URL.
 To see your base URL, log in to the [Infobip API Resource][apidocs] hub with your Infobip credentials.
 ```python
     from infobip_api_client.api_client import ApiClient, Configuration
-    
+
     client_config = Configuration(
         host="<YOUR_BASE_URL>",
         api_key={"APIKeyHeader": "<YOUR_API_KEY>"},
@@ -65,6 +74,9 @@ Now you are ready use the API.
 Here's a basic example of sending the SMS message.
 
 ```python
+    from infobip_api_client.models import SmsAdvancedTextualRequest, SmsTextualMessage, SmsDestination, SmsResponse
+    from infobip_api_client.api.sms_api import SmsApi
+
     sms_request = SmsAdvancedTextualRequest(
         messages=[
             SmsTextualMessage(
@@ -73,21 +85,22 @@ Here's a basic example of sending the SMS message.
                         to="41793026727",
                     ),
                 ],
-                _from="InfoSMS",
+                _from="SMSInfo",
                 text="This is a dummy SMS message sent using Python library",
             )
-        ])
-        
-    api_instance = SendSmsApi(api_client)
+        ]
+    )
+
+    api_instance = SmsApi(api_client)
 
     api_response: SmsResponse = api_instance.send_sms_message(sms_advanced_textual_request=sms_request)
-    pprint(api_response)
+    print(api_response)
 ```
 
 To make your code more robust send the message in try block and handle the `ApiException` in catch block.
 ```python
     from infobip_api_client.exceptions import ApiException
-    
+
     try:
         api_response: SmsResponse = api_instance.send_sms_message(sms_advanced_textual_request=sms_request)
     except ApiException as ex:
@@ -97,7 +110,7 @@ To make your code more robust send the message in try block and handle the `ApiE
 In case of failure you can inspect the `ApiException` for more information.
 ```python
     try:
-        api_response: SmsResponse = api_instance.send_sms_message(sms_advanced_binary_request=sms_advanced_binary_request)
+        api_response: SmsResponse = api_instance.send_sms_message(sms_advanced_textual_request=sms_request)
     except ApiException as ex:
         print("Error occurred while trying to send SMS message.")
         print("Error status: %s\n" % ex.status)
@@ -120,12 +133,14 @@ e.g. `https://{yourDomain}/delivery-reports`
 Example of webhook implementation using Flask:
 
 ```python
+    from infobip_api_client.models import SmsDeliveryResult
+
     @app.route("/api/delivery-reports", methods=["POST"])
     def delivery_report():
-        delivery_result = SmsDeliveryResult(
+        delivery_results = SmsDeliveryResult(
             results=request.json["results"]
         )
-        
+
         for result in delivery_results.results:
             print("message {0} sent at {1}".format(result.message_id, result.sent_at))
 ```
@@ -144,10 +159,12 @@ Each request will return a batch of delivery reports. Please be aware that these
 Infobip API supports Unicode characters and automatically detects encoding. Unicode and non-standard GSM characters use additional space, avoid unpleasant surprises and check how different message configurations will affect your message text, number of characters and message parts.
 
 ```python
+    from infobip_api_client.models import SmsPreviewRequest
+
     sms_preview_request = SmsPreviewRequest(
         text="Let's see how many characters will remain unused in this message."
     )
-    
+
     api_response = api_instance.preview_sms_message(sms_preview_request=sms_preview_request)
 ```
 
@@ -158,6 +175,8 @@ e.g. `https://{yourDomain}/incoming-sms`.
 Example of webhook implementation using Flask:
 
 ```python
+    from infobip_api_client.models import SmsInboundMessageResult
+
     @app.route("/api/incoming-sms", methods=["POST"])
     def incoming_sms():
         message_results = SmsInboundMessageResult(
@@ -165,10 +184,10 @@ Example of webhook implementation using Flask:
             pending_message_count=request.json["pending_message_count"],
             results=request.json["results"]
         )
-        
+
         for result in message_results.results:
             print("message text: {0}".format(result.clean_text))
-        
+
 ```
 #### Two-Factor Authentication (2FA)
 For 2FA quick start guide please check [these examples](two-factor-authentication.md).
