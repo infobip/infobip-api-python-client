@@ -1,4 +1,5 @@
-name: Example workflow for Python using Snyk
+name: Snyk vulnerability scan
+
 on: push
 jobs:
   security:
