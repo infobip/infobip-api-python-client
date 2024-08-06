@@ -9,6 +9,9 @@ and this library adheres to [Semantic Versioning](http://semver.org/) as mention
 
 ⚠ IMPORTANT NOTE: From this point onward Python 3.7 is no longer supported. The minimum supported version is Python 3.8 due to dependency updates.
 
+### Added
+- `calls.md` which contains examples and explanations for the Calls API
+
 ### Security
 * Bumped werkzeug dependency from 2.1.2 to 3.0.3
 * Bumped pytest-httpserver dependency from 1.0.4 to 1.0.8
