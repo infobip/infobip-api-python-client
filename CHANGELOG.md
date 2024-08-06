@@ -9,6 +9,10 @@ and this library adheres to [Semantic Versioning](http://semver.org/) as mention
 
 ⚠ IMPORTANT NOTE: From this point onward Python 3.7 is no longer supported. The minimum supported version is Python 3.8 due to dependency updates.
 
+### Added
+* `snyk.yml` workflow, which serves the purpose of identifying and addressing dependency vulnerabilities in the project.
+* `sonar.yml` workflow to analyze the source code, enhancing code quality and maintainability.
+
 ### Security
 * Bumped werkzeug dependency from 2.1.2 to 3.0.3
 * Bumped pytest-httpserver dependency from 1.0.4 to 1.0.8
