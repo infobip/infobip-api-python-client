@@ -18,7 +18,7 @@ Before starting a call or dialogue you need to set up the application.
 #### Start call
 After setting up the client you can start a call.
 ```python
-    from infobip_api_client.models import CallRequest, CallsPhoneEndpoint, CallEndpointType
+    from infobip_api_client.models import CallRequest, CallsPhoneEndpoint, CallEndpointType, CallState
 
     request = CallRequest(
         endpoint=CallsPhoneEndpoint(phone_number="<TO_PHONE_NUMBER>", type=CallEndpointType.PHONE),
@@ -34,7 +34,7 @@ After setting up the client you can start a call.
  
     print("Waiting for CallState to be established...")
     while CallState.ESTABLISHED != callState:
-        callState = api_response.get_call(api_response.id).state
+        callState = api_instance.get_call(api_response.id).state
 ```
 
 #### Executing call with text
@@ -77,7 +77,7 @@ After starting a call, you can start a dialogue.
 #### Starting a call for conference
 Before starting a conference you need to start a call.
 ```python
-    from infobip_api_client.models import CallRequest, CallEndpointType
+    from infobip_api_client.models import CallRequest, CallEndpointType, CallState
 
     request = CallRequest(
         endpoint=CallsWebRtcEndpoint(identity="<YOUR_IDENTITY>", type=CallEndpointType.WEBRTC),
@@ -93,7 +93,7 @@ Before starting a conference you need to start a call.
  
     print("Waiting for CallState to be established...")
     while CallState.ESTABLISHED != callState:
-        callState = api_response.get_call(api_response.id).state
+        callState = api_instance.get_call(api_response.id).state
 ```
 
 #### Start conference
