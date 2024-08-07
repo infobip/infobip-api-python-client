@@ -77,11 +77,11 @@ After starting a call, you can start a dialogue.
 #### Starting a call for conference
 Before starting a conference you need to start a call.
 ```python
-    from infobip_api_client.models import CallRequest, CallEndpointType, CallState
+    from infobip_api_client.models import CallRequest, CallsWebRtcEndpoint, CallEndpointType, CallState
 
     request = CallRequest(
         endpoint=CallsWebRtcEndpoint(identity="<YOUR_IDENTITY>", type=CallEndpointType.WEBRTC),
-        var_from=<FROM>,
+        var_from="<FROM>",
         calls_configuration_id="ORION",
     )
     
