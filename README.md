@@ -3,6 +3,7 @@
 <img src="https://cdn-web.infobip.com/uploads/2023/01/Infobip-logo.svg" height="93px" alt="Infobip" />
 
 [![Pypi index](https://badgen.net/pypi/v/infobip-api-python-client)](https://pypi.org/project/infobip-api-python-client/)
+[![Snyk](https://snyk.io/test/github/infobip/infobip-api-python-client/badge.svg)](https://snyk.io/test/github/infobip/infobip-api-python-client)
 [![MIT License](https://badgen.net/github/license/infobip/infobip-api-python-client)](https://opensource.org/licenses/MIT)
 
 This is a Python package for Infobip API and you can use it as a dependency to add [Infobip APIs][apidocs] to your application.
