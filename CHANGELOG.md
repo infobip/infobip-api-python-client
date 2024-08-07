@@ -10,12 +10,13 @@ and this library adheres to [Semantic Versioning](http://semver.org/) as mention
 ⚠ IMPORTANT NOTE: From this point onward Python 3.7 is no longer supported. The minimum supported version is Python 3.8 due to dependency updates.
 
 ### Added
-* `snyk.yml` workflow, which serves the purpose of identifying and addressing dependency vulnerabilities in the project.
-* `sonar.yml` workflow to analyze the source code, enhancing code quality and maintainability.
+- `calls.md` which contains examples and explanations for the Calls API
+- `snyk.yml` workflow, which serves the purpose of identifying and addressing dependency vulnerabilities in the project.
+- `sonar.yml` workflow to analyze the source code, enhancing code quality and maintainability.
 
 ### Security
-* Bumped werkzeug dependency from 2.1.2 to 3.0.3
-* Bumped pytest-httpserver dependency from 1.0.4 to 1.0.8
+- Bumped werkzeug dependency from 2.1.2 to 3.0.3
+- Bumped pytest-httpserver dependency from 1.0.4 to 1.0.8
 
 ## [ [4.0.0](https://github.com/infobip/infobip-api-python-client/releases/tag/4.0.0) ] - 2024-06-13
 🎉 **NEW Major Version of `infobip_api_client`.**

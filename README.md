@@ -192,6 +192,9 @@ Example of webhook implementation using Flask:
 #### Two-Factor Authentication (2FA)
 For 2FA quick start guide please check [these examples](two-factor-authentication.md).
 
+#### Calls
+For Calls quick start guide please check [these_examples](calls.md)
+
 ## Ask for help
 
 Feel free to open issues on the repository for any issue or feature request. As per pull requests, for details check the `CONTRIBUTING` [file][contributing] related to it - in short, we will not merge any pull requests, this code is auto-generated.
