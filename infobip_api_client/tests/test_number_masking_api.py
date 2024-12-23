@@ -263,7 +263,7 @@ def test_should_update_number_masking_configuration(
 
 
 def test_should_upload_audio_file(httpserver: HTTPServer, get_api_client):
-    given_url = "http://www.winhistory.de/more/winstart/mp3/winxp.mp3"
+    given_url = "https://example.com"
     given_file_id = "cb702ae4-f356-4efd-b2dd-7a667b570af5"
 
     given_request = {"url": given_url}
