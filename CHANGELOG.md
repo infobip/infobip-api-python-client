@@ -7,7 +7,7 @@ and this library adheres to [Semantic Versioning](http://semver.org/) as mention
 
 ## [ [5.0.0](https://github.com/infobip/infobip-api-python-client/releases/tag/5.0.0) ] - 2024-12-23
 
-🎉 **NEW Major Version of `infobip-api-java-client`.**
+🎉 **NEW Major Version of `infobip-api-python-client`.**
 
 ⚠️ **IMPORTANT NOTE:** This release contains compile time breaking changes.
 All changes, including breaking changes, are addressed and explained in the list bellow.
