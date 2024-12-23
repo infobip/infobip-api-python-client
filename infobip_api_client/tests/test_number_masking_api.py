@@ -44,8 +44,8 @@ number_masking_credentials = "/voice/masking/2/credentials"
 def test_should_get_voice_masking_config(httpserver: HTTPServer, get_api_client):
     given_key = "string"
     given_name = "string"
-    given_callback_url = "string"
-    given_status_url = "string"
+    given_callback_url = "https://example.com"
+    given_status_url = "https://example.com"
     given_backup_callback_url = "string"
     given_backup_status_url = "string"
     given_description = "string"
@@ -109,8 +109,8 @@ def test_should_get_voice_masking_config(httpserver: HTTPServer, get_api_client)
 
 def test_should_create_voice_masking_config(httpserver: HTTPServer, get_api_client):
     given_name = "UniqueConfigurationName"
-    given_callback_url = "http://xyz.com/1/callback"
-    given_status_url = "http://xyz.com/1/status"
+    given_callback_url = "https://example.com"
+    given_status_url = "https://example.com"
     given_insert_date_time = "2019-08-16T09:11:36.573"
     given_update_date_time = "2019-08-16T09:11:36.573"
     given_insert_date_time_offset = datetime.datetime.fromisoformat(
@@ -169,8 +169,8 @@ def test_should_get_number_masking_configuration(
 ):
     given_key = "3FC0C9CB4AFAEAC67E8FC6BA3B1E044A"
     given_name = "UniqueConfigurationName"
-    given_callback_url = "http://xyz.com/1/callback"
-    given_status_url = "http://xyz.com/1/status"
+    given_callback_url = "https://example.com"
+    given_status_url = "https://example.com"
     given_insert_date_time = "2019-08-16T09:11:36.573"
     given_update_date_time = "2019-08-16T09:11:36.573"
     given_insert_date_time_offset = datetime.datetime.fromisoformat(
@@ -213,8 +213,8 @@ def test_should_update_number_masking_configuration(
 ):
     given_key = "3FC0C9CB4AFAEAC67E8FC6BA3B1E044A"
     given_name = "UniqueConfigurationName"
-    given_callback_url = "http://xyz.com/1/callback"
-    given_status_url = "http://xyz.com/1/status"
+    given_callback_url = "https://example.com"
+    given_status_url = "https://example.com"
     given_insert_date_time = "2019-08-16T09:11:36.573"
     given_update_date_time = "2019-08-16T09:11:36.573"
     given_insert_date_time_offset = datetime.datetime.fromisoformat(

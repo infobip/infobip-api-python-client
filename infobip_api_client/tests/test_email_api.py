@@ -72,7 +72,7 @@ TEMP_FILE_PATH = Path(os.path.dirname(__file__)) / "temp"
 
 def test_should_get_all_domain_ips(httpserver: HTTPServer, get_api_client):
     given_domain_name = "example.com"
-    given_ip_address = "11.11.11.1"
+    given_ip_address = "given_ip"
     given_dedicated = True
     given_assigned_domain_count = 1
     given_status = "ASSIGNABLE"
@@ -110,7 +110,7 @@ def test_should_get_all_domain_ips(httpserver: HTTPServer, get_api_client):
 def test_should_assign_ip_to_domain(httpserver: HTTPServer, get_api_client):
     given_result = "OK"
     given_domain_name = "example.com"
-    given_ip_address = "11.11.11.1"
+    given_ip_address = "given_ip"
 
     given_response = {"result": given_result}
 
@@ -134,7 +134,7 @@ def test_should_assign_ip_to_domain(httpserver: HTTPServer, get_api_client):
 def test_should_remove_ip_from_domain(httpserver: HTTPServer, get_api_client):
     given_result = "OK"
     given_domain_name = "example.com"
-    given_ip_address = "11.11.11.1"
+    given_ip_address = "given_ip"
 
     given_response = {"result": given_result}
 
@@ -417,7 +417,7 @@ def test_should_verify_domain(httpserver: HTTPServer, get_api_client):
 
 
 def test_should_get_all_ips(httpserver: HTTPServer, get_api_client):
-    given_ip_address = "11.11.11.1"
+    given_ip_address = "given_ip"
     given_dedicated = True
     given_assigned_domain_count = 1
     given_status = "ASSIGNABLE"
@@ -1086,7 +1086,7 @@ def test_should_get_suppression_domains(httpserver: HTTPServer, get_api_client):
 
 def test_get_all_ips_management(httpserver: HTTPServer, get_api_client):
     given_id = "DB3F9D439088BF73F5560443C8054AC4"
-    given_ip = "185.255.10.64"
+    given_ip = "given_ip"
     given_response = [
         {
             "id": given_id,
@@ -1114,7 +1114,7 @@ def test_get_ip_management(httpserver: HTTPServer, get_api_client):
 
     given_response = {
         "id": given_id,
-        "ip": "185.255.10.64",
+        "ip": "given_ip",
         "pools": [
             {
                 "id": "08A3A7608750CC6E6080325A6ADF45B6",
@@ -1130,7 +1130,7 @@ def test_get_ip_management(httpserver: HTTPServer, get_api_client):
 
     expected_response = EmailIpDetailResponse(
         id=given_id,
-        ip="185.255.10.64",
+        ip="given_ip",
         pools=[
             EmailIpPoolResponse(
                 id="08A3A7608750CC6E6080325A6ADF45B6",
