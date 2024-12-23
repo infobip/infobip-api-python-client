@@ -1,6 +1,5 @@
 import datetime
 import os
-import pathlib
 import pytest
 from pathlib import Path
 from pytest_httpserver import HTTPServer
@@ -47,7 +46,7 @@ from infobip_api_client import (
     EmailDeleteSuppression,
     EmailDomainAccess,
     EmailDomainInfoPageResponse,
-    EmailDomainInfo,
+    EmailDomainInfo, EmailIpResponse, EmailIpDetailResponse, EmailIpPoolResponse, EmailIpPoolCreateRequest,
 )
 
 DOMAIN_IPS = "/email/1/domain-ips"
@@ -63,6 +62,10 @@ REPORTS = "/email/1/reports"
 RETURN_PATH = "/email/1/domains/{domainName}/return-path"
 EMAIL_SUPPRESSION = "/email/1/suppressions"
 EMAIL_SUPPRESSION_DOMAINS = "/email/1/suppressions/domains"
+EMAIL_MANAGEMENT_IPS = "/email/1/ip-management/ips"
+EMAIL_MANAGEMENT_IP = "/email/1/ip-management/ips/{ipId}"
+EMAIL_MANAGEMENT_POOLS = "/email/1/ip-management/pools"
+EMAIL_MANAGEMENT_POOL = "/email/1/ip-management/pools/{poolId}"
 
 TEMP_FILE_PATH = Path(os.path.dirname(__file__)) / "temp"
 
@@ -1076,6 +1079,124 @@ def test_should_get_suppression_domains(httpserver: HTTPServer, get_api_client):
             ),
         ],
         paging=EmailPageDetails(page=given_page, size=given_size),
+    )
+
+    assert response == expected_response
+
+
+def test_get_all_ips_management(httpserver: HTTPServer, get_api_client):
+    given_id = "DB3F9D439088BF73F5560443C8054AC4"
+    given_ip = "185.255.10.64"
+    given_response = [
+        {
+            "id": given_id,
+            "ip": given_ip
+        }
+    ]
+
+    setup_request(httpserver, EMAIL_MANAGEMENT_IPS, given_response)
+
+    api_instance = EmailApi(get_api_client)
+    response = api_instance.get_all_ips_management()
+
+    expected_response = [
+        EmailIpResponse(
+            id=given_id,
+            ip=given_ip
+        )
+    ]
+
+    assert response == expected_response
+
+
+def test_get_ip_management(httpserver: HTTPServer, get_api_client):
+    given_id = "DB3F9D439088BF73F5560443C8054AC4"
+
+    given_response = {
+        "id": given_id,
+        "ip": "185.255.10.64",
+        "pools": [
+            {
+                "id": "08A3A7608750CC6E6080325A6ADF45B6",
+                "name": "IP pool name"
+            }
+        ]
+    }
+
+    setup_request(httpserver, EMAIL_MANAGEMENT_IP.replace("{ipId}", given_id), given_response)
+
+    api_instance = EmailApi(get_api_client)
+    response = api_instance.get_ip_details(ip_id=given_id)
+
+    expected_response = EmailIpDetailResponse(
+        id=given_id,
+        ip="185.255.10.64",
+        pools=[
+            EmailIpPoolResponse(
+                id="08A3A7608750CC6E6080325A6ADF45B6",
+                name="IP pool name"
+            )
+        ]
+    )
+
+    assert response == expected_response
+
+
+def test_create_ip_pool(httpserver: HTTPServer, get_api_client):
+    given_id = "08A3A7608750CC6E6080325A6ADF45B6"
+    given_name = "IP pool name"
+
+    given_response = {
+        "id": given_id,
+        "name": given_name
+    }
+
+    expected_request = {
+        "name": given_name
+    }
+
+    setup_request(httpserver, EMAIL_MANAGEMENT_POOLS, given_response, "POST", "201", request_body=expected_request)
+
+    api_instance = EmailApi(get_api_client)
+    request = EmailIpPoolCreateRequest(name=given_name)
+    response = api_instance.create_ip_pool(email_ip_pool_create_request=request)
+
+    expected_response = EmailIpPoolResponse(
+        id=given_id,
+        name=given_name
+    )
+
+    assert response == expected_response
+
+
+def test_update_ip_pool(httpserver: HTTPServer, get_api_client):
+    given_id = "08A3A7608750CC6E6080325A6ADF45B6"
+    given_name = "IP pool name"
+
+    given_response = {
+        "id": given_id,
+        "name": given_name
+    }
+
+    expected_request = {
+        "name": given_name
+    }
+
+    setup_request(
+        httpserver,
+        EMAIL_MANAGEMENT_POOL.replace("{poolId}", given_id),
+        given_response, "PUT", "200", request_body=expected_request)
+
+    api_instance = EmailApi(get_api_client)
+    request = EmailIpPoolCreateRequest(name=given_name)
+    response = api_instance.update_ip_pool(
+        pool_id=given_id,
+        email_ip_pool_create_request=request
+    )
+
+    expected_response = EmailIpPoolResponse(
+        id=given_id,
+        name=given_name
     )
 
     assert response == expected_response
