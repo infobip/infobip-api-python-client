@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "4.0.0"
+__version__ = "5.0.0"
 
 # import apis into sdk package
 from infobip_api_client.api.call_routing_api import CallRoutingApi
