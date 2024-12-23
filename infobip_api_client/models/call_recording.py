@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -26,6 +25,7 @@ from infobip_api_client.models.call_direction import CallDirection
 from infobip_api_client.models.call_endpoint import CallEndpoint
 from infobip_api_client.models.calls_recording_file import CallsRecordingFile
 from infobip_api_client.models.calls_recording_status import CallsRecordingStatus
+from infobip_api_client.models.platform import Platform
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -52,9 +52,7 @@ class CallRecording(BaseModel):
         description="Calls Configuration ID.",
         alias="callsConfigurationId",
     )
-    application_id: Optional[StrictStr] = Field(
-        default=None, description="Application ID.", alias="applicationId"
-    )
+    platform: Optional[Platform] = None
     start_time: Optional[datetime] = Field(
         default=None,
         description="Date and time when the (first) call recording started.",
@@ -73,7 +71,7 @@ class CallRecording(BaseModel):
         "status",
         "reason",
         "callsConfigurationId",
-        "applicationId",
+        "platform",
         "startTime",
         "endTime",
     ]
@@ -125,6 +123,9 @@ class CallRecording(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict["files"] = _items
+        # override the default output from pydantic by calling `to_dict()` of platform
+        if self.platform:
+            _dict["platform"] = self.platform.to_dict()
         return _dict
 
     @classmethod
@@ -149,7 +150,9 @@ class CallRecording(BaseModel):
                 "status": obj.get("status"),
                 "reason": obj.get("reason"),
                 "callsConfigurationId": obj.get("callsConfigurationId"),
-                "applicationId": obj.get("applicationId"),
+                "platform": Platform.from_dict(obj["platform"])
+                if obj.get("platform") is not None
+                else None,
                 "startTime": obj.get("startTime"),
                 "endTime": obj.get("endTime"),
             }

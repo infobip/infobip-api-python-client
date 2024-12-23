@@ -12,13 +12,12 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from infobip_api_client.models.calls_detection_result import CallsDetectionResult
 from typing import Optional, Set
@@ -33,7 +32,10 @@ class CallsMachineDetectionProperties(BaseModel):
     detection_result: Optional[CallsDetectionResult] = Field(
         default=None, alias="detectionResult"
     )
-    __properties: ClassVar[List[str]] = ["detectionResult"]
+    custom_data: Optional[Dict[str, StrictStr]] = Field(
+        default=None, description="Custom data.", alias="customData"
+    )
+    __properties: ClassVar[List[str]] = ["detectionResult", "customData"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -83,5 +85,10 @@ class CallsMachineDetectionProperties(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({"detectionResult": obj.get("detectionResult")})
+        _obj = cls.model_validate(
+            {
+                "detectionResult": obj.get("detectionResult"),
+                "customData": obj.get("customData"),
+            }
+        )
         return _obj

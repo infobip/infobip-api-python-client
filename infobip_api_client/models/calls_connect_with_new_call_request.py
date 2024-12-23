@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -24,6 +23,7 @@ from infobip_api_client.models.calls_action_call_request import CallsActionCallR
 from infobip_api_client.models.calls_action_conference_request import (
     CallsActionConferenceRequest,
 )
+from infobip_api_client.models.ringback_generation import RingbackGeneration
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -38,8 +38,11 @@ class CallsConnectWithNewCallRequest(BaseModel):
     )
     connect_on_early_media: Optional[StrictBool] = Field(
         default=False,
-        description="Indicates whether to connect calls on early media. Otherwise, the calls are connected after being established.",
+        description="Indicates whether to connect calls on early media. Otherwise, the calls are connected after being established. Cannot be `true` when `ringbackGeneration` is enabled.",
         alias="connectOnEarlyMedia",
+    )
+    ringback_generation: Optional[RingbackGeneration] = Field(
+        default=None, alias="ringbackGeneration"
     )
     conference_request: Optional[CallsActionConferenceRequest] = Field(
         default=None, alias="conferenceRequest"
@@ -47,6 +50,7 @@ class CallsConnectWithNewCallRequest(BaseModel):
     __properties: ClassVar[List[str]] = [
         "callRequest",
         "connectOnEarlyMedia",
+        "ringbackGeneration",
         "conferenceRequest",
     ]
 
@@ -90,6 +94,9 @@ class CallsConnectWithNewCallRequest(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of call_request
         if self.call_request:
             _dict["callRequest"] = self.call_request.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of ringback_generation
+        if self.ringback_generation:
+            _dict["ringbackGeneration"] = self.ringback_generation.to_dict()
         # override the default output from pydantic by calling `to_dict()` of conference_request
         if self.conference_request:
             _dict["conferenceRequest"] = self.conference_request.to_dict()
@@ -112,6 +119,11 @@ class CallsConnectWithNewCallRequest(BaseModel):
                 "connectOnEarlyMedia": obj.get("connectOnEarlyMedia")
                 if obj.get("connectOnEarlyMedia") is not None
                 else False,
+                "ringbackGeneration": RingbackGeneration.from_dict(
+                    obj["ringbackGeneration"]
+                )
+                if obj.get("ringbackGeneration") is not None
+                else None,
                 "conferenceRequest": CallsActionConferenceRequest.from_dict(
                     obj["conferenceRequest"]
                 )

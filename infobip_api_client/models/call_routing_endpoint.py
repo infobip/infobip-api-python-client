@@ -12,15 +12,15 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
 
 from importlib import import_module
-from pydantic import BaseModel, ConfigDict, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Union
+from infobip_api_client.models.call_routing_endpoint_type import CallRoutingEndpointType
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -33,6 +33,9 @@ if TYPE_CHECKING:
     from infobip_api_client.models.call_routing_sip_endpoint import (
         CallRoutingSipEndpoint,
     )
+    from infobip_api_client.models.call_routing_viber_endpoint import (
+        CallRoutingViberEndpoint,
+    )
     from infobip_api_client.models.call_routing_web_rtc_endpoint import (
         CallRoutingWebRtcEndpoint,
     )
@@ -43,15 +46,8 @@ class CallRoutingEndpoint(BaseModel):
     Endpoint for a given destination.
     """  # noqa: E501
 
-    type: StrictStr
+    type: CallRoutingEndpointType
     __properties: ClassVar[List[str]] = ["type"]
-
-    @field_validator("type")
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(["PHONE", "SIP", "WEBRTC"]):
-            raise ValueError("must be one of enum values ('PHONE', 'SIP', 'WEBRTC')")
-        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -66,6 +62,7 @@ class CallRoutingEndpoint(BaseModel):
     __discriminator_value_class_map: ClassVar[Dict[str, str]] = {
         "PHONE": "CallRoutingPhoneEndpoint",
         "SIP": "CallRoutingSipEndpoint",
+        "VIBER": "CallRoutingViberEndpoint",
         "WEBRTC": "CallRoutingWebRtcEndpoint",
     }
 
@@ -92,7 +89,10 @@ class CallRoutingEndpoint(BaseModel):
         cls, json_str: str
     ) -> Optional[
         Union[
-            CallRoutingPhoneEndpoint, CallRoutingSipEndpoint, CallRoutingWebRtcEndpoint
+            CallRoutingPhoneEndpoint,
+            CallRoutingSipEndpoint,
+            CallRoutingViberEndpoint,
+            CallRoutingWebRtcEndpoint,
         ]
     ]:
         """Create an instance of CallRoutingEndpoint from a JSON string"""
@@ -122,7 +122,10 @@ class CallRoutingEndpoint(BaseModel):
         cls, obj: Dict[str, Any]
     ) -> Optional[
         Union[
-            CallRoutingPhoneEndpoint, CallRoutingSipEndpoint, CallRoutingWebRtcEndpoint
+            CallRoutingPhoneEndpoint,
+            CallRoutingSipEndpoint,
+            CallRoutingViberEndpoint,
+            CallRoutingWebRtcEndpoint,
         ]
     ]:
         """Create an instance of CallRoutingEndpoint from a dict"""
@@ -136,6 +139,10 @@ class CallRoutingEndpoint(BaseModel):
             return import_module(
                 "infobip_api_client.models.call_routing_sip_endpoint"
             ).CallRoutingSipEndpoint.from_dict(obj)
+        if object_type == "CallRoutingViberEndpoint":
+            return import_module(
+                "infobip_api_client.models.call_routing_viber_endpoint"
+            ).CallRoutingViberEndpoint.from_dict(obj)
         if object_type == "CallRoutingWebRtcEndpoint":
             return import_module(
                 "infobip_api_client.models.call_routing_web_rtc_endpoint"

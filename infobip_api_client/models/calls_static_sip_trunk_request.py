@@ -12,13 +12,12 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import ConfigDict, Field, StrictBool, StrictStr
+from pydantic import ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from infobip_api_client.models.calls_anonymization_type import CallsAnonymizationType
 from infobip_api_client.models.calls_audio_codec import CallsAudioCodec
@@ -28,13 +27,11 @@ from infobip_api_client.models.calls_fax_type import CallsFaxType
 from infobip_api_client.models.calls_number_presentation_format import (
     CallsNumberPresentationFormat,
 )
-from infobip_api_client.models.calls_pegasus_sip_trunk_type import (
-    CallsPegasusSipTrunkType,
-)
 from infobip_api_client.models.calls_selection_strategy import CallsSelectionStrategy
 from infobip_api_client.models.calls_sip_options import CallsSipOptions
 from infobip_api_client.models.calls_sip_trunk_location import CallsSipTrunkLocation
 from infobip_api_client.models.calls_sip_trunk_request import CallsSipTrunkRequest
+from infobip_api_client.models.calls_sip_trunk_type import CallsSipTrunkType
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -44,10 +41,6 @@ class CallsStaticSipTrunkRequest(CallsSipTrunkRequest):
     CallsStaticSipTrunkRequest
     """  # noqa: E501
 
-    tls: Optional[StrictBool] = Field(
-        default=False,
-        description="Indicates whether communication is secured by the TLS protocol.",
-    )
     codecs: Optional[List[CallsAudioCodec]] = Field(
         default=None, description="List of audio codecs supported by a SIP trunk."
     )
@@ -59,7 +52,7 @@ class CallsStaticSipTrunkRequest(CallsSipTrunkRequest):
     anonymization: Optional[CallsAnonymizationType] = None
     source_hosts: Optional[List[StrictStr]] = Field(
         default=None,
-        description="List of SIP trunk source hosts. If empty, destination host list must not be empty. Source hosts can be send in 2 formats: IP address without port or domain without port.",
+        description="List of SIP trunk source hosts. If empty, destination host list must not be empty. Source hosts can be sent in 2 formats: IP address without port or domain without port.",
         alias="sourceHosts",
     )
     destination_hosts: Optional[List[StrictStr]] = Field(
@@ -73,10 +66,10 @@ class CallsStaticSipTrunkRequest(CallsSipTrunkRequest):
         "type",
         "name",
         "location",
+        "tls",
         "internationalCallsAllowed",
         "channelLimit",
         "billingPackage",
-        "tls",
         "codecs",
         "dtmf",
         "fax",
@@ -147,6 +140,7 @@ class CallsStaticSipTrunkRequest(CallsSipTrunkRequest):
                 "type": obj.get("type"),
                 "name": obj.get("name"),
                 "location": obj.get("location"),
+                "tls": obj.get("tls") if obj.get("tls") is not None else False,
                 "internationalCallsAllowed": obj.get("internationalCallsAllowed")
                 if obj.get("internationalCallsAllowed") is not None
                 else False,
@@ -154,7 +148,6 @@ class CallsStaticSipTrunkRequest(CallsSipTrunkRequest):
                 "billingPackage": CallsBillingPackage.from_dict(obj["billingPackage"])
                 if obj.get("billingPackage") is not None
                 else None,
-                "tls": obj.get("tls") if obj.get("tls") is not None else False,
                 "codecs": obj.get("codecs"),
                 "dtmf": obj.get("dtmf"),
                 "fax": obj.get("fax"),

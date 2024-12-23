@@ -6,10 +6,12 @@ from pytest_httpserver import HTTPServer
 from infobip_api_client import (
     ApiClient,
     Configuration,
-    SmsAdvancedTextualRequest,
-    SmsTextualMessage,
+    SmsMessage,
+    SmsTextContent,
     SmsDestination,
     SmsApi,
+    SmsRequest,
+    SmsMessageContent,
 )
 from infobip_api_client.exceptions import (
     ApiException,
@@ -19,7 +21,9 @@ from infobip_api_client.exceptions import (
     ServiceException,
     BadRequestException,
 )
+from infobip_api_client.tests.test_sms_api import sms_messages
 
+sms_messages = "sms/3/messages"
 sms_advanced_textual_endpoint = "/sms/2/text/advanced"
 sms_advanced_binary_endpoint = "/sms/2/binary/advanced"
 sms_preview_endpoint = "/sms/1/preview"
@@ -97,24 +101,24 @@ def test_error_processing(
     exception_type: type,
 ):
     httpserver.expect_request(
-        uri="/sms/2/text/advanced",
+        uri="/sms/3/messages",
         method="POST",
     ).respond_with_json(status=status_code, response_json=error_response_json)
 
-    sms_advanced_textual_request = SmsAdvancedTextualRequest(
+    request = SmsRequest(
         messages=[
-            SmsTextualMessage(
+            SmsMessage(
                 destinations=[SmsDestination(to="41793026727")],
-                var_from="InfoSMS",
-                text="This is a sample message",
+                sender="InfoSMS",
+                content=SmsMessageContent(
+                    actual_instance=SmsTextContent(text="Test message")
+                ),
             )
         ]
     )
 
     with pytest.raises(ApiException) as exception:
-        sms_api_client.send_sms_message(
-            sms_advanced_textual_request=sms_advanced_textual_request
-        )
+        sms_api_client.send_sms_messages(sms_request=request)
 
     assert exception.type == exception_type
     assert exception.value.body == json.dumps(error_response_json, indent=4)

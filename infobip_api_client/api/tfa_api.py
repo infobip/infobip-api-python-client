@@ -11,7 +11,6 @@
 
     Do not edit the class manually.
 """  # noqa: E501
-
 import warnings
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -120,7 +119,9 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaApplicationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
@@ -190,7 +191,9 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaApplicationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
@@ -260,7 +263,9 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaApplicationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
@@ -396,7 +401,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaEmailMessage",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
@@ -475,7 +483,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaEmailMessage",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
@@ -554,7 +565,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaEmailMessage",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
@@ -693,7 +707,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaMessage",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -771,7 +788,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaMessage",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -849,7 +869,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaMessage",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -984,6 +1007,8 @@ class TfaApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaApplicationResponse",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
@@ -1059,6 +1084,8 @@ class TfaApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaApplicationResponse",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
@@ -1134,6 +1161,8 @@ class TfaApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaApplicationResponse",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
@@ -1211,7 +1240,7 @@ class TfaApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[TfaApplicationResponse]:
-        """Get 2FA applications
+        """Get all 2FA applications
 
         An application is a container for 2FA message templates. Use this method to list your applications.
 
@@ -1247,6 +1276,7 @@ class TfaApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[TfaApplicationResponse]",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
@@ -1277,7 +1307,7 @@ class TfaApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[TfaApplicationResponse]]:
-        """Get 2FA applications
+        """Get all 2FA applications
 
         An application is a container for 2FA message templates. Use this method to list your applications.
 
@@ -1313,6 +1343,7 @@ class TfaApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[TfaApplicationResponse]",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
@@ -1343,7 +1374,7 @@ class TfaApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get 2FA applications
+        """Get all 2FA applications
 
         An application is a container for 2FA message templates. Use this method to list your applications.
 
@@ -1379,6 +1410,7 @@ class TfaApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[TfaApplicationResponse]",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
@@ -1502,6 +1534,8 @@ class TfaApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaMessage",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -1580,6 +1614,8 @@ class TfaApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaMessage",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -1658,6 +1694,8 @@ class TfaApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaMessage",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -1743,7 +1781,7 @@ class TfaApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[TfaMessage]:
-        """Get 2FA message templates
+        """Get all 2FA message templates
 
         List all message templates in a 2FA application.
 
@@ -1782,6 +1820,8 @@ class TfaApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[TfaMessage]",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -1817,7 +1857,7 @@ class TfaApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[TfaMessage]]:
-        """Get 2FA message templates
+        """Get all 2FA message templates
 
         List all message templates in a 2FA application.
 
@@ -1856,6 +1896,8 @@ class TfaApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[TfaMessage]",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -1891,7 +1933,7 @@ class TfaApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get 2FA message templates
+        """Get all 2FA message templates
 
         List all message templates in a 2FA application.
 
@@ -1930,6 +1972,8 @@ class TfaApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[TfaMessage]",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -2074,6 +2118,8 @@ class TfaApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaVerificationResponse",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -2171,6 +2217,8 @@ class TfaApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaVerificationResponse",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -2268,6 +2316,8 @@ class TfaApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaVerificationResponse",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -2404,7 +2454,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaStartEmailAuthenticationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -2479,7 +2532,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaStartEmailAuthenticationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -2554,7 +2610,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaStartEmailAuthenticationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -2689,7 +2748,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaStartAuthenticationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -2764,7 +2826,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaStartAuthenticationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -2839,7 +2904,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaStartAuthenticationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -2974,7 +3042,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaStartAuthenticationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -3049,7 +3120,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaStartAuthenticationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -3124,7 +3198,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaStartAuthenticationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -3253,7 +3330,9 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaStartEmailAuthenticationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -3322,7 +3401,9 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaStartEmailAuthenticationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -3391,7 +3472,9 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaStartEmailAuthenticationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -3470,7 +3553,7 @@ class TfaApi:
         nc_needed: Annotated[
             Optional[StrictBool],
             Field(
-                description="Indicates if Number Lookup is needed before sending the 2FA message. If the parameter value is true, Number Lookup will be requested before sending the SMS. If the value is false, the SMS will be sent without requesting Number Lookup. Field's default value is `true`."
+                description="Indicates if [Number Lookup](https://www.infobip.com/docs/api/connectivity/number-lookup) is needed before sending the 2FA message. If the parameter value is true, Number Lookup will be requested before sending the SMS. If the value is false, the SMS will be sent without requesting Number Lookup. Field's default value is `true`."
             ),
         ] = None,
         _request_timeout: Union[
@@ -3491,7 +3574,7 @@ class TfaApi:
 
         :param tfa_start_authentication_request: (required)
         :type tfa_start_authentication_request: TfaStartAuthenticationRequest
-        :param nc_needed: Indicates if Number Lookup is needed before sending the 2FA message. If the parameter value is true, Number Lookup will be requested before sending the SMS. If the value is false, the SMS will be sent without requesting Number Lookup. Field's default value is `true`.
+        :param nc_needed: Indicates if [Number Lookup](https://www.infobip.com/docs/api/connectivity/number-lookup) is needed before sending the 2FA message. If the parameter value is true, Number Lookup will be requested before sending the SMS. If the value is false, the SMS will be sent without requesting Number Lookup. Field's default value is `true`.
         :type nc_needed: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -3526,7 +3609,9 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaStartAuthenticationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -3548,7 +3633,7 @@ class TfaApi:
         nc_needed: Annotated[
             Optional[StrictBool],
             Field(
-                description="Indicates if Number Lookup is needed before sending the 2FA message. If the parameter value is true, Number Lookup will be requested before sending the SMS. If the value is false, the SMS will be sent without requesting Number Lookup. Field's default value is `true`."
+                description="Indicates if [Number Lookup](https://www.infobip.com/docs/api/connectivity/number-lookup) is needed before sending the 2FA message. If the parameter value is true, Number Lookup will be requested before sending the SMS. If the value is false, the SMS will be sent without requesting Number Lookup. Field's default value is `true`."
             ),
         ] = None,
         _request_timeout: Union[
@@ -3569,7 +3654,7 @@ class TfaApi:
 
         :param tfa_start_authentication_request: (required)
         :type tfa_start_authentication_request: TfaStartAuthenticationRequest
-        :param nc_needed: Indicates if Number Lookup is needed before sending the 2FA message. If the parameter value is true, Number Lookup will be requested before sending the SMS. If the value is false, the SMS will be sent without requesting Number Lookup. Field's default value is `true`.
+        :param nc_needed: Indicates if [Number Lookup](https://www.infobip.com/docs/api/connectivity/number-lookup) is needed before sending the 2FA message. If the parameter value is true, Number Lookup will be requested before sending the SMS. If the value is false, the SMS will be sent without requesting Number Lookup. Field's default value is `true`.
         :type nc_needed: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -3604,7 +3689,9 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaStartAuthenticationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -3626,7 +3713,7 @@ class TfaApi:
         nc_needed: Annotated[
             Optional[StrictBool],
             Field(
-                description="Indicates if Number Lookup is needed before sending the 2FA message. If the parameter value is true, Number Lookup will be requested before sending the SMS. If the value is false, the SMS will be sent without requesting Number Lookup. Field's default value is `true`."
+                description="Indicates if [Number Lookup](https://www.infobip.com/docs/api/connectivity/number-lookup) is needed before sending the 2FA message. If the parameter value is true, Number Lookup will be requested before sending the SMS. If the value is false, the SMS will be sent without requesting Number Lookup. Field's default value is `true`."
             ),
         ] = None,
         _request_timeout: Union[
@@ -3647,7 +3734,7 @@ class TfaApi:
 
         :param tfa_start_authentication_request: (required)
         :type tfa_start_authentication_request: TfaStartAuthenticationRequest
-        :param nc_needed: Indicates if Number Lookup is needed before sending the 2FA message. If the parameter value is true, Number Lookup will be requested before sending the SMS. If the value is false, the SMS will be sent without requesting Number Lookup. Field's default value is `true`.
+        :param nc_needed: Indicates if [Number Lookup](https://www.infobip.com/docs/api/connectivity/number-lookup) is needed before sending the 2FA message. If the parameter value is true, Number Lookup will be requested before sending the SMS. If the value is false, the SMS will be sent without requesting Number Lookup. Field's default value is `true`.
         :type nc_needed: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -3682,7 +3769,9 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaStartAuthenticationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -3813,7 +3902,9 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaStartAuthenticationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -3882,7 +3973,9 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaStartAuthenticationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -3951,7 +4044,9 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaStartAuthenticationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -4083,7 +4178,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaApplicationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
@@ -4159,7 +4257,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaApplicationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
@@ -4235,7 +4336,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaApplicationResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
@@ -4378,7 +4482,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaEmailMessage",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
@@ -4461,7 +4568,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaEmailMessage",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
@@ -4544,7 +4654,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaEmailMessage",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
@@ -4690,7 +4803,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaMessage",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -4772,7 +4888,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaMessage",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -4854,7 +4973,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaMessage",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -4951,9 +5073,9 @@ class TfaApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> TfaVerifyPinResponse:
-        """Verify phone number
+        """Verify a PIN
 
-        Verify a phone number to confirm successful 2FA authentication.
+        Verify OTP to confirm successful phone number verification. pinId is received in the response after [sending the OTP message](#channels/sms/2fa/pin-sending-and-verification/send-2fa-pin-code-over-voice).
 
         :param pin_id: ID of the pin code that has to be verified. (required)
         :type pin_id: str
@@ -4992,7 +5114,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaVerifyPinResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -5026,9 +5151,9 @@ class TfaApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[TfaVerifyPinResponse]:
-        """Verify phone number
+        """Verify a PIN
 
-        Verify a phone number to confirm successful 2FA authentication.
+        Verify OTP to confirm successful phone number verification. pinId is received in the response after [sending the OTP message](#channels/sms/2fa/pin-sending-and-verification/send-2fa-pin-code-over-voice).
 
         :param pin_id: ID of the pin code that has to be verified. (required)
         :type pin_id: str
@@ -5067,7 +5192,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaVerifyPinResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -5101,9 +5229,9 @@ class TfaApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Verify phone number
+        """Verify a PIN
 
-        Verify a phone number to confirm successful 2FA authentication.
+        Verify OTP to confirm successful phone number verification. pinId is received in the response after [sending the OTP message](#channels/sms/2fa/pin-sending-and-verification/send-2fa-pin-code-over-voice).
 
         :param pin_id: ID of the pin code that has to be verified. (required)
         :type pin_id: str
@@ -5142,7 +5270,10 @@ class TfaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TfaVerifyPinResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",

@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -26,9 +25,11 @@ from infobip_api_client.models.call_direction import CallDirection
 from infobip_api_client.models.call_endpoint import CallEndpoint
 from infobip_api_client.models.call_state import CallState
 from infobip_api_client.models.calls_error_code_info import CallsErrorCodeInfo
+from infobip_api_client.models.calls_hangup_source import CallsHangupSource
 from infobip_api_client.models.calls_machine_detection_properties import (
     CallsMachineDetectionProperties,
 )
+from infobip_api_client.models.platform import Platform
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -77,11 +78,7 @@ class CallLog(BaseModel):
         description="IDs of the calls configurations used during the call.",
         alias="callsConfigurationIds",
     )
-    application_ids: Optional[List[StrictStr]] = Field(
-        default=None,
-        description="IDs of the applications used during the call.",
-        alias="applicationIds",
-    )
+    platform: Optional[Platform] = None
     conference_ids: Optional[List[StrictStr]] = Field(
         default=None,
         description="IDs of the conferences where the call was a participant.",
@@ -108,6 +105,9 @@ class CallLog(BaseModel):
         default=None, description="Dialog ID.", alias="dialogId"
     )
     sender: Optional[StrictStr] = Field(default=None, description="Sender.")
+    hangup_source: Optional[CallsHangupSource] = Field(
+        default=None, alias="hangupSource"
+    )
     __properties: ClassVar[List[str]] = [
         "callId",
         "endpoint",
@@ -122,7 +122,7 @@ class CallLog(BaseModel):
         "machineDetection",
         "ringDuration",
         "callsConfigurationIds",
-        "applicationIds",
+        "platform",
         "conferenceIds",
         "duration",
         "hasCameraVideo",
@@ -131,6 +131,7 @@ class CallLog(BaseModel):
         "customData",
         "dialogId",
         "sender",
+        "hangupSource",
     ]
 
     model_config = ConfigDict(
@@ -176,6 +177,9 @@ class CallLog(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of machine_detection
         if self.machine_detection:
             _dict["machineDetection"] = self.machine_detection.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of platform
+        if self.platform:
+            _dict["platform"] = self.platform.to_dict()
         # override the default output from pydantic by calling `to_dict()` of error_code
         if self.error_code:
             _dict["errorCode"] = self.error_code.to_dict()
@@ -211,7 +215,9 @@ class CallLog(BaseModel):
                 else None,
                 "ringDuration": obj.get("ringDuration"),
                 "callsConfigurationIds": obj.get("callsConfigurationIds"),
-                "applicationIds": obj.get("applicationIds"),
+                "platform": Platform.from_dict(obj["platform"])
+                if obj.get("platform") is not None
+                else None,
                 "conferenceIds": obj.get("conferenceIds"),
                 "duration": obj.get("duration"),
                 "hasCameraVideo": obj.get("hasCameraVideo"),
@@ -222,6 +228,7 @@ class CallLog(BaseModel):
                 "customData": obj.get("customData"),
                 "dialogId": obj.get("dialogId"),
                 "sender": obj.get("sender"),
+                "hangupSource": obj.get("hangupSource"),
             }
         )
         return _obj

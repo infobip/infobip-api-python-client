@@ -12,13 +12,12 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -26,28 +25,23 @@ from typing_extensions import Self
 
 class SmsTracking(BaseModel):
     """
-    Sets up tracking parameters to track conversion metrics and type.
+    Allows you to set up tracking parameters to track conversion metrics. For more details on SMS Conversion, see: [Track Conversion](https://www.infobip.com/docs/sms/api#track-conversion).
     """  # noqa: E501
 
-    base_url: Optional[StrictStr] = Field(
+    use_conversion_tracking: Optional[StrictBool] = Field(
         default=None,
-        description="Custom base URL for shortened links in messages when tracking URL conversions. Legacy - use `urlOptions` instead.",
-        alias="baseUrl",
+        description='Indicates if a message has to be tracked for conversion rates. Default "false".',
+        alias="useConversionTracking",
     )
-    process_key: Optional[StrictStr] = Field(
-        default=None,
-        description="The process key which uniquely identifies conversion tracking.",
-        alias="processKey",
-    )
-    track: Optional[StrictStr] = Field(
-        default=None,
-        description="Indicates if a message has to be tracked for conversion rates. Values are: `SMS` and `URL`. `URL` is a legacy value. Use `urlOptions` instead. For more details on SMS Conversion, see: [Track Conversion](https://www.infobip.com/docs/sms/api#track-conversion).",
-    )
-    type: Optional[StrictStr] = Field(
+    conversion_tracking_name: Optional[StrictStr] = Field(
         default=None,
         description="Sets a custom conversion type naming convention, e.g. `ONE_TIME_PIN` or `SOCIAL_INVITES`.",
+        alias="conversionTrackingName",
     )
-    __properties: ClassVar[List[str]] = ["baseUrl", "processKey", "track", "type"]
+    __properties: ClassVar[List[str]] = [
+        "useConversionTracking",
+        "conversionTrackingName",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -99,10 +93,8 @@ class SmsTracking(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "baseUrl": obj.get("baseUrl"),
-                "processKey": obj.get("processKey"),
-                "track": obj.get("track"),
-                "type": obj.get("type"),
+                "useConversionTracking": obj.get("useConversionTracking"),
+                "conversionTrackingName": obj.get("conversionTrackingName"),
             }
         )
         return _obj

@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -23,6 +22,7 @@ from typing import Any, ClassVar, Dict, List, Optional
 from infobip_api_client.models.calls_conference_recording_request import (
     CallsConferenceRecordingRequest,
 )
+from infobip_api_client.models.platform import Platform
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -40,20 +40,16 @@ class CallsConferenceRequest(BaseModel):
     max_duration: Optional[StrictInt] = Field(
         default=28800, description="Max duration in seconds.", alias="maxDuration"
     )
-    calls_configuration_id: Optional[StrictStr] = Field(
-        default=None,
-        description="Calls Configuration ID.",
-        alias="callsConfigurationId",
+    calls_configuration_id: StrictStr = Field(
+        description="Calls Configuration ID.", alias="callsConfigurationId"
     )
-    application_id: Optional[StrictStr] = Field(
-        default=None, description="Application ID.", alias="applicationId"
-    )
+    platform: Optional[Platform] = None
     __properties: ClassVar[List[str]] = [
         "name",
         "recording",
         "maxDuration",
         "callsConfigurationId",
-        "applicationId",
+        "platform",
     ]
 
     model_config = ConfigDict(
@@ -96,6 +92,9 @@ class CallsConferenceRequest(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of recording
         if self.recording:
             _dict["recording"] = self.recording.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of platform
+        if self.platform:
+            _dict["platform"] = self.platform.to_dict()
         return _dict
 
     @classmethod
@@ -117,7 +116,9 @@ class CallsConferenceRequest(BaseModel):
                 if obj.get("maxDuration") is not None
                 else 28800,
                 "callsConfigurationId": obj.get("callsConfigurationId"),
-                "applicationId": obj.get("applicationId"),
+                "platform": Platform.from_dict(obj["platform"])
+                if obj.get("platform") is not None
+                else None,
             }
         )
         return _obj

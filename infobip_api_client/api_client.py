@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 import datetime
 from dateutil.parser import parse
 from enum import Enum
@@ -73,7 +72,7 @@ class ApiClient:
     _pool = None
 
     def __init__(
-        self, configuration=None, header_name=None, header_value=None, cookie=None
+            self, configuration=None, header_name=None, header_value=None, cookie=None
     ) -> None:
         # use default configuration if none is provided
         if configuration is None:
@@ -134,19 +133,19 @@ class ApiClient:
         cls._default = default
 
     def param_serialize(
-        self,
-        method,
-        resource_path,
-        path_params=None,
-        query_params=None,
-        header_params=None,
-        body=None,
-        post_params=None,
-        files=None,
-        auth_settings=None,
-        collection_formats=None,
-        _host=None,
-        _request_auth=None,
+            self,
+            method,
+            resource_path,
+            path_params=None,
+            query_params=None,
+            header_params=None,
+            body=None,
+            post_params=None,
+            files=None,
+            auth_settings=None,
+            collection_formats=None,
+            _host=None,
+            _request_auth=None,
     ) -> RequestSerialized:
 
         """Builds the HTTP request params needed by the request.
@@ -233,13 +232,13 @@ class ApiClient:
         return method, url, header_params, body, post_params
 
     def call_api(
-        self,
-        method,
-        url,
-        header_params=None,
-        body=None,
-        post_params=None,
-        _request_timeout=None,
+            self,
+            method,
+            url,
+            header_params=None,
+            body=None,
+            post_params=None,
+            _request_timeout=None,
     ) -> rest.RESTResponse:
         """Makes the HTTP request (synchronous)
         :param method: Method to call.
@@ -270,9 +269,9 @@ class ApiClient:
         return response_data
 
     def response_deserialize(
-        self,
-        response_data: rest.RESTResponse,
-        response_types_map: Optional[Dict[str, ApiResponseT]] = None,
+            self,
+            response_data: rest.RESTResponse,
+            response_types_map: Optional[Dict[str, ApiResponseT]] = None,
     ) -> ApiResponse[ApiResponseT]:
         """Deserializes response into an object.
         :param response_data: RESTResponse object to be deserialized.
@@ -285,9 +284,9 @@ class ApiClient:
 
         response_type = response_types_map.get(str(response_data.status), None)
         if (
-            not response_type
-            and isinstance(response_data.status, int)
-            and 100 <= response_data.status <= 599
+                not response_type
+                and isinstance(response_data.status, int)
+                and 100 <= response_data.status <= 599
         ):
             # if not found, look for '1XX', '2XX', etc.
             response_type = response_types_map.get(
@@ -514,17 +513,20 @@ class ApiClient:
         """
         params = []
         for k, v in files.items():
-            if isinstance(v, str):
-                with open(v, "rb") as f:
-                    filename = os.path.basename(f.name)
-                    filedata = f.read()
-            elif isinstance(v, bytes):
-                filename = k
-                filedata = v
-            else:
-                raise ValueError("Unsupported file value")
-            mimetype = mimetypes.guess_type(filename)[0] or "application/octet-stream"
-            params.append(tuple([k, tuple([filename, filedata, mimetype])]))
+            if not isinstance(v, list):
+                v = [v]
+            for file_param_content in v:
+                if isinstance(file_param_content, str):
+                    with open(file_param_content, "rb") as f:
+                        filename = os.path.basename(f.name)
+                        filedata = f.read()
+                elif isinstance(file_param_content, bytes):
+                    filename = k
+                    filedata = file_param_content
+                else:
+                    raise ValueError("Unsupported file value")
+                mimetype = mimetypes.guess_type(filename)[0] or "application/octet-stream"
+                params.append(tuple([k, tuple([filename, filedata, mimetype])]))
         return params
 
     def select_header_accept(self, accepts: List[str]) -> Optional[str]:
@@ -558,14 +560,14 @@ class ApiClient:
         return content_types[0]
 
     def update_params_for_auth(
-        self,
-        headers,
-        queries,
-        auth_settings,
-        resource_path,
-        method,
-        body,
-        request_auth=None,
+            self,
+            headers,
+            queries,
+            auth_settings,
+            resource_path,
+            method,
+            body,
+            request_auth=None,
     ) -> None:
         """Updates header and query params based on authentication setting.
 
@@ -595,7 +597,7 @@ class ApiClient:
                     )
 
     def _apply_auth_params(
-        self, headers, queries, resource_path, method, body, auth_setting
+            self, headers, queries, resource_path, method, body, auth_setting
     ) -> None:
         """Updates the request parameters based on a single auth_setting
 

@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -36,7 +35,7 @@ class CallRecordingRequest(BaseModel):
         default=None, alias="customData"
     )
     file_prefix: Optional[
-        Annotated[str, Field(min_length=1, strict=True, max_length=100)]
+        Annotated[str, Field(min_length=1, strict=True, max_length=214)]
     ] = Field(default=None, alias="filePrefix")
     __properties: ClassVar[List[str]] = ["recordingType", "customData", "filePrefix"]
 

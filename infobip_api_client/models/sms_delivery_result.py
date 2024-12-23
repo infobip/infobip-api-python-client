@@ -12,15 +12,14 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
-from infobip_api_client.models.sms_report import SmsReport
+from infobip_api_client.models.sms_delivery_report import SmsDeliveryReport
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -30,7 +29,9 @@ class SmsDeliveryResult(BaseModel):
     SmsDeliveryResult
     """  # noqa: E501
 
-    results: Optional[List[SmsReport]] = None
+    results: Optional[List[SmsDeliveryReport]] = Field(
+        default=None, description="Collection of reports, one per every message."
+    )
     __properties: ClassVar[List[str]] = ["results"]
 
     model_config = ConfigDict(
@@ -90,7 +91,9 @@ class SmsDeliveryResult(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "results": [SmsReport.from_dict(_item) for _item in obj["results"]]
+                "results": [
+                    SmsDeliveryReport.from_dict(_item) for _item in obj["results"]
+                ]
                 if obj.get("results") is not None
                 else None
             }

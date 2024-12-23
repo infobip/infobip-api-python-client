@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -21,83 +20,79 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from infobip_api_client.models.message_error import MessageError
 from infobip_api_client.models.message_price import MessagePrice
-from infobip_api_client.models.message_status import MessageStatus
+from infobip_api_client.models.platform import Platform
+from infobip_api_client.models.sms_message_content import SmsMessageContent
+from infobip_api_client.models.sms_message_error import SmsMessageError
+from infobip_api_client.models.sms_message_status import SmsMessageStatus
 from typing import Optional, Set
 from typing_extensions import Self
 
 
 class SmsLog(BaseModel):
     """
-    SmsLog
+    An array of message log results, one object per each message log entry.
     """  # noqa: E501
 
-    application_id: Optional[StrictStr] = Field(
-        default=None,
-        description="Application id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).",
-        alias="applicationId",
+    sender: Optional[StrictStr] = Field(
+        default=None, description="The sender ID which can be alphanumeric or numeric."
+    )
+    destination: Optional[StrictStr] = Field(
+        default=None, description="Message destination address."
     )
     bulk_id: Optional[StrictStr] = Field(
         default=None,
         description="Unique ID assigned to the request if messaging multiple recipients or sending multiple messages via a single API request.",
         alias="bulkId",
     )
+    message_id: Optional[StrictStr] = Field(
+        default=None,
+        description="Unique message ID for which a log is requested.",
+        alias="messageId",
+    )
+    sent_at: Optional[datetime] = Field(
+        default=None,
+        description="Date and time when the message was sent. Has the following format: yyyy-MM-dd'T'HH:mm:ss.SSSZ.",
+        alias="sentAt",
+    )
     done_at: Optional[datetime] = Field(
         default=None,
-        description="Date and time when the Infobip services finished processing the message (i.e. delivered to the destination, delivered to the destination network, etc.). Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.",
+        description="Date and time when the Infobip services finished processing the message (i.e., delivered to the destination, network, etc.). Has the following format: yyyy-MM-dd'T'HH:mm:ss.SSSZ.",
         alias="doneAt",
     )
-    entity_id: Optional[StrictStr] = Field(
+    message_count: Optional[StrictInt] = Field(
         default=None,
-        description="Entity id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).",
-        alias="entityId",
+        description="The number of messages content was split to.",
+        alias="messageCount",
     )
-    error: Optional[MessageError] = None
-    var_from: Optional[StrictStr] = Field(
+    price: Optional[MessagePrice] = None
+    status: Optional[SmsMessageStatus] = None
+    error: Optional[SmsMessageError] = None
+    platform: Optional[Platform] = None
+    content: Optional[SmsMessageContent] = None
+    campaign_reference_id: Optional[StrictStr] = Field(
         default=None,
-        description="Sender ID that can be alphanumeric or numeric.",
-        alias="from",
+        description="ID of a campaign that was sent in the message.",
+        alias="campaignReferenceId",
     )
     mcc_mnc: Optional[StrictStr] = Field(
         default=None, description="Mobile country and network codes.", alias="mccMnc"
     )
-    message_id: Optional[StrictStr] = Field(
-        default=None, description="Unique message ID.", alias="messageId"
-    )
-    price: Optional[MessagePrice] = None
-    sent_at: Optional[datetime] = Field(
-        default=None,
-        description="Date and time when the message was [scheduled](https://www.infobip.com/docs/api#channels/sms/get-scheduled-sms-messages) to be sent. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.",
-        alias="sentAt",
-    )
-    sms_count: Optional[StrictInt] = Field(
-        default=None,
-        description="The number of parts the message content was split into.",
-        alias="smsCount",
-    )
-    status: Optional[MessageStatus] = None
-    text: Optional[StrictStr] = Field(
-        default=None, description="Content of the message being sent."
-    )
-    to: Optional[StrictStr] = Field(
-        default=None, description="The destination address of the message."
-    )
     __properties: ClassVar[List[str]] = [
-        "applicationId",
+        "sender",
+        "destination",
         "bulkId",
-        "doneAt",
-        "entityId",
-        "error",
-        "from",
-        "mccMnc",
         "messageId",
-        "price",
         "sentAt",
-        "smsCount",
+        "doneAt",
+        "messageCount",
+        "price",
         "status",
-        "text",
-        "to",
+        "error",
+        "platform",
+        "content",
+        "campaignReferenceId",
+        "mccMnc",
     ]
 
     model_config = ConfigDict(
@@ -137,15 +132,21 @@ class SmsLog(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of error
-        if self.error:
-            _dict["error"] = self.error.to_dict()
         # override the default output from pydantic by calling `to_dict()` of price
         if self.price:
             _dict["price"] = self.price.to_dict()
         # override the default output from pydantic by calling `to_dict()` of status
         if self.status:
             _dict["status"] = self.status.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of error
+        if self.error:
+            _dict["error"] = self.error.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of platform
+        if self.platform:
+            _dict["platform"] = self.platform.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of content
+        if self.content:
+            _dict["content"] = self.content.to_dict()
         return _dict
 
     @classmethod
@@ -159,26 +160,30 @@ class SmsLog(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "applicationId": obj.get("applicationId"),
+                "sender": obj.get("sender"),
+                "destination": obj.get("destination"),
                 "bulkId": obj.get("bulkId"),
-                "doneAt": obj.get("doneAt"),
-                "entityId": obj.get("entityId"),
-                "error": MessageError.from_dict(obj["error"])
-                if obj.get("error") is not None
-                else None,
-                "from": obj.get("from"),
-                "mccMnc": obj.get("mccMnc"),
                 "messageId": obj.get("messageId"),
+                "sentAt": obj.get("sentAt"),
+                "doneAt": obj.get("doneAt"),
+                "messageCount": obj.get("messageCount"),
                 "price": MessagePrice.from_dict(obj["price"])
                 if obj.get("price") is not None
                 else None,
-                "sentAt": obj.get("sentAt"),
-                "smsCount": obj.get("smsCount"),
-                "status": MessageStatus.from_dict(obj["status"])
+                "status": SmsMessageStatus.from_dict(obj["status"])
                 if obj.get("status") is not None
                 else None,
-                "text": obj.get("text"),
-                "to": obj.get("to"),
+                "error": SmsMessageError.from_dict(obj["error"])
+                if obj.get("error") is not None
+                else None,
+                "platform": Platform.from_dict(obj["platform"])
+                if obj.get("platform") is not None
+                else None,
+                "content": SmsMessageContent.from_dict(obj["content"])
+                if obj.get("content") is not None
+                else None,
+                "campaignReferenceId": obj.get("campaignReferenceId"),
+                "mccMnc": obj.get("mccMnc"),
             }
         )
         return _obj

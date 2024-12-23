@@ -1,6 +1,8 @@
 import tempfile
+import datetime
 
 import pytest
+from dateutil.tz import tzoffset
 from pytest_httpserver import HTTPServer
 
 from infobip_api_client import (
@@ -62,9 +64,6 @@ from infobip_api_client import (
     CallRecordingPage,
     CallRecording,
     CallsRecordingFile,
-    CallsPublicCallRecording,
-    CallsPublicConferenceRecording,
-    CallsPublicRecordingFile,
     CallsConferenceRecordingPage,
     CallsOnDemandComposition,
     CallBulkRequest,
@@ -75,6 +74,21 @@ from infobip_api_client import (
     CallBulkResponse,
     CallBulkStatus,
     CallsRescheduleRequest,
+    CallsConferenceRecording,
+    Platform,
+    CallState,
+    CallDirection,
+    CallsDetectionResult,
+    CallsBulkEndpointType,
+    CallsLanguage,
+    CallsGender,
+    CallVoice,
+    CallsFileFormat,
+    CallsRecordingFileLocation,
+    CallsRecordingStatus,
+    CallsPlayContentType,
+    CallsConferencePlayRequest,
+    CallsParticipantState,
 )
 
 CALLS = "/calls/1/calls"
@@ -217,7 +231,7 @@ def test_should_get_calls(httpserver: HTTPServer, get_api_client):
                 "parentCallId": given_parent_call_id,
                 "machineDetection": {"detectionResult": given_detection_result},
                 "ringDuration": given_ring_duration,
-                "applicationId": given_application_id,
+                "platform": {"applicationId": given_application_id},
                 "conferenceId": given_conference_id,
                 "customData": {"key1": given_key1, "key2": given_key2},
             }
@@ -263,7 +277,7 @@ def test_should_get_calls(httpserver: HTTPServer, get_api_client):
                     detection_result=given_detection_result
                 ),
                 ring_duration=given_ring_duration,
-                application_id=given_application_id,
+                platform=Platform(application_id=given_application_id),
                 conference_id=given_conference_id,
                 custom_data={"key1": given_key1, "key2": given_key2},
             )
@@ -280,36 +294,35 @@ def test_should_get_calls(httpserver: HTTPServer, get_api_client):
 
 
 def test_should_create_call(httpserver: HTTPServer, get_api_client):
-    givenPhoneNumber = "41792030000"
+    givenPhoneNumber = "41792036727"
     givenType = "PHONE"
-    givenFrom = "44790123456"
-    givenMaxDuration = 28800
+    givenFrom = "41793026834"
     givenApplicationId = "61c060db2675060027d8c7a6"
-    givenParentCallId = "3ad8805e-d401-424e-9b03-e02a2016a5e2"
+    givenCallsConfigurationId = "dc5942707c704551a00cd2ea"
+    givenMaxDuration = 28800
 
     givenRequest = {
         "endpoint": {
+            "type": givenType,
             "phoneNumber": givenPhoneNumber,
         },
         "from": givenFrom,
+        "callsConfigurationId": givenCallsConfigurationId,
         "maxDuration": givenMaxDuration,
-        "applicationId": givenApplicationId,
+        "platform": {"applicationId": givenApplicationId},
     }
 
-    givenCallId = "string"
-    givenTo = "44790987654"
-    givenDirection = "INBOUND"
+    givenCallId = "d8d84155-3831-43fb-91c9-bb897149a79d"
+    givenTo = "44790123456"
+    givenDirection = "OUTBOUND"
     givenCallState = "CALLING"
-    givenMuted = True
-    givenUserMuted = True
-    givenDeaf = True
-    givenCamera = True
-    givenScreenShare = True
-    givenStartTime = "2022-05-01T14:25:45.125Z"
-    givenAnswerTime = "2022-05-01T14:25:55.123Z"
-    givenEndTime = "2022-05-01T14:27:40.235Z"
-    givenDetectionResult = "HUMAN"
-    givenRingDuration = 3
+    givenMuted = False
+    givenDeaf = False
+    givenCamera = False
+    givenScreenShare = False
+    givenStartTime = "2022-01-01T00:00:00.100+0000"
+    givenAnswerTime = "2022-01-01T00:00:02.100+0000"
+    givenRingDuration = 2
     givenConferenceId = "034e622a-cc7e-456d-8a10-0ba43b11aa5e"
     givenKey1 = "value1"
     givenKey2 = "value2"
@@ -317,8 +330,8 @@ def test_should_create_call(httpserver: HTTPServer, get_api_client):
     given_response = {
         "id": givenCallId,
         "endpoint": {
-            "phoneNumber": givenPhoneNumber,
             "type": givenType,
+            "phoneNumber": givenTo,
         },
         "from": givenFrom,
         "to": givenTo,
@@ -327,18 +340,16 @@ def test_should_create_call(httpserver: HTTPServer, get_api_client):
         "media": {
             "audio": {
                 "muted": givenMuted,
-                "userMuted": givenUserMuted,
                 "deaf": givenDeaf,
             },
-            "video": {"camera": givenCamera, "screenShare": givenScreenShare},
+            "video": {
+                "camera": givenCamera,
+                "screenShare": givenScreenShare,
+            },
         },
-        "startTime": givenStartTime,
-        "answerTime": givenAnswerTime,
-        "endTime": givenEndTime,
-        "parentCallId": givenParentCallId,
-        "machineDetection": {"detectionResult": givenDetectionResult},
         "ringDuration": givenRingDuration,
-        "applicationId": givenApplicationId,
+        "callsConfigurationId": givenCallsConfigurationId,
+        "platform": {"applicationId": givenApplicationId},
         "conferenceId": givenConferenceId,
         "customData": {"key1": givenKey1, "key2": givenKey2},
     }
@@ -348,39 +359,32 @@ def test_should_create_call(httpserver: HTTPServer, get_api_client):
     setup_request(httpserver, CALLS, given_response, "POST", 201, givenRequest)
 
     request: CallRequest = CallRequest(
-        endpoint=CallsPhoneEndpoint(phone_number=givenPhoneNumber),
+        endpoint=CallsPhoneEndpoint(
+            type=CallEndpointType.PHONE, phone_number=givenPhoneNumber
+        ),
         var_from=givenFrom,
-        application_id=givenApplicationId,
+        calls_configuration_id=givenCallsConfigurationId,
+        platform=Platform(application_id=givenApplicationId),
     )
 
     api_response = api_instance.create_call(call_request=request)
 
     expected_response = Call(
         id=givenCallId,
-        endpoint=CallsPhoneEndpoint(
-            phone_number=givenPhoneNumber, type=CallEndpointType.PHONE
-        ),
+        endpoint=CallsPhoneEndpoint(type=CallEndpointType.PHONE, phone_number=givenTo),
         var_from=givenFrom,
         to=givenTo,
-        direction=givenDirection,
-        state=givenCallState,
+        direction=CallDirection.OUTBOUND,
+        state=CallState.CALLING,
         media=CallsMediaProperties(
-            audio=CallsAudioMediaProperties(
-                muted=givenMuted, user_muted=givenUserMuted, deaf=givenDeaf
-            ),
+            audio=CallsAudioMediaProperties(muted=givenMuted, deaf=givenDeaf),
             video=CallsVideoMediaProperties(
                 camera=givenCamera, screen_share=givenScreenShare
             ),
         ),
-        start_time=givenStartTime,
-        end_time=givenEndTime,
-        answer_time=givenAnswerTime,
-        parent_call_id=givenParentCallId,
-        machine_detection=CallsMachineDetectionProperties(
-            detection_result=givenDetectionResult
-        ),
         ring_duration=givenRingDuration,
-        application_id=givenApplicationId,
+        calls_configuration_id=givenCallsConfigurationId,
+        platform=Platform(application_id=givenApplicationId),
         conference_id=givenConferenceId,
         custom_data={"key1": givenKey1, "key2": givenKey2},
     )
@@ -437,7 +441,9 @@ def test_should_get_a_call(httpserver: HTTPServer, get_api_client):
         "parentCallId": givenParentCallId,
         "machineDetection": {"detectionResult": givenDetectionResult},
         "ringDuration": givenRingDuration,
-        "applicationId": givenApplicationId,
+        "platform": {
+            "applicationId": givenApplicationId,
+        },
         "conferenceId": givenConferenceId,
         "customData": {"key1": givenKey1, "key2": givenKey2},
     }
@@ -474,7 +480,7 @@ def test_should_get_a_call(httpserver: HTTPServer, get_api_client):
             detection_result=givenDetectionResult
         ),
         ring_duration=givenRingDuration,
-        application_id=givenApplicationId,
+        platform=Platform(application_id=givenApplicationId),
         conference_id=givenConferenceId,
         custom_data={"key1": givenKey1, "key2": givenKey2},
     )
@@ -542,7 +548,9 @@ def test_should_get_a_call_history(httpserver: HTTPServer, get_api_client):
                 "endTime": given_end_time,
                 "parentCallId": given_parent_call_id,
                 "machineDetection": {"detectionResult": given_detection_result},
-                "applicationIds": [given_application_id],
+                "platform": {
+                    "applicationId": given_application_id,
+                },
                 "conferenceIds": [given_conference_id],
                 "duration": given_duration,
                 "hasCameraVideo": given_has_camera_video,
@@ -587,7 +595,7 @@ def test_should_get_a_call_history(httpserver: HTTPServer, get_api_client):
                 machine_detection=CallsMachineDetectionProperties(
                     detection_result=given_detection_result
                 ),
-                application_ids=[given_application_id],
+                platform=Platform(application_id=given_application_id),
                 conference_ids=[given_conference_id],
                 duration=given_duration,
                 has_camera_video=given_has_camera_video,
@@ -664,7 +672,9 @@ def test_should_get_call_history(httpserver: HTTPServer, get_api_client):
         "endTime": given_end_time,
         "parentCallId": given_parent_call_id,
         "machineDetection": {"detectionResult": given_detection_result},
-        "applicationIds": [given_application_id],
+        "platform": {
+            "applicationId": given_application_id,
+        },
         "conferenceIds": [given_conference_id],
         "duration": given_duration,
         "hasCameraVideo": given_has_camera_video,
@@ -698,7 +708,7 @@ def test_should_get_call_history(httpserver: HTTPServer, get_api_client):
         machine_detection=CallsMachineDetectionProperties(
             detection_result=given_detection_result
         ),
-        application_ids=[given_application_id],
+        platform=Platform(application_id=given_application_id),
         conference_ids=[given_conference_id],
         duration=given_duration,
         has_camera_video=given_has_camera_video,
@@ -764,7 +774,7 @@ def test_should_connect_calls(httpserver: HTTPServer, get_api_client):
         "id": given_id,
         "name": given_name,
         "participants": participants,
-        "applicationId": given_application_id,
+        "platform": {"applicationId": given_application_id},
     }
 
     expected_request = {"callIds": [given_call_id1, given_call_id2]}
@@ -817,7 +827,7 @@ def test_should_connect_calls(httpserver: HTTPServer, get_api_client):
                 ),
             ),
         ],
-        application_id=given_application_id,
+        platform=Platform(application_id=given_application_id),
     )
 
     assert api_response == expected_response
@@ -900,7 +910,7 @@ def test_should_connect_with_new_call(httpserver: HTTPServer, get_api_client):
             "endTime": given_end_time,
             "parentCallId": given_parent_call_id,
             "machineDetection": {"detectionResult": given_detection_result},
-            "applicationId": given_application_id,
+            "platform": {"applicationId": given_application_id},
             "conferenceId": given_conference_id,
             "customData": {"key1": given_key1, "key2": given_key2},
         },
@@ -984,7 +994,7 @@ def test_should_connect_with_new_call(httpserver: HTTPServer, get_api_client):
             machine_detection=CallsMachineDetectionProperties(
                 detection_result=given_detection_result
             ),
-            application_id=given_application_id,
+            platform=Platform(application_id=given_application_id),
             conference_id=given_conference_id,
             custom_data={"key1": given_key1, "key2": given_key2},
         ),
@@ -1108,7 +1118,9 @@ def test_should_hangup(httpserver: HTTPServer, get_api_client):
         "startTime": givenStartTime,
         "answerTime": givenAnswerTime,
         "ringDuration": givenRingDuration,
-        "applicationId": givenApplicationId,
+        "platform": {
+            "applicationId": givenApplicationId,
+        },
         "conferenceId": givenConferenceId,
         "customData": {"key2": givenKey2, "key1": givenKey1},
     }
@@ -1143,7 +1155,7 @@ def test_should_hangup(httpserver: HTTPServer, get_api_client):
         start_time=givenStartTime,
         answer_time=givenAnswerTime,
         ring_duration=givenRingDuration,
-        application_id=givenApplicationId,
+        platform=Platform(application_id=givenApplicationId),
         conference_id=givenConferenceId,
         custom_data={"key2": givenKey2, "key1": givenKey1},
     )
@@ -1471,7 +1483,7 @@ def test_should_request_application_transfer(httpserver: HTTPServer, get_api_cli
     given_timeout = 20
 
     given_request = {
-        "destinationApplicationId": given_destination_application_id,
+        "destinationCallsConfigurationId": given_destination_application_id,
         "timeout": given_timeout,
     }
 
@@ -1488,7 +1500,7 @@ def test_should_request_application_transfer(httpserver: HTTPServer, get_api_cli
     api_instance = CallsApi(get_api_client)
 
     request: CallsApplicationTransferRequest = CallsApplicationTransferRequest(
-        destination_application_id=given_destination_application_id,
+        destination_calls_configuration_id=given_destination_application_id,
         timeout=given_timeout,
     )
 
@@ -1618,7 +1630,9 @@ def test_should_get_conferences(httpserver: HTTPServer, get_api_client):
                         },
                     },
                 ],
-                "applicationId": given_application_id,
+                "platform": {
+                    "applicationId": given_application_id,
+                },
             }
         ],
         "paging": {
@@ -1680,7 +1694,9 @@ def test_should_get_conferences(httpserver: HTTPServer, get_api_client):
                         ),
                     ),
                 ],
-                application_id=given_application_id,
+                platform=Platform(
+                    application_id=given_application_id,
+                ),
             )
         ],
         paging=PageInfo(
@@ -1709,6 +1725,7 @@ def test_should_create_conference(httpserver: HTTPServer, get_api_client):
     given_video_camera = True
     given_video_screen_share = True
     given_application_id = "61c060db2675060027d8c7a6"
+    given_calls_configuration_id = "dc5942707c704551a00cd2ea"
 
     given_response = {
         "id": given_id,
@@ -1749,7 +1766,9 @@ def test_should_create_conference(httpserver: HTTPServer, get_api_client):
                 },
             },
         ],
-        "applicationId": given_application_id,
+        "platform": {
+            "applicationId": given_application_id,
+        },
     }
 
     setup_request(httpserver, CONFERENCES, given_response, "POST", 201, None)
@@ -1757,7 +1776,9 @@ def test_should_create_conference(httpserver: HTTPServer, get_api_client):
     api_instance = CallsApi(get_api_client)
 
     request: CallsConferenceRequest = CallsConferenceRequest(
-        name=given_name, application_id=given_application_id
+        name=given_name,
+        calls_configuration_id=given_calls_configuration_id,
+        platform=Platform(application_id=given_application_id),
     )
 
     api_response = api_instance.create_conference(calls_conference_request=request)
@@ -1803,7 +1824,9 @@ def test_should_create_conference(httpserver: HTTPServer, get_api_client):
                 ),
             ),
         ],
-        application_id=given_application_id,
+        platform=Platform(
+            application_id=given_application_id,
+        ),
     )
 
     assert api_response == expected_response
@@ -1864,7 +1887,9 @@ def test_should_get_conference(httpserver: HTTPServer, get_api_client):
                 },
             },
         ],
-        "applicationId": given_application_id,
+        "platform": {
+            "applicationId": given_application_id,
+        },
     }
 
     given_conference_id = "123"
@@ -1917,7 +1942,9 @@ def test_should_get_conference(httpserver: HTTPServer, get_api_client):
                 ),
             ),
         ],
-        application_id=given_application_id,
+        platform=Platform(
+            application_id=given_application_id,
+        ),
     )
 
     assert api_response == expected_response
@@ -1928,7 +1955,7 @@ def test_update_all_calls(httpserver: HTTPServer, get_api_client):
 
     given_request = {"muted": given_muted}
 
-    given_status = "PENDING"
+    given_status = CallsActionStatus.PENDING
 
     given_response = {"status": given_status}
 
@@ -1992,7 +2019,7 @@ def test_should_add_new_call(httpserver: HTTPServer, get_api_client):
     given_answer_time = "2022-05-01T14:25:55.0+0000"
     given_end_time = "2022-05-01T14:27:40.0+0000"
     given_parent_call_id = "3ad8805e-d401-424e-9b03-e02a2016a5e2"
-    given_detection_result = "HUMAN"
+    given_detection_result = CallsDetectionResult.HUMAN
     given_conference_id = "034e622a-cc7e-456d-8a10-0ba43b11aa5e"
     given_key1 = "value1"
     given_key2 = "value2"
@@ -2059,7 +2086,9 @@ def test_should_add_new_call(httpserver: HTTPServer, get_api_client):
             "endTime": given_end_time,
             "parentCallId": given_parent_call_id,
             "machineDetection": {"detectionResult": given_detection_result},
-            "applicationId": given_application_id,
+            "platform": {
+                "applicationId": given_application_id,
+            },
             "conferenceId": given_conference_id,
             "customData": {"key1": given_key1, "key2": given_key2},
         },
@@ -2155,7 +2184,9 @@ def test_should_add_new_call(httpserver: HTTPServer, get_api_client):
             machine_detection=CallsMachineDetectionProperties(
                 detection_result=given_detection_result
             ),
-            application_id=given_application_id,
+            platform=Platform(
+                application_id=given_application_id,
+            ),
             conference_id=given_conference_id,
             custom_data={"key1": given_key1, "key2": given_key2},
         ),
@@ -2175,7 +2206,7 @@ def test_should_add_existing_call(httpserver: HTTPServer, get_api_client):
     given_name = "Example conference"
     given_call_id = "string"
     given_phone_number = "41792030000"
-    given_type = "PHONE"
+    given_type = CallEndpointType.PHONE
     given_state = "JOINING"
     given_join_time = "2022-05-01T14:25:45.0Z"
     given_audio_muted = True
@@ -2241,7 +2272,7 @@ def test_should_add_existing_call(httpserver: HTTPServer, get_api_client):
                 },
             },
         ],
-        "applicationId": given_application_id,
+        "platform": {"applicationId": given_application_id},
     }
 
     endpoint = CONFERENCE_CALL.replace("{conferenceId}", given_conference_id).replace(
@@ -2303,14 +2334,14 @@ def test_should_add_existing_call(httpserver: HTTPServer, get_api_client):
                 ),
             ),
         ],
-        application_id=given_application_id,
+        platform=Platform(application_id=given_application_id),
     )
 
     assert api_response == expected_response
 
 
 def test_should_conference_remove_call(httpserver: HTTPServer, get_api_client):
-    given_status = "PENDING"
+    given_status = CallsActionStatus.PENDING
 
     given_response = {"status": given_status}
 
@@ -2339,7 +2370,7 @@ def test_should_conference_update_call(httpserver: HTTPServer, get_api_client):
 
     given_request = {"muted": given_muted}
 
-    given_status = "PENDING"
+    given_status = CallsActionStatus.PENDING
 
     given_response = {"status": given_status}
 
@@ -2372,8 +2403,8 @@ def test_should_hangup_conference(httpserver: HTTPServer, get_api_client):
     given_name = "Example conference"
     given_call_id = "string"
     given_phone_number = "41792030000"
-    given_type = "PHONE"
-    given_state = "JOINING"
+    given_type = CallEndpointType.PHONE
+    given_state = CallsParticipantState.JOINING
     given_join_time = "2022-05-01T14:25:45.134Z"
     given_audio_muted = True
     given_audio_user_muted = True
@@ -2404,7 +2435,9 @@ def test_should_hangup_conference(httpserver: HTTPServer, get_api_client):
                 },
             }
         ],
-        "applicationId": given_application_id,
+        "platform": {
+            "applicationId": given_application_id,
+        },
     }
 
     given_conference_id = "123"
@@ -2440,18 +2473,20 @@ def test_should_hangup_conference(httpserver: HTTPServer, get_api_client):
                 ),
             )
         ],
-        application_id=given_application_id,
+        platform=Platform(
+            application_id=given_application_id,
+        ),
     )
     assert api_response == expected_response
 
 
 def test_should_conference_play_file(httpserver: HTTPServer, get_api_client):
     given_loop_count = 0
-    given_type = "FILE"
+    given_type = CallsPlayContentType.FILE
 
     given_request = {"loopCount": given_loop_count, "content": {"type": given_type}}
 
-    given_status = "PENDING"
+    given_status = CallsActionStatus.PENDING
 
     given_response = {"status": given_status}
 
@@ -2463,12 +2498,12 @@ def test_should_conference_play_file(httpserver: HTTPServer, get_api_client):
 
     api_instance = CallsApi(get_api_client)
 
-    request: CallsPlayRequest = CallsPlayRequest(
+    request: CallsConferencePlayRequest = CallsConferencePlayRequest(
         loop_count=given_loop_count, content=CallsPlayContent(type=given_type)
     )
 
     api_response = api_instance.conference_play_file(
-        calls_play_request=request, conference_id=given_conference_id
+        calls_conference_play_request=request, conference_id=given_conference_id
     )
 
     expected_response = CallsActionResponse(status=given_status)
@@ -2477,7 +2512,7 @@ def test_should_conference_play_file(httpserver: HTTPServer, get_api_client):
 
 
 def test_should_conference_stop_file(httpserver: HTTPServer, get_api_client):
-    given_status = "PENDING"
+    given_status = CallsActionStatus.PENDING
 
     given_response = {"status": given_status}
 
@@ -2503,11 +2538,11 @@ def test_should_conference_stop_file(httpserver: HTTPServer, get_api_client):
 def test_should_get_calls_recordings(httpserver: HTTPServer, get_api_client):
     given_id = "d8d84155-3831-43fb-91c9-bb897149a79d"
     given_phone_number = "41792030000"
-    given_type = "PHONE"
-    given_direction = "INBOUND"
+    given_type = CallEndpointType.PHONE
+    given_direction = CallDirection.INBOUND
     given_file_id = "218eceba-c044-430d-9f26-8f1a7f0g2d03"
     given_name = "Example file"
-    given_file_format = "WAV"
+    given_file_format = CallsFileFormat.WAV
     given_size = 292190
     given_creation_method = "RECORDED"
     given_creation_time = "2022-05-01T14:25:45.143Z"
@@ -2515,8 +2550,8 @@ def test_should_get_calls_recordings(httpserver: HTTPServer, get_api_client):
     given_duration = 3
     given_start_time = "2022-05-01T14:25:45.134Z"
     given_end_time = "2022-05-01T14:35:45.154Z"
-    given_location = "SFTP"
-    given_status = "SUCCESSFUL"
+    given_location = CallsRecordingFileLocation.SFTP
+    given_status = CallsRecordingStatus.SUCCESSFUL
     given_reason = "string"
     given_page = 0
     given_page_size = 1
@@ -2576,9 +2611,7 @@ def test_should_get_calls_recordings(httpserver: HTTPServer, get_api_client):
                         name=given_name,
                         file_format=given_file_format,
                         size=given_size,
-                        creation_method=given_creation_method,
                         creation_time=given_creation_time,
-                        expiration_time=given_expiration_time,
                         duration=given_duration,
                         start_time=given_start_time,
                         end_time=given_end_time,
@@ -2603,19 +2636,19 @@ def test_should_get_calls_recordings(httpserver: HTTPServer, get_api_client):
 def test_should_get_call_recordings(httpserver: HTTPServer, get_api_client):
     given_id = "d8d84155-3831-43fb-91c9-bb897149a79d"
     given_phone_number = "41792030000"
-    given_type = "PHONE"
-    given_direction = "INBOUND"
+    given_type = CallEndpointType.PHONE
+    given_direction = CallDirection.INBOUND
     given_file_id = "218eceba-c044-430d-9f26-8f1a7f0g2d03"
     given_name = "Example file"
-    given_file_format = "WAV"
+    given_file_format = CallsFileFormat.WAV
     given_size = 292190
     given_creation_time = "2022-05-01T14:25:45.143Z"
     given_expiration_time = "2022-06-01T14:25:45.143Z"
     given_duration = 3
     given_start_time = "2022-05-01T14:25:45.134Z"
     given_end_time = "2022-05-01T14:35:45.154Z"
-    given_location = "SFTP"
-    given_status = "SUCCESSFUL"
+    given_location = CallsRecordingFileLocation.SFTP
+    given_status = CallsRecordingStatus.SUCCESSFUL
 
     given_response = {
         "callId": given_id,
@@ -2646,18 +2679,17 @@ def test_should_get_call_recordings(httpserver: HTTPServer, get_api_client):
 
     api_response = api_instance.get_call_recordings(call_id=given_id)
 
-    expected_response = CallsPublicCallRecording(
+    expected_response = CallRecording(
         call_id=given_id,
         endpoint=CallsPhoneEndpoint(type=given_type, phone_number=given_phone_number),
         direction=given_direction,
         files=[
-            CallsPublicRecordingFile(
+            CallsRecordingFile(
                 id=given_file_id,
                 name=given_name,
                 file_format=given_file_format,
                 size=given_size,
                 creation_time=given_creation_time,
-                expiration_time=given_expiration_time,
                 duration=given_duration,
                 start_time=given_start_time,
                 end_time=given_end_time,
@@ -2718,12 +2750,12 @@ def test_should_delete_call_recordings(httpserver: HTTPServer, get_api_client):
 
     api_response = api_instance.delete_call_recordings(call_id=given_id)
 
-    expected_response = CallsPublicCallRecording(
+    expected_response = CallRecording(
         call_id=given_id,
         endpoint=CallsPhoneEndpoint(type=given_type, phone_number=given_phone_number),
         direction=given_direction,
         files=[
-            CallsPublicRecordingFile(
+            CallsRecordingFile(
                 id=given_file_id,
                 name=given_name,
                 file_format=given_file_format,
@@ -2747,7 +2779,7 @@ def test_should_get_conferences_recordings(httpserver: HTTPServer, get_api_clien
     given_application_id = "string"
     given_file_id = "218eceba-c044-430d-9f26-8f1a7f0g2d03"
     given_name = "Example file"
-    given_file_format = "WAV"
+    given_file_format = CallsFileFormat.WAV
     given_size = 292190
     given_creation_method = "RECORDED"
     given_creation_time = "2022-05-01T14:25:45.143Z"
@@ -2755,12 +2787,12 @@ def test_should_get_conferences_recordings(httpserver: HTTPServer, get_api_clien
     given_duration = 3
     given_start_time = "2022-05-01T14:25:45.134Z"
     given_end_time = "2022-05-01T14:35:45.154Z"
-    given_location = "SFTP"
+    given_location = CallsRecordingFileLocation.SFTP
     given_id = "d8d84155-3831-43fb-91c9-bb897149a79d"
     given_phone_number = "41792030000"
     given_type = "PHONE"
-    given_direction = "INBOUND"
-    given_status = "SUCCESSFUL"
+    given_direction = CallDirection.INBOUND
+    given_status = CallsRecordingStatus.SUCCESSFUL
     given_reason = "string"
     given_page = 0
     given_page_size = 1
@@ -2772,7 +2804,7 @@ def test_should_get_conferences_recordings(httpserver: HTTPServer, get_api_clien
             {
                 "conferenceId": given_conference_id,
                 "conferenceName": given_conference_name,
-                "applicationId": given_application_id,
+                "platform": {"applicationId": given_application_id},
                 "composedFiles": [
                     {
                         "id": given_file_id,
@@ -2832,12 +2864,14 @@ def test_should_get_conferences_recordings(httpserver: HTTPServer, get_api_clien
 
     expected_response = CallsConferenceRecordingPage(
         results=[
-            CallsPublicConferenceRecording(
+            CallsConferenceRecording(
                 conference_id=given_conference_id,
                 conference_name=given_conference_name,
-                application_id=given_application_id,
+                platform=Platform(
+                    application_id=given_application_id,
+                ),
                 composed_files=[
-                    CallsPublicRecordingFile(
+                    CallsRecordingFile(
                         id=given_file_id,
                         name=given_name,
                         file_format=given_file_format,
@@ -2850,21 +2884,19 @@ def test_should_get_conferences_recordings(httpserver: HTTPServer, get_api_clien
                     )
                 ],
                 call_recordings=[
-                    CallsPublicCallRecording(
+                    CallRecording(
                         call_id=given_id,
                         endpoint=CallsPhoneEndpoint(
                             type=CallEndpointType.PHONE, phone_number=given_phone_number
                         ),
                         direction=given_direction,
                         files=[
-                            CallsPublicRecordingFile(
+                            CallsRecordingFile(
                                 id=given_file_id,
                                 name=given_name,
                                 file_format=given_file_format,
                                 size=given_size,
-                                creation_method=given_creation_method,
                                 creation_time=given_creation_time,
-                                expiration_time=given_expiration_time,
                                 duration=given_duration,
                                 start_time=given_start_time,
                                 end_time=given_end_time,
@@ -2893,7 +2925,7 @@ def test_should_get_conference_recordings(httpserver: HTTPServer, get_api_client
     given_application_id = "string"
     given_file_id = "218eceba-c044-430d-9f26-8f1a7f0g2d03"
     given_name = "Example file"
-    given_file_format = "WAV"
+    given_file_format = CallsFileFormat.WAV
     given_size = 292190
     given_creation_method = "RECORDED"
     given_creation_time = "2022-05-01T14:25:45.143Z"
@@ -2901,7 +2933,7 @@ def test_should_get_conference_recordings(httpserver: HTTPServer, get_api_client
     given_duration = 3
     given_start_time = "2022-05-01T14:25:45.134Z"
     given_end_time = "2022-05-01T14:35:45.154Z"
-    given_location = "SFTP"
+    given_location = CallsRecordingFileLocation.SFTP
     given_id = "d8d84155-3831-43fb-91c9-bb897149a79d"
     given_phone_number = "41792030000"
     given_type = "PHONE"
@@ -2911,7 +2943,7 @@ def test_should_get_conference_recordings(httpserver: HTTPServer, get_api_client
     given_response = {
         "conferenceId": given_conference_id,
         "conferenceName": given_conference_name,
-        "applicationId": given_application_id,
+        "platform": {"applicationId": given_application_id},
         "composedFiles": [
             {
                 "id": given_file_id,
@@ -2962,12 +2994,14 @@ def test_should_get_conference_recordings(httpserver: HTTPServer, get_api_client
         conference_id=given_conference_id
     )
 
-    expected_response = CallsPublicConferenceRecording(
+    expected_response = CallsConferenceRecording(
         conference_id=given_conference_id,
         conference_name=given_conference_name,
-        application_id=given_application_id,
+        platform=Platform(
+            application_id=given_application_id,
+        ),
         composed_files=[
-            CallsPublicRecordingFile(
+            CallsRecordingFile(
                 id=given_file_id,
                 name=given_name,
                 file_format=given_file_format,
@@ -2980,21 +3014,19 @@ def test_should_get_conference_recordings(httpserver: HTTPServer, get_api_client
             )
         ],
         call_recordings=[
-            CallsPublicCallRecording(
+            CallRecording(
                 call_id=given_id,
                 endpoint=CallsPhoneEndpoint(
                     type=CallEndpointType.PHONE, phone_number=given_phone_number
                 ),
                 direction=given_direction,
                 files=[
-                    CallsPublicRecordingFile(
+                    CallsRecordingFile(
                         id=given_file_id,
                         name=given_name,
                         file_format=given_file_format,
                         size=given_size,
-                        creation_method=given_creation_method,
                         creation_time=given_creation_time,
-                        expiration_time=given_expiration_time,
                         duration=given_duration,
                         start_time=given_start_time,
                         end_time=given_end_time,
@@ -3015,7 +3047,7 @@ def test_should_delete_conference_recordings(httpserver: HTTPServer, get_api_cli
     given_application_id = "string"
     given_file_id = "218eceba-c044-430d-9f26-8f1a7f0g2d03"
     given_name = "Example file"
-    given_file_format = "WAV"
+    given_file_format = CallsFileFormat.WAV
     given_size = 292190
     given_creation_method = "RECORDED"
     given_creation_time = "2022-05-01T14:25:45.143Z"
@@ -3023,7 +3055,7 @@ def test_should_delete_conference_recordings(httpserver: HTTPServer, get_api_cli
     given_duration = 3
     given_start_time = "2022-05-01T14:25:45.134Z"
     given_end_time = "2022-05-01T14:35:45.154Z"
-    given_location = "SFTP"
+    given_location = CallsRecordingFileLocation.SFTP
     given_id = "d8d84155-3831-43fb-91c9-bb897149a79d"
     given_phone_number = "41792030000"
     given_type = "PHONE"
@@ -3033,7 +3065,7 @@ def test_should_delete_conference_recordings(httpserver: HTTPServer, get_api_cli
     given_response = {
         "conferenceId": given_conference_id,
         "conferenceName": given_conference_name,
-        "applicationId": given_application_id,
+        "platform": {"applicationId": given_application_id},
         "composedFiles": [
             {
                 "id": given_file_id,
@@ -3084,12 +3116,12 @@ def test_should_delete_conference_recordings(httpserver: HTTPServer, get_api_cli
         conference_id=given_conference_id
     )
 
-    expected_response = CallsPublicConferenceRecording(
+    expected_response = CallsConferenceRecording(
         conference_id=given_conference_id,
         conference_name=given_conference_name,
-        application_id=given_application_id,
+        platform=Platform(application_id=given_application_id),
         composed_files=[
-            CallsPublicRecordingFile(
+            CallsRecordingFile(
                 id=given_file_id,
                 name=given_name,
                 file_format=given_file_format,
@@ -3102,14 +3134,14 @@ def test_should_delete_conference_recordings(httpserver: HTTPServer, get_api_cli
             )
         ],
         call_recordings=[
-            CallsPublicCallRecording(
+            CallRecording(
                 call_id=given_id,
                 endpoint=CallsPhoneEndpoint(
                     type=CallEndpointType.PHONE, phone_number=given_phone_number
                 ),
                 direction=given_direction,
                 files=[
-                    CallsPublicRecordingFile(
+                    CallsRecordingFile(
                         id=given_file_id,
                         name=given_name,
                         file_format=given_file_format,
@@ -3197,7 +3229,7 @@ def test_should_delete_recording_file(httpserver: HTTPServer, get_api_client):
 
     api_response = api_instance.delete_recording_file(file_id=given_id)
 
-    expected_response: CallsPublicRecordingFile = CallsPublicRecordingFile(
+    expected_response: CallsRecordingFile = CallsRecordingFile(
         id=given_id,
         name=given_name,
         file_format=given_file_format,
@@ -3214,11 +3246,11 @@ def test_should_delete_recording_file(httpserver: HTTPServer, get_api_client):
 
 def test_should_conference_say_text(httpserver: HTTPServer, get_api_client):
     given_text = "string"
-    given_language = "ar"
+    given_language = CallsLanguage.AR
     given_speech_rate = 0.5
     given_loop_count = 0
-    given_voice_gender = "FEMALE"
-    given_voice_name = "Hoda"
+    given_voice_gender = CallsGender.FEMALE
+    given_voice_name = CallVoice.HANS
 
     given_request = {
         "text": given_text,
@@ -3231,7 +3263,7 @@ def test_should_conference_say_text(httpserver: HTTPServer, get_api_client):
         },
     }
 
-    given_status = "PENDING"
+    given_status = CallsActionStatus.PENDING
 
     given_response = {"status": given_status}
 
@@ -3717,10 +3749,11 @@ def test_should_delete_media_stream_config(httpserver: HTTPServer, get_api_clien
 
 
 def test_should_create_bulk_of_calls(httpserver: HTTPServer, get_api_client):
+    given_calls_configuration_id = "dc5942707c704551a00cd2ea"
     given_application_id = "61c060db2675060027d8c7a6"
     given_from = "41793026834"
     given_phone_number = "41792036727"
-    given_type = "PHONE"
+    given_type = CallsBulkEndpointType.PHONE
     given_bulk_id = "bulk"
     given_call_id = "call"
     given_external_id = "external"
@@ -3730,7 +3763,9 @@ def test_should_create_bulk_of_calls(httpserver: HTTPServer, get_api_client):
         "bulkId": given_bulk_id,
         "calls": [
             {
-                "applicationId": given_application_id,
+                "platform": {
+                    "applicationId": given_application_id,
+                },
                 "callId": given_call_id,
                 "externalId": given_external_id,
                 "from": given_from,
@@ -3738,7 +3773,9 @@ def test_should_create_bulk_of_calls(httpserver: HTTPServer, get_api_client):
                 "status": given_status,
             },
             {
-                "applicationId": given_application_id,
+                "platform": {
+                    "applicationId": given_application_id,
+                },
                 "callId": given_call_id,
                 "externalId": given_external_id,
                 "from": given_from,
@@ -3746,7 +3783,9 @@ def test_should_create_bulk_of_calls(httpserver: HTTPServer, get_api_client):
                 "status": given_status,
             },
             {
-                "applicationId": given_application_id,
+                "platform": {
+                    "applicationId": given_application_id,
+                },
                 "callId": given_call_id,
                 "externalId": given_external_id,
                 "from": given_from,
@@ -3761,7 +3800,10 @@ def test_should_create_bulk_of_calls(httpserver: HTTPServer, get_api_client):
     api_instance = CallsApi(get_api_client)
 
     request: CallBulkRequest = CallBulkRequest(
-        application_id=given_application_id,
+        calls_configuration_id=given_calls_configuration_id,
+        platform=Platform(
+            application_id=given_application_id,
+        ),
         items=[
             CallsBulkItem(
                 var_from=given_from,
@@ -3792,34 +3834,34 @@ def test_should_create_bulk_of_calls(httpserver: HTTPServer, get_api_client):
         bulk_id="bulk",
         calls=[
             CallsBulkCall(
-                application_id=given_application_id,
+                platform=Platform(application_id=given_application_id),
                 call_id=given_call_id,
                 external_id=given_external_id,
                 var_from=given_from,
                 endpoint=CallsBulkPhoneEndpoint(
                     type=given_type, phone_number=given_phone_number
                 ),
-                status="PENDING",
+                status=CallsActionStatus.PENDING,
             ),
             CallsBulkCall(
-                application_id=given_application_id,
+                platform=Platform(application_id=given_application_id),
                 call_id=given_call_id,
                 external_id=given_external_id,
                 var_from=given_from,
                 endpoint=CallsBulkPhoneEndpoint(
                     type=given_type, phone_number=given_phone_number
                 ),
-                status="PENDING",
+                status=CallsActionStatus.PENDING,
             ),
             CallsBulkCall(
-                application_id=given_application_id,
+                platform=Platform(application_id=given_application_id),
                 call_id=given_call_id,
                 external_id=given_external_id,
                 var_from=given_from,
                 endpoint=CallsBulkPhoneEndpoint(
                     type=given_type, phone_number=given_phone_number
                 ),
-                status="PENDING",
+                status=CallsActionStatus.PENDING,
             ),
         ],
     )

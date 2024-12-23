@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -30,17 +29,17 @@ class SmsBinaryContent(BaseModel):
     """  # noqa: E501
 
     data_coding: Optional[StrictInt] = Field(
-        default=None,
+        default=0,
         description="Binary content data coding. The default value is (`0`) for GSM7. Example: (`8`) for  Unicode data.",
         alias="dataCoding",
     )
     esm_class: Optional[StrictInt] = Field(
-        default=None,
+        default=0,
         description="“Esm_class” parameter. Indicate special message attributes associated with the SMS. Default value is (`0`).",
         alias="esmClass",
     )
     hex: StrictStr = Field(
-        description="Hexadecimal string. This is the representation of your binary data. Two hex digits represent one byte. They should be separated by the space character (Example: `0f c2 4a bf 34 13 ba`)."
+        description="Hexadecimal string. This is the representation of your binary data. Two hex digits represent one byte. They should be separated by the space character."
     )
     __properties: ClassVar[List[str]] = ["dataCoding", "esmClass", "hex"]
 
@@ -94,8 +93,12 @@ class SmsBinaryContent(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "dataCoding": obj.get("dataCoding"),
-                "esmClass": obj.get("esmClass"),
+                "dataCoding": obj.get("dataCoding")
+                if obj.get("dataCoding") is not None
+                else 0,
+                "esmClass": obj.get("esmClass")
+                if obj.get("esmClass") is not None
+                else 0,
                 "hex": obj.get("hex"),
             }
         )

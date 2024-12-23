@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -20,6 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool
 from typing import Any, ClassVar, Dict, List, Optional
+from infobip_api_client.models.ringback_generation import RingbackGeneration
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -36,10 +36,17 @@ class CallsDialogPropagationOptions(BaseModel):
     )
     child_call_ringing: Optional[StrictBool] = Field(
         default=False,
-        description="Flag indicating if a child call's ringing should be propagated to the parent call. The parent call must be `INBOUND`.",
+        description="Flag indicating if a child call's ringing should be propagated to the parent call. The parent call must be `INBOUND`. Cannot be `true` when `ringbackGeneration` is enabled.",
         alias="childCallRinging",
     )
-    __properties: ClassVar[List[str]] = ["childCallHangup", "childCallRinging"]
+    ringback_generation: Optional[RingbackGeneration] = Field(
+        default=None, alias="ringbackGeneration"
+    )
+    __properties: ClassVar[List[str]] = [
+        "childCallHangup",
+        "childCallRinging",
+        "ringbackGeneration",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -78,6 +85,9 @@ class CallsDialogPropagationOptions(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of ringback_generation
+        if self.ringback_generation:
+            _dict["ringbackGeneration"] = self.ringback_generation.to_dict()
         return _dict
 
     @classmethod
@@ -97,6 +107,11 @@ class CallsDialogPropagationOptions(BaseModel):
                 "childCallRinging": obj.get("childCallRinging")
                 if obj.get("childCallRinging") is not None
                 else False,
+                "ringbackGeneration": RingbackGeneration.from_dict(
+                    obj["ringbackGeneration"]
+                )
+                if obj.get("ringbackGeneration") is not None
+                else None,
             }
         )
         return _obj

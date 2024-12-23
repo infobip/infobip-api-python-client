@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -20,7 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from infobip_api_client.models.sms_language import SmsLanguage
+from infobip_api_client.models.sms_preview_language import SmsPreviewLanguage
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -30,7 +29,7 @@ class SmsLanguageConfiguration(BaseModel):
     Sets up additional configuration that changes the original message content you can preview with this call.
     """  # noqa: E501
 
-    language: Optional[SmsLanguage] = None
+    language: Optional[SmsPreviewLanguage] = None
     transliteration: Optional[StrictStr] = Field(
         default=None,
         description="Conversion of a message text from one script to another. Possible values: `TURKISH`, `GREEK`, `CYRILLIC`, `SERBIAN_CYRILLIC`, `BULGARIAN_CYRILLIC`, `CENTRAL_EUROPEAN`, `BALTIC` and `NON_UNICODE`.",
@@ -90,7 +89,7 @@ class SmsLanguageConfiguration(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "language": SmsLanguage.from_dict(obj["language"])
+                "language": SmsPreviewLanguage.from_dict(obj["language"])
                 if obj.get("language") is not None
                 else None,
                 "transliteration": obj.get("transliteration"),

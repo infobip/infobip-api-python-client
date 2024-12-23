@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -28,14 +27,12 @@ from infobip_api_client.models.calls_fax_type import CallsFaxType
 from infobip_api_client.models.calls_number_presentation_format import (
     CallsNumberPresentationFormat,
 )
-from infobip_api_client.models.calls_pegasus_sip_trunk_type import (
-    CallsPegasusSipTrunkType,
-)
 from infobip_api_client.models.calls_sbc_hosts import CallsSbcHosts
 from infobip_api_client.models.calls_selection_strategy import CallsSelectionStrategy
 from infobip_api_client.models.calls_sip_options import CallsSipOptions
 from infobip_api_client.models.calls_sip_trunk_location import CallsSipTrunkLocation
 from infobip_api_client.models.calls_sip_trunk_response import CallsSipTrunkResponse
+from infobip_api_client.models.calls_sip_trunk_type import CallsSipTrunkType
 from typing import Optional, Set
 from typing_extensions import Self
 

@@ -11,14 +11,13 @@
 
     Do not edit the class manually.
 """  # noqa: E501
-
 import warnings
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from datetime import datetime
-from pydantic import Field, StrictBool, StrictBytes, StrictStr, field_validator
+from pydantic import Field, StrictBool, StrictBytes, StrictStr
 from typing import Optional, Union
 from typing_extensions import Annotated
 from infobip_api_client.models.call import Call
@@ -30,6 +29,7 @@ from infobip_api_client.models.call_endpoint_type import CallEndpointType
 from infobip_api_client.models.call_log import CallLog
 from infobip_api_client.models.call_log_page import CallLogPage
 from infobip_api_client.models.call_page import CallPage
+from infobip_api_client.models.call_recording import CallRecording
 from infobip_api_client.models.call_recording_page import CallRecordingPage
 from infobip_api_client.models.call_request import CallRequest
 from infobip_api_client.models.call_state import CallState
@@ -47,11 +47,15 @@ from infobip_api_client.models.calls_conference_and_call import CallsConferenceA
 from infobip_api_client.models.calls_conference_broadcast_webrtc_text_request import (
     CallsConferenceBroadcastWebrtcTextRequest,
 )
+from infobip_api_client.models.calls_conference_log import CallsConferenceLog
 from infobip_api_client.models.calls_conference_log_page import CallsConferenceLogPage
-from infobip_api_client.models.calls_conference_log_response import (
-    CallsConferenceLogResponse,
-)
 from infobip_api_client.models.calls_conference_page import CallsConferencePage
+from infobip_api_client.models.calls_conference_play_request import (
+    CallsConferencePlayRequest,
+)
+from infobip_api_client.models.calls_conference_recording import (
+    CallsConferenceRecording,
+)
 from infobip_api_client.models.calls_conference_recording_page import (
     CallsConferenceRecordingPage,
 )
@@ -79,6 +83,9 @@ from infobip_api_client.models.calls_dialog_recording_page import (
 )
 from infobip_api_client.models.calls_dialog_recording_request import (
     CallsDialogRecordingRequest,
+)
+from infobip_api_client.models.calls_dialog_recording_response import (
+    CallsDialogRecordingResponse,
 )
 from infobip_api_client.models.calls_dialog_request import CallsDialogRequest
 from infobip_api_client.models.calls_dialog_response import CallsDialogResponse
@@ -109,24 +116,14 @@ from infobip_api_client.models.calls_on_demand_composition import (
 )
 from infobip_api_client.models.calls_play_request import CallsPlayRequest
 from infobip_api_client.models.calls_pre_answer_request import CallsPreAnswerRequest
-from infobip_api_client.models.calls_public_call_recording import (
-    CallsPublicCallRecording,
-)
-from infobip_api_client.models.calls_public_conference_recording import (
-    CallsPublicConferenceRecording,
-)
-from infobip_api_client.models.calls_public_dialog_recording import (
-    CallsPublicDialogRecording,
-)
-from infobip_api_client.models.calls_public_recording_file import (
-    CallsPublicRecordingFile,
-)
 from infobip_api_client.models.calls_public_sip_trunk_service_address import (
     CallsPublicSipTrunkServiceAddress,
 )
 from infobip_api_client.models.calls_public_sip_trunk_service_address_request import (
     CallsPublicSipTrunkServiceAddressRequest,
 )
+from infobip_api_client.models.calls_recording_file import CallsRecordingFile
+from infobip_api_client.models.calls_recording_location import CallsRecordingLocation
 from infobip_api_client.models.calls_recording_start_request import (
     CallsRecordingStartRequest,
 )
@@ -134,6 +131,9 @@ from infobip_api_client.models.calls_region_list import CallsRegionList
 from infobip_api_client.models.calls_reschedule_request import CallsRescheduleRequest
 from infobip_api_client.models.calls_say_request import CallsSayRequest
 from infobip_api_client.models.calls_sip_trunk_page import CallsSipTrunkPage
+from infobip_api_client.models.calls_sip_trunk_registration_credentials import (
+    CallsSipTrunkRegistrationCredentials,
+)
 from infobip_api_client.models.calls_sip_trunk_request import CallsSipTrunkRequest
 from infobip_api_client.models.calls_sip_trunk_response import CallsSipTrunkResponse
 from infobip_api_client.models.calls_sip_trunk_service_address_page import (
@@ -153,6 +153,9 @@ from infobip_api_client.models.calls_speech_capture_request import (
 )
 from infobip_api_client.models.calls_start_media_stream_request import (
     CallsStartMediaStreamRequest,
+)
+from infobip_api_client.models.calls_start_transcription_request import (
+    CallsStartTranscriptionRequest,
 )
 from infobip_api_client.models.calls_stop_play_request import CallsStopPlayRequest
 from infobip_api_client.models.calls_update_request import CallsUpdateRequest
@@ -238,6 +241,7 @@ class CallsApi:
             "200": "CallsConference",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -316,6 +320,7 @@ class CallsApi:
             "200": "CallsConference",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -394,6 +399,7 @@ class CallsApi:
             "200": "CallsConference",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -531,6 +537,7 @@ class CallsApi:
             "200": "CallsConferenceAndCall",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -605,6 +612,7 @@ class CallsApi:
             "200": "CallsConferenceAndCall",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -679,6 +687,7 @@ class CallsApi:
             "200": "CallsConferenceAndCall",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -813,6 +822,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -887,6 +897,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -961,6 +972,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -1095,6 +1107,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -1169,6 +1182,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -1243,6 +1257,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -1382,6 +1397,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -1461,6 +1477,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -1540,6 +1557,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -1669,6 +1687,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -1748,6 +1767,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -1827,6 +1847,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -1951,6 +1972,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -2025,6 +2047,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -2099,6 +2122,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -2233,6 +2257,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -2307,6 +2332,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -2381,6 +2407,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -3085,6 +3112,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -3159,6 +3187,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -3233,6 +3262,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -3593,6 +3623,291 @@ class CallsApi:
         )
 
     @validate_call
+    def call_start_transcription(
+        self,
+        call_id: Annotated[StrictStr, Field(description="Call ID.")],
+        calls_start_transcription_request: CallsStartTranscriptionRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> CallsActionResponse:
+        """Start transcription
+
+        Start call transcription.
+
+        :param call_id: Call ID. (required)
+        :type call_id: str
+        :param calls_start_transcription_request: (required)
+        :type calls_start_transcription_request: CallsStartTranscriptionRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._call_start_transcription_serialize(
+            call_id=call_id,
+            calls_start_transcription_request=calls_start_transcription_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "CallsActionResponse",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+    @validate_call
+    def call_start_transcription_with_http_info(
+        self,
+        call_id: Annotated[StrictStr, Field(description="Call ID.")],
+        calls_start_transcription_request: CallsStartTranscriptionRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[CallsActionResponse]:
+        """Start transcription
+
+        Start call transcription.
+
+        :param call_id: Call ID. (required)
+        :type call_id: str
+        :param calls_start_transcription_request: (required)
+        :type calls_start_transcription_request: CallsStartTranscriptionRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._call_start_transcription_serialize(
+            call_id=call_id,
+            calls_start_transcription_request=calls_start_transcription_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "CallsActionResponse",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+    @validate_call
+    def call_start_transcription_without_preload_content(
+        self,
+        call_id: Annotated[StrictStr, Field(description="Call ID.")],
+        calls_start_transcription_request: CallsStartTranscriptionRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Start transcription
+
+        Start call transcription.
+
+        :param call_id: Call ID. (required)
+        :type call_id: str
+        :param calls_start_transcription_request: (required)
+        :type calls_start_transcription_request: CallsStartTranscriptionRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._call_start_transcription_serialize(
+            call_id=call_id,
+            calls_start_transcription_request=calls_start_transcription_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "CallsActionResponse",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+    def _call_start_transcription_serialize(
+        self,
+        call_id,
+        calls_start_transcription_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {}
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if call_id is not None:
+            _path_params["callId"] = call_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if calls_start_transcription_request is not None:
+            _body_params = calls_start_transcription_request
+
+        # set the HTTP header `Accept`
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params["Content-Type"] = _content_type
+        else:
+            _default_content_type = self.api_client.select_header_content_type(
+                ["application/json"]
+            )
+            if _default_content_type is not None:
+                _header_params["Content-Type"] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = ["APIKeyHeader"]
+
+        return self.api_client.param_serialize(
+            method="POST",
+            resource_path="/calls/1/calls/{callId}/start-transcription",
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth,
+        )
+
+    @validate_call
     def call_stop_playing_file(
         self,
         call_id: Annotated[StrictStr, Field(description="Call ID.")],
@@ -3650,7 +3965,9 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -3723,7 +4040,9 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -3796,7 +4115,9 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -3927,6 +4248,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -3997,6 +4319,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -4067,6 +4390,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -4116,6 +4440,263 @@ class CallsApi:
         return self.api_client.param_serialize(
             method="POST",
             resource_path="/calls/1/calls/{callId}/stop-recording",
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth,
+        )
+
+    @validate_call
+    def call_stop_transcription(
+        self,
+        call_id: Annotated[StrictStr, Field(description="Call ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> CallsActionResponse:
+        """Stop transcription
+
+        Stop call transcription.
+
+        :param call_id: Call ID. (required)
+        :type call_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._call_stop_transcription_serialize(
+            call_id=call_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "CallsActionResponse",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+    @validate_call
+    def call_stop_transcription_with_http_info(
+        self,
+        call_id: Annotated[StrictStr, Field(description="Call ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[CallsActionResponse]:
+        """Stop transcription
+
+        Stop call transcription.
+
+        :param call_id: Call ID. (required)
+        :type call_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._call_stop_transcription_serialize(
+            call_id=call_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "CallsActionResponse",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+    @validate_call
+    def call_stop_transcription_without_preload_content(
+        self,
+        call_id: Annotated[StrictStr, Field(description="Call ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Stop transcription
+
+        Stop call transcription.
+
+        :param call_id: Call ID. (required)
+        :type call_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._call_stop_transcription_serialize(
+            call_id=call_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "CallsActionResponse",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+    def _call_stop_transcription_serialize(
+        self,
+        call_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {}
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if call_id is not None:
+            _path_params["callId"] = call_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+        # set the HTTP header `Accept`
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )
+
+        # authentication setting
+        _auth_settings: List[str] = ["APIKeyHeader"]
+
+        return self.api_client.param_serialize(
+            method="POST",
+            resource_path="/calls/1/calls/{callId}/stop-transcription",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -4183,6 +4764,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallBulkStatus",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -4252,6 +4834,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallBulkStatus",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -4321,6 +4904,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallBulkStatus",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -4388,7 +4972,7 @@ class CallsApi:
         conference_id: Annotated[StrictStr, Field(description="Conference ID.")],
         calls_on_demand_composition: CallsOnDemandComposition,
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -4411,7 +4995,7 @@ class CallsApi:
         :param calls_on_demand_composition: (required)
         :type calls_on_demand_composition: CallsOnDemandComposition
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4446,7 +5030,9 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -4467,7 +5053,7 @@ class CallsApi:
         conference_id: Annotated[StrictStr, Field(description="Conference ID.")],
         calls_on_demand_composition: CallsOnDemandComposition,
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -4490,7 +5076,7 @@ class CallsApi:
         :param calls_on_demand_composition: (required)
         :type calls_on_demand_composition: CallsOnDemandComposition
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4525,7 +5111,9 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -4546,7 +5134,7 @@ class CallsApi:
         conference_id: Annotated[StrictStr, Field(description="Conference ID.")],
         calls_on_demand_composition: CallsOnDemandComposition,
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -4569,7 +5157,7 @@ class CallsApi:
         :param calls_on_demand_composition: (required)
         :type calls_on_demand_composition: CallsOnDemandComposition
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4604,7 +5192,9 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -4643,7 +5233,7 @@ class CallsApi:
         # process the query parameters
         if location is not None:
 
-            _query_params.append(("location", location))
+            _query_params.append(("location", location.value))
 
         # process the header parameters
         # process the form parameters
@@ -4690,7 +5280,7 @@ class CallsApi:
         dialog_id: Annotated[StrictStr, Field(description="Dialog ID.")],
         calls_on_demand_composition: CallsOnDemandComposition,
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -4713,7 +5303,7 @@ class CallsApi:
         :param calls_on_demand_composition: (required)
         :type calls_on_demand_composition: CallsOnDemandComposition
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4748,7 +5338,9 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -4769,7 +5361,7 @@ class CallsApi:
         dialog_id: Annotated[StrictStr, Field(description="Dialog ID.")],
         calls_on_demand_composition: CallsOnDemandComposition,
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -4792,7 +5384,7 @@ class CallsApi:
         :param calls_on_demand_composition: (required)
         :type calls_on_demand_composition: CallsOnDemandComposition
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4827,7 +5419,9 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -4848,7 +5442,7 @@ class CallsApi:
         dialog_id: Annotated[StrictStr, Field(description="Dialog ID.")],
         calls_on_demand_composition: CallsOnDemandComposition,
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -4871,7 +5465,7 @@ class CallsApi:
         :param calls_on_demand_composition: (required)
         :type calls_on_demand_composition: CallsOnDemandComposition
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4906,7 +5500,9 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -4945,7 +5541,7 @@ class CallsApi:
         # process the query parameters
         if location is not None:
 
-            _query_params.append(("location", location))
+            _query_params.append(("location", location.value))
 
         # process the header parameters
         # process the form parameters
@@ -5046,6 +5642,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -5120,6 +5717,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -5194,6 +5792,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -5272,7 +5871,7 @@ class CallsApi:
     def conference_play_file(
         self,
         conference_id: Annotated[StrictStr, Field(description="Conference ID.")],
-        calls_play_request: CallsPlayRequest,
+        calls_conference_play_request: CallsConferencePlayRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5291,8 +5890,8 @@ class CallsApi:
 
         :param conference_id: Conference ID. (required)
         :type conference_id: str
-        :param calls_play_request: (required)
-        :type calls_play_request: CallsPlayRequest
+        :param calls_conference_play_request: (required)
+        :type calls_conference_play_request: CallsConferencePlayRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5317,7 +5916,7 @@ class CallsApi:
 
         _param = self._conference_play_file_serialize(
             conference_id=conference_id,
-            calls_play_request=calls_play_request,
+            calls_conference_play_request=calls_conference_play_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5328,6 +5927,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -5346,7 +5946,7 @@ class CallsApi:
     def conference_play_file_with_http_info(
         self,
         conference_id: Annotated[StrictStr, Field(description="Conference ID.")],
-        calls_play_request: CallsPlayRequest,
+        calls_conference_play_request: CallsConferencePlayRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5365,8 +5965,8 @@ class CallsApi:
 
         :param conference_id: Conference ID. (required)
         :type conference_id: str
-        :param calls_play_request: (required)
-        :type calls_play_request: CallsPlayRequest
+        :param calls_conference_play_request: (required)
+        :type calls_conference_play_request: CallsConferencePlayRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5391,7 +5991,7 @@ class CallsApi:
 
         _param = self._conference_play_file_serialize(
             conference_id=conference_id,
-            calls_play_request=calls_play_request,
+            calls_conference_play_request=calls_conference_play_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5402,6 +6002,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -5420,7 +6021,7 @@ class CallsApi:
     def conference_play_file_without_preload_content(
         self,
         conference_id: Annotated[StrictStr, Field(description="Conference ID.")],
-        calls_play_request: CallsPlayRequest,
+        calls_conference_play_request: CallsConferencePlayRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5439,8 +6040,8 @@ class CallsApi:
 
         :param conference_id: Conference ID. (required)
         :type conference_id: str
-        :param calls_play_request: (required)
-        :type calls_play_request: CallsPlayRequest
+        :param calls_conference_play_request: (required)
+        :type calls_conference_play_request: CallsConferencePlayRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5465,7 +6066,7 @@ class CallsApi:
 
         _param = self._conference_play_file_serialize(
             conference_id=conference_id,
-            calls_play_request=calls_play_request,
+            calls_conference_play_request=calls_conference_play_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5476,6 +6077,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -5489,7 +6091,7 @@ class CallsApi:
     def _conference_play_file_serialize(
         self,
         conference_id,
-        calls_play_request,
+        calls_conference_play_request,
         _request_auth,
         _content_type,
         _headers,
@@ -5514,8 +6116,8 @@ class CallsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if calls_play_request is not None:
-            _body_params = calls_play_request
+        if calls_conference_play_request is not None:
+            _body_params = calls_conference_play_request
 
         # set the HTTP header `Accept`
         _header_params["Accept"] = self.api_client.select_header_accept(
@@ -5610,6 +6212,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -5684,6 +6287,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -5758,6 +6362,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -5892,6 +6497,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -5966,6 +6572,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -6040,6 +6647,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -6169,6 +6777,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -6238,6 +6847,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -6307,6 +6917,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -6424,6 +7035,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -6494,6 +7106,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -6564,6 +7177,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -6681,6 +7295,7 @@ class CallsApi:
             "200": "CallsConference",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -6751,6 +7366,7 @@ class CallsApi:
             "200": "CallsConference",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -6821,6 +7437,7 @@ class CallsApi:
             "200": "CallsConference",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -6952,6 +7569,7 @@ class CallsApi:
             "200": "CallsConferenceAndCall",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -7026,6 +7644,7 @@ class CallsApi:
             "200": "CallsConferenceAndCall",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -7100,6 +7719,7 @@ class CallsApi:
             "200": "CallsConferenceAndCall",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -7230,6 +7850,7 @@ class CallsApi:
             "201": "CallBulkResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -7300,6 +7921,7 @@ class CallsApi:
             "201": "CallBulkResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -7370,6 +7992,7 @@ class CallsApi:
             "201": "CallBulkResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -7497,6 +8120,7 @@ class CallsApi:
             "201": "Call",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -7567,6 +8191,7 @@ class CallsApi:
             "201": "Call",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -7637,6 +8262,7 @@ class CallsApi:
             "201": "Call",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -7764,6 +8390,7 @@ class CallsApi:
             "201": "CallsConference",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -7834,6 +8461,7 @@ class CallsApi:
             "201": "CallsConference",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -7904,6 +8532,7 @@ class CallsApi:
             "201": "CallsConference",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -8031,6 +8660,7 @@ class CallsApi:
             "201": "CallsDialogResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -8101,6 +8731,7 @@ class CallsApi:
             "201": "CallsDialogResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -8171,6 +8802,7 @@ class CallsApi:
             "201": "CallsDialogResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -8316,6 +8948,7 @@ class CallsApi:
             "201": "CallsDialogResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -8404,6 +9037,7 @@ class CallsApi:
             "201": "CallsDialogResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -8492,6 +9126,7 @@ class CallsApi:
             "201": "CallsDialogResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -8625,6 +9260,7 @@ class CallsApi:
             "201": "CallsMediaStreamConfigResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -8694,6 +9330,7 @@ class CallsApi:
             "201": "CallsMediaStreamConfigResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -8763,6 +9400,7 @@ class CallsApi:
             "201": "CallsMediaStreamConfigResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -8889,6 +9527,7 @@ class CallsApi:
             "202": "CallsCreateSipTrunkResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -8958,6 +9597,7 @@ class CallsApi:
             "202": "CallsCreateSipTrunkResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -9027,6 +9667,7 @@ class CallsApi:
             "202": "CallsCreateSipTrunkResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -9153,6 +9794,7 @@ class CallsApi:
             "201": "CallsPublicSipTrunkServiceAddress",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -9222,6 +9864,7 @@ class CallsApi:
             "201": "CallsPublicSipTrunkServiceAddress",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -9291,6 +9934,7 @@ class CallsApi:
             "201": "CallsPublicSipTrunkServiceAddress",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -9366,7 +10010,7 @@ class CallsApi:
         self,
         call_id: Annotated[StrictStr, Field(description="Call ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -9379,7 +10023,7 @@ class CallsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CallsPublicCallRecording:
+    ) -> CallRecording:
         """Delete call recordings
 
         Delete the recordings for a single call.
@@ -9387,7 +10031,7 @@ class CallsApi:
         :param call_id: Call ID. (required)
         :type call_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -9420,8 +10064,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsPublicCallRecording",
+            "200": "CallRecording",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -9441,7 +10086,7 @@ class CallsApi:
         self,
         call_id: Annotated[StrictStr, Field(description="Call ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -9454,7 +10099,7 @@ class CallsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CallsPublicCallRecording]:
+    ) -> ApiResponse[CallRecording]:
         """Delete call recordings
 
         Delete the recordings for a single call.
@@ -9462,7 +10107,7 @@ class CallsApi:
         :param call_id: Call ID. (required)
         :type call_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -9495,8 +10140,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsPublicCallRecording",
+            "200": "CallRecording",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -9516,7 +10162,7 @@ class CallsApi:
         self,
         call_id: Annotated[StrictStr, Field(description="Call ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -9537,7 +10183,7 @@ class CallsApi:
         :param call_id: Call ID. (required)
         :type call_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -9570,8 +10216,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsPublicCallRecording",
+            "200": "CallRecording",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -9609,7 +10256,7 @@ class CallsApi:
         # process the query parameters
         if location is not None:
 
-            _query_params.append(("location", location))
+            _query_params.append(("location", location.value))
 
         # process the header parameters
         # process the form parameters
@@ -9693,6 +10340,8 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsFile",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -9761,6 +10410,8 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsFile",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -9829,6 +10480,8 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsFile",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -9894,7 +10547,7 @@ class CallsApi:
         self,
         conference_id: Annotated[StrictStr, Field(description="Conference ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -9907,7 +10560,7 @@ class CallsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CallsPublicConferenceRecording:
+    ) -> CallsConferenceRecording:
         """Delete conference recordings
 
         Delete the recordings for a single conference.
@@ -9915,7 +10568,7 @@ class CallsApi:
         :param conference_id: Conference ID. (required)
         :type conference_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -9948,8 +10601,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsPublicConferenceRecording",
+            "200": "CallsConferenceRecording",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -9969,7 +10623,7 @@ class CallsApi:
         self,
         conference_id: Annotated[StrictStr, Field(description="Conference ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -9982,7 +10636,7 @@ class CallsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CallsPublicConferenceRecording]:
+    ) -> ApiResponse[CallsConferenceRecording]:
         """Delete conference recordings
 
         Delete the recordings for a single conference.
@@ -9990,7 +10644,7 @@ class CallsApi:
         :param conference_id: Conference ID. (required)
         :type conference_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -10023,8 +10677,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsPublicConferenceRecording",
+            "200": "CallsConferenceRecording",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -10044,7 +10699,7 @@ class CallsApi:
         self,
         conference_id: Annotated[StrictStr, Field(description="Conference ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -10065,7 +10720,7 @@ class CallsApi:
         :param conference_id: Conference ID. (required)
         :type conference_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -10098,8 +10753,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsPublicConferenceRecording",
+            "200": "CallsConferenceRecording",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -10137,7 +10793,7 @@ class CallsApi:
         # process the query parameters
         if location is not None:
 
-            _query_params.append(("location", location))
+            _query_params.append(("location", location.value))
 
         # process the header parameters
         # process the form parameters
@@ -10171,7 +10827,7 @@ class CallsApi:
         self,
         dialog_id: Annotated[StrictStr, Field(description="Dialog ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -10184,7 +10840,7 @@ class CallsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CallsPublicDialogRecording:
+    ) -> CallsDialogRecordingResponse:
         """Delete dialog recordings
 
         Delete the recordings for a single dialog.
@@ -10192,7 +10848,7 @@ class CallsApi:
         :param dialog_id: Dialog ID. (required)
         :type dialog_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -10225,8 +10881,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsPublicDialogRecording",
+            "200": "CallsDialogRecordingResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -10246,7 +10903,7 @@ class CallsApi:
         self,
         dialog_id: Annotated[StrictStr, Field(description="Dialog ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -10259,7 +10916,7 @@ class CallsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CallsPublicDialogRecording]:
+    ) -> ApiResponse[CallsDialogRecordingResponse]:
         """Delete dialog recordings
 
         Delete the recordings for a single dialog.
@@ -10267,7 +10924,7 @@ class CallsApi:
         :param dialog_id: Dialog ID. (required)
         :type dialog_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -10300,8 +10957,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsPublicDialogRecording",
+            "200": "CallsDialogRecordingResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -10321,7 +10979,7 @@ class CallsApi:
         self,
         dialog_id: Annotated[StrictStr, Field(description="Dialog ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -10342,7 +11000,7 @@ class CallsApi:
         :param dialog_id: Dialog ID. (required)
         :type dialog_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -10375,8 +11033,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsPublicDialogRecording",
+            "200": "CallsDialogRecordingResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -10414,7 +11073,7 @@ class CallsApi:
         # process the query parameters
         if location is not None:
 
-            _query_params.append(("location", location))
+            _query_params.append(("location", location.value))
 
         # process the header parameters
         # process the form parameters
@@ -10500,6 +11159,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsMediaStreamConfigResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -10571,6 +11231,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsMediaStreamConfigResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -10642,6 +11303,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsMediaStreamConfigResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -10708,7 +11370,7 @@ class CallsApi:
         self,
         file_id: Annotated[StrictStr, Field(description="File ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -10721,7 +11383,7 @@ class CallsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CallsPublicRecordingFile:
+    ) -> CallsRecordingFile:
         """Delete recording file
 
         Delete a single file from a call or conference recording. The call or conference recording metadata will still exist after deleting the file, but the file will not show up anymore in the file list of that call or conference recording.
@@ -10729,7 +11391,7 @@ class CallsApi:
         :param file_id: File ID. (required)
         :type file_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -10762,8 +11424,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsPublicRecordingFile",
+            "200": "CallsRecordingFile",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -10783,7 +11446,7 @@ class CallsApi:
         self,
         file_id: Annotated[StrictStr, Field(description="File ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -10796,7 +11459,7 @@ class CallsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CallsPublicRecordingFile]:
+    ) -> ApiResponse[CallsRecordingFile]:
         """Delete recording file
 
         Delete a single file from a call or conference recording. The call or conference recording metadata will still exist after deleting the file, but the file will not show up anymore in the file list of that call or conference recording.
@@ -10804,7 +11467,7 @@ class CallsApi:
         :param file_id: File ID. (required)
         :type file_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -10837,8 +11500,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsPublicRecordingFile",
+            "200": "CallsRecordingFile",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -10858,7 +11522,7 @@ class CallsApi:
         self,
         file_id: Annotated[StrictStr, Field(description="File ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -10879,7 +11543,7 @@ class CallsApi:
         :param file_id: File ID. (required)
         :type file_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -10912,8 +11576,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsPublicRecordingFile",
+            "200": "CallsRecordingFile",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -10951,7 +11616,7 @@ class CallsApi:
         # process the query parameters
         if location is not None:
 
-            _query_params.append(("location", location))
+            _query_params.append(("location", location.value))
 
         # process the header parameters
         # process the form parameters
@@ -11035,6 +11700,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "202": "CallsSipTrunkResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -11104,6 +11770,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "202": "CallsSipTrunkResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -11173,6 +11840,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "202": "CallsSipTrunkResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -11293,6 +11961,7 @@ class CallsApi:
             "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -11365,6 +12034,7 @@ class CallsApi:
             "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -11437,6 +12107,7 @@ class CallsApi:
             "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -11557,6 +12228,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -11631,6 +12303,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -11705,6 +12378,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -11839,6 +12513,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -11913,6 +12588,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -11987,6 +12663,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -12121,6 +12798,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -12195,6 +12873,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -12269,6 +12948,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -12403,6 +13083,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -12477,6 +13158,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -12551,6 +13233,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -12680,6 +13363,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -12749,6 +13433,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -12818,6 +13503,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -12935,6 +13621,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -13005,6 +13692,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -13075,6 +13763,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -13141,7 +13830,13 @@ class CallsApi:
         self,
         file_id: Annotated[StrictStr, Field(description="File ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
+        ] = None,
+        range: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Range header specifies range of bytes to be returned by the response. If range header is not specified, response will return a complete file."
+            ),
         ] = None,
         _request_timeout: Union[
             None,
@@ -13162,7 +13857,9 @@ class CallsApi:
         :param file_id: File ID. (required)
         :type file_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
+        :param range: Range header specifies range of bytes to be returned by the response. If range header is not specified, response will return a complete file.
+        :type range: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -13188,6 +13885,7 @@ class CallsApi:
         _param = self._download_recording_file_serialize(
             file_id=file_id,
             location=location,
+            range=range,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -13196,9 +13894,11 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "bytearray",
+            "206": "bytearray",
             "401": "ApiException",
             "403": "ApiException",
             "404": "ApiException",
+            "416": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -13217,7 +13917,13 @@ class CallsApi:
         self,
         file_id: Annotated[StrictStr, Field(description="File ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
+        ] = None,
+        range: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Range header specifies range of bytes to be returned by the response. If range header is not specified, response will return a complete file."
+            ),
         ] = None,
         _request_timeout: Union[
             None,
@@ -13238,7 +13944,9 @@ class CallsApi:
         :param file_id: File ID. (required)
         :type file_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
+        :param range: Range header specifies range of bytes to be returned by the response. If range header is not specified, response will return a complete file.
+        :type range: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -13264,6 +13972,7 @@ class CallsApi:
         _param = self._download_recording_file_serialize(
             file_id=file_id,
             location=location,
+            range=range,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -13272,9 +13981,11 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "bytearray",
+            "206": "bytearray",
             "401": "ApiException",
             "403": "ApiException",
             "404": "ApiException",
+            "416": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -13293,7 +14004,13 @@ class CallsApi:
         self,
         file_id: Annotated[StrictStr, Field(description="File ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
+        ] = None,
+        range: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Range header specifies range of bytes to be returned by the response. If range header is not specified, response will return a complete file."
+            ),
         ] = None,
         _request_timeout: Union[
             None,
@@ -13314,7 +14031,9 @@ class CallsApi:
         :param file_id: File ID. (required)
         :type file_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
+        :param range: Range header specifies range of bytes to be returned by the response. If range header is not specified, response will return a complete file.
+        :type range: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -13340,6 +14059,7 @@ class CallsApi:
         _param = self._download_recording_file_serialize(
             file_id=file_id,
             location=location,
+            range=range,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -13348,9 +14068,11 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "bytearray",
+            "206": "bytearray",
             "401": "ApiException",
             "403": "ApiException",
             "404": "ApiException",
+            "416": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -13364,6 +14086,7 @@ class CallsApi:
         self,
         file_id,
         location,
+        range,
         _request_auth,
         _content_type,
         _headers,
@@ -13387,9 +14110,11 @@ class CallsApi:
         # process the query parameters
         if location is not None:
 
-            _query_params.append(("location", location))
+            _query_params.append(("location", location.value))
 
         # process the header parameters
+        if range is not None:
+            _header_params["Range"] = range
         # process the form parameters
         # process the body parameter
 
@@ -13471,6 +14196,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallBulkStatus",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -13540,6 +14266,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallBulkStatus",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -13609,6 +14336,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallBulkStatus",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -13725,6 +14453,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Call",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -13794,6 +14523,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Call",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -13863,6 +14593,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Call",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -13979,6 +14710,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallLog",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -14048,6 +14780,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallLog",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -14117,6 +14850,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallLog",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -14183,7 +14917,7 @@ class CallsApi:
         self,
         call_id: Annotated[StrictStr, Field(description="Call ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -14196,7 +14930,7 @@ class CallsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CallsPublicCallRecording:
+    ) -> CallRecording:
         """Get call recordings
 
         Get the recordings for a single call.
@@ -14204,7 +14938,7 @@ class CallsApi:
         :param call_id: Call ID. (required)
         :type call_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -14237,8 +14971,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsPublicCallRecording",
+            "200": "CallRecording",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -14258,7 +14993,7 @@ class CallsApi:
         self,
         call_id: Annotated[StrictStr, Field(description="Call ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -14271,7 +15006,7 @@ class CallsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CallsPublicCallRecording]:
+    ) -> ApiResponse[CallRecording]:
         """Get call recordings
 
         Get the recordings for a single call.
@@ -14279,7 +15014,7 @@ class CallsApi:
         :param call_id: Call ID. (required)
         :type call_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -14312,8 +15047,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsPublicCallRecording",
+            "200": "CallRecording",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -14333,7 +15069,7 @@ class CallsApi:
         self,
         call_id: Annotated[StrictStr, Field(description="Call ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -14354,7 +15090,7 @@ class CallsApi:
         :param call_id: Call ID. (required)
         :type call_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -14387,8 +15123,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsPublicCallRecording",
+            "200": "CallRecording",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -14426,7 +15163,7 @@ class CallsApi:
         # process the query parameters
         if location is not None:
 
-            _query_params.append(("location", location))
+            _query_params.append(("location", location.value))
 
         # process the header parameters
         # process the form parameters
@@ -14586,6 +15323,7 @@ class CallsApi:
             "200": "CallPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -14730,6 +15468,7 @@ class CallsApi:
             "200": "CallPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -14874,6 +15613,7 @@ class CallsApi:
             "200": "CallPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -15060,6 +15800,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsFile",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -15129,6 +15870,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsFile",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -15198,6 +15940,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsFile",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -15325,6 +16068,7 @@ class CallsApi:
             "200": "CallsFilePage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -15404,6 +16148,7 @@ class CallsApi:
             "200": "CallsFilePage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -15483,6 +16228,7 @@ class CallsApi:
             "200": "CallsFilePage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -15690,6 +16436,7 @@ class CallsApi:
             "200": "CallLogPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -15843,6 +16590,7 @@ class CallsApi:
             "200": "CallLogPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -15996,6 +16744,7 @@ class CallsApi:
             "200": "CallLogPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -16151,6 +16900,9 @@ class CallsApi:
         application_id: Annotated[
             Optional[StrictStr], Field(description="Application ID.")
         ] = None,
+        entity_id: Annotated[
+            Optional[StrictStr], Field(description="Entity ID.")
+        ] = None,
         endpoint_identifier: Annotated[
             Optional[StrictStr], Field(description="Endpoint identifier.")
         ] = None,
@@ -16169,7 +16921,7 @@ class CallsApi:
             Optional[CallEndpointType], Field(description="Endpoint type.")
         ] = None,
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         page: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
@@ -16201,6 +16953,8 @@ class CallsApi:
         :type calls_configuration_id: str
         :param application_id: Application ID.
         :type application_id: str
+        :param entity_id: Entity ID.
+        :type entity_id: str
         :param endpoint_identifier: Endpoint identifier.
         :type endpoint_identifier: str
         :param start_time_after: Date and time when the (first) call recording started.
@@ -16212,7 +16966,7 @@ class CallsApi:
         :param endpoint_type: Endpoint type.
         :type endpoint_type: CallEndpointType
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param page: Results page to retrieve (0..N).
         :type page: int
         :param size: Number of records per page.
@@ -16243,6 +16997,7 @@ class CallsApi:
             call_id=call_id,
             calls_configuration_id=calls_configuration_id,
             application_id=application_id,
+            entity_id=entity_id,
             endpoint_identifier=endpoint_identifier,
             start_time_after=start_time_after,
             end_time_before=end_time_before,
@@ -16261,6 +17016,7 @@ class CallsApi:
             "200": "CallRecordingPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -16284,6 +17040,9 @@ class CallsApi:
         application_id: Annotated[
             Optional[StrictStr], Field(description="Application ID.")
         ] = None,
+        entity_id: Annotated[
+            Optional[StrictStr], Field(description="Entity ID.")
+        ] = None,
         endpoint_identifier: Annotated[
             Optional[StrictStr], Field(description="Endpoint identifier.")
         ] = None,
@@ -16302,7 +17061,7 @@ class CallsApi:
             Optional[CallEndpointType], Field(description="Endpoint type.")
         ] = None,
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         page: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
@@ -16334,6 +17093,8 @@ class CallsApi:
         :type calls_configuration_id: str
         :param application_id: Application ID.
         :type application_id: str
+        :param entity_id: Entity ID.
+        :type entity_id: str
         :param endpoint_identifier: Endpoint identifier.
         :type endpoint_identifier: str
         :param start_time_after: Date and time when the (first) call recording started.
@@ -16345,7 +17106,7 @@ class CallsApi:
         :param endpoint_type: Endpoint type.
         :type endpoint_type: CallEndpointType
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param page: Results page to retrieve (0..N).
         :type page: int
         :param size: Number of records per page.
@@ -16376,6 +17137,7 @@ class CallsApi:
             call_id=call_id,
             calls_configuration_id=calls_configuration_id,
             application_id=application_id,
+            entity_id=entity_id,
             endpoint_identifier=endpoint_identifier,
             start_time_after=start_time_after,
             end_time_before=end_time_before,
@@ -16394,6 +17156,7 @@ class CallsApi:
             "200": "CallRecordingPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -16417,6 +17180,9 @@ class CallsApi:
         application_id: Annotated[
             Optional[StrictStr], Field(description="Application ID.")
         ] = None,
+        entity_id: Annotated[
+            Optional[StrictStr], Field(description="Entity ID.")
+        ] = None,
         endpoint_identifier: Annotated[
             Optional[StrictStr], Field(description="Endpoint identifier.")
         ] = None,
@@ -16435,7 +17201,7 @@ class CallsApi:
             Optional[CallEndpointType], Field(description="Endpoint type.")
         ] = None,
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         page: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
@@ -16467,6 +17233,8 @@ class CallsApi:
         :type calls_configuration_id: str
         :param application_id: Application ID.
         :type application_id: str
+        :param entity_id: Entity ID.
+        :type entity_id: str
         :param endpoint_identifier: Endpoint identifier.
         :type endpoint_identifier: str
         :param start_time_after: Date and time when the (first) call recording started.
@@ -16478,7 +17246,7 @@ class CallsApi:
         :param endpoint_type: Endpoint type.
         :type endpoint_type: CallEndpointType
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param page: Results page to retrieve (0..N).
         :type page: int
         :param size: Number of records per page.
@@ -16509,6 +17277,7 @@ class CallsApi:
             call_id=call_id,
             calls_configuration_id=calls_configuration_id,
             application_id=application_id,
+            entity_id=entity_id,
             endpoint_identifier=endpoint_identifier,
             start_time_after=start_time_after,
             end_time_before=end_time_before,
@@ -16527,6 +17296,7 @@ class CallsApi:
             "200": "CallRecordingPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -16541,6 +17311,7 @@ class CallsApi:
         call_id,
         calls_configuration_id,
         application_id,
+        entity_id,
         endpoint_identifier,
         start_time_after,
         end_time_before,
@@ -16579,6 +17350,10 @@ class CallsApi:
         if application_id is not None:
 
             _query_params.append(("applicationId", application_id))
+
+        if entity_id is not None:
+
+            _query_params.append(("entityId", entity_id))
 
         if endpoint_identifier is not None:
 
@@ -16620,7 +17395,7 @@ class CallsApi:
 
         if location is not None:
 
-            _query_params.append(("location", location))
+            _query_params.append(("location", location.value))
 
         if page is not None:
 
@@ -16712,6 +17487,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsConference",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -16781,6 +17557,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsConference",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -16850,6 +17627,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsConference",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -16926,7 +17704,7 @@ class CallsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CallsConferenceLogResponse:
+    ) -> CallsConferenceLog:
         """Get conference history
 
         Get a single conference history. Conference history retention period is 3 months.
@@ -16964,8 +17742,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsConferenceLogResponse",
+            "200": "CallsConferenceLog",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -16995,7 +17774,7 @@ class CallsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CallsConferenceLogResponse]:
+    ) -> ApiResponse[CallsConferenceLog]:
         """Get conference history
 
         Get a single conference history. Conference history retention period is 3 months.
@@ -17033,8 +17812,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsConferenceLogResponse",
+            "200": "CallsConferenceLog",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -17102,8 +17882,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsConferenceLogResponse",
+            "200": "CallsConferenceLog",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -17170,7 +17951,7 @@ class CallsApi:
         self,
         conference_id: Annotated[StrictStr, Field(description="Conference ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -17183,7 +17964,7 @@ class CallsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CallsPublicConferenceRecording:
+    ) -> CallsConferenceRecording:
         """Get conference recordings
 
         Get the recordings for a single conference.
@@ -17191,7 +17972,7 @@ class CallsApi:
         :param conference_id: Conference ID. (required)
         :type conference_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -17224,8 +18005,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsPublicConferenceRecording",
+            "200": "CallsConferenceRecording",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -17245,7 +18027,7 @@ class CallsApi:
         self,
         conference_id: Annotated[StrictStr, Field(description="Conference ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -17258,7 +18040,7 @@ class CallsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CallsPublicConferenceRecording]:
+    ) -> ApiResponse[CallsConferenceRecording]:
         """Get conference recordings
 
         Get the recordings for a single conference.
@@ -17266,7 +18048,7 @@ class CallsApi:
         :param conference_id: Conference ID. (required)
         :type conference_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -17299,8 +18081,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsPublicConferenceRecording",
+            "200": "CallsConferenceRecording",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -17320,7 +18103,7 @@ class CallsApi:
         self,
         conference_id: Annotated[StrictStr, Field(description="Conference ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -17341,7 +18124,7 @@ class CallsApi:
         :param conference_id: Conference ID. (required)
         :type conference_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -17374,8 +18157,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsPublicConferenceRecording",
+            "200": "CallsConferenceRecording",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -17413,7 +18197,7 @@ class CallsApi:
         # process the query parameters
         if location is not None:
 
-            _query_params.append(("location", location))
+            _query_params.append(("location", location.value))
 
         # process the header parameters
         # process the form parameters
@@ -17539,6 +18323,7 @@ class CallsApi:
             "200": "CallsConferencePage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -17649,6 +18434,7 @@ class CallsApi:
             "200": "CallsConferencePage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -17759,6 +18545,7 @@ class CallsApi:
             "200": "CallsConferencePage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -17966,6 +18753,7 @@ class CallsApi:
             "200": "CallsConferenceLogPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -18085,6 +18873,7 @@ class CallsApi:
             "200": "CallsConferenceLogPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -18204,6 +18993,7 @@ class CallsApi:
             "200": "CallsConferenceLogPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -18331,6 +19121,9 @@ class CallsApi:
         application_id: Annotated[
             Optional[StrictStr], Field(description="Application ID.")
         ] = None,
+        entity_id: Annotated[
+            Optional[StrictStr], Field(description="Entity ID.")
+        ] = None,
         conference_name: Annotated[
             Optional[StrictStr], Field(description="Conference name.")
         ] = None,
@@ -18338,6 +19131,18 @@ class CallsApi:
             Optional[StrictStr],
             Field(
                 description="Filter all conference recordings where call ID was included in the recording."
+            ),
+        ] = None,
+        call_endpoint_type: Annotated[
+            Optional[CallEndpointType],
+            Field(
+                description="Filter all conference recordings where calls with endpoint type were included in the recording."
+            ),
+        ] = None,
+        call_endpoint_identifier: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Filter all conference recordings where calls with endpoint identifier were included in the recording."
             ),
         ] = None,
         start_time_after: Annotated[
@@ -18359,7 +19164,7 @@ class CallsApi:
             ),
         ] = None,
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         page: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
@@ -18391,10 +19196,16 @@ class CallsApi:
         :type calls_configuration_id: str
         :param application_id: Application ID.
         :type application_id: str
+        :param entity_id: Entity ID.
+        :type entity_id: str
         :param conference_name: Conference name.
         :type conference_name: str
         :param call_id: Filter all conference recordings where call ID was included in the recording.
         :type call_id: str
+        :param call_endpoint_type: Filter all conference recordings where calls with endpoint type were included in the recording.
+        :type call_endpoint_type: CallEndpointType
+        :param call_endpoint_identifier: Filter all conference recordings where calls with endpoint identifier were included in the recording.
+        :type call_endpoint_identifier: str
         :param start_time_after: Date and time when the (first) conference recording started.
         :type start_time_after: datetime
         :param end_time_before: Date and time when the (last) conference recording ended.
@@ -18402,7 +19213,7 @@ class CallsApi:
         :param composition: Flag indicating whether auto-compose feature was turned on for the recording.
         :type composition: bool
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param page: Results page to retrieve (0..N).
         :type page: int
         :param size: Number of records per page.
@@ -18433,8 +19244,11 @@ class CallsApi:
             conference_id=conference_id,
             calls_configuration_id=calls_configuration_id,
             application_id=application_id,
+            entity_id=entity_id,
             conference_name=conference_name,
             call_id=call_id,
+            call_endpoint_type=call_endpoint_type,
+            call_endpoint_identifier=call_endpoint_identifier,
             start_time_after=start_time_after,
             end_time_before=end_time_before,
             composition=composition,
@@ -18451,6 +19265,7 @@ class CallsApi:
             "200": "CallsConferenceRecordingPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -18476,6 +19291,9 @@ class CallsApi:
         application_id: Annotated[
             Optional[StrictStr], Field(description="Application ID.")
         ] = None,
+        entity_id: Annotated[
+            Optional[StrictStr], Field(description="Entity ID.")
+        ] = None,
         conference_name: Annotated[
             Optional[StrictStr], Field(description="Conference name.")
         ] = None,
@@ -18483,6 +19301,18 @@ class CallsApi:
             Optional[StrictStr],
             Field(
                 description="Filter all conference recordings where call ID was included in the recording."
+            ),
+        ] = None,
+        call_endpoint_type: Annotated[
+            Optional[CallEndpointType],
+            Field(
+                description="Filter all conference recordings where calls with endpoint type were included in the recording."
+            ),
+        ] = None,
+        call_endpoint_identifier: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Filter all conference recordings where calls with endpoint identifier were included in the recording."
             ),
         ] = None,
         start_time_after: Annotated[
@@ -18504,7 +19334,7 @@ class CallsApi:
             ),
         ] = None,
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         page: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
@@ -18536,10 +19366,16 @@ class CallsApi:
         :type calls_configuration_id: str
         :param application_id: Application ID.
         :type application_id: str
+        :param entity_id: Entity ID.
+        :type entity_id: str
         :param conference_name: Conference name.
         :type conference_name: str
         :param call_id: Filter all conference recordings where call ID was included in the recording.
         :type call_id: str
+        :param call_endpoint_type: Filter all conference recordings where calls with endpoint type were included in the recording.
+        :type call_endpoint_type: CallEndpointType
+        :param call_endpoint_identifier: Filter all conference recordings where calls with endpoint identifier were included in the recording.
+        :type call_endpoint_identifier: str
         :param start_time_after: Date and time when the (first) conference recording started.
         :type start_time_after: datetime
         :param end_time_before: Date and time when the (last) conference recording ended.
@@ -18547,7 +19383,7 @@ class CallsApi:
         :param composition: Flag indicating whether auto-compose feature was turned on for the recording.
         :type composition: bool
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param page: Results page to retrieve (0..N).
         :type page: int
         :param size: Number of records per page.
@@ -18578,8 +19414,11 @@ class CallsApi:
             conference_id=conference_id,
             calls_configuration_id=calls_configuration_id,
             application_id=application_id,
+            entity_id=entity_id,
             conference_name=conference_name,
             call_id=call_id,
+            call_endpoint_type=call_endpoint_type,
+            call_endpoint_identifier=call_endpoint_identifier,
             start_time_after=start_time_after,
             end_time_before=end_time_before,
             composition=composition,
@@ -18596,6 +19435,7 @@ class CallsApi:
             "200": "CallsConferenceRecordingPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -18621,6 +19461,9 @@ class CallsApi:
         application_id: Annotated[
             Optional[StrictStr], Field(description="Application ID.")
         ] = None,
+        entity_id: Annotated[
+            Optional[StrictStr], Field(description="Entity ID.")
+        ] = None,
         conference_name: Annotated[
             Optional[StrictStr], Field(description="Conference name.")
         ] = None,
@@ -18628,6 +19471,18 @@ class CallsApi:
             Optional[StrictStr],
             Field(
                 description="Filter all conference recordings where call ID was included in the recording."
+            ),
+        ] = None,
+        call_endpoint_type: Annotated[
+            Optional[CallEndpointType],
+            Field(
+                description="Filter all conference recordings where calls with endpoint type were included in the recording."
+            ),
+        ] = None,
+        call_endpoint_identifier: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Filter all conference recordings where calls with endpoint identifier were included in the recording."
             ),
         ] = None,
         start_time_after: Annotated[
@@ -18649,7 +19504,7 @@ class CallsApi:
             ),
         ] = None,
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         page: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
@@ -18681,10 +19536,16 @@ class CallsApi:
         :type calls_configuration_id: str
         :param application_id: Application ID.
         :type application_id: str
+        :param entity_id: Entity ID.
+        :type entity_id: str
         :param conference_name: Conference name.
         :type conference_name: str
         :param call_id: Filter all conference recordings where call ID was included in the recording.
         :type call_id: str
+        :param call_endpoint_type: Filter all conference recordings where calls with endpoint type were included in the recording.
+        :type call_endpoint_type: CallEndpointType
+        :param call_endpoint_identifier: Filter all conference recordings where calls with endpoint identifier were included in the recording.
+        :type call_endpoint_identifier: str
         :param start_time_after: Date and time when the (first) conference recording started.
         :type start_time_after: datetime
         :param end_time_before: Date and time when the (last) conference recording ended.
@@ -18692,7 +19553,7 @@ class CallsApi:
         :param composition: Flag indicating whether auto-compose feature was turned on for the recording.
         :type composition: bool
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param page: Results page to retrieve (0..N).
         :type page: int
         :param size: Number of records per page.
@@ -18723,8 +19584,11 @@ class CallsApi:
             conference_id=conference_id,
             calls_configuration_id=calls_configuration_id,
             application_id=application_id,
+            entity_id=entity_id,
             conference_name=conference_name,
             call_id=call_id,
+            call_endpoint_type=call_endpoint_type,
+            call_endpoint_identifier=call_endpoint_identifier,
             start_time_after=start_time_after,
             end_time_before=end_time_before,
             composition=composition,
@@ -18741,6 +19605,7 @@ class CallsApi:
             "200": "CallsConferenceRecordingPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -18755,8 +19620,11 @@ class CallsApi:
         conference_id,
         calls_configuration_id,
         application_id,
+        entity_id,
         conference_name,
         call_id,
+        call_endpoint_type,
+        call_endpoint_identifier,
         start_time_after,
         end_time_before,
         composition,
@@ -18794,6 +19662,10 @@ class CallsApi:
 
             _query_params.append(("applicationId", application_id))
 
+        if entity_id is not None:
+
+            _query_params.append(("entityId", entity_id))
+
         if conference_name is not None:
 
             _query_params.append(("conferenceName", conference_name))
@@ -18801,6 +19673,14 @@ class CallsApi:
         if call_id is not None:
 
             _query_params.append(("callId", call_id))
+
+        if call_endpoint_type is not None:
+
+            _query_params.append(("callEndpointType", call_endpoint_type.value))
+
+        if call_endpoint_identifier is not None:
+
+            _query_params.append(("callEndpointIdentifier", call_endpoint_identifier))
 
         if start_time_after is not None:
             if isinstance(start_time_after, datetime):
@@ -18834,7 +19714,7 @@ class CallsApi:
 
         if location is not None:
 
-            _query_params.append(("location", location))
+            _query_params.append(("location", location.value))
 
         if page is not None:
 
@@ -18923,6 +19803,7 @@ class CallsApi:
             "200": "CallsCountryList",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -18988,6 +19869,7 @@ class CallsApi:
             "200": "CallsCountryList",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -19053,6 +19935,7 @@ class CallsApi:
             "200": "CallsCountryList",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -19165,6 +20048,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsDialogResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -19234,6 +20118,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsDialogResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -19303,6 +20188,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsDialogResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -19419,6 +20305,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsDialogLogResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -19488,6 +20375,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsDialogLogResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -19557,6 +20445,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsDialogLogResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -19623,7 +20512,7 @@ class CallsApi:
         self,
         dialog_id: Annotated[StrictStr, Field(description="Dialog ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -19636,7 +20525,7 @@ class CallsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CallsPublicDialogRecording:
+    ) -> CallsDialogRecordingResponse:
         """Get dialog recordings
 
         Get the recordings for a single dialog.
@@ -19644,7 +20533,7 @@ class CallsApi:
         :param dialog_id: Dialog ID. (required)
         :type dialog_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -19677,8 +20566,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsPublicDialogRecording",
+            "200": "CallsDialogRecordingResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -19698,7 +20588,7 @@ class CallsApi:
         self,
         dialog_id: Annotated[StrictStr, Field(description="Dialog ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -19711,7 +20601,7 @@ class CallsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CallsPublicDialogRecording]:
+    ) -> ApiResponse[CallsDialogRecordingResponse]:
         """Get dialog recordings
 
         Get the recordings for a single dialog.
@@ -19719,7 +20609,7 @@ class CallsApi:
         :param dialog_id: Dialog ID. (required)
         :type dialog_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -19752,8 +20642,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsPublicDialogRecording",
+            "200": "CallsDialogRecordingResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -19773,7 +20664,7 @@ class CallsApi:
         self,
         dialog_id: Annotated[StrictStr, Field(description="Dialog ID.")],
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         _request_timeout: Union[
             None,
@@ -19794,7 +20685,7 @@ class CallsApi:
         :param dialog_id: Dialog ID. (required)
         :type dialog_id: str
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -19827,8 +20718,9 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsPublicDialogRecording",
+            "200": "CallsDialogRecordingResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -19866,7 +20758,7 @@ class CallsApi:
         # process the query parameters
         if location is not None:
 
-            _query_params.append(("location", location))
+            _query_params.append(("location", location.value))
 
         # process the header parameters
         # process the form parameters
@@ -20000,6 +20892,7 @@ class CallsApi:
             "200": "CallsDialogPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -20118,6 +21011,7 @@ class CallsApi:
             "200": "CallsDialogPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -20236,6 +21130,7 @@ class CallsApi:
             "200": "CallsDialogPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -20456,6 +21351,7 @@ class CallsApi:
             "200": "CallsDialogLogPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -20583,6 +21479,7 @@ class CallsApi:
             "200": "CallsDialogLogPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -20710,6 +21607,7 @@ class CallsApi:
             "200": "CallsDialogLogPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -20842,10 +21740,25 @@ class CallsApi:
         application_id: Annotated[
             Optional[StrictStr], Field(description="Application ID.")
         ] = None,
+        entity_id: Annotated[
+            Optional[StrictStr], Field(description="Entity ID.")
+        ] = None,
         call_id: Annotated[
             Optional[StrictStr],
             Field(
                 description="Filter all dialog recordings where call ID was included in the recording."
+            ),
+        ] = None,
+        call_endpoint_type: Annotated[
+            Optional[CallEndpointType],
+            Field(
+                description="Filter all dialog recordings where calls with endpoint type were included in the recording."
+            ),
+        ] = None,
+        call_endpoint_identifier: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Filter all dialog recordings where calls with endpoint identifier were included in the recording."
             ),
         ] = None,
         start_time_after: Annotated[
@@ -20865,7 +21778,7 @@ class CallsApi:
             ),
         ] = None,
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         page: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
@@ -20897,8 +21810,14 @@ class CallsApi:
         :type calls_configuration_id: str
         :param application_id: Application ID.
         :type application_id: str
+        :param entity_id: Entity ID.
+        :type entity_id: str
         :param call_id: Filter all dialog recordings where call ID was included in the recording.
         :type call_id: str
+        :param call_endpoint_type: Filter all dialog recordings where calls with endpoint type were included in the recording.
+        :type call_endpoint_type: CallEndpointType
+        :param call_endpoint_identifier: Filter all dialog recordings where calls with endpoint identifier were included in the recording.
+        :type call_endpoint_identifier: str
         :param start_time_after: Date and time when the (first) dialog recording started.
         :type start_time_after: datetime
         :param end_time_before: Date and time when the (last) dialog recording ended.
@@ -20906,7 +21825,7 @@ class CallsApi:
         :param composition: Flag indicating whether auto-compose feature was turned on for the recording.
         :type composition: bool
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param page: Results page to retrieve (0..N).
         :type page: int
         :param size: Number of records per page.
@@ -20937,7 +21856,10 @@ class CallsApi:
             dialog_id=dialog_id,
             calls_configuration_id=calls_configuration_id,
             application_id=application_id,
+            entity_id=entity_id,
             call_id=call_id,
+            call_endpoint_type=call_endpoint_type,
+            call_endpoint_identifier=call_endpoint_identifier,
             start_time_after=start_time_after,
             end_time_before=end_time_before,
             composition=composition,
@@ -20954,6 +21876,7 @@ class CallsApi:
             "200": "CallsDialogRecordingPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -20979,10 +21902,25 @@ class CallsApi:
         application_id: Annotated[
             Optional[StrictStr], Field(description="Application ID.")
         ] = None,
+        entity_id: Annotated[
+            Optional[StrictStr], Field(description="Entity ID.")
+        ] = None,
         call_id: Annotated[
             Optional[StrictStr],
             Field(
                 description="Filter all dialog recordings where call ID was included in the recording."
+            ),
+        ] = None,
+        call_endpoint_type: Annotated[
+            Optional[CallEndpointType],
+            Field(
+                description="Filter all dialog recordings where calls with endpoint type were included in the recording."
+            ),
+        ] = None,
+        call_endpoint_identifier: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Filter all dialog recordings where calls with endpoint identifier were included in the recording."
             ),
         ] = None,
         start_time_after: Annotated[
@@ -21002,7 +21940,7 @@ class CallsApi:
             ),
         ] = None,
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         page: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
@@ -21034,8 +21972,14 @@ class CallsApi:
         :type calls_configuration_id: str
         :param application_id: Application ID.
         :type application_id: str
+        :param entity_id: Entity ID.
+        :type entity_id: str
         :param call_id: Filter all dialog recordings where call ID was included in the recording.
         :type call_id: str
+        :param call_endpoint_type: Filter all dialog recordings where calls with endpoint type were included in the recording.
+        :type call_endpoint_type: CallEndpointType
+        :param call_endpoint_identifier: Filter all dialog recordings where calls with endpoint identifier were included in the recording.
+        :type call_endpoint_identifier: str
         :param start_time_after: Date and time when the (first) dialog recording started.
         :type start_time_after: datetime
         :param end_time_before: Date and time when the (last) dialog recording ended.
@@ -21043,7 +21987,7 @@ class CallsApi:
         :param composition: Flag indicating whether auto-compose feature was turned on for the recording.
         :type composition: bool
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param page: Results page to retrieve (0..N).
         :type page: int
         :param size: Number of records per page.
@@ -21074,7 +22018,10 @@ class CallsApi:
             dialog_id=dialog_id,
             calls_configuration_id=calls_configuration_id,
             application_id=application_id,
+            entity_id=entity_id,
             call_id=call_id,
+            call_endpoint_type=call_endpoint_type,
+            call_endpoint_identifier=call_endpoint_identifier,
             start_time_after=start_time_after,
             end_time_before=end_time_before,
             composition=composition,
@@ -21091,6 +22038,7 @@ class CallsApi:
             "200": "CallsDialogRecordingPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -21116,10 +22064,25 @@ class CallsApi:
         application_id: Annotated[
             Optional[StrictStr], Field(description="Application ID.")
         ] = None,
+        entity_id: Annotated[
+            Optional[StrictStr], Field(description="Entity ID.")
+        ] = None,
         call_id: Annotated[
             Optional[StrictStr],
             Field(
                 description="Filter all dialog recordings where call ID was included in the recording."
+            ),
+        ] = None,
+        call_endpoint_type: Annotated[
+            Optional[CallEndpointType],
+            Field(
+                description="Filter all dialog recordings where calls with endpoint type were included in the recording."
+            ),
+        ] = None,
+        call_endpoint_identifier: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Filter all dialog recordings where calls with endpoint identifier were included in the recording."
             ),
         ] = None,
         start_time_after: Annotated[
@@ -21139,7 +22102,7 @@ class CallsApi:
             ),
         ] = None,
         location: Annotated[
-            Optional[StrictStr], Field(description="Recording location.")
+            Optional[CallsRecordingLocation], Field(description="Recording location.")
         ] = None,
         page: Annotated[
             Optional[Annotated[int, Field(strict=True, ge=0)]],
@@ -21171,8 +22134,14 @@ class CallsApi:
         :type calls_configuration_id: str
         :param application_id: Application ID.
         :type application_id: str
+        :param entity_id: Entity ID.
+        :type entity_id: str
         :param call_id: Filter all dialog recordings where call ID was included in the recording.
         :type call_id: str
+        :param call_endpoint_type: Filter all dialog recordings where calls with endpoint type were included in the recording.
+        :type call_endpoint_type: CallEndpointType
+        :param call_endpoint_identifier: Filter all dialog recordings where calls with endpoint identifier were included in the recording.
+        :type call_endpoint_identifier: str
         :param start_time_after: Date and time when the (first) dialog recording started.
         :type start_time_after: datetime
         :param end_time_before: Date and time when the (last) dialog recording ended.
@@ -21180,7 +22149,7 @@ class CallsApi:
         :param composition: Flag indicating whether auto-compose feature was turned on for the recording.
         :type composition: bool
         :param location: Recording location.
-        :type location: str
+        :type location: CallsRecordingLocation
         :param page: Results page to retrieve (0..N).
         :type page: int
         :param size: Number of records per page.
@@ -21211,7 +22180,10 @@ class CallsApi:
             dialog_id=dialog_id,
             calls_configuration_id=calls_configuration_id,
             application_id=application_id,
+            entity_id=entity_id,
             call_id=call_id,
+            call_endpoint_type=call_endpoint_type,
+            call_endpoint_identifier=call_endpoint_identifier,
             start_time_after=start_time_after,
             end_time_before=end_time_before,
             composition=composition,
@@ -21228,6 +22200,7 @@ class CallsApi:
             "200": "CallsDialogRecordingPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -21242,7 +22215,10 @@ class CallsApi:
         dialog_id,
         calls_configuration_id,
         application_id,
+        entity_id,
         call_id,
+        call_endpoint_type,
+        call_endpoint_identifier,
         start_time_after,
         end_time_before,
         composition,
@@ -21280,9 +22256,21 @@ class CallsApi:
 
             _query_params.append(("applicationId", application_id))
 
+        if entity_id is not None:
+
+            _query_params.append(("entityId", entity_id))
+
         if call_id is not None:
 
             _query_params.append(("callId", call_id))
+
+        if call_endpoint_type is not None:
+
+            _query_params.append(("callEndpointType", call_endpoint_type.value))
+
+        if call_endpoint_identifier is not None:
+
+            _query_params.append(("callEndpointIdentifier", call_endpoint_identifier))
 
         if start_time_after is not None:
             if isinstance(start_time_after, datetime):
@@ -21316,7 +22304,7 @@ class CallsApi:
 
         if location is not None:
 
-            _query_params.append(("location", location))
+            _query_params.append(("location", location.value))
 
         if page is not None:
 
@@ -21410,6 +22398,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsMediaStreamConfigResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -21481,6 +22470,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsMediaStreamConfigResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -21552,6 +22542,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsMediaStreamConfigResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -21679,6 +22670,7 @@ class CallsApi:
             "200": "CallsMediaStreamConfigPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -21758,6 +22750,7 @@ class CallsApi:
             "200": "CallsMediaStreamConfigPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -21837,6 +22830,7 @@ class CallsApi:
             "200": "CallsMediaStreamConfigPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -21960,6 +22954,7 @@ class CallsApi:
             "200": "CallsRegionList",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -22029,6 +23024,7 @@ class CallsApi:
             "200": "CallsRegionList",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -22098,6 +23094,7 @@ class CallsApi:
             "200": "CallsRegionList",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -22215,6 +23212,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsSipTrunkResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -22284,6 +23282,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsSipTrunkResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -22353,6 +23352,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsSipTrunkResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -22472,6 +23472,8 @@ class CallsApi:
             "200": "CallsPublicSipTrunkServiceAddress",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -22543,6 +23545,8 @@ class CallsApi:
             "200": "CallsPublicSipTrunkServiceAddress",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -22614,6 +23618,8 @@ class CallsApi:
             "200": "CallsPublicSipTrunkServiceAddress",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -22740,6 +23746,7 @@ class CallsApi:
             "200": "CallsSipTrunkServiceAddressPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -22819,6 +23826,7 @@ class CallsApi:
             "200": "CallsSipTrunkServiceAddressPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -22898,6 +23906,7 @@ class CallsApi:
             "200": "CallsSipTrunkServiceAddressPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -23021,6 +24030,8 @@ class CallsApi:
             "200": "CallsExtendedSipTrunkStatusResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -23090,6 +24101,8 @@ class CallsApi:
             "200": "CallsExtendedSipTrunkStatusResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -23159,6 +24172,8 @@ class CallsApi:
             "200": "CallsExtendedSipTrunkStatusResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -23291,6 +24306,7 @@ class CallsApi:
             "200": "CallsSipTrunkPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -23376,6 +24392,7 @@ class CallsApi:
             "200": "CallsSipTrunkPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -23461,6 +24478,7 @@ class CallsApi:
             "200": "CallsSipTrunkPage",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -23593,6 +24611,7 @@ class CallsApi:
             "200": "Call",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -23667,6 +24686,7 @@ class CallsApi:
             "200": "Call",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -23741,6 +24761,7 @@ class CallsApi:
             "200": "Call",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -23870,6 +24891,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsConference",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -23939,6 +24961,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsConference",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -24008,6 +25031,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsConference",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -24124,6 +25148,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsDialogResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -24193,6 +25218,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsDialogResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -24262,6 +25288,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsDialogResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -24378,6 +25405,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallBulkStatus",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -24447,6 +25475,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallBulkStatus",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -24516,6 +25545,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallBulkStatus",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -24635,7 +25665,9 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -24708,7 +25740,9 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -24781,7 +25815,9 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -24915,6 +25951,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -24988,6 +26025,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -25061,6 +26099,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -25183,7 +26222,9 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallBulkStatus",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -25256,7 +26297,9 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallBulkStatus",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -25329,7 +26372,9 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallBulkStatus",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -25405,6 +26450,266 @@ class CallsApi:
         )
 
     @validate_call
+    def reset_sip_trunk_password(
+        self,
+        sip_trunk_id: Annotated[StrictStr, Field(description="Sip Trunk ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> CallsSipTrunkRegistrationCredentials:
+        """Reset registered SIP trunk password
+
+        Reset password. Applicable only for `REGISTERED` SIP trunks.
+
+        :param sip_trunk_id: Sip Trunk ID. (required)
+        :type sip_trunk_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._reset_sip_trunk_password_serialize(
+            sip_trunk_id=sip_trunk_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "CallsSipTrunkRegistrationCredentials",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+    @validate_call
+    def reset_sip_trunk_password_with_http_info(
+        self,
+        sip_trunk_id: Annotated[StrictStr, Field(description="Sip Trunk ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[CallsSipTrunkRegistrationCredentials]:
+        """Reset registered SIP trunk password
+
+        Reset password. Applicable only for `REGISTERED` SIP trunks.
+
+        :param sip_trunk_id: Sip Trunk ID. (required)
+        :type sip_trunk_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._reset_sip_trunk_password_serialize(
+            sip_trunk_id=sip_trunk_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "CallsSipTrunkRegistrationCredentials",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+    @validate_call
+    def reset_sip_trunk_password_without_preload_content(
+        self,
+        sip_trunk_id: Annotated[StrictStr, Field(description="Sip Trunk ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Reset registered SIP trunk password
+
+        Reset password. Applicable only for `REGISTERED` SIP trunks.
+
+        :param sip_trunk_id: Sip Trunk ID. (required)
+        :type sip_trunk_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._reset_sip_trunk_password_serialize(
+            sip_trunk_id=sip_trunk_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "CallsSipTrunkRegistrationCredentials",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+    def _reset_sip_trunk_password_serialize(
+        self,
+        sip_trunk_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {}
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if sip_trunk_id is not None:
+            _path_params["sipTrunkId"] = sip_trunk_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+        # set the HTTP header `Accept`
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )
+
+        # authentication setting
+        _auth_settings: List[str] = ["APIKeyHeader"]
+
+        return self.api_client.param_serialize(
+            method="POST",
+            resource_path="/calls/1/sip-trunks/{sipTrunkId}/reset-password",
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth,
+        )
+
+    @validate_call
     def resume_bulk(
         self,
         bulk_id: Annotated[StrictStr, Field(description="Bulk ID.")],
@@ -25459,6 +26764,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallBulkStatus",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -25528,6 +26834,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallBulkStatus",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -25597,6 +26904,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallBulkStatus",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -25713,6 +27021,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -25782,6 +27091,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -25851,6 +27161,7 @@ class CallsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsActionResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -25972,6 +27283,8 @@ class CallsApi:
             "200": "CallsSipTrunkStatusResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -26045,6 +27358,8 @@ class CallsApi:
             "200": "CallsSipTrunkStatusResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -26118,6 +27433,8 @@ class CallsApi:
             "200": "CallsSipTrunkStatusResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -26251,6 +27568,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -26325,6 +27643,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -26399,6 +27718,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -26529,6 +27849,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -26599,6 +27920,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -26669,6 +27991,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -26790,6 +28113,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -26864,6 +28188,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -26938,6 +28263,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -27076,6 +28402,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -27154,6 +28481,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -27232,6 +28560,7 @@ class CallsApi:
             "200": "CallsActionResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -27369,7 +28698,9 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsMediaStreamConfigResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -27444,7 +28775,9 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsMediaStreamConfigResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -27519,7 +28852,9 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsMediaStreamConfigResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
@@ -27654,6 +28989,8 @@ class CallsApi:
             "202": "CallsSipTrunkResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -27727,6 +29064,8 @@ class CallsApi:
             "202": "CallsSipTrunkResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -27800,6 +29139,8 @@ class CallsApi:
             "202": "CallsSipTrunkResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -27935,6 +29276,8 @@ class CallsApi:
             "200": "CallsPublicSipTrunkServiceAddress",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -28010,6 +29353,8 @@ class CallsApi:
             "200": "CallsPublicSipTrunkServiceAddress",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -28085,6 +29430,8 @@ class CallsApi:
             "200": "CallsPublicSipTrunkServiceAddress",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -28212,7 +29559,9 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsFile",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -28280,7 +29629,9 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsFile",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -28348,7 +29699,9 @@ class CallsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsFile",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }

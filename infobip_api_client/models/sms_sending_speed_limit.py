@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -20,7 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
-from infobip_api_client.models.sms_speed_limit_time_unit import SmsSpeedLimitTimeUnit
+from infobip_api_client.models.speed_limit_time_unit import SpeedLimitTimeUnit
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -33,7 +32,7 @@ class SmsSendingSpeedLimit(BaseModel):
     amount: StrictInt = Field(
         description="The number of messages to be sent per timeUnit. By default, the system sends messages as fast as the infrastructure allows. Use this parameter to adapt sending capacity to your needs. The system is only able to work against its maximum capacity for ambitious message batches."
     )
-    time_unit: Optional[SmsSpeedLimitTimeUnit] = Field(default=None, alias="timeUnit")
+    time_unit: Optional[SpeedLimitTimeUnit] = Field(default=None, alias="timeUnit")
     __properties: ClassVar[List[str]] = ["amount", "timeUnit"]
 
     model_config = ConfigDict(

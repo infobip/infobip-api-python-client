@@ -12,13 +12,12 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -35,7 +34,32 @@ class CallsVoice(BaseModel):
     gender: Optional[StrictStr] = Field(
         default=None, description="Gender of the voice. Can be `male` or `female`."
     )
-    __properties: ClassVar[List[str]] = ["name", "gender"]
+    supplier: Optional[StrictStr] = Field(
+        default=None, description="Name of the supplier for text to speech synthesis."
+    )
+    ssml_supported: Optional[StrictBool] = Field(
+        default=None,
+        description="Indicates if SSML is supported.",
+        alias="ssmlSupported",
+    )
+    is_default: Optional[StrictBool] = Field(
+        default=None,
+        description="Indicates whether voice is default voice for a given language. If voice is not chosen for the language, then default voice will be used.",
+        alias="isDefault",
+    )
+    is_neural: Optional[StrictBool] = Field(
+        default=None,
+        description="Indicates whether voice is neural. Using neural voice will generate additional cost.",
+        alias="isNeural",
+    )
+    __properties: ClassVar[List[str]] = [
+        "name",
+        "gender",
+        "supplier",
+        "ssmlSupported",
+        "isDefault",
+        "isNeural",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -86,6 +110,13 @@ class CallsVoice(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {"name": obj.get("name"), "gender": obj.get("gender")}
+            {
+                "name": obj.get("name"),
+                "gender": obj.get("gender"),
+                "supplier": obj.get("supplier"),
+                "ssmlSupported": obj.get("ssmlSupported"),
+                "isDefault": obj.get("isDefault"),
+                "isNeural": obj.get("isNeural"),
+            }
         )
         return _obj

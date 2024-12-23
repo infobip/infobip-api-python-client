@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -32,12 +31,11 @@ class SmsResponse(BaseModel):
 
     bulk_id: Optional[StrictStr] = Field(
         default=None,
-        description="Unique ID assigned to the request if messaging multiple recipients or sending multiple messages via a single API request. Typically, used to fetch [delivery reports](#channels/sms/get-outbound-sms-message-delivery-reports) and [message logs](#channels/sms/get-outbound-sms-message-logs).",
+        description="Unique ID assigned to the request if messaging multiple recipients or sending multiple messages via a single API request. If not provided, it will be auto-generated and returned in the API response. Typically used for fetching delivery reports and message logs.",
         alias="bulkId",
     )
-    messages: Optional[List[SmsResponseDetails]] = Field(
-        default=None,
-        description="An array of message objects of a single message or multiple messages sent under one bulk ID.",
+    messages: List[SmsResponseDetails] = Field(
+        description="An array of message objects of a single message or multiple messages sent under one bulk ID."
     )
     __properties: ClassVar[List[str]] = ["bulkId", "messages"]
 

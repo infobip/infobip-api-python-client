@@ -11,7 +11,6 @@
 
     Do not edit the class manually.
 """  # noqa: E501
-
 import warnings
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -101,6 +100,7 @@ class CallRoutingApi:
             "201": "CallRoutingRouteResponse",
             "400": "ApiError",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -170,6 +170,7 @@ class CallRoutingApi:
             "201": "CallRoutingRouteResponse",
             "400": "ApiError",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -239,6 +240,7 @@ class CallRoutingApi:
             "201": "CallRoutingRouteResponse",
             "400": "ApiError",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -364,6 +366,7 @@ class CallRoutingApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallRoutingRouteResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiError",
             "429": "ApiException",
             "500": "ApiException",
@@ -433,6 +436,7 @@ class CallRoutingApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallRoutingRouteResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiError",
             "429": "ApiException",
             "500": "ApiException",
@@ -502,6 +506,7 @@ class CallRoutingApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallRoutingRouteResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiError",
             "429": "ApiException",
             "500": "ApiException",
@@ -618,7 +623,7 @@ class CallRoutingApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallRoutingRouteResponse",
             "401": "ApiException",
-            "403": "ApiError",
+            "403": "ApiException",
             "404": "ApiError",
             "429": "ApiException",
             "500": "ApiException",
@@ -688,7 +693,7 @@ class CallRoutingApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallRoutingRouteResponse",
             "401": "ApiException",
-            "403": "ApiError",
+            "403": "ApiException",
             "404": "ApiError",
             "429": "ApiException",
             "500": "ApiException",
@@ -758,7 +763,7 @@ class CallRoutingApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallRoutingRouteResponse",
             "401": "ApiException",
-            "403": "ApiError",
+            "403": "ApiException",
             "404": "ApiError",
             "429": "ApiException",
             "500": "ApiException",
@@ -886,6 +891,7 @@ class CallRoutingApi:
             "200": "CallRoutingRouteResponsePage",
             "400": "ApiError",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -965,6 +971,7 @@ class CallRoutingApi:
             "200": "CallRoutingRouteResponsePage",
             "400": "ApiError",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -1044,6 +1051,7 @@ class CallRoutingApi:
             "200": "CallRoutingRouteResponsePage",
             "400": "ApiError",
             "401": "ApiException",
+            "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
         }
@@ -1171,7 +1179,7 @@ class CallRoutingApi:
             "200": "CallRoutingRouteResponse",
             "400": "ApiError",
             "401": "ApiException",
-            "403": "ApiError",
+            "403": "ApiException",
             "404": "ApiError",
             "429": "ApiException",
             "500": "ApiException",
@@ -1246,7 +1254,7 @@ class CallRoutingApi:
             "200": "CallRoutingRouteResponse",
             "400": "ApiError",
             "401": "ApiException",
-            "403": "ApiError",
+            "403": "ApiException",
             "404": "ApiError",
             "429": "ApiException",
             "500": "ApiException",
@@ -1321,7 +1329,7 @@ class CallRoutingApi:
             "200": "CallRoutingRouteResponse",
             "400": "ApiError",
             "401": "ApiException",
-            "403": "ApiError",
+            "403": "ApiException",
             "404": "ApiError",
             "429": "ApiException",
             "500": "ApiException",

@@ -12,16 +12,15 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from typing_extensions import Annotated
 from infobip_api_client.models.calls_language import CallsLanguage
+from infobip_api_client.models.calls_termination import CallsTermination
 from infobip_api_client.models.calls_voice_preferences import CallsVoicePreferences
 from typing import Optional, Set
 from typing_extensions import Self
@@ -29,17 +28,14 @@ from typing_extensions import Self
 
 class CallsSayRequest(BaseModel):
     """
-    CallsSayRequest
+    Call say request.
     """  # noqa: E501
 
-    text: StrictStr = Field(description="Text to read.")
+    text: StrictStr = Field(
+        description="Text to read. Use the Speech Synthesis Markup Language (SSML) in a request to fine-tune your output."
+    )
     language: CallsLanguage
-    speech_rate: Optional[
-        Union[
-            Annotated[float, Field(le=2.0, strict=True, ge=0.5)],
-            Annotated[int, Field(le=2, strict=True, ge=1)],
-        ]
-    ] = Field(
+    speech_rate: Optional[Union[StrictFloat, StrictInt]] = Field(
         default=None,
         description="Speech rate. Must be within `[0.5 - 2.0]` range, default value is `1`.",
         alias="speechRate",
@@ -48,12 +44,20 @@ class CallsSayRequest(BaseModel):
         default=None, description="Number of times to read the text.", alias="loopCount"
     )
     preferences: Optional[CallsVoicePreferences] = None
+    stop_on: Optional[CallsTermination] = Field(default=None, alias="stopOn")
+    custom_data: Optional[Dict[str, StrictStr]] = Field(
+        default=None,
+        description="Optional parameter to update a call's custom data.",
+        alias="customData",
+    )
     __properties: ClassVar[List[str]] = [
         "text",
         "language",
         "speechRate",
         "loopCount",
         "preferences",
+        "stopOn",
+        "customData",
     ]
 
     model_config = ConfigDict(
@@ -96,6 +100,9 @@ class CallsSayRequest(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of preferences
         if self.preferences:
             _dict["preferences"] = self.preferences.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of stop_on
+        if self.stop_on:
+            _dict["stopOn"] = self.stop_on.to_dict()
         return _dict
 
     @classmethod
@@ -116,6 +123,10 @@ class CallsSayRequest(BaseModel):
                 "preferences": CallsVoicePreferences.from_dict(obj["preferences"])
                 if obj.get("preferences") is not None
                 else None,
+                "stopOn": CallsTermination.from_dict(obj["stopOn"])
+                if obj.get("stopOn") is not None
+                else None,
+                "customData": obj.get("customData"),
             }
         )
         return _obj

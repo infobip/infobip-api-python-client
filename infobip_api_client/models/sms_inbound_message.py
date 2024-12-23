@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -40,6 +39,11 @@ class SmsInboundMessage(BaseModel):
         default=None,
         description="Custom callback data sent over the notifyUrl.",
         alias="callbackData",
+    )
+    campaign_reference_id: Optional[StrictStr] = Field(
+        default=None,
+        description="ID that allows you to track, analyze, and show an aggregated overview and the performance of individual campaigns per sending channel.",
+        alias="campaignReferenceId",
     )
     clean_text: Optional[StrictStr] = Field(
         default=None,
@@ -82,6 +86,7 @@ class SmsInboundMessage(BaseModel):
     __properties: ClassVar[List[str]] = [
         "applicationId",
         "callbackData",
+        "campaignReferenceId",
         "cleanText",
         "entityId",
         "from",
@@ -149,6 +154,7 @@ class SmsInboundMessage(BaseModel):
             {
                 "applicationId": obj.get("applicationId"),
                 "callbackData": obj.get("callbackData"),
+                "campaignReferenceId": obj.get("campaignReferenceId"),
                 "cleanText": obj.get("cleanText"),
                 "entityId": obj.get("entityId"),
                 "from": obj.get("from"),

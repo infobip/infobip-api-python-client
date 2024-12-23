@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -20,9 +19,9 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from infobip_api_client.models.calls_delivery_time_window import CallsDeliveryTimeWindow
 from infobip_api_client.models.calls_retry import CallsRetry
 from infobip_api_client.models.calls_voice import CallsVoice
+from infobip_api_client.models.delivery_time_window import DeliveryTimeWindow
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -41,7 +40,7 @@ class CallsClickToCallMessage(BaseModel):
         description="An audio file can be delivered as a voice message to the recipients. An audio file must be uploaded online, so that the existing URL can be available for file download. Size of the audio file must be below 4 MB. Supported formats of the provided file are aac, aiff, m4a, mp2, mp3, mp4 (audio only), ogg, wav and wma. Our platform needs to have permission to make GET and HEAD HTTP requests on the provided URL. Standard http ports (like 80, 8080, etc.) are advised.",
         alias="audioFileUrl",
     )
-    delivery_time_window: Optional[CallsDeliveryTimeWindow] = Field(
+    delivery_time_window: Optional[DeliveryTimeWindow] = Field(
         default=None, alias="deliveryTimeWindow"
     )
     destination_a: StrictStr = Field(
@@ -188,7 +187,7 @@ class CallsClickToCallMessage(BaseModel):
             {
                 "anonymization": obj.get("anonymization"),
                 "audioFileUrl": obj.get("audioFileUrl"),
-                "deliveryTimeWindow": CallsDeliveryTimeWindow.from_dict(
+                "deliveryTimeWindow": DeliveryTimeWindow.from_dict(
                     obj["deliveryTimeWindow"]
                 )
                 if obj.get("deliveryTimeWindow") is not None

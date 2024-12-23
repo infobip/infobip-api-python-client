@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -22,22 +21,16 @@ from importlib import import_module
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
-from infobip_api_client.models.calls_anonymization_type import CallsAnonymizationType
-from infobip_api_client.models.calls_audio_codec import CallsAudioCodec
-from infobip_api_client.models.calls_dtmf_type import CallsDtmfType
-from infobip_api_client.models.calls_fax_type import CallsFaxType
-from infobip_api_client.models.calls_number_presentation_format import (
-    CallsNumberPresentationFormat,
-)
-from infobip_api_client.models.calls_pegasus_sip_trunk_type import (
-    CallsPegasusSipTrunkType,
-)
+from infobip_api_client.models.calls_sip_trunk_type import CallsSipTrunkType
 from typing import Optional, Set
 from typing_extensions import Self
 
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
+    from infobip_api_client.models.calls_provider_sip_trunk_update_request import (
+        CallsProviderSipTrunkUpdateRequest,
+    )
     from infobip_api_client.models.calls_registered_sip_trunk_update_request import (
         CallsRegisteredSipTrunkUpdateRequest,
     )
@@ -51,16 +44,8 @@ class CallsSipTrunkUpdateRequest(BaseModel):
     CallsSipTrunkUpdateRequest
     """  # noqa: E501
 
-    type: Optional[CallsPegasusSipTrunkType] = None
+    type: Optional[CallsSipTrunkType] = None
     name: StrictStr = Field(description="SIP trunk name.")
-    codecs: Optional[List[CallsAudioCodec]] = Field(
-        default=None, description="List of audio codecs supported by a SIP trunk."
-    )
-    dtmf: Optional[CallsDtmfType] = None
-    fax: Optional[CallsFaxType] = None
-    number_format: Optional[CallsNumberPresentationFormat] = Field(
-        default=None, alias="numberFormat"
-    )
     international_calls_allowed: Optional[StrictBool] = Field(
         default=False,
         description="Indicates whether international calls should be allowed. Calls between different countries are considered international.",
@@ -71,17 +56,11 @@ class CallsSipTrunkUpdateRequest(BaseModel):
         description="Maximum number of concurrent channels.",
         alias="channelLimit",
     )
-    anonymization: Optional[CallsAnonymizationType] = None
     __properties: ClassVar[List[str]] = [
         "type",
         "name",
-        "codecs",
-        "dtmf",
-        "fax",
-        "numberFormat",
         "internationalCallsAllowed",
         "channelLimit",
-        "anonymization",
     ]
 
     model_config = ConfigDict(
@@ -95,6 +74,7 @@ class CallsSipTrunkUpdateRequest(BaseModel):
 
     # discriminator mappings
     __discriminator_value_class_map: ClassVar[Dict[str, str]] = {
+        "PROVIDER": "CallsProviderSipTrunkUpdateRequest",
         "REGISTERED": "CallsRegisteredSipTrunkUpdateRequest",
         "STATIC": "CallsStaticSipTrunkUpdateRequest",
     }
@@ -121,7 +101,11 @@ class CallsSipTrunkUpdateRequest(BaseModel):
     def from_json(
         cls, json_str: str
     ) -> Optional[
-        Union[CallsRegisteredSipTrunkUpdateRequest, CallsStaticSipTrunkUpdateRequest]
+        Union[
+            CallsProviderSipTrunkUpdateRequest,
+            CallsRegisteredSipTrunkUpdateRequest,
+            CallsStaticSipTrunkUpdateRequest,
+        ]
     ]:
         """Create an instance of CallsSipTrunkUpdateRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
@@ -149,11 +133,19 @@ class CallsSipTrunkUpdateRequest(BaseModel):
     def from_dict(
         cls, obj: Dict[str, Any]
     ) -> Optional[
-        Union[CallsRegisteredSipTrunkUpdateRequest, CallsStaticSipTrunkUpdateRequest]
+        Union[
+            CallsProviderSipTrunkUpdateRequest,
+            CallsRegisteredSipTrunkUpdateRequest,
+            CallsStaticSipTrunkUpdateRequest,
+        ]
     ]:
         """Create an instance of CallsSipTrunkUpdateRequest from a dict"""
         # look up the object type based on discriminator mapping
         object_type = cls.get_discriminator_value(obj)
+        if object_type == "CallsProviderSipTrunkUpdateRequest":
+            return import_module(
+                "infobip_api_client.models.calls_provider_sip_trunk_update_request"
+            ).CallsProviderSipTrunkUpdateRequest.from_dict(obj)
         if object_type == "CallsRegisteredSipTrunkUpdateRequest":
             return import_module(
                 "infobip_api_client.models.calls_registered_sip_trunk_update_request"

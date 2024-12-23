@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -27,9 +26,7 @@ from infobip_api_client.models.calls_fax_type import CallsFaxType
 from infobip_api_client.models.calls_number_presentation_format import (
     CallsNumberPresentationFormat,
 )
-from infobip_api_client.models.calls_pegasus_sip_trunk_type import (
-    CallsPegasusSipTrunkType,
-)
+from infobip_api_client.models.calls_sip_trunk_type import CallsSipTrunkType
 from infobip_api_client.models.calls_sip_trunk_update_request import (
     CallsSipTrunkUpdateRequest,
 )
@@ -47,17 +44,26 @@ class CallsRegisteredSipTrunkUpdateRequest(CallsSipTrunkUpdateRequest):
         description="Enables an authentication challenge for each call.",
         alias="inviteAuthentication",
     )
+    codecs: Optional[List[CallsAudioCodec]] = Field(
+        default=None, description="List of audio codecs supported by a SIP trunk."
+    )
+    dtmf: Optional[CallsDtmfType] = None
+    fax: Optional[CallsFaxType] = None
+    anonymization: Optional[CallsAnonymizationType] = None
+    number_format: Optional[CallsNumberPresentationFormat] = Field(
+        default=None, alias="numberFormat"
+    )
     __properties: ClassVar[List[str]] = [
         "type",
         "name",
+        "internationalCallsAllowed",
+        "channelLimit",
+        "inviteAuthentication",
         "codecs",
         "dtmf",
         "fax",
-        "numberFormat",
-        "internationalCallsAllowed",
-        "channelLimit",
         "anonymization",
-        "inviteAuthentication",
+        "numberFormat",
     ]
 
     model_config = ConfigDict(
@@ -112,16 +118,16 @@ class CallsRegisteredSipTrunkUpdateRequest(CallsSipTrunkUpdateRequest):
             {
                 "type": obj.get("type"),
                 "name": obj.get("name"),
-                "codecs": obj.get("codecs"),
-                "dtmf": obj.get("dtmf"),
-                "fax": obj.get("fax"),
-                "numberFormat": obj.get("numberFormat"),
                 "internationalCallsAllowed": obj.get("internationalCallsAllowed")
                 if obj.get("internationalCallsAllowed") is not None
                 else False,
                 "channelLimit": obj.get("channelLimit"),
-                "anonymization": obj.get("anonymization"),
                 "inviteAuthentication": obj.get("inviteAuthentication"),
+                "codecs": obj.get("codecs"),
+                "dtmf": obj.get("dtmf"),
+                "fax": obj.get("fax"),
+                "anonymization": obj.get("anonymization"),
+                "numberFormat": obj.get("numberFormat"),
             }
         )
         return _obj

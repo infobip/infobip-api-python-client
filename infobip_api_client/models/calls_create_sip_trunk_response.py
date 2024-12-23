@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -22,11 +21,9 @@ from importlib import import_module
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from infobip_api_client.models.calls_billing_package import CallsBillingPackage
-from infobip_api_client.models.calls_pegasus_sip_trunk_type import (
-    CallsPegasusSipTrunkType,
-)
 from infobip_api_client.models.calls_sbc_hosts import CallsSbcHosts
 from infobip_api_client.models.calls_sip_trunk_location import CallsSipTrunkLocation
+from infobip_api_client.models.calls_sip_trunk_type import CallsSipTrunkType
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -50,7 +47,7 @@ class CallsCreateSipTrunkResponse(BaseModel):
     """  # noqa: E501
 
     id: Optional[StrictStr] = Field(default=None, description="SIP trunk ID.")
-    type: Optional[CallsPegasusSipTrunkType] = None
+    type: Optional[CallsSipTrunkType] = None
     name: Optional[StrictStr] = Field(default=None, description="SIP trunk name.")
     location: Optional[CallsSipTrunkLocation] = None
     international_calls_allowed: Optional[StrictBool] = Field(

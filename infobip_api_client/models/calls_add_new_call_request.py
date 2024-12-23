@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -21,6 +20,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictBool
 from typing import Any, ClassVar, Dict, List, Optional
 from infobip_api_client.models.calls_action_call_request import CallsActionCallRequest
+from infobip_api_client.models.ringback_generation import RingbackGeneration
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -33,10 +33,17 @@ class CallsAddNewCallRequest(BaseModel):
     call_request: CallsActionCallRequest = Field(alias="callRequest")
     connect_on_early_media: Optional[StrictBool] = Field(
         default=False,
-        description="Indicates whether to connect a new call on early media. Otherwise, the call will be connected after being established.",
+        description="Indicates whether to connect a new call on early media. Otherwise, the call will be connected after being established. Cannot be `true` when `ringbackGeneration` is enabled.",
         alias="connectOnEarlyMedia",
     )
-    __properties: ClassVar[List[str]] = ["callRequest", "connectOnEarlyMedia"]
+    ringback_generation: Optional[RingbackGeneration] = Field(
+        default=None, alias="ringbackGeneration"
+    )
+    __properties: ClassVar[List[str]] = [
+        "callRequest",
+        "connectOnEarlyMedia",
+        "ringbackGeneration",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -78,6 +85,9 @@ class CallsAddNewCallRequest(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of call_request
         if self.call_request:
             _dict["callRequest"] = self.call_request.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of ringback_generation
+        if self.ringback_generation:
+            _dict["ringbackGeneration"] = self.ringback_generation.to_dict()
         return _dict
 
     @classmethod
@@ -97,6 +107,11 @@ class CallsAddNewCallRequest(BaseModel):
                 "connectOnEarlyMedia": obj.get("connectOnEarlyMedia")
                 if obj.get("connectOnEarlyMedia") is not None
                 else False,
+                "ringbackGeneration": RingbackGeneration.from_dict(
+                    obj["ringbackGeneration"]
+                )
+                if obj.get("ringbackGeneration") is not None
+                else None,
             }
         )
         return _obj
