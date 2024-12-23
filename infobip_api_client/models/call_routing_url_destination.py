@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -22,6 +21,9 @@ from pydantic import ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from infobip_api_client.models.call_routing_destination import CallRoutingDestination
+from infobip_api_client.models.call_routing_destination_type import (
+    CallRoutingDestinationType,
+)
 from infobip_api_client.models.security_config import SecurityConfig
 from typing import Optional, Set
 from typing_extensions import Self
@@ -47,9 +49,9 @@ class CallRoutingUrlDestination(CallRoutingDestination):
         default=None, alias="securityConfig"
     )
     __properties: ClassVar[List[str]] = [
-        "weight",
         "priority",
         "type",
+        "weight",
         "url",
         "securityConfig",
     ]
@@ -107,9 +109,9 @@ class CallRoutingUrlDestination(CallRoutingDestination):
 
         _obj = cls.model_validate(
             {
-                "weight": obj.get("weight"),
                 "priority": obj.get("priority"),
                 "type": obj.get("type"),
+                "weight": obj.get("weight"),
                 "url": obj.get("url"),
                 "securityConfig": SecurityConfig.from_dict(obj["securityConfig"])
                 if obj.get("securityConfig") is not None

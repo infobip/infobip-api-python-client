@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -21,12 +20,13 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing_extensions import Annotated
 from infobip_api_client.models.call_transfer import CallTransfer
-from infobip_api_client.models.calls_delivery_time_window import CallsDeliveryTimeWindow
 from infobip_api_client.models.calls_destination import CallsDestination
 from infobip_api_client.models.calls_retry import CallsRetry
 from infobip_api_client.models.calls_sending_speed import CallsSendingSpeed
 from infobip_api_client.models.calls_voice import CallsVoice
+from infobip_api_client.models.delivery_time_window import DeliveryTimeWindow
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -51,12 +51,14 @@ class CallsAdvancedMessage(BaseModel):
         description="Call transfers object enables transferring the ongoing call to another recipient(s) and establish a communication between your original recipient and additional one.",
         alias="callTransfers",
     )
-    callback_data: Optional[StrictStr] = Field(
+    callback_data: Optional[
+        Annotated[str, Field(min_length=0, strict=True, max_length=700)]
+    ] = Field(
         default=None,
-        description="Additional client's data that will be sent on the notifyUrl. The maximum value is 200 characters. Example:  `Text containing some additional data needed in Delivery Report`.",
+        description="Additional client's data that will be sent on the notifyUrl. The maximum value is 700 characters. Example:  `Text containing some additional data needed in Delivery Report`.",
         alias="callbackData",
     )
-    delivery_time_window: Optional[CallsDeliveryTimeWindow] = Field(
+    delivery_time_window: Optional[DeliveryTimeWindow] = Field(
         default=None, alias="deliveryTimeWindow"
     )
     destinations: List[CallsDestination] = Field(
@@ -250,7 +252,7 @@ class CallsAdvancedMessage(BaseModel):
                 if obj.get("callTransfers") is not None
                 else None,
                 "callbackData": obj.get("callbackData"),
-                "deliveryTimeWindow": CallsDeliveryTimeWindow.from_dict(
+                "deliveryTimeWindow": DeliveryTimeWindow.from_dict(
                     obj["deliveryTimeWindow"]
                 )
                 if obj.get("deliveryTimeWindow") is not None

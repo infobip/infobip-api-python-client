@@ -12,16 +12,17 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
+from infobip_api_client.models.calls_action_status import CallsActionStatus
 from infobip_api_client.models.calls_bulk_endpoint import CallsBulkEndpoint
+from infobip_api_client.models.platform import Platform
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -36,9 +37,7 @@ class CallsBulkCall(BaseModel):
         description="Calls Configuration ID.",
         alias="callsConfigurationId",
     )
-    application_id: Optional[StrictStr] = Field(
-        default=None, description="Application ID.", alias="applicationId"
-    )
+    platform: Optional[Platform] = None
     call_id: Optional[Annotated[str, Field(strict=True, max_length=128)]] = Field(
         default=None, description="Unique call ID.", alias="callId"
     )
@@ -49,13 +48,13 @@ class CallsBulkCall(BaseModel):
         default=None, description="Caller identifier.", alias="from"
     )
     endpoint: Optional[CallsBulkEndpoint] = None
-    status: Optional[StrictStr] = Field(default=None, description="Action status.")
+    status: Optional[CallsActionStatus] = None
     reason: Optional[StrictStr] = Field(
         default=None, description="Failure reason in human-readable format."
     )
     __properties: ClassVar[List[str]] = [
         "callsConfigurationId",
-        "applicationId",
+        "platform",
         "callId",
         "externalId",
         "from",
@@ -63,18 +62,6 @@ class CallsBulkCall(BaseModel):
         "status",
         "reason",
     ]
-
-    @field_validator("status")
-    def status_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(["PENDING", "IN_PROGRESS", "COMPLETED", "FAILED"]):
-            raise ValueError(
-                "must be one of enum values ('PENDING', 'IN_PROGRESS', 'COMPLETED', 'FAILED')"
-            )
-        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -113,6 +100,9 @@ class CallsBulkCall(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of platform
+        if self.platform:
+            _dict["platform"] = self.platform.to_dict()
         # override the default output from pydantic by calling `to_dict()` of endpoint
         if self.endpoint:
             _dict["endpoint"] = self.endpoint.to_dict()
@@ -130,7 +120,9 @@ class CallsBulkCall(BaseModel):
         _obj = cls.model_validate(
             {
                 "callsConfigurationId": obj.get("callsConfigurationId"),
-                "applicationId": obj.get("applicationId"),
+                "platform": Platform.from_dict(obj["platform"])
+                if obj.get("platform") is not None
+                else None,
                 "callId": obj.get("callId"),
                 "externalId": obj.get("externalId"),
                 "from": obj.get("from"),

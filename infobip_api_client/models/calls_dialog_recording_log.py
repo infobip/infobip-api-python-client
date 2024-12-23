@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -20,12 +19,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
-from infobip_api_client.models.calls_public_call_recording import (
-    CallsPublicCallRecording,
-)
-from infobip_api_client.models.calls_public_recording_file import (
-    CallsPublicRecordingFile,
-)
+from infobip_api_client.models.call_recording import CallRecording
+from infobip_api_client.models.calls_recording_file import CallsRecordingFile
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -35,12 +30,12 @@ class CallsDialogRecordingLog(BaseModel):
     Dialog recordings.
     """  # noqa: E501
 
-    composed_files: Optional[List[CallsPublicRecordingFile]] = Field(
+    composed_files: Optional[List[CallsRecordingFile]] = Field(
         default=None,
         description="File(s) with a recording of both dialog calls.",
         alias="composedFiles",
     )
-    call_recordings: Optional[List[CallsPublicCallRecording]] = Field(
+    call_recordings: Optional[List[CallRecording]] = Field(
         default=None,
         description="File(s) with a recording of individual dialog calls.",
         alias="callRecordings",
@@ -112,14 +107,13 @@ class CallsDialogRecordingLog(BaseModel):
         _obj = cls.model_validate(
             {
                 "composedFiles": [
-                    CallsPublicRecordingFile.from_dict(_item)
+                    CallsRecordingFile.from_dict(_item)
                     for _item in obj["composedFiles"]
                 ]
                 if obj.get("composedFiles") is not None
                 else None,
                 "callRecordings": [
-                    CallsPublicCallRecording.from_dict(_item)
-                    for _item in obj["callRecordings"]
+                    CallRecording.from_dict(_item) for _item in obj["callRecordings"]
                 ]
                 if obj.get("callRecordings") is not None
                 else None,

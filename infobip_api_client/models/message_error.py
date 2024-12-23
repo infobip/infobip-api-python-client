@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -26,23 +25,15 @@ from typing_extensions import Self
 
 class MessageError(BaseModel):
     """
-    Indicates whether the error occurred during the query execution.
+    MessageError
     """  # noqa: E501
 
-    group_id: Optional[StrictInt] = Field(
-        default=None, description="Error group ID.", alias="groupId"
-    )
-    group_name: Optional[StrictStr] = Field(
-        default=None, description="Error group name.", alias="groupName"
-    )
-    id: Optional[StrictInt] = Field(default=None, description="Error ID.")
-    name: Optional[StrictStr] = Field(default=None, description="Error name.")
-    description: Optional[StrictStr] = Field(
-        default=None, description="Human-readable description of the error."
-    )
-    permanent: Optional[StrictBool] = Field(
-        default=None, description="Indicator of whether the error is permanent."
-    )
+    group_id: Optional[StrictInt] = Field(default=None, alias="groupId")
+    group_name: Optional[StrictStr] = Field(default=None, alias="groupName")
+    id: Optional[StrictInt] = None
+    name: Optional[StrictStr] = None
+    description: Optional[StrictStr] = None
+    permanent: Optional[StrictBool] = None
     __properties: ClassVar[List[str]] = [
         "groupId",
         "groupName",

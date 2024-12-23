@@ -12,15 +12,17 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from infobip_api_client.models.message_status import MessageStatus
+from infobip_api_client.models.sms_message_response_details import (
+    SmsMessageResponseDetails,
+)
+from infobip_api_client.models.sms_message_status import SmsMessageStatus
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -32,19 +34,21 @@ class SmsResponseDetails(BaseModel):
 
     message_id: Optional[StrictStr] = Field(
         default=None,
-        description="Unique message ID. If not passed, it will be automatically generated and returned in a response.",
+        description="Unique message ID. If not provided, it will be auto-generated and returned in the API response.",
         alias="messageId",
     )
-    status: Optional[MessageStatus] = None
-    to: Optional[StrictStr] = Field(
-        default=None, description="The destination address of the message."
-    )
-    sms_count: Optional[StrictInt] = Field(
+    status: Optional[SmsMessageStatus] = None
+    destination: Optional[StrictStr] = Field(
         default=None,
-        description="This is the total count of SMS submitted in the request. SMS messages have a character limit and messages longer than that limit will be split into multiple SMS and reflected in the total count of SMS submitted.",
-        alias="smsCount",
+        description="The destination address of the message, i.e., its recipient.",
     )
-    __properties: ClassVar[List[str]] = ["messageId", "status", "to", "smsCount"]
+    details: Optional[SmsMessageResponseDetails] = None
+    __properties: ClassVar[List[str]] = [
+        "messageId",
+        "status",
+        "destination",
+        "details",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -86,6 +90,9 @@ class SmsResponseDetails(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of status
         if self.status:
             _dict["status"] = self.status.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of details
+        if self.details:
+            _dict["details"] = self.details.to_dict()
         return _dict
 
     @classmethod
@@ -100,11 +107,13 @@ class SmsResponseDetails(BaseModel):
         _obj = cls.model_validate(
             {
                 "messageId": obj.get("messageId"),
-                "status": MessageStatus.from_dict(obj["status"])
+                "status": SmsMessageStatus.from_dict(obj["status"])
                 if obj.get("status") is not None
                 else None,
-                "to": obj.get("to"),
-                "smsCount": obj.get("smsCount"),
+                "destination": obj.get("destination"),
+                "details": SmsMessageResponseDetails.from_dict(obj["details"])
+                if obj.get("details") is not None
+                else None,
             }
         )
         return _obj

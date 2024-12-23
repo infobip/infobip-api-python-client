@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -20,6 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,12 +29,15 @@ class SmsSouthKoreaOptions(BaseModel):
     Use case dependent parameters for sending SMS to phone numbers registered in South Korea.
     """  # noqa: E501
 
+    title: Optional[
+        Annotated[str, Field(min_length=0, strict=True, max_length=66)]
+    ] = Field(default=None, description="Title of the message.")
     reseller_code: Optional[StrictInt] = Field(
         default=None,
         description="Reseller identification code: 9-digit registration number in the business registration certificate for South Korea. Resellers should submit this when sending.",
         alias="resellerCode",
     )
-    __properties: ClassVar[List[str]] = ["resellerCode"]
+    __properties: ClassVar[List[str]] = ["title", "resellerCode"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -84,5 +87,7 @@ class SmsSouthKoreaOptions(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({"resellerCode": obj.get("resellerCode")})
+        _obj = cls.model_validate(
+            {"title": obj.get("title"), "resellerCode": obj.get("resellerCode")}
+        )
         return _obj

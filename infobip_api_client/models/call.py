@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -29,6 +28,7 @@ from infobip_api_client.models.calls_machine_detection_properties import (
     CallsMachineDetectionProperties,
 )
 from infobip_api_client.models.calls_media_properties import CallsMediaProperties
+from infobip_api_client.models.platform import Platform
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -78,9 +78,7 @@ class Call(BaseModel):
         description="Current calls configuration ID.",
         alias="callsConfigurationId",
     )
-    application_id: Optional[StrictStr] = Field(
-        default=None, description="Current application ID.", alias="applicationId"
-    )
+    platform: Optional[Platform] = None
     conference_id: Optional[Annotated[str, Field(strict=True, max_length=128)]] = Field(
         default=None, description="Current conference ID.", alias="conferenceId"
     )
@@ -105,7 +103,7 @@ class Call(BaseModel):
         "machineDetection",
         "ringDuration",
         "callsConfigurationId",
-        "applicationId",
+        "platform",
         "conferenceId",
         "customData",
         "dialogId",
@@ -157,6 +155,9 @@ class Call(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of machine_detection
         if self.machine_detection:
             _dict["machineDetection"] = self.machine_detection.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of platform
+        if self.platform:
+            _dict["platform"] = self.platform.to_dict()
         return _dict
 
     @classmethod
@@ -192,7 +193,9 @@ class Call(BaseModel):
                 else None,
                 "ringDuration": obj.get("ringDuration"),
                 "callsConfigurationId": obj.get("callsConfigurationId"),
-                "applicationId": obj.get("applicationId"),
+                "platform": Platform.from_dict(obj["platform"])
+                if obj.get("platform") is not None
+                else None,
                 "conferenceId": obj.get("conferenceId"),
                 "customData": obj.get("customData"),
                 "dialogId": obj.get("dialogId"),

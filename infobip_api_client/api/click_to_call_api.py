@@ -11,7 +11,6 @@
 
     Do not edit the class manually.
 """  # noqa: E501
-
 import warnings
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -93,7 +92,9 @@ class ClickToCallApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsVoiceResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -162,7 +163,9 @@ class ClickToCallApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsVoiceResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -231,7 +234,9 @@ class ClickToCallApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CallsVoiceResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",

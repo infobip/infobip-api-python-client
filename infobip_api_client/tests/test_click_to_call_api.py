@@ -12,9 +12,9 @@ from infobip_api_client.models.calls_click_to_call_message import (
 from infobip_api_client.models.calls_click_to_call_message_body import (
     CallsClickToCallMessageBody,
 )
-from infobip_api_client.models.calls_delivery_day import CallsDeliveryDay
-from infobip_api_client.models.calls_delivery_time import CallsDeliveryTime
-from infobip_api_client.models.calls_delivery_time_window import CallsDeliveryTimeWindow
+from infobip_api_client.models.delivery_day import DeliveryDay
+from infobip_api_client.models.delivery_time import DeliveryTime
+from infobip_api_client.models.delivery_time_window import DeliveryTimeWindow
 from infobip_api_client.models.calls_retry import CallsRetry
 from infobip_api_client.models.calls_voice import CallsVoice
 
@@ -148,19 +148,19 @@ def test_should_send_click_to_call_message(httpserver: HTTPServer, get_api_clien
                     max_count=given_max_count,
                 ),
                 machine_detection=given_machine_detection,
-                delivery_time_window=CallsDeliveryTimeWindow(
-                    var_from=CallsDeliveryTime(
+                delivery_time_window=DeliveryTimeWindow(
+                    var_from=DeliveryTime(
                         hour=given_from_hour, minute=given_from_minute
                     ),
-                    to=CallsDeliveryTime(hour=given_to_hour, minute=given_to_minute),
+                    to=DeliveryTime(hour=given_to_hour, minute=given_to_minute),
                     days=[
-                        CallsDeliveryDay.MONDAY,
-                        CallsDeliveryDay.TUESDAY,
-                        CallsDeliveryDay.WEDNESDAY,
-                        CallsDeliveryDay.THURSDAY,
-                        CallsDeliveryDay.FRIDAY,
-                        CallsDeliveryDay.SATURDAY,
-                        CallsDeliveryDay.SUNDAY,
+                        DeliveryDay.MONDAY,
+                        DeliveryDay.TUESDAY,
+                        DeliveryDay.WEDNESDAY,
+                        DeliveryDay.THURSDAY,
+                        DeliveryDay.FRIDAY,
+                        DeliveryDay.SATURDAY,
+                        DeliveryDay.SUNDAY,
                     ],
                 ),
             )

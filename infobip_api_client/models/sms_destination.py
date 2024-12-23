@@ -12,13 +12,12 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
@@ -30,15 +29,20 @@ class SmsDestination(BaseModel):
     An array of destination objects for where messages are being sent. A valid destination is required.
     """  # noqa: E501
 
+    to: Annotated[str, Field(min_length=0, strict=True, max_length=64)] = Field(
+        description="The destination address of the message."
+    )
     message_id: Optional[StrictStr] = Field(
         default=None,
         description="The ID that uniquely identifies the message sent.",
         alias="messageId",
     )
-    to: Annotated[str, Field(min_length=0, strict=True, max_length=50)] = Field(
-        description="Message destination address. Addresses must be in international format (Example: `41793026727`)."
+    network_id: Optional[StrictInt] = Field(
+        default=None,
+        description="Available in US and Canada only if networkId is known for Network Operator of the destination. Returned in [SMS message delivery reports](https://www.infobip.com/docs/api/channels/sms/sms-messaging/logs-and-status-reports) and [Inbound SMS](https://www.infobip.com/docs/api/channels/sms/sms-messaging/inbound-sms); contact Infobip Support to enable.",
+        alias="networkId",
     )
-    __properties: ClassVar[List[str]] = ["messageId", "to"]
+    __properties: ClassVar[List[str]] = ["to", "messageId", "networkId"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -89,6 +93,10 @@ class SmsDestination(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {"messageId": obj.get("messageId"), "to": obj.get("to")}
+            {
+                "to": obj.get("to"),
+                "messageId": obj.get("messageId"),
+                "networkId": obj.get("networkId"),
+            }
         )
         return _obj

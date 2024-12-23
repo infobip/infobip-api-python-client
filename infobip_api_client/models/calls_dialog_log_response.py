@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -25,6 +24,7 @@ from typing_extensions import Annotated
 from infobip_api_client.models.calls_dialog_recording_log import CallsDialogRecordingLog
 from infobip_api_client.models.calls_dialog_state import CallsDialogState
 from infobip_api_client.models.calls_error_code_info import CallsErrorCodeInfo
+from infobip_api_client.models.platform import Platform
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -42,9 +42,7 @@ class CallsDialogLogResponse(BaseModel):
         description="Calls Configuration ID.",
         alias="callsConfigurationId",
     )
-    application_id: Optional[StrictStr] = Field(
-        default=None, description="Application ID.", alias="applicationId"
-    )
+    platform: Optional[Platform] = None
     state: Optional[CallsDialogState] = None
     start_time: Optional[datetime] = Field(
         default=None,
@@ -75,7 +73,7 @@ class CallsDialogLogResponse(BaseModel):
     __properties: ClassVar[List[str]] = [
         "dialogId",
         "callsConfigurationId",
-        "applicationId",
+        "platform",
         "state",
         "startTime",
         "establishTime",
@@ -124,6 +122,9 @@ class CallsDialogLogResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of platform
+        if self.platform:
+            _dict["platform"] = self.platform.to_dict()
         # override the default output from pydantic by calling `to_dict()` of recording
         if self.recording:
             _dict["recording"] = self.recording.to_dict()
@@ -145,7 +146,9 @@ class CallsDialogLogResponse(BaseModel):
             {
                 "dialogId": obj.get("dialogId"),
                 "callsConfigurationId": obj.get("callsConfigurationId"),
-                "applicationId": obj.get("applicationId"),
+                "platform": Platform.from_dict(obj["platform"])
+                if obj.get("platform") is not None
+                else None,
                 "state": obj.get("state"),
                 "startTime": obj.get("startTime"),
                 "establishTime": obj.get("establishTime"),

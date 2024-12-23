@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -21,6 +20,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from infobip_api_client.models.calls_bulk_item import CallsBulkItem
+from infobip_api_client.models.platform import Platform
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -35,19 +35,15 @@ class CallBulkRequest(BaseModel):
         description="Unique ID of the bulk request. If it's not set, a unique ID will be assigned to the bulk request.",
         alias="bulkId",
     )
-    calls_configuration_id: Optional[StrictStr] = Field(
-        default=None,
-        description="Calls Configuration ID.",
-        alias="callsConfigurationId",
+    calls_configuration_id: StrictStr = Field(
+        description="Calls Configuration ID.", alias="callsConfigurationId"
     )
-    application_id: Optional[StrictStr] = Field(
-        default=None, description="Application ID.", alias="applicationId"
-    )
+    platform: Optional[Platform] = None
     items: List[CallsBulkItem] = Field(description="Bulk item list.")
     __properties: ClassVar[List[str]] = [
         "bulkId",
         "callsConfigurationId",
-        "applicationId",
+        "platform",
         "items",
     ]
 
@@ -88,6 +84,9 @@ class CallBulkRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of platform
+        if self.platform:
+            _dict["platform"] = self.platform.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in items (list)
         _items = []
         if self.items:
@@ -110,7 +109,9 @@ class CallBulkRequest(BaseModel):
             {
                 "bulkId": obj.get("bulkId"),
                 "callsConfigurationId": obj.get("callsConfigurationId"),
-                "applicationId": obj.get("applicationId"),
+                "platform": Platform.from_dict(obj["platform"])
+                if obj.get("platform") is not None
+                else None,
                 "items": [CallsBulkItem.from_dict(_item) for _item in obj["items"]]
                 if obj.get("items") is not None
                 else None,

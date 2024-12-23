@@ -12,14 +12,14 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
+from infobip_api_client.models.calls_time_unit import CallsTimeUnit
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -34,24 +34,8 @@ class CallRate(BaseModel):
         description="Defines the number of calls scheduled per specified time unit.",
         alias="maxCalls",
     )
-    time_unit: Optional[StrictStr] = Field(
-        default=None,
-        description="Defines a time unit used for calculating call creation rate.",
-        alias="timeUnit",
-    )
+    time_unit: Optional[CallsTimeUnit] = Field(default=None, alias="timeUnit")
     __properties: ClassVar[List[str]] = ["maxCalls", "timeUnit"]
-
-    @field_validator("time_unit")
-    def time_unit_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(["SECONDS", "MINUTES", "HOURS", "DAYS"]):
-            raise ValueError(
-                "must be one of enum values ('SECONDS', 'MINUTES', 'HOURS', 'DAYS')"
-            )
-        return value
 
     model_config = ConfigDict(
         populate_by_name=True,

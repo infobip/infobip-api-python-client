@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -31,7 +30,8 @@ class SmsLogsResponse(BaseModel):
     """  # noqa: E501
 
     results: Optional[List[SmsLog]] = Field(
-        default=None, description="Collection of logs."
+        default=None,
+        description="An array of message log results, one object per each message log entry.",
     )
     __properties: ClassVar[List[str]] = ["results"]
 

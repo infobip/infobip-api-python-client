@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -29,18 +28,19 @@ from infobip_api_client.models.calls_fax_type import CallsFaxType
 from infobip_api_client.models.calls_number_presentation_format import (
     CallsNumberPresentationFormat,
 )
-from infobip_api_client.models.calls_pegasus_sip_trunk_type import (
-    CallsPegasusSipTrunkType,
-)
 from infobip_api_client.models.calls_sbc_hosts import CallsSbcHosts
 from infobip_api_client.models.calls_sip_options import CallsSipOptions
 from infobip_api_client.models.calls_sip_trunk_location import CallsSipTrunkLocation
+from infobip_api_client.models.calls_sip_trunk_type import CallsSipTrunkType
 from typing import Optional, Set
 from typing_extensions import Self
 
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
+    from infobip_api_client.models.calls_provider_sip_trunk_response import (
+        CallsProviderSipTrunkResponse,
+    )
     from infobip_api_client.models.calls_registered_sip_trunk_response import (
         CallsRegisteredSipTrunkResponse,
     )
@@ -55,7 +55,7 @@ class CallsSipTrunkResponse(BaseModel):
     """  # noqa: E501
 
     id: Optional[StrictStr] = Field(default=None, description="SIP trunk ID.")
-    type: Optional[CallsPegasusSipTrunkType] = None
+    type: Optional[CallsSipTrunkType] = None
     name: Optional[StrictStr] = Field(default=None, description="SIP trunk name.")
     location: Optional[CallsSipTrunkLocation] = None
     tls: Optional[StrictBool] = Field(
@@ -115,6 +115,7 @@ class CallsSipTrunkResponse(BaseModel):
 
     # discriminator mappings
     __discriminator_value_class_map: ClassVar[Dict[str, str]] = {
+        "PROVIDER": "CallsProviderSipTrunkResponse",
         "REGISTERED": "CallsRegisteredSipTrunkResponse",
         "STATIC": "CallsStaticSipTrunkResponse",
     }
@@ -140,7 +141,13 @@ class CallsSipTrunkResponse(BaseModel):
     @classmethod
     def from_json(
         cls, json_str: str
-    ) -> Optional[Union[CallsRegisteredSipTrunkResponse, CallsStaticSipTrunkResponse]]:
+    ) -> Optional[
+        Union[
+            CallsProviderSipTrunkResponse,
+            CallsRegisteredSipTrunkResponse,
+            CallsStaticSipTrunkResponse,
+        ]
+    ]:
         """Create an instance of CallsSipTrunkResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -175,10 +182,20 @@ class CallsSipTrunkResponse(BaseModel):
     @classmethod
     def from_dict(
         cls, obj: Dict[str, Any]
-    ) -> Optional[Union[CallsRegisteredSipTrunkResponse, CallsStaticSipTrunkResponse]]:
+    ) -> Optional[
+        Union[
+            CallsProviderSipTrunkResponse,
+            CallsRegisteredSipTrunkResponse,
+            CallsStaticSipTrunkResponse,
+        ]
+    ]:
         """Create an instance of CallsSipTrunkResponse from a dict"""
         # look up the object type based on discriminator mapping
         object_type = cls.get_discriminator_value(obj)
+        if object_type == "CallsProviderSipTrunkResponse":
+            return import_module(
+                "infobip_api_client.models.calls_provider_sip_trunk_response"
+            ).CallsProviderSipTrunkResponse.from_dict(obj)
         if object_type == "CallsRegisteredSipTrunkResponse":
             return import_module(
                 "infobip_api_client.models.calls_registered_sip_trunk_response"

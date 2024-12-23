@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -27,11 +26,9 @@ from infobip_api_client.models.calls_fax_type import CallsFaxType
 from infobip_api_client.models.calls_number_presentation_format import (
     CallsNumberPresentationFormat,
 )
-from infobip_api_client.models.calls_pegasus_sip_trunk_type import (
-    CallsPegasusSipTrunkType,
-)
 from infobip_api_client.models.calls_selection_strategy import CallsSelectionStrategy
 from infobip_api_client.models.calls_sip_options import CallsSipOptions
+from infobip_api_client.models.calls_sip_trunk_type import CallsSipTrunkType
 from infobip_api_client.models.calls_sip_trunk_update_request import (
     CallsSipTrunkUpdateRequest,
 )
@@ -46,7 +43,7 @@ class CallsStaticSipTrunkUpdateRequest(CallsSipTrunkUpdateRequest):
 
     source_hosts: Optional[List[StrictStr]] = Field(
         default=None,
-        description="List of SIP trunk source hosts. If empty, destination host list must not be empty. Source hosts can be send in 2 formats: IP address without port or domain without port.",
+        description="List of SIP trunk source hosts. If empty, destination host list must not be empty. Source hosts can be sent in 2 formats: IP address without port or domain without port.",
         alias="sourceHosts",
     )
     destination_hosts: Optional[List[StrictStr]] = Field(
@@ -55,20 +52,29 @@ class CallsStaticSipTrunkUpdateRequest(CallsSipTrunkUpdateRequest):
         alias="destinationHosts",
     )
     strategy: Optional[CallsSelectionStrategy] = None
+    codecs: Optional[List[CallsAudioCodec]] = Field(
+        default=None, description="List of audio codecs supported by a SIP trunk."
+    )
+    dtmf: Optional[CallsDtmfType] = None
+    fax: Optional[CallsFaxType] = None
+    anonymization: Optional[CallsAnonymizationType] = None
+    number_format: Optional[CallsNumberPresentationFormat] = Field(
+        default=None, alias="numberFormat"
+    )
     sip_options: Optional[CallsSipOptions] = Field(default=None, alias="sipOptions")
     __properties: ClassVar[List[str]] = [
         "type",
         "name",
-        "codecs",
-        "dtmf",
-        "fax",
-        "numberFormat",
         "internationalCallsAllowed",
         "channelLimit",
-        "anonymization",
         "sourceHosts",
         "destinationHosts",
         "strategy",
+        "codecs",
+        "dtmf",
+        "fax",
+        "anonymization",
+        "numberFormat",
         "sipOptions",
     ]
 
@@ -127,18 +133,18 @@ class CallsStaticSipTrunkUpdateRequest(CallsSipTrunkUpdateRequest):
             {
                 "type": obj.get("type"),
                 "name": obj.get("name"),
-                "codecs": obj.get("codecs"),
-                "dtmf": obj.get("dtmf"),
-                "fax": obj.get("fax"),
-                "numberFormat": obj.get("numberFormat"),
                 "internationalCallsAllowed": obj.get("internationalCallsAllowed")
                 if obj.get("internationalCallsAllowed") is not None
                 else False,
                 "channelLimit": obj.get("channelLimit"),
-                "anonymization": obj.get("anonymization"),
                 "sourceHosts": obj.get("sourceHosts"),
                 "destinationHosts": obj.get("destinationHosts"),
                 "strategy": obj.get("strategy"),
+                "codecs": obj.get("codecs"),
+                "dtmf": obj.get("dtmf"),
+                "fax": obj.get("fax"),
+                "anonymization": obj.get("anonymization"),
+                "numberFormat": obj.get("numberFormat"),
                 "sipOptions": CallsSipOptions.from_dict(obj["sipOptions"])
                 if obj.get("sipOptions") is not None
                 else None,

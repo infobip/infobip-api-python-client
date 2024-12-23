@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -20,6 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool
 from typing import Any, ClassVar, Dict, List, Optional
+from infobip_api_client.models.calls_multi_channel import CallsMultiChannel
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -31,10 +31,13 @@ class CallsOnDemandComposition(BaseModel):
 
     delete_call_recordings: Optional[StrictBool] = Field(
         default=True,
-        description="Indicates whether to delete call recordings after composition. If set to 'true' then call recordings will be deleted after composition. Otherwise, call recordings will be available, alongside with composed file.",
+        description="Indicates whether to delete individual files for the call recordings after composition. If set to 'true' then files from the call recordings will be deleted after composition. Otherwise, files from the call recordings will be available, alongside with composed file.",
         alias="deleteCallRecordings",
     )
-    __properties: ClassVar[List[str]] = ["deleteCallRecordings"]
+    multi_channel: Optional[CallsMultiChannel] = Field(
+        default=None, alias="multiChannel"
+    )
+    __properties: ClassVar[List[str]] = ["deleteCallRecordings", "multiChannel"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -73,6 +76,9 @@ class CallsOnDemandComposition(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of multi_channel
+        if self.multi_channel:
+            _dict["multiChannel"] = self.multi_channel.to_dict()
         return _dict
 
     @classmethod
@@ -88,7 +94,10 @@ class CallsOnDemandComposition(BaseModel):
             {
                 "deleteCallRecordings": obj.get("deleteCallRecordings")
                 if obj.get("deleteCallRecordings") is not None
-                else True
+                else True,
+                "multiChannel": CallsMultiChannel.from_dict(obj["multiChannel"])
+                if obj.get("multiChannel") is not None
+                else None,
             }
         )
         return _obj

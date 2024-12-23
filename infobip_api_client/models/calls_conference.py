@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -22,6 +21,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from infobip_api_client.models.calls_participant import CallsParticipant
+from infobip_api_client.models.platform import Platform
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -46,15 +46,13 @@ class CallsConference(BaseModel):
         description="Calls Configuration ID.",
         alias="callsConfigurationId",
     )
-    application_id: Optional[StrictStr] = Field(
-        default=None, description="Application ID.", alias="applicationId"
-    )
+    platform: Optional[Platform] = None
     __properties: ClassVar[List[str]] = [
         "id",
         "name",
         "participants",
         "callsConfigurationId",
-        "applicationId",
+        "platform",
     ]
 
     model_config = ConfigDict(
@@ -101,6 +99,9 @@ class CallsConference(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict["participants"] = _items
+        # override the default output from pydantic by calling `to_dict()` of platform
+        if self.platform:
+            _dict["platform"] = self.platform.to_dict()
         return _dict
 
     @classmethod
@@ -122,7 +123,9 @@ class CallsConference(BaseModel):
                 if obj.get("participants") is not None
                 else None,
                 "callsConfigurationId": obj.get("callsConfigurationId"),
-                "applicationId": obj.get("applicationId"),
+                "platform": Platform.from_dict(obj["platform"])
+                if obj.get("platform") is not None
+                else None,
             }
         )
         return _obj

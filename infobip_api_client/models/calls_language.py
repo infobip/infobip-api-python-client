@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import json
 from enum import Enum
@@ -85,6 +84,8 @@ class CallsLanguage(str, Enum):
     UK = "uk"
     VI = "vi"
     WLS = "wls"
+    AR_MINUS_MA = "ar-ma"
+    UR_MINUS_PK = "ur-pk"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

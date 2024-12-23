@@ -1,3 +1,5 @@
+from infobip_api_client import SmsMessageContent
+
 # Infobip API Python Client
 
 <img src="https://cdn-web.infobip.com/uploads/2023/01/Infobip-logo.svg" height="93px" alt="Infobip" />
@@ -24,19 +26,17 @@ We use [OpenAPI Generator](https://openapi-generator.tech/) to generate the pack
 Detailed documentation about Infobip API can be found here. The current version of this library includes this subset of Infobip products:
 
 * [SMS](https://www.infobip.com/docs/api/channels/sms)
-  * [SMS Messaging](https://www.infobip.com/docs/api/channels/sms/sms-messaging)
-  * [2FA](https://www.infobip.com/docs/api/channels/sms/2fa)
+* [2FA](https://www.infobip.com/docs/api/platform/2fa)
 * [Voice](https://www.infobip.com/docs/api/channels/voice)
-  * [Calls](https://www.infobip.com/docs/api/channels/voice/calls)
-  * [Click To Call](https://www.infobip.com/docs/api/channels/voice/click-to-call)
-  * [Call Routing](https://www.infobip.com/docs/api/channels/voice/routing)
+* [Moments](https://www.infobip.com/docs/api/customer-engagement/moments).
+* [Email](https://www.infobip.com/docs/api/channels/email)
 
 ## General Info
 For `infobip-api-python-client` versioning we use [Semantic Versioning][semver] scheme.
 
 Published under [MIT License][license].
 
-Python 3.7 is minimum supported version by this library.
+Python 3.8 is minimum supported version by this library.
 
 ## Installation
 Pull the library by using the following command:
@@ -78,23 +78,23 @@ Here's a basic example of sending the SMS message.
     from infobip_api_client.models import SmsAdvancedTextualRequest, SmsTextualMessage, SmsDestination, SmsResponse
     from infobip_api_client.api.sms_api import SmsApi
 
-    sms_request = SmsAdvancedTextualRequest(
+    sms_request = SmsRequest(
         messages=[
-            SmsTextualMessage(
+            SmsMessage(
                 destinations=[
                     SmsDestination(
                         to="41793026727",
                     ),
                 ],
-                _from="SMSInfo",
-                text="This is a dummy SMS message sent using Python library",
+                sender="InfoSMS",
+                content=SmsMessageContent(actual_instance=SmsTextContent(text="This is a dummy SMS message sent using Python library"))
             )
         ]
     )
 
     api_instance = SmsApi(api_client)
 
-    api_response: SmsResponse = api_instance.send_sms_message(sms_advanced_textual_request=sms_request)
+    api_response: SmsResponse = api_instance.send_sms_messages(sms_request=sms_request)
     print(api_response)
 ```
 
@@ -103,7 +103,7 @@ To make your code more robust send the message in try block and handle the `ApiE
     from infobip_api_client.exceptions import ApiException
 
     try:
-        api_response: SmsResponse = api_instance.send_sms_message(sms_advanced_textual_request=sms_request)
+        api_response: SmsResponse = api_instance.send_sms_messages(sms_request=sms_request)
     except ApiException as ex:
         print("Error occurred while trying to send SMS message.")
 ```
@@ -111,7 +111,7 @@ To make your code more robust send the message in try block and handle the `ApiE
 In case of failure you can inspect the `ApiException` for more information.
 ```python
     try:
-        api_response: SmsResponse = api_instance.send_sms_message(sms_advanced_textual_request=sms_request)
+        api_response: SmsResponse = api_instance.send_sms_messages(sms_request=sms_request)
     except ApiException as ex:
         print("Error occurred while trying to send SMS message.")
         print("Error status: %s\n" % ex.status)
@@ -198,12 +198,14 @@ For Calls quick start guide please check [these_examples](calls.md)
 
 ## Ask for help
 
-Feel free to open issues on the repository for any issue or feature request. As per pull requests, for details check the `CONTRIBUTING` [file][contributing] related to it - in short, we will not merge any pull requests, this code is auto-generated.
+Feel free to open issues on the repository for any encountered problem or feature request.
 
-If it's something that requires our imminent attention feel free to contact us @ [support@infobip.com](mailto:support@infobip.com).
+If you want to contribute to this library in any way, please follow the guidelines in [CONTRIBUTING][contributing] file.
+
+For anything that requires our imminent attention, contact us @ [support@infobip.com](mailto:support@infobip.com).
 
 [apidocs]: https://www.infobip.com/docs/api
-[freetrial]: https://www.infobip.com/docs/freetrial
+[freetrial]: https://www.infobip.com/docs/essentials/getting-started/free-trial
 [signup]: https://www.infobip.com/signup
 [semver]: https://semver.org
 [license]: LICENSE

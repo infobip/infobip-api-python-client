@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -26,6 +25,7 @@ from infobip_api_client.models.call_recording_request import CallRecordingReques
 from infobip_api_client.models.calls_machine_detection_request import (
     CallsMachineDetectionRequest,
 )
+from infobip_api_client.models.platform import Platform
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -60,14 +60,10 @@ class CallRequest(BaseModel):
     custom_data: Optional[Dict[str, StrictStr]] = Field(
         default=None, description="Custom data.", alias="customData"
     )
-    calls_configuration_id: Optional[StrictStr] = Field(
-        default=None,
-        description="Calls Configuration ID.",
-        alias="callsConfigurationId",
+    calls_configuration_id: StrictStr = Field(
+        description="Calls Configuration ID.", alias="callsConfigurationId"
     )
-    application_id: Optional[StrictStr] = Field(
-        default=None, description="Application ID.", alias="applicationId"
-    )
+    platform: Optional[Platform] = None
     parent_call_id: Optional[
         Annotated[str, Field(strict=True, max_length=128)]
     ] = Field(
@@ -85,7 +81,7 @@ class CallRequest(BaseModel):
         "maxDuration",
         "customData",
         "callsConfigurationId",
-        "applicationId",
+        "platform",
         "parentCallId",
     ]
 
@@ -135,6 +131,9 @@ class CallRequest(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of machine_detection
         if self.machine_detection:
             _dict["machineDetection"] = self.machine_detection.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of platform
+        if self.platform:
+            _dict["platform"] = self.platform.to_dict()
         return _dict
 
     @classmethod
@@ -167,7 +166,9 @@ class CallRequest(BaseModel):
                 else 28800,
                 "customData": obj.get("customData"),
                 "callsConfigurationId": obj.get("callsConfigurationId"),
-                "applicationId": obj.get("applicationId"),
+                "platform": Platform.from_dict(obj["platform"])
+                if obj.get("platform") is not None
+                else None,
                 "parentCallId": obj.get("parentCallId"),
             }
         )

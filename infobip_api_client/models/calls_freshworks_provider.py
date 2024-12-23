@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -20,15 +19,13 @@ import json
 
 from pydantic import ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
-from infobip_api_client.models.calls_pegasus_provider import CallsPegasusProvider
-from infobip_api_client.models.calls_pegasus_provider_trunk_type import (
-    CallsPegasusProviderTrunkType,
-)
+from infobip_api_client.models.calls_provider import CallsProvider
+from infobip_api_client.models.calls_provider_trunk_type import CallsProviderTrunkType
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class CallsFreshworksProvider(CallsPegasusProvider):
+class CallsFreshworksProvider(CallsProvider):
     """
     CallsFreshworksProvider
     """  # noqa: E501

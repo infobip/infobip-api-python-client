@@ -12,15 +12,16 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
 
 from pydantic import ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from infobip_api_client.models.calls_play_content import CallsPlayContent
+from infobip_api_client.models.calls_play_content_type import CallsPlayContentType
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -31,7 +32,10 @@ class CallsUrlPlayContent(CallsPlayContent):
     """  # noqa: E501
 
     file_url: StrictStr = Field(alias="fileUrl")
-    __properties: ClassVar[List[str]] = ["type", "fileUrl"]
+    cache_duration: Optional[Annotated[int, Field(le=86400, strict=True)]] = Field(
+        default=None, alias="cacheDuration"
+    )
+    __properties: ClassVar[List[str]] = ["type", "fileUrl", "cacheDuration"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -82,6 +86,10 @@ class CallsUrlPlayContent(CallsPlayContent):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {"type": obj.get("type"), "fileUrl": obj.get("fileUrl")}
+            {
+                "type": obj.get("type"),
+                "fileUrl": obj.get("fileUrl"),
+                "cacheDuration": obj.get("cacheDuration"),
+            }
         )
         return _obj

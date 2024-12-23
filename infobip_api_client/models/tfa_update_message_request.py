@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -58,6 +57,11 @@ class TfaUpdateMessageRequest(BaseModel):
         description="The speed of narration for messages sent as voice. Supported range is from `0.5` to `2`.",
         alias="speechRate",
     )
+    voice_name: Optional[StrictStr] = Field(
+        default=None,
+        description="Defines the voice that will be used for the chosen language (example: Joanna). For each supported language, we may offer different voices (learn more [here](https://www.infobip.com/docs/voice-and-video/reference#text-to-speech-languages)). You can use this [method](https://www.infobip.com/docs/api/channels/voice/voice-message/get-voices) to retrieve all voices for the given language. If not defined, it will default to the standard voice for the selected language (if available). If the standard voice is not available, the request will fail. To avoid that, you can choose one of the neural voices (charges will apply).",
+        alias="voiceName",
+    )
     __properties: ClassVar[List[str]] = [
         "language",
         "messageText",
@@ -67,6 +71,7 @@ class TfaUpdateMessageRequest(BaseModel):
         "repeatDTMF",
         "senderId",
         "speechRate",
+        "voiceName",
     ]
 
     model_config = ConfigDict(
@@ -132,6 +137,7 @@ class TfaUpdateMessageRequest(BaseModel):
                 "repeatDTMF": obj.get("repeatDTMF"),
                 "senderId": obj.get("senderId"),
                 "speechRate": obj.get("speechRate"),
+                "voiceName": obj.get("voiceName"),
             }
         )
         return _obj

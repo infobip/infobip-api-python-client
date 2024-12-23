@@ -12,15 +12,17 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
 
 from importlib import import_module
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from infobip_api_client.models.call_routing_destination_type import (
+    CallRoutingDestinationType,
+)
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -40,19 +42,10 @@ class CallRoutingDestination(BaseModel):
     List of destinations. First destination in the list is the first one to be executed. Subsequent destinations are executed only if the previous one fails.
     """  # noqa: E501
 
-    weight: Optional[StrictInt] = None
     priority: Optional[StrictInt] = None
-    type: StrictStr
-    __properties: ClassVar[List[str]] = ["weight", "priority", "type"]
-
-    @field_validator("type")
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(["APPLICATION", "ENDPOINT", "URL"]):
-            raise ValueError(
-                "must be one of enum values ('APPLICATION', 'ENDPOINT', 'URL')"
-            )
-        return value
+    type: CallRoutingDestinationType
+    weight: Optional[StrictInt] = None
+    __properties: ClassVar[List[str]] = ["priority", "type", "weight"]
 
     model_config = ConfigDict(
         populate_by_name=True,

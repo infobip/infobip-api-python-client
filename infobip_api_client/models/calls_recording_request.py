@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -33,7 +32,7 @@ class CallsRecordingRequest(BaseModel):
     recording_type: CallsRecordingType = Field(alias="recordingType")
     max_silence: Optional[StrictInt] = Field(
         default=None,
-        description="Silence duration, in seconds, before the recording stops.",
+        description="Silence duration, in seconds, before the recording stops. (If this field is set the recording can't be stopped by the [stop recording endpoint](#call-stop-recording).)",
         alias="maxSilence",
     )
     beep: Optional[StrictBool] = Field(
@@ -42,7 +41,7 @@ class CallsRecordingRequest(BaseModel):
     )
     max_duration: Optional[StrictInt] = Field(
         default=None,
-        description="Maximum recording duration in seconds.",
+        description="Maximum recording duration in seconds.  (If this field is set the recording can't be stopped by the [stop recording endpoint](#call-stop-recording).)",
         alias="maxDuration",
     )
     custom_data: Optional[Dict[str, StrictStr]] = Field(

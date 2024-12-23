@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -20,6 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from infobip_api_client.models.platform import Platform
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,16 +29,11 @@ class CallsApplicationTransferRequest(BaseModel):
     CallsApplicationTransferRequest
     """  # noqa: E501
 
-    destination_calls_configuration_id: Optional[StrictStr] = Field(
-        default=None,
+    destination_calls_configuration_id: StrictStr = Field(
         description="ID of the calls configuration to which the call is to be transferred.",
         alias="destinationCallsConfigurationId",
     )
-    destination_application_id: Optional[StrictStr] = Field(
-        default=None,
-        description="ID of the application to which the call is to be transferred.",
-        alias="destinationApplicationId",
-    )
+    platform: Optional[Platform] = None
     timeout: Optional[StrictInt] = Field(
         default=30,
         description="Time to wait, in seconds, for the receiving application to accept the transfer.",
@@ -50,7 +45,7 @@ class CallsApplicationTransferRequest(BaseModel):
     )
     __properties: ClassVar[List[str]] = [
         "destinationCallsConfigurationId",
-        "destinationApplicationId",
+        "platform",
         "timeout",
         "customData",
     ]
@@ -92,6 +87,9 @@ class CallsApplicationTransferRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of platform
+        if self.platform:
+            _dict["platform"] = self.platform.to_dict()
         return _dict
 
     @classmethod
@@ -108,7 +106,9 @@ class CallsApplicationTransferRequest(BaseModel):
                 "destinationCallsConfigurationId": obj.get(
                     "destinationCallsConfigurationId"
                 ),
-                "destinationApplicationId": obj.get("destinationApplicationId"),
+                "platform": Platform.from_dict(obj["platform"])
+                if obj.get("platform") is not None
+                else None,
                 "timeout": obj.get("timeout") if obj.get("timeout") is not None else 30,
                 "customData": obj.get("customData"),
             }

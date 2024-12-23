@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -21,7 +20,7 @@ import json
 from importlib import import_module
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from infobip_api_client.models.security_config_type import SecurityConfigType
+from infobip_api_client.models.url_security_config_type import UrlSecurityConfigType
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -34,10 +33,10 @@ if TYPE_CHECKING:
 
 class SecurityConfig(BaseModel):
     """
-    Security settings object holding the authentication settings necessary to access your webhook.
+    Webhook security config.
     """  # noqa: E501
 
-    type: Optional[SecurityConfigType] = None
+    type: Optional[UrlSecurityConfigType] = None
     __properties: ClassVar[List[str]] = ["type"]
 
     model_config = ConfigDict(
