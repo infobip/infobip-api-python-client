@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -26,13 +25,11 @@ from typing_extensions import Self
 
 class MessagePrice(BaseModel):
     """
-    Sent email price.
+    Sent message price.
     """  # noqa: E501
 
     price_per_message: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None,
-        description="Price per one email request.",
-        alias="pricePerMessage",
+        default=None, description="Price per one message.", alias="pricePerMessage"
     )
     currency: Optional[StrictStr] = Field(
         default=None, description="The currency in which the price is expressed."

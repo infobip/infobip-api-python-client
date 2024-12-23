@@ -7,54 +7,64 @@ from pytest_httpserver import HTTPServer
 from infobip_api_client import (
     ApiClient,
     Configuration,
-    SmsAdvancedTextualRequest,
-    SmsTextualMessage,
     SmsDestination,
     SmsApi,
     SmsResponse,
     SmsResponseDetails,
-    MessageStatus,
     SmsBulkResponse,
     SmsBulkStatusResponse,
     SmsBulkStatus,
     SmsBulkRequest,
     SmsUpdateStatusRequest,
     SmsDeliveryResult,
-    SmsReport,
-    MessageError,
     MessagePrice,
     SmsLogsResponse,
     SmsLog,
     SmsInboundMessageResult,
     SmsInboundMessage,
-    SmsDeliveryTimeWindow,
-    SmsDeliveryDay,
-    SmsDeliveryTimeFrom,
-    SmsDeliveryTimeTo,
     SmsLanguage,
-    SmsUrlOptions,
     SmsSendingSpeedLimit,
-    SmsSpeedLimitTimeUnit,
     SmsTracking,
     SmsRegionalOptions,
     SmsIndiaDltOptions,
-    SmsTurkeyIysOptions,
-    SmsAdvancedBinaryRequest,
-    SmsBinaryMessage,
     SmsBinaryContent,
     SmsPreviewRequest,
     SmsPreviewResponse,
     SmsPreview,
     SmsLanguageConfiguration,
+    SmsRequest,
+    SmsMessage,
+    SmsMessageContent,
+    SmsTextContent,
+    SmsMessageOptions,
+    Platform,
+    SmsMessageStatus,
+    MessageGeneralStatus,
+    SmsMessageResponseDetails,
+    SmsTransliterationCode,
+    SmsLanguageCode,
+    ValidityPeriod,
+    ValidityPeriodTimeUnit,
+    SmsWebhooks,
+    SmsMessageDeliveryReporting,
+    DeliveryTimeWindow,
+    DeliveryDay,
+    DeliveryTime,
+    SmsMessageRequestOptions,
+    UrlOptions,
+    SmsRequestSchedulingSettings,
+    SmsPreviewLanguage,
+    SmsDeliveryReport,
+    SmsMessageError,
+    SmsMessageErrorGroup,
 )
 
-sms_advanced_textual_endpoint = "/sms/2/text/advanced"
-sms_advanced_binary_endpoint = "/sms/2/binary/advanced"
+sms_messages = "/sms/3/messages"
+sms_outbound_reports_endpoint = "/sms/3/reports"
+sms_outbound_logs_endpoint = "/sms/3/logs"
 sms_preview_endpoint = "/sms/1/preview"
 sms_bulks_endpoint = "/sms/1/bulks"
 sms_bulks_status_endpoint = "/sms/1/bulks/status"
-sms_outbound_reports_endpoint = "/sms/1/reports"
-sms_outbound_logs_endpoint = "/sms/1/logs"
 sms_inbound_messages_endpoint = "/sms/1/inbox/reports"
 
 
@@ -67,32 +77,37 @@ def test_send_basic_sms_with_application_and_entity(
     given_from = "InfoSMS"
     given_text = "This is a sample message"
     given_group_id = 1
-    given_group_name = "PENDING"
+    given_group_name = MessageGeneralStatus.PENDING
     given_status_id = 26
     given_status_name = "MESSAGE_ACCEPTED"
     given_status_description = "Message sent to next instance"
     given_application_id = "given_application_id"
     given_entity_id = "given_entity_id"
+    given_message_count = 1
 
     given_request = {
         "messages": [
             {
+                "sender": given_from,
                 "destinations": [{"to": given_to}],
-                "flash": False,
-                "text": given_text,
-                "from": given_from,
-                "applicationId": given_application_id,
-                "entityId": given_entity_id,
+                "content": {
+                    "text": given_text,
+                },
+                "options": {
+                    "platform": {
+                        "applicationId": given_application_id,
+                        "entityId": given_entity_id,
+                    }
+                },
             }
-        ],
-        "includeSmsCountInResponse": False,
+        ]
     }
 
     expected_response = {
         "bulkId": given_bulk_id,
         "messages": [
             {
-                "to": given_to,
+                "messageId": given_message_id,
                 "status": {
                     "groupId": given_group_id,
                     "groupName": given_group_name,
@@ -100,51 +115,56 @@ def test_send_basic_sms_with_application_and_entity(
                     "name": given_status_name,
                     "description": given_status_description,
                 },
-                "messageId": given_message_id,
+                "destination": given_to,
+                "details": {
+                    "messageCount": given_message_count,
+                },
             }
         ],
     }
 
     setup_post_request_ok(
         httpserver=httpserver,
-        endpoint=sms_advanced_textual_endpoint,
+        endpoint=sms_messages,
         expected_request=given_request,
         expected_response=expected_response,
     )
 
-    sms_advanced_textual_request = SmsAdvancedTextualRequest(
+    request = SmsRequest(
         messages=[
-            SmsTextualMessage(
+            SmsMessage(
                 destinations=[
                     SmsDestination(
                         to=given_to,
                     ),
                 ],
-                var_from=given_from,
-                text=given_text,
-                application_id=given_application_id,
-                entity_id=given_entity_id,
+                sender=given_from,
+                content=SmsMessageContent(actual_instance=SmsTextContent(text=given_text)),
+                options=SmsMessageOptions(
+                    platform=Platform(
+                        application_id=given_application_id, entity_id=given_entity_id
+                    )
+                ),
             )
         ]
     )
 
-    actual_response: SmsResponse = sms_api_client.send_sms_message(
-        sms_advanced_textual_request=sms_advanced_textual_request
-    )
+    actual_response: SmsResponse = sms_api_client.send_sms_messages(sms_request=request)
 
     expected_sms_response = SmsResponse(
         bulk_id=given_bulk_id,
         messages=[
             SmsResponseDetails(
                 message_id=given_message_id,
-                status=MessageStatus(
-                    groupId=given_group_id,
-                    groupName=given_group_name,
+                status=SmsMessageStatus(
+                    group_id=given_group_id,
+                    group_name=given_group_name,
                     id=given_status_id,
                     name=given_status_name,
                     description=given_status_description,
                 ),
-                to=given_to,
+                destination=given_to,
+                details=SmsMessageResponseDetails(message_count=given_message_count),
             )
         ],
     )
@@ -153,473 +173,515 @@ def test_send_basic_sms_with_application_and_entity(
 
 
 def test_send_fully_featured_sms(httpserver: HTTPServer, sms_api_client):
-    bulk_id = "2034072219640523072"
-    first_to = "41793026727"
-    second_to = "41793026834"
-    first_message_id = "MESSAGE-ID-123-xyz"
-    second_message_id = "2250be2d4219-3af1-78856-aabe-1362af1edfd2"
-    given_from = "InfoSMS"
-    application_id = "application_id"
-    entity_id = "entity_id"
-
-    flash = False
-    callback_data = "my-callback-data"
-    first_delivery_day = "MONDAY"
-    second_delivery_day = "THURSDAY"
-    delivery_from_hours = 11
-    delivery_from_minutes = 10
-    delivery_to_hours = 12
-    delivery_to_minutes = 15
+    sender_1 = "InfoSMS"
+    sender_2 = "41793026700"
+    destination_1 = "41793026727"
+    destination_2 = "41793026834"
+    destination_3 = "41793026700"
+    message_id_1 = "MESSAGE-ID-123-xyz"
+    text_1 = "Artık Ulusal Dil Tanımlayıcısı ile Türkçe karakterli smslerinizi rahatlıkla iletebilirsiniz."
+    text_2 = "A long time ago, in a galaxy far, far away... It is a period of civil war. Rebel spaceships, striking from a hidden base, have won their first victory against the evil Galactic Empire."
+    transliteration = SmsTransliterationCode.TURKISH
+    validity_period_amount = 720
+    validity_period_unit = ValidityPeriodTimeUnit.HOURS
+    campaign_reference_id = "summersale"
+    delivery_url = "https://www.example.com/sms/advanced"
     intermediate_report = True
-    language_code = "AUTODETECT"
-    notify_content_type = "application/json"
-    notify_url = "https://example.com/mms-webhook"
-    validity_period = 10
-    text = "Laku noć"
-    transliteration = "CENTRAL_EUROPEAN"
-
-    india_dlt_content_template_id = "content-template-id"
-    india_dlt_principal_entity_id = "principal-entity-id"
-    turkey_iys_brand_code = 123123
-    turkey_iys_recipient_type = "TACIR"
+    content_type = "application/json"
+    callback_data = "DLR callback data"
+    delivery_days = [
+        DeliveryDay.MONDAY,
+        DeliveryDay.TUESDAY,
+        DeliveryDay.WEDNESDAY,
+        DeliveryDay.THURSDAY,
+        DeliveryDay.FRIDAY,
+        DeliveryDay.SATURDAY,
+        DeliveryDay.SUNDAY,
+    ]
+    delivery_from_hour = 6
+    delivery_from_minute = 0
+    delivery_to_hour = 15
+    delivery_to_minute = 30
+    bulk_id = "BULK-ID-123-xyz"
     send_at = "2023-08-01T16:10:00+05:30"
 
-    sending_speed_limit_amount = 10
-    sending_speed_limit_time_unit = "HOUR"
-    url_options_shorten_url = True
-    url_options_track_clicks = False
-    url_options_tracking_url = "https://ib.com"
-    url_options_remove_protocol = True
-    url_options_custom_domain = "example.com"
-    tracking = "SMS"
-    tracking_type = "MY_CAMPAIGN"
-    tracking_base_url = "https://example.com"
-    tracking_process_key = "123"
+    send_at_offset = datetime.datetime(
+        2023,
+        8,
+        1,
+        16,
+        10,
+        0,
+        tzinfo=datetime.timezone(datetime.timedelta(hours=5, minutes=30)),
+    )
+    shorten_url = True
+    track_clicks = True
+    tracking_url = "https://example.com/click-report"
+    remove_protocol = True
+    custom_domain = "example.com"
+    include_sms_count_in_response = True
+    use_conversion_tracking = True
+    conversion_tracking_name = "MY_CAMPAIGN"
 
-    expected_request = {
-        "bulkId": bulk_id,
-        "messages": [
-            {
-                "callbackData": callback_data,
-                "deliveryTimeWindow": {
-                    "days": [first_delivery_day, second_delivery_day],
-                    "from": {
-                        "hour": delivery_from_hours,
-                        "minute": delivery_from_minutes,
-                    },
-                    "to": {"hour": delivery_to_hours, "minute": delivery_to_minutes},
-                },
-                "destinations": [
-                    {"to": first_to, "messageId": first_message_id},
-                    {"to": second_to},
-                ],
-                "flash": flash,
-                "from": given_from,
-                "intermediateReport": intermediate_report,
-                "language": {"languageCode": language_code},
-                "notifyContentType": notify_content_type,
-                "notifyUrl": notify_url,
-                "regional": {
-                    "indiaDlt": {
-                        "contentTemplateId": india_dlt_content_template_id,
-                        "principalEntityId": india_dlt_principal_entity_id,
-                    },
-                    "turkeyIys": {
-                        "brandCode": turkey_iys_brand_code,
-                        "recipientType": turkey_iys_recipient_type,
-                    },
-                },
-                "sendAt": send_at,
-                "text": text,
-                "transliteration": transliteration,
-                "validityPeriod": validity_period,
-                "applicationId": application_id,
-                "entityId": entity_id,
-            }
-        ],
-        "sendingSpeedLimit": {
-            "amount": sending_speed_limit_amount,
-            "timeUnit": sending_speed_limit_time_unit,
-        },
-        "urlOptions": {
-            "shortenUrl": url_options_shorten_url,
-            "trackClicks": url_options_track_clicks,
-            "trackingUrl": url_options_tracking_url,
-            "removeProtocol": url_options_remove_protocol,
-            "customDomain": url_options_custom_domain,
-        },
-        "tracking": {
-            "baseUrl": tracking_base_url,
-            "processKey": tracking_process_key,
-            "track": tracking,
-            "type": tracking_type,
-        },
-        "includeSmsCountInResponse": False,
-    }
-
-    group_id = 1
-    group_name = "PENDING"
+    # Response values
+    bulk_id_response = "2034072219640523072"
+    message_id_response_1 = "2250be2d4219-3af1-78856-aabe-1362af1edfd2"
+    message_id_response_2 = "3350be2d4219-3af1-23343-bbbb-1362af1edfd3"
+    status_group_id = 1
+    status_group_name = MessageGeneralStatus.PENDING
     status_id = 26
-    status_name = "MESSAGE_ACCEPTED"
+    status_name = "PENDING_ACCEPTED"
     status_description = "Message sent to next instance"
+    message_count = 1
 
-    expected_response = {
-        "bulkId": bulk_id,
+    given_request = {
         "messages": [
             {
-                "to": first_to,
-                "status": {
-                    "groupId": group_id,
-                    "groupName": group_name,
-                    "id": status_id,
-                    "name": status_name,
-                    "description": status_description,
+                "sender": sender_1,
+                "destinations": [
+                    {"to": destination_1, "messageId": message_id_1},
+                    {"to": destination_2},
+                ],
+                "content": {"text": text_1, "transliteration": transliteration},
+                "options": {
+                    "validityPeriod": {
+                        "amount": validity_period_amount,
+                        "timeUnit": validity_period_unit,
+                    },
+                    "campaignReferenceId": campaign_reference_id,
                 },
-                "messageId": first_message_id,
+                "webhooks": {
+                    "delivery": {
+                        "url": delivery_url,
+                        "intermediateReport": intermediate_report,
+                    },
+                    "contentType": content_type,
+                    "callbackData": callback_data,
+                },
             },
             {
-                "to": second_to,
+                "sender": sender_2,
+                "destinations": [{"to": destination_3}],
+                "content": {"text": text_2},
+                "options": {
+                    "deliveryTimeWindow": {
+                        "days": delivery_days,
+                        "from": {
+                            "hour": delivery_from_hour,
+                            "minute": delivery_from_minute,
+                        },
+                        "to": {"hour": delivery_to_hour, "minute": delivery_to_minute},
+                    }
+                },
+            },
+        ],
+        "options": {
+            "schedule": {"bulkId": bulk_id, "sendAt": send_at},
+            "tracking": {
+                "shortenUrl": shorten_url,
+                "trackClicks": track_clicks,
+                "trackingUrl": tracking_url,
+                "removeProtocol": remove_protocol,
+                "customDomain": custom_domain,
+            },
+            "includeSmsCountInResponse": include_sms_count_in_response,
+            "conversionTracking": {
+                "useConversionTracking": use_conversion_tracking,
+                "conversionTrackingName": conversion_tracking_name,
+            },
+        },
+    }
+
+    given_response = {
+        "bulkId": bulk_id_response,
+        "messages": [
+            {
+                "messageId": message_id_response_1,
                 "status": {
-                    "groupId": group_id,
-                    "groupName": group_name,
+                    "groupId": status_group_id,
+                    "groupName": status_group_name,
                     "id": status_id,
                     "name": status_name,
                     "description": status_description,
                 },
-                "messageId": second_message_id,
+                "destination": destination_1,
+                "details": {"messageCount": message_count},
+            },
+            {
+                "messageId": message_id_response_2,
+                "status": {
+                    "groupId": status_group_id,
+                    "groupName": status_group_name,
+                    "id": status_id,
+                    "name": status_name,
+                    "description": status_description,
+                },
+                "destination": destination_2,
+                "details": {"messageCount": message_count},
             },
         ],
     }
 
-    setup_post_request_ok(
-        httpserver=httpserver,
-        endpoint=sms_advanced_textual_endpoint,
-        expected_request=expected_request,
-        expected_response=expected_response,
-    )
+    setup_post_request_ok(httpserver, sms_messages, given_request, given_response)
 
-    sms_advanced_textual_request = SmsAdvancedTextualRequest(
-        bulk_id=bulk_id,
+    request = SmsRequest(
         messages=[
-            SmsTextualMessage(
-                callback_data=callback_data,
-                delivery_time_window=SmsDeliveryTimeWindow(
-                    days=[SmsDeliveryDay.MONDAY, SmsDeliveryDay.THURSDAY],
-                    var_from=SmsDeliveryTimeFrom(
-                        hour=delivery_from_hours, minute=delivery_from_minutes
-                    ),
-                    to=SmsDeliveryTimeTo(
-                        hour=delivery_to_hours, minute=delivery_to_minutes
-                    ),
-                ),
+            SmsMessage(
+                sender=sender_1,
                 destinations=[
-                    SmsDestination(
-                        message_id=first_message_id,
-                        to=first_to,
-                    ),
-                    SmsDestination(to=second_to),
+                    SmsDestination(to=destination_1, message_id=message_id_1),
+                    SmsDestination(to=destination_2),
                 ],
-                var_from=given_from,
-                flash=flash,
-                intermediate_report=intermediate_report,
-                language=SmsLanguage(language_code=language_code),
-                notify_content_type=notify_content_type,
-                notify_url=notify_url,
-                regional=SmsRegionalOptions(
-                    india_dlt=SmsIndiaDltOptions(
-                        content_template_id=india_dlt_content_template_id,
-                        principal_entity_id=india_dlt_principal_entity_id,
-                    ),
-                    turkey_iys=SmsTurkeyIysOptions(
-                        brand_code=turkey_iys_brand_code,
-                        recipient_type=turkey_iys_recipient_type,
-                    ),
+                content=SmsMessageContent(
+                    actual_instance=SmsTextContent(
+                        text=text_1, transliteration=transliteration
+                    )
                 ),
-                send_at=datetime.datetime(
-                    2023,
-                    8,
-                    1,
-                    16,
-                    10,
-                    0,
-                    tzinfo=datetime.timezone(datetime.timedelta(hours=5, minutes=30)),
+                options=SmsMessageOptions(
+                    validity_period=ValidityPeriod(
+                        amount=validity_period_amount, time_unit=validity_period_unit
+                    ),
+                    campaign_reference_id=campaign_reference_id,
                 ),
-                text=text,
-                transliteration=transliteration,
-                validity_period=validity_period,
-                application_id=application_id,
-                entity_id=entity_id,
-            )
+                webhooks=SmsWebhooks(
+                    delivery=SmsMessageDeliveryReporting(
+                        url=delivery_url, intermediate_report=intermediate_report
+                    ),
+                    content_type=content_type,
+                    callback_data=callback_data,
+                ),
+            ),
+            SmsMessage(
+                sender=sender_2,
+                destinations=[SmsDestination(to=destination_3)],
+                content=SmsMessageContent(actual_instance=SmsTextContent(text=text_2)),
+                options=SmsMessageOptions(
+                    delivery_time_window=DeliveryTimeWindow(
+                        days=delivery_days,
+                        var_from=DeliveryTime(
+                            hour=delivery_from_hour, minute=delivery_from_minute
+                        ),
+                        to=DeliveryTime(
+                            hour=delivery_to_hour, minute=delivery_to_minute
+                        ),
+                    )
+                ),
+            ),
         ],
-        sending_speed_limit=SmsSendingSpeedLimit(
-            amount=sending_speed_limit_amount, time_unit=SmsSpeedLimitTimeUnit.HOUR
-        ),
-        url_options=SmsUrlOptions(
-            shorten_url=url_options_shorten_url,
-            track_clicks=url_options_track_clicks,
-            tracking_url=url_options_tracking_url,
-            remove_protocol=url_options_remove_protocol,
-            custom_domain=url_options_custom_domain,
-        ),
-        tracking=SmsTracking(
-            base_url=tracking_base_url,
-            process_key=tracking_process_key,
-            track=tracking,
-            type=tracking_type,
+        options=SmsMessageRequestOptions(
+            schedule=SmsRequestSchedulingSettings(
+                bulk_id=bulk_id, send_at=send_at_offset
+            ),
+            tracking=UrlOptions(
+                shorten_url=shorten_url,
+                track_clicks=track_clicks,
+                tracking_url=tracking_url,
+                remove_protocol=remove_protocol,
+                custom_domain=custom_domain,
+            ),
+            include_sms_count_in_response=include_sms_count_in_response,
+            conversion_tracking=SmsTracking(
+                use_conversion_tracking=use_conversion_tracking,
+                conversion_tracking_name=conversion_tracking_name,
+            ),
         ),
     )
 
-    actual_response = sms_api_client.send_sms_message(
-        sms_advanced_textual_request=sms_advanced_textual_request
-    )
+    response = sms_api_client.send_sms_messages(sms_request=request)
 
-    expected_sms_result = SmsResponse(
-        bulk_id=bulk_id,
+    expected_response = SmsResponse(
+        bulk_id=bulk_id_response,
         messages=[
             SmsResponseDetails(
-                message_id=first_message_id,
-                status=MessageStatus(
-                    group_id=group_id,
-                    group_name=group_name,
+                message_id=message_id_response_1,
+                status=SmsMessageStatus(
+                    group_id=status_group_id,
+                    group_name=status_group_name,
                     id=status_id,
                     name=status_name,
                     description=status_description,
                 ),
-                to=first_to,
+                destination=destination_1,
+                details=SmsMessageResponseDetails(message_count=message_count),
             ),
             SmsResponseDetails(
-                message_id=second_message_id,
-                status=MessageStatus(
-                    group_id=group_id,
-                    group_name=group_name,
+                message_id=message_id_response_2,
+                status=SmsMessageStatus(
+                    group_id=status_group_id,
+                    group_name=status_group_name,
                     id=status_id,
                     name=status_name,
                     description=status_description,
                 ),
-                to=second_to,
+                destination=destination_2,
+                details=SmsMessageResponseDetails(message_count=message_count),
             ),
         ],
     )
 
-    assert actual_response == expected_sms_result
+    assert response == expected_response
 
 
 def test_send_fully_featured_binary_sms(httpserver: HTTPServer, sms_api_client):
-    bulk_id = "2034072219640523072"
-    first_to = "41793026727"
-    second_to = "41793026834"
-    first_message_id = "MESSAGE-ID-123-xyz"
-    second_message_id = "2250be2d4219-3af1-78856-aabe-1362af1edfd2"
-    given_from = "InfoSMS"
-    application_id = "application_id"
-    entity_id = "entity_id"
-
-    flash = False
-    callback_data = "my-callback-data"
-    first_delivery_day = "MONDAY"
-    second_delivery_day = "THURSDAY"
-    delivery_from_hours = 11
-    delivery_from_minutes = 10
-    delivery_to_hours = 12
-    delivery_to_minutes = 15
+    sender_1 = "InfoSMS"
+    sender_2 = "41793026700"
+    destination_1 = "41793026727"
+    destination_2 = "41793026834"
+    destination_3 = "41793026700"
+    message_id_1 = "MESSAGE-ID-123-xyz"
+    validity_period_amount = 720
+    validity_period_unit = ValidityPeriodTimeUnit.HOURS
+    campaign_reference_id = "summersale"
+    delivery_url = "https://www.example.com/sms/advanced"
     intermediate_report = True
-    notify_content_type = "application/json"
-    notify_url = "https://example.com/mms-webhook"
-    validity_period = 10
-    hex_message = "54 65 73 74 20 6d 65 73 73 61 67 65 2e"
+    content_type = "application/json"
+    callback_data = "DLR callback data"
+    delivery_days = [
+        DeliveryDay.MONDAY,
+        DeliveryDay.TUESDAY,
+        DeliveryDay.WEDNESDAY,
+        DeliveryDay.THURSDAY,
+        DeliveryDay.FRIDAY,
+        DeliveryDay.SATURDAY,
+        DeliveryDay.SUNDAY,
+    ]
+    delivery_from_hour = 6
+    delivery_from_minute = 0
+    delivery_to_hour = 15
+    delivery_to_minute = 30
+    bulk_id = "BULK-ID-123-xyz"
+    send_at = "2023-08-01T16:10:00+05:30"
     data_coding = 0
     esm_class = 0
+    given_hex = "41 20 6C 6F 6E 67 20 74 …20 45 6D 70 69 72 65 2E"
 
-    india_dlt_content_template_id = "content-template-id"
-    india_dlt_principal_entity_id = "principal-entity-id"
-    turkey_iys_brand_code = 123123
-    turkey_iys_recipient_type = "TACIR"
-    send_at = "2023-08-01T16:10:00+05:30"
+    send_at_offset = datetime.datetime(
+        2023,
+        8,
+        1,
+        16,
+        10,
+        0,
+        tzinfo=datetime.timezone(datetime.timedelta(hours=5, minutes=30)),
+    )
+    shorten_url = True
+    track_clicks = True
+    tracking_url = "https://example.com/click-report"
+    remove_protocol = True
+    custom_domain = "example.com"
+    include_sms_count_in_response = True
+    use_conversion_tracking = True
+    conversion_tracking_name = "MY_CAMPAIGN"
 
-    sending_speed_limit_amount = 10
-    sending_speed_limit_time_unit = "HOUR"
+    # Response values
+    bulk_id_response = "2034072219640523072"
+    message_id_response_1 = "2250be2d4219-3af1-78856-aabe-1362af1edfd2"
+    message_id_response_2 = "3350be2d4219-3af1-23343-bbbb-1362af1edfd3"
+    status_group_id = 1
+    status_group_name = MessageGeneralStatus.PENDING
+    status_id = 26
+    status_name = "PENDING_ACCEPTED"
+    status_description = "Message sent to next instance"
+    message_count = 1
 
-    expected_request = {
-        "bulkId": bulk_id,
+    given_request = {
         "messages": [
             {
-                "callbackData": callback_data,
-                "deliveryTimeWindow": {
-                    "days": [first_delivery_day, second_delivery_day],
-                    "from": {
-                        "hour": delivery_from_hours,
-                        "minute": delivery_from_minutes,
-                    },
-                    "to": {"hour": delivery_to_hours, "minute": delivery_to_minutes},
-                },
+                "sender": sender_1,
                 "destinations": [
-                    {"to": first_to, "messageId": first_message_id},
-                    {"to": second_to},
+                    {"to": destination_1, "messageId": message_id_1},
+                    {"to": destination_2},
                 ],
-                "flash": flash,
-                "from": given_from,
-                "intermediateReport": intermediate_report,
-                "notifyContentType": notify_content_type,
-                "notifyUrl": notify_url,
-                "regional": {
-                    "indiaDlt": {
-                        "contentTemplateId": india_dlt_content_template_id,
-                        "principalEntityId": india_dlt_principal_entity_id,
-                    },
-                    "turkeyIys": {
-                        "brandCode": turkey_iys_brand_code,
-                        "recipientType": turkey_iys_recipient_type,
-                    },
-                },
-                "sendAt": send_at,
-                "binary": {
-                    "hex": hex_message,
+                "content": {
                     "dataCoding": data_coding,
                     "esmClass": esm_class,
+                    "hex": given_hex,
                 },
-                "validityPeriod": validity_period,
-                "applicationId": application_id,
-                "entityId": entity_id,
-            }
+                "options": {
+                    "validityPeriod": {
+                        "amount": validity_period_amount,
+                        "timeUnit": validity_period_unit,
+                    },
+                    "campaignReferenceId": campaign_reference_id,
+                },
+                "webhooks": {
+                    "delivery": {
+                        "url": delivery_url,
+                        "intermediateReport": intermediate_report,
+                    },
+                    "contentType": content_type,
+                    "callbackData": callback_data,
+                },
+            },
+            {
+                "sender": sender_2,
+                "destinations": [{"to": destination_3}],
+                "content": {
+                    "dataCoding": data_coding,
+                    "esmClass": esm_class,
+                    "hex": given_hex,
+                },
+                "options": {
+                    "deliveryTimeWindow": {
+                        "days": delivery_days,
+                        "from": {
+                            "hour": delivery_from_hour,
+                            "minute": delivery_from_minute,
+                        },
+                        "to": {"hour": delivery_to_hour, "minute": delivery_to_minute},
+                    }
+                },
+            },
         ],
-        "sendingSpeedLimit": {
-            "amount": sending_speed_limit_amount,
-            "timeUnit": sending_speed_limit_time_unit,
+        "options": {
+            "schedule": {"bulkId": bulk_id, "sendAt": send_at},
+            "tracking": {
+                "shortenUrl": shorten_url,
+                "trackClicks": track_clicks,
+                "trackingUrl": tracking_url,
+                "removeProtocol": remove_protocol,
+                "customDomain": custom_domain,
+            },
+            "includeSmsCountInResponse": include_sms_count_in_response,
+            "conversionTracking": {
+                "useConversionTracking": use_conversion_tracking,
+                "conversionTrackingName": conversion_tracking_name,
+            },
         },
     }
 
-    group_id = 1
-    group_name = "PENDING"
-    status_id = 26
-    status_name = "MESSAGE_ACCEPTED"
-    status_description = "Message sent to next instance"
-
-    expected_sms_response = {
-        "bulkId": bulk_id,
+    given_response = {
+        "bulkId": bulk_id_response,
         "messages": [
             {
-                "to": first_to,
+                "messageId": message_id_response_1,
                 "status": {
-                    "groupId": group_id,
-                    "groupName": group_name,
+                    "groupId": status_group_id,
+                    "groupName": status_group_name,
                     "id": status_id,
                     "name": status_name,
                     "description": status_description,
                 },
-                "messageId": first_message_id,
+                "destination": destination_1,
+                "details": {"messageCount": message_count},
             },
             {
-                "to": second_to,
+                "messageId": message_id_response_2,
                 "status": {
-                    "groupId": group_id,
-                    "groupName": group_name,
+                    "groupId": status_group_id,
+                    "groupName": status_group_name,
                     "id": status_id,
                     "name": status_name,
                     "description": status_description,
                 },
-                "messageId": second_message_id,
+                "destination": destination_2,
+                "details": {"messageCount": message_count},
             },
         ],
     }
 
-    setup_post_request_ok(
-        httpserver=httpserver,
-        endpoint=sms_advanced_binary_endpoint,
-        expected_request=expected_request,
-        expected_response=expected_sms_response,
-    )
+    setup_post_request_ok(httpserver, sms_messages, given_request, given_response)
 
-    sms_advanced_binary_request = SmsAdvancedBinaryRequest(
-        bulk_id=bulk_id,
+    request = SmsRequest(
         messages=[
-            SmsBinaryMessage(
-                callback_data=callback_data,
-                delivery_time_window=SmsDeliveryTimeWindow(
-                    days=[SmsDeliveryDay.MONDAY, SmsDeliveryDay.THURSDAY],
-                    var_from=SmsDeliveryTimeFrom(
-                        hour=delivery_from_hours, minute=delivery_from_minutes
-                    ),
-                    to=SmsDeliveryTimeTo(
-                        hour=delivery_to_hours, minute=delivery_to_minutes
-                    ),
-                ),
+            SmsMessage(
+                sender=sender_1,
                 destinations=[
-                    SmsDestination(
-                        message_id=first_message_id,
-                        to=first_to,
-                    ),
-                    SmsDestination(to=second_to),
+                    SmsDestination(to=destination_1, message_id=message_id_1),
+                    SmsDestination(to=destination_2),
                 ],
-                var_from=given_from,
-                flash=flash,
-                intermediate_report=intermediate_report,
-                notify_content_type=notify_content_type,
-                notify_url=notify_url,
-                regional=SmsRegionalOptions(
-                    india_dlt=SmsIndiaDltOptions(
-                        content_template_id=india_dlt_content_template_id,
-                        principal_entity_id=india_dlt_principal_entity_id,
+                content=SmsMessageContent(
+                    actual_instance=SmsBinaryContent(
+                        esm_class=esm_class, data_coding=data_coding, hex=given_hex
+                    )
+                ),
+                options=SmsMessageOptions(
+                    validity_period=ValidityPeriod(
+                        amount=validity_period_amount, time_unit=validity_period_unit
                     ),
-                    turkey_iys=SmsTurkeyIysOptions(
-                        brand_code=turkey_iys_brand_code,
-                        recipient_type=turkey_iys_recipient_type,
+                    campaign_reference_id=campaign_reference_id,
+                ),
+                webhooks=SmsWebhooks(
+                    delivery=SmsMessageDeliveryReporting(
+                        url=delivery_url, intermediate_report=intermediate_report
                     ),
+                    content_type=content_type,
+                    callback_data=callback_data,
                 ),
-                send_at=datetime.datetime(
-                    2023,
-                    8,
-                    1,
-                    16,
-                    10,
-                    0,
-                    tzinfo=datetime.timezone(datetime.timedelta(hours=5, minutes=30)),
+            ),
+            SmsMessage(
+                sender=sender_2,
+                destinations=[SmsDestination(to=destination_3)],
+                content=SmsMessageContent(
+                    actual_instance=SmsBinaryContent(
+                        esm_class=esm_class, data_coding=data_coding, hex=given_hex
+                    )
                 ),
-                binary=SmsBinaryContent(
-                    hex=hex_message, data_coding=data_coding, esm_class=esm_class
+                options=SmsMessageOptions(
+                    delivery_time_window=DeliveryTimeWindow(
+                        days=delivery_days,
+                        var_from=DeliveryTime(
+                            hour=delivery_from_hour, minute=delivery_from_minute
+                        ),
+                        to=DeliveryTime(
+                            hour=delivery_to_hour, minute=delivery_to_minute
+                        ),
+                    )
                 ),
-                validity_period=validity_period,
-                application_id=application_id,
-                entity_id=entity_id,
-            )
+            ),
         ],
-        sending_speed_limit=SmsSendingSpeedLimit(
-            amount=sending_speed_limit_amount, time_unit=SmsSpeedLimitTimeUnit.HOUR
+        options=SmsMessageRequestOptions(
+            schedule=SmsRequestSchedulingSettings(
+                bulk_id=bulk_id, send_at=send_at_offset
+            ),
+            tracking=UrlOptions(
+                shorten_url=shorten_url,
+                track_clicks=track_clicks,
+                tracking_url=tracking_url,
+                remove_protocol=remove_protocol,
+                custom_domain=custom_domain,
+            ),
+            include_sms_count_in_response=include_sms_count_in_response,
+            conversion_tracking=SmsTracking(
+                use_conversion_tracking=use_conversion_tracking,
+                conversion_tracking_name=conversion_tracking_name,
+            ),
         ),
     )
 
-    actual_response = sms_api_client.send_binary_sms_message(
-        sms_advanced_binary_request=sms_advanced_binary_request
-    )
+    response = sms_api_client.send_sms_messages(sms_request=request)
 
-    expected_sms_response = SmsResponse(
-        bulk_id=bulk_id,
+    expected_response = SmsResponse(
+        bulk_id=bulk_id_response,
         messages=[
             SmsResponseDetails(
-                message_id=first_message_id,
-                status=MessageStatus(
-                    group_id=group_id,
-                    group_name=group_name,
+                message_id=message_id_response_1,
+                status=SmsMessageStatus(
+                    group_id=status_group_id,
+                    group_name=status_group_name,
                     id=status_id,
                     name=status_name,
                     description=status_description,
                 ),
-                to=first_to,
+                destination=destination_1,
+                details=SmsMessageResponseDetails(message_count=message_count),
             ),
             SmsResponseDetails(
-                message_id=second_message_id,
-                status=MessageStatus(
-                    group_id=group_id,
-                    group_name=group_name,
+                message_id=message_id_response_2,
+                status=SmsMessageStatus(
+                    group_id=status_group_id,
+                    group_name=status_group_name,
                     id=status_id,
                     name=status_name,
                     description=status_description,
                 ),
-                to=second_to,
+                destination=destination_2,
+                details=SmsMessageResponseDetails(message_count=message_count),
             ),
         ],
     )
 
-    assert actual_response == expected_sms_response
+    assert response == expected_response
 
 
 def test_preview_sms(httpserver: HTTPServer, sms_api_client):
@@ -637,7 +699,9 @@ def test_preview_sms(httpserver: HTTPServer, sms_api_client):
                 "messageCount": 1,
                 "charactersRemaining": 96,
                 "configuration": {
-                    "languageCode": "AUTODETECT",
+                    "language": {
+                        "languageCode": "AUTODETECT",
+                    },
                     "transliteration": "CENTRAL_EUROPEAN",
                 },
             }
@@ -669,7 +733,8 @@ def test_preview_sms(httpserver: HTTPServer, sms_api_client):
                 message_count=1,
                 characters_remaining=96,
                 configuration=SmsLanguageConfiguration(
-                    language_code="AUTODETECT", transliteration="CENTRAL_EUROPEAN"
+                    language=SmsPreviewLanguage(language_code="AUTODETECT"),
+                    transliteration="CENTRAL_EUROPEAN",
                 ),
             )
         ],
@@ -805,78 +870,87 @@ def test_update_scheduled_sms_messages_status(httpserver: HTTPServer, sms_api_cl
 
 
 def test_outbound_delivery_reports_webhook_model():
-    delivery_result_payload = """
-    {
-        "results": [
-        {
-            "bulkId": "BULK-ID-123-xyz",
-            "messageId": "MESSAGE-ID-123-xyz",
-            "to": "41793026727",
-            "from": "InfoSMS",
-            "sentAt": "2019-11-09T16:00:00.000+0000",
-            "doneAt": "2019-11-09T16:01:00.000+0000",
-            "smsCount": 1,
-            "mccMnc": "code",
-            "callbackData": "my-callback-data",
-            "price": {
-                "pricePerMessage": 0.01,
-                "currency": "EUR"
-            },
-            "status": {
-                "groupId": 3,
-                "groupName": "DELIVERED",
-                "id": 5,
-                "name": "DELIVERED_TO_HANDSET",
-                "description": "Message delivered to handset"
-            },
-            "error": {
-                "groupId": 0,
-                "groupName": "Ok",
-                "id": 0,
-                "name": "NO_ERROR",
-                "description": "No Error",
-                "permanent": false
-            },
-            "entityId": "entity_id",
-            "applicationId": "application_id"
-        }
-        ]
-    }
-    """
+    send_at_offset = datetime.datetime(
+        2023,
+        8,
+        1,
+        16,
+        10,
+        0,
+        tzinfo=datetime.timezone(datetime.timedelta(hours=5, minutes=30)),
+    )
 
     expected_deserialized_report = SmsDeliveryResult(
         results=[
-            SmsReport(
+            SmsDeliveryReport(
                 bulk_id="BULK-ID-123-xyz",
-                message_id="MESSAGE-ID-123-xyz",
-                to="41793026727",
-                var_from="InfoSMS",
-                sent_at="2019-11-09T16:00:00.000+0000",
-                done_at="2019-11-09T16:01:00.000+0000",
-                sms_count=1,
-                mcc_mnc="code",
-                callback_data="my-callback-data",
                 price=MessagePrice(price_per_message=0.01, currency="EUR"),
-                status=MessageStatus(
+                status=SmsMessageStatus(
                     group_id=3,
-                    group_name="DELIVERED",
+                    group_name=MessageGeneralStatus.DELIVERED,
                     id=5,
                     name="DELIVERED_TO_HANDSET",
                     description="Message delivered to handset",
                 ),
-                error=MessageError(
+                error=SmsMessageError(
                     group_id=0,
-                    group_name="Ok",
+                    group_name=SmsMessageErrorGroup.OK,
                     id=0,
                     name="NO_ERROR",
                     description="No Error",
                     permanent=False,
                 ),
-                entity_id="entity_id",
-                application_id="application_id",
+                message_id="MESSAGE-ID-123-xyz",
+                to="41793026727",
+                sender="InfoSMS",
+                sent_at=send_at_offset,
+                done_at=send_at_offset,
+                message_count=1,
+                platform=Platform(
+                    application_id="marketing-automation-application",
+                    entity_id="promotional-traffic-entity",
+                ),
             )
         ]
     )
+    delivery_result_payload = """
+    {
+      "results": [
+        {
+          "bulkId": "BULK-ID-123-xyz",
+          "price": {
+            "pricePerMessage": 0.01,
+            "currency": "EUR"
+          },
+          "status": {
+            "groupId": 3,
+            "groupName": "DELIVERED",
+            "id": 5,
+            "name": "DELIVERED_TO_HANDSET",
+            "description": "Message delivered to handset"
+          },
+          "error": {
+            "groupId": 0,
+            "groupName": "OK",
+            "id": 0,
+            "name": "NO_ERROR",
+            "description": "No Error",
+            "permanent": false
+          },
+          "messageId": "MESSAGE-ID-123-xyz",
+          "to": "41793026727",
+          "sender": "InfoSMS",
+          "sentAt": "2023-08-01T16:10:00+05:30",
+          "doneAt": "2023-08-01T16:10:00+05:30",
+          "messageCount": 1,
+          "platform": {
+            "entityId": "promotional-traffic-entity",
+            "applicationId": "marketing-automation-application"
+          }
+        }
+      ]
+    }
+    """
 
     actual_deserialized_report = SmsDeliveryResult.from_json(delivery_result_payload)
 
@@ -884,6 +958,16 @@ def test_outbound_delivery_reports_webhook_model():
 
 
 def test_inbound_reports_webhook_model():
+    received_at_offset = datetime.datetime(
+        2023,
+        8,
+        1,
+        16,
+        10,
+        0,
+        tzinfo=datetime.timezone(datetime.timedelta(hours=5, minutes=30)),
+    )
+
     inbound_report_payload = """
     {
         "results": [
@@ -894,7 +978,7 @@ def test_inbound_reports_webhook_model():
             "text": "QUIZ Correct answer is Paris",
             "cleanText": "Correct answer is Paris",
             "keyword": "QUIZ",
-            "receivedAt": "2016-10-06T09:28:39.220+0000",
+            "receivedAt": "2023-08-01T16:10:00+05:30",
             "smsCount": 1,
             "price": {
                 "pricePerMessage": 0.00,
@@ -917,7 +1001,7 @@ def test_inbound_reports_webhook_model():
                 text="QUIZ Correct answer is Paris",
                 clean_text="Correct answer is Paris",
                 keyword="QUIZ",
-                received_at="2016-10-06T09:28:39.220+0000",
+                received_at=received_at_offset,
                 sms_count=1,
                 callback_data="callbackData",
                 price=MessagePrice(price_per_message=0.0, currency="EUR"),
@@ -934,25 +1018,47 @@ def test_inbound_reports_webhook_model():
 
 def test_outbound_delivery_reports(httpserver: HTTPServer, sms_api_client):
     bulk_id = "BULK-ID-123-xyz"
-    message_id = "MESSAGE-ID-123-xyz"
-    message_id2 = "12db39c3-7822-4e72-a3ec-c87442c0ffc5"
-    to = "41793026727"
-    sent_at = "2019-11-09T16:00:00.000+0000"
-    done_at = "2019-11-09T16:00:00.000+0000"
+    message_id_1 = "MESSAGE-ID-123-xyz"
+    message_id_2 = "12db39c3-7822-4e72-a3ec-c87442c0ffc5"
+    to_1 = "41793026727"
+    to_2 = "41793026834"
+    sender = "InfoSMS"
+    sent_at = "2023-08-01T16:10:00+05:30"
+    done_at = "2023-08-01T16:10:00+05:30"
+
+    sent_at_offset = datetime.datetime(
+        2023,
+        8,
+        1,
+        16,
+        10,
+        0,
+        tzinfo=datetime.timezone(datetime.timedelta(hours=5, minutes=30)),
+    )
+
+    done_at_offset = datetime.datetime(
+        2023,
+        8,
+        1,
+        16,
+        10,
+        0,
+        tzinfo=datetime.timezone(datetime.timedelta(hours=5, minutes=30)),
+    )
     sms_count = 1
     price_per_message = 0.01
     currency = "EUR"
-    application_id = "test_application_id"
-    entity_id = "test_entity_id"
+    application_id = "marketing-automation-application"
+    entity_id = "promotional-traffic-entity"
 
     status_group_id = 3
-    status_group_name = "DELIVERED"
+    status_group_name = MessageGeneralStatus.DELIVERED
     status_id = 5
     status_name = "DELIVERED_TO_HANDSET"
     status_description = "Message delivered to handset"
 
     error_group_id = 0
-    error_group_name = "Ok"
+    error_group_name = SmsMessageErrorGroup.OK
     error_id = 0
     error_name = "NO_ERROR"
     error_description = "No Error"
@@ -962,11 +1068,6 @@ def test_outbound_delivery_reports(httpserver: HTTPServer, sms_api_client):
         "results": [
             {
                 "bulkId": bulk_id,
-                "messageId": message_id,
-                "to": to,
-                "sentAt": sent_at,
-                "doneAt": done_at,
-                "smsCount": sms_count,
                 "price": {"pricePerMessage": price_per_message, "currency": currency},
                 "status": {
                     "groupId": status_group_id,
@@ -983,16 +1084,16 @@ def test_outbound_delivery_reports(httpserver: HTTPServer, sms_api_client):
                     "description": error_description,
                     "permanent": error_permanent,
                 },
-                "applicationId": application_id,
-                "entityId": entity_id,
+                "messageId": message_id_1,
+                "to": to_1,
+                "sender": sender,
+                "sentAt": sent_at,
+                "doneAt": done_at,
+                "messageCount": sms_count,
+                "platform": {"entityId": entity_id, "applicationId": application_id},
             },
             {
                 "bulkId": bulk_id,
-                "messageId": message_id2,
-                "to": to,
-                "sentAt": sent_at,
-                "doneAt": done_at,
-                "smsCount": sms_count,
                 "price": {"pricePerMessage": price_per_message, "currency": currency},
                 "status": {
                     "groupId": status_group_id,
@@ -1009,8 +1110,13 @@ def test_outbound_delivery_reports(httpserver: HTTPServer, sms_api_client):
                     "description": error_description,
                     "permanent": error_permanent,
                 },
-                "applicationId": application_id,
-                "entityId": entity_id,
+                "messageId": message_id_2,
+                "to": to_2,
+                "sender": sender,
+                "sentAt": sent_at,
+                "doneAt": done_at,
+                "messageCount": sms_count,
+                "platform": {"entityId": entity_id, "applicationId": application_id},
             },
         ]
     }
@@ -1024,30 +1130,25 @@ def test_outbound_delivery_reports(httpserver: HTTPServer, sms_api_client):
         query_string=query_string,
     )
 
-    actual_response: SmsDeliveryResult = (
-        sms_api_client.get_outbound_sms_message_delivery_reports(bulk_id=bulk_id)
+    actual_response = sms_api_client.get_outbound_sms_message_delivery_reports(
+        bulk_id=bulk_id
     )
 
-    expected_report_response = SmsDeliveryResult(
+    expected_deserialized_report = SmsDeliveryResult(
         results=[
-            SmsReport(
+            SmsDeliveryReport(
                 bulk_id=bulk_id,
-                message_id=message_id,
-                to=to,
-                sent_at=sent_at,
-                done_at=done_at,
-                sms_count=sms_count,
                 price=MessagePrice(
                     price_per_message=price_per_message, currency=currency
                 ),
-                status=MessageStatus(
+                status=SmsMessageStatus(
                     group_id=status_group_id,
                     group_name=status_group_name,
                     id=status_id,
                     name=status_name,
                     description=status_description,
                 ),
-                error=MessageError(
+                error=SmsMessageError(
                     group_id=error_group_id,
                     group_name=error_group_name,
                     id=error_id,
@@ -1055,27 +1156,27 @@ def test_outbound_delivery_reports(httpserver: HTTPServer, sms_api_client):
                     description=error_description,
                     permanent=error_permanent,
                 ),
-                application_id=application_id,
-                entity_id=entity_id,
+                message_id=message_id_1,
+                to=to_1,
+                sender=sender,
+                sent_at=sent_at_offset,
+                done_at=done_at_offset,
+                message_count=sms_count,
+                platform=Platform(application_id=application_id, entity_id=entity_id),
             ),
-            SmsReport(
+            SmsDeliveryReport(
                 bulk_id=bulk_id,
-                message_id=message_id2,
-                to=to,
-                sent_at=sent_at,
-                done_at=done_at,
-                sms_count=sms_count,
                 price=MessagePrice(
                     price_per_message=price_per_message, currency=currency
                 ),
-                status=MessageStatus(
+                status=SmsMessageStatus(
                     group_id=status_group_id,
                     group_name=status_group_name,
                     id=status_id,
                     name=status_name,
                     description=status_description,
                 ),
-                error=MessageError(
+                error=SmsMessageError(
                     group_id=error_group_id,
                     group_name=error_group_name,
                     id=error_id,
@@ -1083,13 +1184,18 @@ def test_outbound_delivery_reports(httpserver: HTTPServer, sms_api_client):
                     description=error_description,
                     permanent=error_permanent,
                 ),
-                application_id=application_id,
-                entity_id=entity_id,
+                message_id=message_id_2,
+                to=to_2,
+                sender=sender,
+                sent_at=sent_at_offset,
+                done_at=done_at_offset,
+                message_count=sms_count,
+                platform=Platform(application_id=application_id, entity_id=entity_id),
             ),
         ]
     )
 
-    assert actual_response == expected_report_response
+    assert actual_response == expected_deserialized_report
 
 
 def test_get_inbound_sms_messages(httpserver: HTTPServer, sms_api_client):
@@ -1147,22 +1253,48 @@ def test_get_inbound_sms_messages(httpserver: HTTPServer, sms_api_client):
 
 def test_outbound_logs(httpserver: HTTPServer, sms_api_client):
     bulk_id = "BULK-ID-123-xyz"
-    message_id = "MESSAGE-ID-123-xyz"
-    message_id2 = "12db39c3-7822-4e72-a3ec-c87442c0ffc5"
-    to = "41793026727"
-    sent_at = "2023-03-09T16:00:00.000+0000"
-    done_at = "2023-03-09T16:01:00.000+0000"
+    message_id_1 = "MESSAGE-ID-123-xyz"
+    message_id_2 = "12db39c3-7822-4e72-a3ec-c87442c0ffc5"
+    destination_1 = "41793026727"
+    destination_2 = "41793026834"
+    sent_at = "2023-08-01T16:10:00+05:30"
+    done_at = "2023-08-01T16:10:00+05:30"
+
+    sent_at_offset = datetime.datetime(
+        2023,
+        8,
+        1,
+        16,
+        10,
+        0,
+        tzinfo=datetime.timezone(datetime.timedelta(seconds=19800)),
+    )
+
+    done_at_offset = datetime.datetime(
+        2023,
+        8,
+        1,
+        16,
+        10,
+        0,
+        tzinfo=datetime.timezone(datetime.timedelta(seconds=19800)),
+    )
     sms_count = 1
-    mcc_mnc = "22801"
     price_per_message = 0.01
     currency = "EUR"
+    application_id = "marketing-automation-application"
+    entity_id = "promotional-traffic-entity"
+    mcc_mnc = "22801"
+    text = "This is a sample message"
+
     status_group_id = 3
-    status_group_name = "DELIVERED"
+    status_group_name = MessageGeneralStatus.DELIVERED
     status_id = 5
     status_name = "DELIVERED_TO_HANDSET"
     status_description = "Message delivered to handset"
+
     error_group_id = 0
-    error_group_name = "Ok"
+    error_group_name = SmsMessageErrorGroup.OK
     error_id = 0
     error_name = "NO_ERROR"
     error_description = "No Error"
@@ -1171,13 +1303,12 @@ def test_outbound_logs(httpserver: HTTPServer, sms_api_client):
     expected_response = {
         "results": [
             {
+                "destination": destination_1,
                 "bulkId": bulk_id,
-                "messageId": message_id,
-                "to": to,
+                "messageId": message_id_1,
                 "sentAt": sent_at,
                 "doneAt": done_at,
-                "smsCount": sms_count,
-                "mccMnc": mcc_mnc,
+                "messageCount": sms_count,
                 "price": {"pricePerMessage": price_per_message, "currency": currency},
                 "status": {
                     "groupId": status_group_id,
@@ -1194,15 +1325,17 @@ def test_outbound_logs(httpserver: HTTPServer, sms_api_client):
                     "description": error_description,
                     "permanent": error_permanent,
                 },
+                "platform": {"entityId": entity_id, "applicationId": application_id},
+                "content": {"text": text},
+                "mccMnc": mcc_mnc,
             },
             {
+                "destination": destination_2,
                 "bulkId": bulk_id,
-                "messageId": message_id2,
-                "to": to,
+                "messageId": message_id_2,
                 "sentAt": sent_at,
                 "doneAt": done_at,
-                "smsCount": sms_count,
-                "mccMnc": mcc_mnc,
+                "messageCount": sms_count,
                 "price": {"pricePerMessage": price_per_message, "currency": currency},
                 "status": {
                     "groupId": status_group_id,
@@ -1219,48 +1352,44 @@ def test_outbound_logs(httpserver: HTTPServer, sms_api_client):
                     "description": error_description,
                     "permanent": error_permanent,
                 },
+                "platform": {"entityId": entity_id, "applicationId": application_id},
+                "content": {"text": text},
+                "mccMnc": mcc_mnc,
             },
         ]
     }
 
-    query_string = to_query_string_without_escaping(
-        {"bulkId": bulk_id, "sentSince": "2023-03-09T14%3A00%3A00%2B00%3A00"}
-    )
+    query_string = to_query_string_without_escaping({"bulkId": bulk_id})
 
     setup_get_request(
         httpserver=httpserver,
         endpoint=sms_outbound_logs_endpoint,
         expected_response=expected_response,
+        query_string=query_string,
     )
 
-    actual_response: SmsLogsResponse = sms_api_client.get_outbound_sms_message_logs(
-        bulk_id=[bulk_id],
-        sent_since=datetime.datetime(
-            2023, 3, 9, 14, 0, 0, 0, tzinfo=datetime.timezone.utc
-        ),
-    )
+    actual_response = sms_api_client.get_outbound_sms_message_logs(bulk_id=[bulk_id])
 
-    expected_logs_response = SmsLogsResponse(
+    expected_deserialized_logs = SmsLogsResponse(
         results=[
             SmsLog(
+                destination=destination_1,
                 bulk_id=bulk_id,
-                message_id=message_id,
-                to=to,
-                sent_at=sent_at,
-                done_at=done_at,
-                sms_count=sms_count,
-                mcc_mnc=mcc_mnc,
+                message_id=message_id_1,
+                sent_at=sent_at_offset,
+                done_at=done_at_offset,
+                message_count=sms_count,
                 price=MessagePrice(
                     price_per_message=price_per_message, currency=currency
                 ),
-                status=MessageStatus(
+                status=SmsMessageStatus(
                     group_id=status_group_id,
                     group_name=status_group_name,
                     id=status_id,
                     name=status_name,
                     description=status_description,
                 ),
-                error=MessageError(
+                error=SmsMessageError(
                     group_id=error_group_id,
                     group_name=error_group_name,
                     id=error_id,
@@ -1268,26 +1397,28 @@ def test_outbound_logs(httpserver: HTTPServer, sms_api_client):
                     description=error_description,
                     permanent=error_permanent,
                 ),
+                platform=Platform(application_id=application_id, entity_id=entity_id),
+                content=SmsMessageContent(actual_instance=SmsTextContent(text=text)),
+                mcc_mnc=mcc_mnc,
             ),
             SmsLog(
+                destination=destination_2,
                 bulk_id=bulk_id,
-                message_id=message_id2,
-                to=to,
-                sent_at=sent_at,
-                done_at=done_at,
-                sms_count=sms_count,
-                mcc_mnc=mcc_mnc,
+                message_id=message_id_2,
+                sent_at=sent_at_offset,
+                done_at=done_at_offset,
+                message_count=sms_count,
                 price=MessagePrice(
                     price_per_message=price_per_message, currency=currency
                 ),
-                status=MessageStatus(
+                status=SmsMessageStatus(
                     group_id=status_group_id,
                     group_name=status_group_name,
                     id=status_id,
                     name=status_name,
                     description=status_description,
                 ),
-                error=MessageError(
+                error=SmsMessageError(
                     group_id=error_group_id,
                     group_name=error_group_name,
                     id=error_id,
@@ -1295,11 +1426,14 @@ def test_outbound_logs(httpserver: HTTPServer, sms_api_client):
                     description=error_description,
                     permanent=error_permanent,
                 ),
+                platform=Platform(application_id=application_id, entity_id=entity_id),
+                content=SmsMessageContent(actual_instance=SmsTextContent(text=text)),
+                mcc_mnc=mcc_mnc,
             ),
         ]
     )
 
-    assert actual_response == expected_logs_response
+    assert actual_response == expected_deserialized_logs
 
 
 def to_query_string_without_escaping(query_params: dict):

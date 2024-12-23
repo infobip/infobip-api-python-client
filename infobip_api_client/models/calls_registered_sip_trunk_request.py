@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -28,11 +27,9 @@ from infobip_api_client.models.calls_fax_type import CallsFaxType
 from infobip_api_client.models.calls_number_presentation_format import (
     CallsNumberPresentationFormat,
 )
-from infobip_api_client.models.calls_pegasus_sip_trunk_type import (
-    CallsPegasusSipTrunkType,
-)
 from infobip_api_client.models.calls_sip_trunk_location import CallsSipTrunkLocation
 from infobip_api_client.models.calls_sip_trunk_request import CallsSipTrunkRequest
+from infobip_api_client.models.calls_sip_trunk_type import CallsSipTrunkType
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -42,10 +39,6 @@ class CallsRegisteredSipTrunkRequest(CallsSipTrunkRequest):
     CallsRegisteredSipTrunkRequest
     """  # noqa: E501
 
-    tls: Optional[StrictBool] = Field(
-        default=False,
-        description="Indicates whether communication is secured by the TLS protocol.",
-    )
     codecs: Optional[List[CallsAudioCodec]] = Field(
         default=None, description="List of audio codecs supported by a SIP trunk."
     )
@@ -64,10 +57,10 @@ class CallsRegisteredSipTrunkRequest(CallsSipTrunkRequest):
         "type",
         "name",
         "location",
+        "tls",
         "internationalCallsAllowed",
         "channelLimit",
         "billingPackage",
-        "tls",
         "codecs",
         "dtmf",
         "fax",
@@ -132,6 +125,7 @@ class CallsRegisteredSipTrunkRequest(CallsSipTrunkRequest):
                 "type": obj.get("type"),
                 "name": obj.get("name"),
                 "location": obj.get("location"),
+                "tls": obj.get("tls") if obj.get("tls") is not None else False,
                 "internationalCallsAllowed": obj.get("internationalCallsAllowed")
                 if obj.get("internationalCallsAllowed") is not None
                 else False,
@@ -139,7 +133,6 @@ class CallsRegisteredSipTrunkRequest(CallsSipTrunkRequest):
                 "billingPackage": CallsBillingPackage.from_dict(obj["billingPackage"])
                 if obj.get("billingPackage") is not None
                 else None,
-                "tls": obj.get("tls") if obj.get("tls") is not None else False,
                 "codecs": obj.get("codecs"),
                 "dtmf": obj.get("dtmf"),
                 "fax": obj.get("fax"),

@@ -12,22 +12,22 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from infobip_api_client.models.calls_play_content import CallsPlayContent
+from infobip_api_client.models.calls_termination import CallsTermination
 from typing import Optional, Set
 from typing_extensions import Self
 
 
 class CallsPlayRequest(BaseModel):
     """
-    CallsPlayRequest
+    Call play request.
     """  # noqa: E501
 
     loop_count: Optional[StrictInt] = Field(
@@ -35,8 +35,29 @@ class CallsPlayRequest(BaseModel):
         description="Number of times the file will be played.",
         alias="loopCount",
     )
+    timeout: Optional[StrictInt] = Field(
+        default=None,
+        description="The duration, in milliseconds, of the file to be played. If timeout is not defined, the file will be played until it ends.",
+    )
+    offset: Optional[StrictInt] = Field(
+        default=None,
+        description="The starting point, in milliseconds, from which the file will be played. If offset is not defined, the file will be played from its beginning.",
+    )
     content: CallsPlayContent
-    __properties: ClassVar[List[str]] = ["loopCount", "content"]
+    stop_on: Optional[CallsTermination] = Field(default=None, alias="stopOn")
+    custom_data: Optional[Dict[str, StrictStr]] = Field(
+        default=None,
+        description="Optional parameter to update a call's custom data.",
+        alias="customData",
+    )
+    __properties: ClassVar[List[str]] = [
+        "loopCount",
+        "timeout",
+        "offset",
+        "content",
+        "stopOn",
+        "customData",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -78,6 +99,9 @@ class CallsPlayRequest(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of content
         if self.content:
             _dict["content"] = self.content.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of stop_on
+        if self.stop_on:
+            _dict["stopOn"] = self.stop_on.to_dict()
         return _dict
 
     @classmethod
@@ -92,9 +116,15 @@ class CallsPlayRequest(BaseModel):
         _obj = cls.model_validate(
             {
                 "loopCount": obj.get("loopCount"),
+                "timeout": obj.get("timeout"),
+                "offset": obj.get("offset"),
                 "content": CallsPlayContent.from_dict(obj["content"])
                 if obj.get("content") is not None
                 else None,
+                "stopOn": CallsTermination.from_dict(obj["stopOn"])
+                if obj.get("stopOn") is not None
+                else None,
+                "customData": obj.get("customData"),
             }
         )
         return _obj

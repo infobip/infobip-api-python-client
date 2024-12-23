@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -20,8 +19,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
-from infobip_api_client.models.calls_public_conference_recording import (
-    CallsPublicConferenceRecording,
+from infobip_api_client.models.calls_conference_recording import (
+    CallsConferenceRecording,
 )
 from infobip_api_client.models.page_info import PageInfo
 from typing import Optional, Set
@@ -33,7 +32,7 @@ class CallsConferenceRecordingPage(BaseModel):
     CallsConferenceRecordingPage
     """  # noqa: E501
 
-    results: Optional[List[CallsPublicConferenceRecording]] = Field(
+    results: Optional[List[CallsConferenceRecording]] = Field(
         default=None, description="The list of the results for this page."
     )
     paging: Optional[PageInfo] = None
@@ -100,7 +99,7 @@ class CallsConferenceRecordingPage(BaseModel):
         _obj = cls.model_validate(
             {
                 "results": [
-                    CallsPublicConferenceRecording.from_dict(_item)
+                    CallsConferenceRecording.from_dict(_item)
                     for _item in obj["results"]
                 ]
                 if obj.get("results") is not None

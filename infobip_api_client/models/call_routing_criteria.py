@@ -12,15 +12,15 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
 
 from importlib import import_module
-from pydantic import BaseModel, ConfigDict, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Union
+from infobip_api_client.models.call_routing_criteria_type import CallRoutingCriteriaType
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -43,15 +43,8 @@ class CallRoutingCriteria(BaseModel):
     Criteria type.
     """  # noqa: E501
 
-    type: StrictStr
+    type: CallRoutingCriteriaType
     __properties: ClassVar[List[str]] = ["type"]
-
-    @field_validator("type")
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(["PHONE", "SIP", "WEBRTC"]):
-            raise ValueError("must be one of enum values ('PHONE', 'SIP', 'WEBRTC')")
-        return value
 
     model_config = ConfigDict(
         populate_by_name=True,

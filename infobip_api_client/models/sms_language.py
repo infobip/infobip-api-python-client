@@ -12,29 +12,35 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool
 from typing import Any, ClassVar, Dict, List, Optional
+from infobip_api_client.models.sms_language_code import SmsLanguageCode
 from typing import Optional, Set
 from typing_extensions import Self
 
 
 class SmsLanguage(BaseModel):
     """
-    SmsLanguage
+    Sets the language parameters for the message being sent.
     """  # noqa: E501
 
-    language_code: Optional[StrictStr] = Field(
-        default=None,
-        description="Language code for the correct character set. Possible values: `TR` for Turkish, `ES` for Spanish, `PT` for Portuguese, or `AUTODETECT` to let platform select the character set based on message content.",
-        alias="languageCode",
+    language_code: Optional[SmsLanguageCode] = Field(default=None, alias="languageCode")
+    single_shift: Optional[StrictBool] = Field(
+        default=False,
+        description="Uses a single shift table which enhances only the extension table of the GSM default alphabet. Allows you to selectively improve character support without altering the entire message.",
+        alias="singleShift",
     )
-    __properties: ClassVar[List[str]] = ["languageCode"]
+    locking_shift: Optional[StrictBool] = Field(
+        default=False,
+        description="Uses a locking shift table which allows you to represent characters beyond the standard GSM default alphabet. This flexibility enables better language support.",
+        alias="lockingShift",
+    )
+    __properties: ClassVar[List[str]] = ["languageCode", "singleShift", "lockingShift"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -84,5 +90,15 @@ class SmsLanguage(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({"languageCode": obj.get("languageCode")})
+        _obj = cls.model_validate(
+            {
+                "languageCode": obj.get("languageCode"),
+                "singleShift": obj.get("singleShift")
+                if obj.get("singleShift") is not None
+                else False,
+                "lockingShift": obj.get("lockingShift")
+                if obj.get("lockingShift") is not None
+                else False,
+            }
+        )
         return _obj

@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -21,12 +20,10 @@ import json
 from pydantic import ConfigDict
 from typing import Any, ClassVar, Dict, List
 from infobip_api_client.models.calls_billing_package import CallsBillingPackage
-from infobip_api_client.models.calls_pegasus_provider import CallsPegasusProvider
-from infobip_api_client.models.calls_pegasus_sip_trunk_type import (
-    CallsPegasusSipTrunkType,
-)
+from infobip_api_client.models.calls_provider import CallsProvider
 from infobip_api_client.models.calls_sip_trunk_location import CallsSipTrunkLocation
 from infobip_api_client.models.calls_sip_trunk_request import CallsSipTrunkRequest
+from infobip_api_client.models.calls_sip_trunk_type import CallsSipTrunkType
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -36,11 +33,12 @@ class CallsProviderSipTrunkRequest(CallsSipTrunkRequest):
     CallsProviderSipTrunkRequest
     """  # noqa: E501
 
-    provider: CallsPegasusProvider
+    provider: CallsProvider
     __properties: ClassVar[List[str]] = [
         "type",
         "name",
         "location",
+        "tls",
         "internationalCallsAllowed",
         "channelLimit",
         "billingPackage",
@@ -106,6 +104,7 @@ class CallsProviderSipTrunkRequest(CallsSipTrunkRequest):
                 "type": obj.get("type"),
                 "name": obj.get("name"),
                 "location": obj.get("location"),
+                "tls": obj.get("tls") if obj.get("tls") is not None else False,
                 "internationalCallsAllowed": obj.get("internationalCallsAllowed")
                 if obj.get("internationalCallsAllowed") is not None
                 else False,
@@ -113,7 +112,7 @@ class CallsProviderSipTrunkRequest(CallsSipTrunkRequest):
                 "billingPackage": CallsBillingPackage.from_dict(obj["billingPackage"])
                 if obj.get("billingPackage") is not None
                 else None,
-                "provider": CallsPegasusProvider.from_dict(obj["provider"])
+                "provider": CallsProvider.from_dict(obj["provider"])
                 if obj.get("provider") is not None
                 else None,
             }

@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import json
 from enum import Enum
@@ -21,13 +20,14 @@ from typing_extensions import Self
 
 class CallsErrorCode(str, Enum):
     """
-    Error code to hang up with. There are rules for using error codes.  `NORMAL_HANGUP` - Call needs to be established.  `NO_ANSWER` - Call cannot be established.  `BUSY` - Call cannot be established.  `CANCELLED` - Call cannot be established and must be `INBOUND` call  `REJECTED` - Call cannot be established and must be `OUTBOUND` call.  `FORBIDDEN` - Call cannot be established.  `DESTINATION_NOT_FOUND` - Call cannot be established and must be `OUTBOUND`  `DESTINATION_UNAVAILABLE` - Call cannot be established and must be `OUTBOUND`.  `INVALID_DESTINATION` - Call needs to be established and must be `OUTBOUND`.  `SERVICE_UNAVAILABLE` - Call cannot to be established.
+    Error code to hang up with. There are rules for using error codes.  `NORMAL_HANGUP` - Call needs to be established.  `MACHINE_DETECTED` - Call needs to be established and must be `OUTBOUND`.  `NO_ANSWER` - Call cannot be established.  `BUSY` - Call cannot be established.  `CANCELLED` - Call cannot be established.  `REJECTED` - Call cannot be established.  `FORBIDDEN` - Call cannot be established.  `DESTINATION_NOT_FOUND` - Call cannot be established.  `DESTINATION_UNAVAILABLE` - Call cannot be established.  `INVALID_DESTINATION` - Call cannot be established.  `SERVICE_UNAVAILABLE` - Call cannot be established.
     """
 
     """
     allowed enum values
     """
     NORMAL_HANGUP = "NORMAL_HANGUP"
+    MACHINE_DETECTED = "MACHINE_DETECTED"
     NO_ANSWER = "NO_ANSWER"
     BUSY = "BUSY"
     CANCELLED = "CANCELLED"

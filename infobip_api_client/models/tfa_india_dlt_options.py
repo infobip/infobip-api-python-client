@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -42,7 +41,18 @@ class TfaIndiaDltOptions(BaseModel):
     ] = Field(
         description="Your assigned DLT principal entity ID.", alias="principalEntityId"
     )
-    __properties: ClassVar[List[str]] = ["contentTemplateId", "principalEntityId"]
+    tele_marketer_id: Optional[
+        Annotated[str, Field(min_length=0, strict=True, max_length=255)]
+    ] = Field(
+        default=None,
+        description="Your assigned Telemarketer ID (required for Aggregators).",
+        alias="teleMarketerId",
+    )
+    __properties: ClassVar[List[str]] = [
+        "contentTemplateId",
+        "principalEntityId",
+        "teleMarketerId",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -96,6 +106,7 @@ class TfaIndiaDltOptions(BaseModel):
             {
                 "contentTemplateId": obj.get("contentTemplateId"),
                 "principalEntityId": obj.get("principalEntityId"),
+                "teleMarketerId": obj.get("teleMarketerId"),
             }
         )
         return _obj

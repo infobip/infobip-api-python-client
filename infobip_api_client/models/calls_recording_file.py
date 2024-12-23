@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -21,11 +20,11 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from infobip_api_client.models.calls_creation_method import CallsCreationMethod
 from infobip_api_client.models.calls_file_format import CallsFileFormat
 from infobip_api_client.models.calls_recording_file_location import (
     CallsRecordingFileLocation,
 )
+from infobip_api_client.models.calls_sftp_upload_status import CallsSftpUploadStatus
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -39,14 +38,8 @@ class CallsRecordingFile(BaseModel):
     name: StrictStr = Field(description="File name.")
     file_format: CallsFileFormat = Field(alias="fileFormat")
     size: Optional[StrictInt] = Field(default=None, description="File size in bytes.")
-    creation_method: Optional[CallsCreationMethod] = Field(
-        default=None, alias="creationMethod"
-    )
     creation_time: Optional[datetime] = Field(
         default=None, description="File creation time.", alias="creationTime"
-    )
-    expiration_time: Optional[datetime] = Field(
-        default=None, description="File expiration time.", alias="expirationTime"
     )
     duration: Optional[StrictInt] = Field(
         default=None, description="File duration in seconds."
@@ -62,18 +55,24 @@ class CallsRecordingFile(BaseModel):
         alias="endTime",
     )
     location: Optional[CallsRecordingFileLocation] = None
+    sftp_upload_status: Optional[CallsSftpUploadStatus] = Field(
+        default=None, alias="sftpUploadStatus"
+    )
+    custom_data: Optional[Dict[str, StrictStr]] = Field(
+        default=None, description="Custom data.", alias="customData"
+    )
     __properties: ClassVar[List[str]] = [
         "id",
         "name",
         "fileFormat",
         "size",
-        "creationMethod",
         "creationTime",
-        "expirationTime",
         "duration",
         "startTime",
         "endTime",
         "location",
+        "sftpUploadStatus",
+        "customData",
     ]
 
     model_config = ConfigDict(
@@ -130,13 +129,13 @@ class CallsRecordingFile(BaseModel):
                 "name": obj.get("name"),
                 "fileFormat": obj.get("fileFormat"),
                 "size": obj.get("size"),
-                "creationMethod": obj.get("creationMethod"),
                 "creationTime": obj.get("creationTime"),
-                "expirationTime": obj.get("expirationTime"),
                 "duration": obj.get("duration"),
                 "startTime": obj.get("startTime"),
                 "endTime": obj.get("endTime"),
                 "location": obj.get("location"),
+                "sftpUploadStatus": obj.get("sftpUploadStatus"),
+                "customData": obj.get("customData"),
             }
         )
         return _obj

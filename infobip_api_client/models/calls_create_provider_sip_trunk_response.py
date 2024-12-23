@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -24,12 +23,10 @@ from infobip_api_client.models.calls_billing_package import CallsBillingPackage
 from infobip_api_client.models.calls_create_sip_trunk_response import (
     CallsCreateSipTrunkResponse,
 )
-from infobip_api_client.models.calls_pegasus_provider import CallsPegasusProvider
-from infobip_api_client.models.calls_pegasus_sip_trunk_type import (
-    CallsPegasusSipTrunkType,
-)
+from infobip_api_client.models.calls_provider import CallsProvider
 from infobip_api_client.models.calls_sbc_hosts import CallsSbcHosts
 from infobip_api_client.models.calls_sip_trunk_location import CallsSipTrunkLocation
+from infobip_api_client.models.calls_sip_trunk_type import CallsSipTrunkType
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -39,7 +36,7 @@ class CallsCreateProviderSipTrunkResponse(CallsCreateSipTrunkResponse):
     CallsCreateProviderSipTrunkResponse
     """  # noqa: E501
 
-    provider: Optional[CallsPegasusProvider] = None
+    provider: Optional[CallsProvider] = None
     __properties: ClassVar[List[str]] = [
         "id",
         "type",
@@ -123,7 +120,7 @@ class CallsCreateProviderSipTrunkResponse(CallsCreateSipTrunkResponse):
                 "sbcHosts": CallsSbcHosts.from_dict(obj["sbcHosts"])
                 if obj.get("sbcHosts") is not None
                 else None,
-                "provider": CallsPegasusProvider.from_dict(obj["provider"])
+                "provider": CallsProvider.from_dict(obj["provider"])
                 if obj.get("provider") is not None
                 else None,
             }

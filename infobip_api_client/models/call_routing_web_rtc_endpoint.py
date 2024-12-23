@@ -12,15 +12,15 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
 
 from pydantic import ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from infobip_api_client.models.call_routing_endpoint import CallRoutingEndpoint
+from infobip_api_client.models.call_routing_endpoint_type import CallRoutingEndpointType
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -30,8 +30,9 @@ class CallRoutingWebRtcEndpoint(CallRoutingEndpoint):
     CallRoutingWebRtcEndpoint
     """  # noqa: E501
 
-    identity: StrictStr = Field(
-        description="The unique identity used to present a user on the Infobip WebRTC platform."
+    identity: Optional[StrictStr] = Field(
+        default=None,
+        description="The unique identity used to present a user on the Infobip WebRTC platform. Defaults to `to` value used in inbound call.",
     )
     __properties: ClassVar[List[str]] = ["type", "identity"]
 

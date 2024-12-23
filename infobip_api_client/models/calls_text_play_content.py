@@ -12,16 +12,17 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import ConfigDict, Field, StrictStr, field_validator
+from pydantic import ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
+from infobip_api_client.models.calls_language import CallsLanguage
 from infobip_api_client.models.calls_play_content import CallsPlayContent
+from infobip_api_client.models.calls_play_content_type import CallsPlayContentType
 from infobip_api_client.models.calls_voice_preferences import CallsVoicePreferences
 from typing import Optional, Set
 from typing_extensions import Self
@@ -33,7 +34,7 @@ class CallsTextPlayContent(CallsPlayContent):
     """  # noqa: E501
 
     text: StrictStr
-    language: StrictStr
+    language: CallsLanguage
     speech_rate: Optional[
         Union[
             Annotated[float, Field(le=2.0, strict=True, ge=0.5)],
@@ -48,76 +49,6 @@ class CallsTextPlayContent(CallsPlayContent):
         "speechRate",
         "preferences",
     ]
-
-    @field_validator("language")
-    def language_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(
-            [
-                "ar",
-                "bn",
-                "bg",
-                "ca",
-                "zh-cn",
-                "zh-tw",
-                "hr",
-                "cs",
-                "da",
-                "nl",
-                "en",
-                "en-au",
-                "en-gb",
-                "en-ca",
-                "en-in",
-                "en-ie",
-                "en-gb-wls",
-                "epo",
-                "fil-ph",
-                "fi",
-                "fr",
-                "fr-ca",
-                "fr-ch",
-                "de",
-                "de-at",
-                "de-ch",
-                "el",
-                "gu",
-                "he",
-                "hi",
-                "hu",
-                "is",
-                "id",
-                "it",
-                "ja",
-                "kn",
-                "ko",
-                "ms",
-                "ml",
-                "no",
-                "pl",
-                "pt-pt",
-                "pt-br",
-                "ro",
-                "ru",
-                "sk",
-                "sl",
-                "es",
-                "es-gl",
-                "es-mx",
-                "sv",
-                "ta",
-                "te",
-                "th",
-                "tr",
-                "uk",
-                "vi",
-                "wls",
-            ]
-        ):
-            raise ValueError(
-                "must be one of enum values ('ar', 'bn', 'bg', 'ca', 'zh-cn', 'zh-tw', 'hr', 'cs', 'da', 'nl', 'en', 'en-au', 'en-gb', 'en-ca', 'en-in', 'en-ie', 'en-gb-wls', 'epo', 'fil-ph', 'fi', 'fr', 'fr-ca', 'fr-ch', 'de', 'de-at', 'de-ch', 'el', 'gu', 'he', 'hi', 'hu', 'is', 'id', 'it', 'ja', 'kn', 'ko', 'ms', 'ml', 'no', 'pl', 'pt-pt', 'pt-br', 'ro', 'ru', 'sk', 'sl', 'es', 'es-gl', 'es-mx', 'sv', 'ta', 'te', 'th', 'tr', 'uk', 'vi', 'wls')"
-            )
-        return value
 
     model_config = ConfigDict(
         populate_by_name=True,

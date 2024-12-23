@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -21,7 +20,7 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
-from infobip_api_client.models.calls_time_window import CallsTimeWindow
+from infobip_api_client.models.delivery_time_window import DeliveryTimeWindow
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -34,7 +33,7 @@ class CallsSchedulingOptions(BaseModel):
     start_time: Optional[datetime] = Field(
         default=None, description="Scheduling start date and time.", alias="startTime"
     )
-    calling_time_window: Optional[CallsTimeWindow] = Field(
+    calling_time_window: Optional[DeliveryTimeWindow] = Field(
         default=None, alias="callingTimeWindow"
     )
     __properties: ClassVar[List[str]] = ["startTime", "callingTimeWindow"]
@@ -93,7 +92,9 @@ class CallsSchedulingOptions(BaseModel):
         _obj = cls.model_validate(
             {
                 "startTime": obj.get("startTime"),
-                "callingTimeWindow": CallsTimeWindow.from_dict(obj["callingTimeWindow"])
+                "callingTimeWindow": DeliveryTimeWindow.from_dict(
+                    obj["callingTimeWindow"]
+                )
                 if obj.get("callingTimeWindow") is not None
                 else None,
             }

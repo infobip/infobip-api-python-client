@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -22,7 +21,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
 from infobip_api_client.models.sms_india_dlt_options import SmsIndiaDltOptions
 from infobip_api_client.models.sms_south_korea_options import SmsSouthKoreaOptions
-from infobip_api_client.models.sms_turkey_iys_options import SmsTurkeyIysOptions
+from infobip_api_client.models.turkey_iys_options import TurkeyIysOptions
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -33,7 +32,7 @@ class SmsRegionalOptions(BaseModel):
     """  # noqa: E501
 
     india_dlt: Optional[SmsIndiaDltOptions] = Field(default=None, alias="indiaDlt")
-    turkey_iys: Optional[SmsTurkeyIysOptions] = Field(default=None, alias="turkeyIys")
+    turkey_iys: Optional[TurkeyIysOptions] = Field(default=None, alias="turkeyIys")
     south_korea: Optional[SmsSouthKoreaOptions] = Field(
         default=None, alias="southKorea"
     )
@@ -101,7 +100,7 @@ class SmsRegionalOptions(BaseModel):
                 "indiaDlt": SmsIndiaDltOptions.from_dict(obj["indiaDlt"])
                 if obj.get("indiaDlt") is not None
                 else None,
-                "turkeyIys": SmsTurkeyIysOptions.from_dict(obj["turkeyIys"])
+                "turkeyIys": TurkeyIysOptions.from_dict(obj["turkeyIys"])
                 if obj.get("turkeyIys") is not None
                 else None,
                 "southKorea": SmsSouthKoreaOptions.from_dict(obj["southKorea"])

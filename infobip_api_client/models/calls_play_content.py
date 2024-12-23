@@ -12,15 +12,15 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
 
 from importlib import import_module
-from pydantic import BaseModel, ConfigDict, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from infobip_api_client.models.calls_play_content_type import CallsPlayContentType
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -37,23 +37,11 @@ if TYPE_CHECKING:
 
 class CallsPlayContent(BaseModel):
     """
-    CallsPlayContent
+    Audio content to play. It can either be previously uploaded file or a file from a URL.
     """  # noqa: E501
 
-    type: Optional[StrictStr] = None
+    type: Optional[CallsPlayContentType] = None
     __properties: ClassVar[List[str]] = ["type"]
-
-    @field_validator("type")
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(["FILE", "URL", "RECORDING", "TEXT"]):
-            raise ValueError(
-                "must be one of enum values ('FILE', 'URL', 'RECORDING', 'TEXT')"
-            )
-        return value
 
     model_config = ConfigDict(
         populate_by_name=True,

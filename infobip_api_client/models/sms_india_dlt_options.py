@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -37,7 +36,16 @@ class SmsIndiaDltOptions(BaseModel):
     principal_entity_id: StrictStr = Field(
         description="Your assigned DLT principal entity ID.", alias="principalEntityId"
     )
-    __properties: ClassVar[List[str]] = ["contentTemplateId", "principalEntityId"]
+    telemarketer_id: Optional[StrictStr] = Field(
+        default=None,
+        description="Your assigned Telemarketer ID. (required for Aggregators)",
+        alias="telemarketerId",
+    )
+    __properties: ClassVar[List[str]] = [
+        "contentTemplateId",
+        "principalEntityId",
+        "telemarketerId",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -91,6 +99,7 @@ class SmsIndiaDltOptions(BaseModel):
             {
                 "contentTemplateId": obj.get("contentTemplateId"),
                 "principalEntityId": obj.get("principalEntityId"),
+                "telemarketerId": obj.get("telemarketerId"),
             }
         )
         return _obj

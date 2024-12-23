@@ -12,7 +12,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -21,12 +20,13 @@ import json
 from pydantic import ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from infobip_api_client.models.call_routing_allowed_time_window import (
-    CallRoutingAllowedTimeWindow,
-)
 from infobip_api_client.models.call_routing_destination import CallRoutingDestination
+from infobip_api_client.models.call_routing_destination_type import (
+    CallRoutingDestinationType,
+)
 from infobip_api_client.models.call_routing_endpoint import CallRoutingEndpoint
 from infobip_api_client.models.call_routing_recording import CallRoutingRecording
+from infobip_api_client.models.delivery_time_window import DeliveryTimeWindow
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -51,15 +51,15 @@ class CallRoutingEndpointDestination(CallRoutingDestination):
         alias="connectTimeout",
     )
     recording: Optional[CallRoutingRecording] = None
-    allowed_time_windows: Optional[List[CallRoutingAllowedTimeWindow]] = Field(
+    allowed_time_windows: Optional[List[DeliveryTimeWindow]] = Field(
         default=None,
         description="Sets specific delivery windows outside of which calls won't be forwarded to the destination. If defined, call forwarding is allowed only if any time window in array is satisfied. ",
         alias="allowedTimeWindows",
     )
     __properties: ClassVar[List[str]] = [
-        "weight",
         "priority",
         "type",
+        "weight",
         "value",
         "connectTimeout",
         "recording",
@@ -129,9 +129,9 @@ class CallRoutingEndpointDestination(CallRoutingDestination):
 
         _obj = cls.model_validate(
             {
-                "weight": obj.get("weight"),
                 "priority": obj.get("priority"),
                 "type": obj.get("type"),
+                "weight": obj.get("weight"),
                 "value": CallRoutingEndpoint.from_dict(obj["value"])
                 if obj.get("value") is not None
                 else None,
@@ -140,7 +140,7 @@ class CallRoutingEndpointDestination(CallRoutingDestination):
                 if obj.get("recording") is not None
                 else None,
                 "allowedTimeWindows": [
-                    CallRoutingAllowedTimeWindow.from_dict(_item)
+                    DeliveryTimeWindow.from_dict(_item)
                     for _item in obj["allowedTimeWindows"]
                 ]
                 if obj.get("allowedTimeWindows") is not None

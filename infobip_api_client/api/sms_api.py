@@ -11,7 +11,6 @@
 
     Do not edit the class manually.
 """  # noqa: E501
-
 import warnings
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -21,12 +20,7 @@ from datetime import datetime
 from pydantic import Field, StrictInt, StrictStr
 from typing import List, Optional
 from typing_extensions import Annotated
-from infobip_api_client.models.sms_advanced_binary_request import (
-    SmsAdvancedBinaryRequest,
-)
-from infobip_api_client.models.sms_advanced_textual_request import (
-    SmsAdvancedTextualRequest,
-)
+from infobip_api_client.models.message_general_status import MessageGeneralStatus
 from infobip_api_client.models.sms_bulk_request import SmsBulkRequest
 from infobip_api_client.models.sms_bulk_response import SmsBulkResponse
 from infobip_api_client.models.sms_bulk_status_response import SmsBulkStatusResponse
@@ -35,6 +29,7 @@ from infobip_api_client.models.sms_inbound_message_result import SmsInboundMessa
 from infobip_api_client.models.sms_logs_response import SmsLogsResponse
 from infobip_api_client.models.sms_preview_request import SmsPreviewRequest
 from infobip_api_client.models.sms_preview_response import SmsPreviewResponse
+from infobip_api_client.models.sms_request import SmsRequest
 from infobip_api_client.models.sms_response import SmsResponse
 from infobip_api_client.models.sms_update_status_request import SmsUpdateStatusRequest
 
@@ -76,6 +71,10 @@ class SmsApi:
                 description="Entity id that the message is linked to. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management)."
             ),
         ] = None,
+        campaign_reference_id: Annotated[
+            Optional[StrictStr],
+            Field(description="ID of a campaign that was sent in the message."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -98,6 +97,8 @@ class SmsApi:
         :type application_id: str
         :param entity_id: Entity id that the message is linked to. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
         :type entity_id: str
+        :param campaign_reference_id: ID of a campaign that was sent in the message.
+        :type campaign_reference_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -124,6 +125,7 @@ class SmsApi:
             limit=limit,
             application_id=application_id,
             entity_id=entity_id,
+            campaign_reference_id=campaign_reference_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -133,6 +135,7 @@ class SmsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "SmsInboundMessageResult",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -168,6 +171,10 @@ class SmsApi:
                 description="Entity id that the message is linked to. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management)."
             ),
         ] = None,
+        campaign_reference_id: Annotated[
+            Optional[StrictStr],
+            Field(description="ID of a campaign that was sent in the message."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -190,6 +197,8 @@ class SmsApi:
         :type application_id: str
         :param entity_id: Entity id that the message is linked to. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
         :type entity_id: str
+        :param campaign_reference_id: ID of a campaign that was sent in the message.
+        :type campaign_reference_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -216,6 +225,7 @@ class SmsApi:
             limit=limit,
             application_id=application_id,
             entity_id=entity_id,
+            campaign_reference_id=campaign_reference_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -225,6 +235,7 @@ class SmsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "SmsInboundMessageResult",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -260,6 +271,10 @@ class SmsApi:
                 description="Entity id that the message is linked to. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management)."
             ),
         ] = None,
+        campaign_reference_id: Annotated[
+            Optional[StrictStr],
+            Field(description="ID of a campaign that was sent in the message."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -282,6 +297,8 @@ class SmsApi:
         :type application_id: str
         :param entity_id: Entity id that the message is linked to. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
         :type entity_id: str
+        :param campaign_reference_id: ID of a campaign that was sent in the message.
+        :type campaign_reference_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -308,6 +325,7 @@ class SmsApi:
             limit=limit,
             application_id=application_id,
             entity_id=entity_id,
+            campaign_reference_id=campaign_reference_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -317,6 +335,7 @@ class SmsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "SmsInboundMessageResult",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -332,6 +351,7 @@ class SmsApi:
         limit,
         application_id,
         entity_id,
+        campaign_reference_id,
         _request_auth,
         _content_type,
         _headers,
@@ -362,6 +382,10 @@ class SmsApi:
         if entity_id is not None:
 
             _query_params.append(("entityId", entity_id))
+
+        if campaign_reference_id is not None:
+
+            _query_params.append(("campaignReferenceId", campaign_reference_id))
 
         # process the header parameters
         # process the form parameters
@@ -396,17 +420,23 @@ class SmsApi:
         bulk_id: Annotated[
             Optional[StrictStr],
             Field(
-                description="Unique ID assigned to the request if messaging multiple recipients or sending multiple messages via a single API request."
+                description="The ID that uniquely identifies the request. Bulk ID will be received only when you send a message to more than one destination address."
             ),
         ] = None,
         message_id: Annotated[
             Optional[StrictStr],
-            Field(description="Unique message ID for which a report is requested."),
+            Field(description="The ID that uniquely identifies the message sent."),
         ] = None,
         limit: Annotated[
             Optional[Annotated[int, Field(le=1000, strict=True)]],
             Field(
-                description="Maximum number of delivery reports to be returned. If not set, the latest 50 records are returned. Maximum limit value is `1000` and you can only access reports for the last 48h."
+                description="Maximum number of delivery reports to be returned. If not set, the latest 50 records are returned. Maximum limit value is 1000 and you can only access reports for the last 48h"
+            ),
+        ] = None,
+        entity_id: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Entity id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management)."
             ),
         ] = None,
         application_id: Annotated[
@@ -415,11 +445,9 @@ class SmsApi:
                 description="Application id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management)."
             ),
         ] = None,
-        entity_id: Annotated[
+        campaign_reference_id: Annotated[
             Optional[StrictStr],
-            Field(
-                description="Entity id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management)."
-            ),
+            Field(description="ID of a campaign that was sent in the message."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -435,18 +463,20 @@ class SmsApi:
     ) -> SmsDeliveryResult:
         """Get outbound SMS message delivery reports
 
-        If you are for any reason unable to receive real-time delivery reports on your endpoint, you can use this API method to learn if and when the message has been delivered to the recipient. Each request will return a batch of delivery reports - only once. The following API request will return only new reports that arrived since the last API request in the last 48 hours.
+        If you are unable to receive real-time message delivery reports towards your endpoint for various reasons, we offer you an API method to fetch batches of message reports to confirm whether specific messages have been delivered. Each request towards this endpoint will return batches of the latest message reports. Please note they will be returned only once.
 
-        :param bulk_id: Unique ID assigned to the request if messaging multiple recipients or sending multiple messages via a single API request.
+        :param bulk_id: The ID that uniquely identifies the request. Bulk ID will be received only when you send a message to more than one destination address.
         :type bulk_id: str
-        :param message_id: Unique message ID for which a report is requested.
+        :param message_id: The ID that uniquely identifies the message sent.
         :type message_id: str
-        :param limit: Maximum number of delivery reports to be returned. If not set, the latest 50 records are returned. Maximum limit value is `1000` and you can only access reports for the last 48h.
+        :param limit: Maximum number of delivery reports to be returned. If not set, the latest 50 records are returned. Maximum limit value is 1000 and you can only access reports for the last 48h
         :type limit: int
-        :param application_id: Application id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
-        :type application_id: str
         :param entity_id: Entity id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
         :type entity_id: str
+        :param application_id: Application id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
+        :type application_id: str
+        :param campaign_reference_id: ID of a campaign that was sent in the message.
+        :type campaign_reference_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -473,8 +503,9 @@ class SmsApi:
             bulk_id=bulk_id,
             message_id=message_id,
             limit=limit,
-            application_id=application_id,
             entity_id=entity_id,
+            application_id=application_id,
+            campaign_reference_id=campaign_reference_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -483,9 +514,9 @@ class SmsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "SmsDeliveryResult",
-            "400": "ApiException",
-            "401": "ApiException",
-            "500": "ApiException",
+            "401": "ApiError",
+            "403": "ApiError",
+            "500": "ApiError",
         }
 
         response_data = self.api_client.call_api(
@@ -503,17 +534,23 @@ class SmsApi:
         bulk_id: Annotated[
             Optional[StrictStr],
             Field(
-                description="Unique ID assigned to the request if messaging multiple recipients or sending multiple messages via a single API request."
+                description="The ID that uniquely identifies the request. Bulk ID will be received only when you send a message to more than one destination address."
             ),
         ] = None,
         message_id: Annotated[
             Optional[StrictStr],
-            Field(description="Unique message ID for which a report is requested."),
+            Field(description="The ID that uniquely identifies the message sent."),
         ] = None,
         limit: Annotated[
             Optional[Annotated[int, Field(le=1000, strict=True)]],
             Field(
-                description="Maximum number of delivery reports to be returned. If not set, the latest 50 records are returned. Maximum limit value is `1000` and you can only access reports for the last 48h."
+                description="Maximum number of delivery reports to be returned. If not set, the latest 50 records are returned. Maximum limit value is 1000 and you can only access reports for the last 48h"
+            ),
+        ] = None,
+        entity_id: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Entity id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management)."
             ),
         ] = None,
         application_id: Annotated[
@@ -522,11 +559,9 @@ class SmsApi:
                 description="Application id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management)."
             ),
         ] = None,
-        entity_id: Annotated[
+        campaign_reference_id: Annotated[
             Optional[StrictStr],
-            Field(
-                description="Entity id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management)."
-            ),
+            Field(description="ID of a campaign that was sent in the message."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -542,18 +577,20 @@ class SmsApi:
     ) -> ApiResponse[SmsDeliveryResult]:
         """Get outbound SMS message delivery reports
 
-        If you are for any reason unable to receive real-time delivery reports on your endpoint, you can use this API method to learn if and when the message has been delivered to the recipient. Each request will return a batch of delivery reports - only once. The following API request will return only new reports that arrived since the last API request in the last 48 hours.
+        If you are unable to receive real-time message delivery reports towards your endpoint for various reasons, we offer you an API method to fetch batches of message reports to confirm whether specific messages have been delivered. Each request towards this endpoint will return batches of the latest message reports. Please note they will be returned only once.
 
-        :param bulk_id: Unique ID assigned to the request if messaging multiple recipients or sending multiple messages via a single API request.
+        :param bulk_id: The ID that uniquely identifies the request. Bulk ID will be received only when you send a message to more than one destination address.
         :type bulk_id: str
-        :param message_id: Unique message ID for which a report is requested.
+        :param message_id: The ID that uniquely identifies the message sent.
         :type message_id: str
-        :param limit: Maximum number of delivery reports to be returned. If not set, the latest 50 records are returned. Maximum limit value is `1000` and you can only access reports for the last 48h.
+        :param limit: Maximum number of delivery reports to be returned. If not set, the latest 50 records are returned. Maximum limit value is 1000 and you can only access reports for the last 48h
         :type limit: int
-        :param application_id: Application id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
-        :type application_id: str
         :param entity_id: Entity id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
         :type entity_id: str
+        :param application_id: Application id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
+        :type application_id: str
+        :param campaign_reference_id: ID of a campaign that was sent in the message.
+        :type campaign_reference_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -580,8 +617,9 @@ class SmsApi:
             bulk_id=bulk_id,
             message_id=message_id,
             limit=limit,
-            application_id=application_id,
             entity_id=entity_id,
+            application_id=application_id,
+            campaign_reference_id=campaign_reference_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -590,9 +628,9 @@ class SmsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "SmsDeliveryResult",
-            "400": "ApiException",
-            "401": "ApiException",
-            "500": "ApiException",
+            "401": "ApiError",
+            "403": "ApiError",
+            "500": "ApiError",
         }
 
         response_data = self.api_client.call_api(
@@ -610,17 +648,23 @@ class SmsApi:
         bulk_id: Annotated[
             Optional[StrictStr],
             Field(
-                description="Unique ID assigned to the request if messaging multiple recipients or sending multiple messages via a single API request."
+                description="The ID that uniquely identifies the request. Bulk ID will be received only when you send a message to more than one destination address."
             ),
         ] = None,
         message_id: Annotated[
             Optional[StrictStr],
-            Field(description="Unique message ID for which a report is requested."),
+            Field(description="The ID that uniquely identifies the message sent."),
         ] = None,
         limit: Annotated[
             Optional[Annotated[int, Field(le=1000, strict=True)]],
             Field(
-                description="Maximum number of delivery reports to be returned. If not set, the latest 50 records are returned. Maximum limit value is `1000` and you can only access reports for the last 48h."
+                description="Maximum number of delivery reports to be returned. If not set, the latest 50 records are returned. Maximum limit value is 1000 and you can only access reports for the last 48h"
+            ),
+        ] = None,
+        entity_id: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Entity id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management)."
             ),
         ] = None,
         application_id: Annotated[
@@ -629,11 +673,9 @@ class SmsApi:
                 description="Application id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management)."
             ),
         ] = None,
-        entity_id: Annotated[
+        campaign_reference_id: Annotated[
             Optional[StrictStr],
-            Field(
-                description="Entity id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management)."
-            ),
+            Field(description="ID of a campaign that was sent in the message."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -649,18 +691,20 @@ class SmsApi:
     ) -> RESTResponseType:
         """Get outbound SMS message delivery reports
 
-        If you are for any reason unable to receive real-time delivery reports on your endpoint, you can use this API method to learn if and when the message has been delivered to the recipient. Each request will return a batch of delivery reports - only once. The following API request will return only new reports that arrived since the last API request in the last 48 hours.
+        If you are unable to receive real-time message delivery reports towards your endpoint for various reasons, we offer you an API method to fetch batches of message reports to confirm whether specific messages have been delivered. Each request towards this endpoint will return batches of the latest message reports. Please note they will be returned only once.
 
-        :param bulk_id: Unique ID assigned to the request if messaging multiple recipients or sending multiple messages via a single API request.
+        :param bulk_id: The ID that uniquely identifies the request. Bulk ID will be received only when you send a message to more than one destination address.
         :type bulk_id: str
-        :param message_id: Unique message ID for which a report is requested.
+        :param message_id: The ID that uniquely identifies the message sent.
         :type message_id: str
-        :param limit: Maximum number of delivery reports to be returned. If not set, the latest 50 records are returned. Maximum limit value is `1000` and you can only access reports for the last 48h.
+        :param limit: Maximum number of delivery reports to be returned. If not set, the latest 50 records are returned. Maximum limit value is 1000 and you can only access reports for the last 48h
         :type limit: int
-        :param application_id: Application id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
-        :type application_id: str
         :param entity_id: Entity id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
         :type entity_id: str
+        :param application_id: Application id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
+        :type application_id: str
+        :param campaign_reference_id: ID of a campaign that was sent in the message.
+        :type campaign_reference_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -687,8 +731,9 @@ class SmsApi:
             bulk_id=bulk_id,
             message_id=message_id,
             limit=limit,
-            application_id=application_id,
             entity_id=entity_id,
+            application_id=application_id,
+            campaign_reference_id=campaign_reference_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -697,9 +742,9 @@ class SmsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "SmsDeliveryResult",
-            "400": "ApiException",
-            "401": "ApiException",
-            "500": "ApiException",
+            "401": "ApiError",
+            "403": "ApiError",
+            "500": "ApiError",
         }
 
         response_data = self.api_client.call_api(
@@ -712,8 +757,9 @@ class SmsApi:
         bulk_id,
         message_id,
         limit,
-        application_id,
         entity_id,
+        application_id,
+        campaign_reference_id,
         _request_auth,
         _content_type,
         _headers,
@@ -745,13 +791,17 @@ class SmsApi:
 
             _query_params.append(("limit", limit))
 
+        if entity_id is not None:
+
+            _query_params.append(("entityId", entity_id))
+
         if application_id is not None:
 
             _query_params.append(("applicationId", application_id))
 
-        if entity_id is not None:
+        if campaign_reference_id is not None:
 
-            _query_params.append(("entityId", entity_id))
+            _query_params.append(("campaignReferenceId", campaign_reference_id))
 
         # process the header parameters
         # process the form parameters
@@ -767,7 +817,7 @@ class SmsApi:
 
         return self.api_client.param_serialize(
             method="GET",
-            resource_path="/sms/1/reports",
+            resource_path="/sms/3/reports",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -783,11 +833,20 @@ class SmsApi:
     @validate_call
     def get_outbound_sms_message_logs(
         self,
-        var_from: Annotated[
+        mcc: Annotated[
+            Optional[StrictStr], Field(description="Mobile Country Code.")
+        ] = None,
+        mnc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Mobile Network Code. Mobile Country Code is required if this property is used."
+            ),
+        ] = None,
+        sender: Annotated[
             Optional[StrictStr],
             Field(description="The sender ID which can be alphanumeric or numeric."),
         ] = None,
-        to: Annotated[
+        destination: Annotated[
             Optional[StrictStr], Field(description="Message destination address.")
         ] = None,
         bulk_id: Annotated[
@@ -802,35 +861,30 @@ class SmsApi:
                 description="Unique message ID for which a log is requested. May contain multiple comma-separated values. Maximum length 2048 characters."
             ),
         ] = None,
-        general_status: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Sent [message status](https://www.infobip.com/docs/essentials/response-status-and-error-codes#api-status-codes). Possible values: `ACCEPTED`, `PENDING`, `UNDELIVERABLE`, `DELIVERED`, `REJECTED`, `EXPIRED`."
-            ),
-        ] = None,
+        general_status: Optional[MessageGeneralStatus] = None,
         sent_since: Annotated[
             Optional[datetime],
             Field(
-                description="The logs will only include messages sent after this date. Use it together with `sentUntil` to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`."
+                description="The logs will only include messages sent after this date. Use it together with sentUntil to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: yyyy-MM-dd'T'HH:mm:ss.SSSZ."
             ),
         ] = None,
         sent_until: Annotated[
             Optional[datetime],
             Field(
-                description="The logs will only include messages sent before this date. Use it together with `sentBefore` to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`."
+                description="The logs will only include messages sent before this date. Use it together with sentSince to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: yyyy-MM-dd'T'HH:mm:ss.SSSZ."
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt],
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
             Field(
-                description="Maximum number of messages to include in logs. If not set, the latest 50 records are returned. Maximum limit value is `1000` and you can only access logs for the last 48h. If you want to fetch more than 1000 logs allowed per call, use `sentBefore` and `sentUntil` to retrieve them in pages."
+                description="Maximum number of messages to include in logs. If not set, the latest 50 records are returned. Maximum limit value is 1000 and you can only access logs for the last 48h. If you want to fetch more than 1000 logs allowed per call, use sentBefore and sentUntil to retrieve them in pages."
             ),
         ] = None,
-        mcc: Annotated[
-            Optional[StrictStr], Field(description="Mobile Country Code.")
-        ] = None,
-        mnc: Annotated[
-            Optional[StrictStr], Field(description="Mobile Network Code.")
+        entity_id: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Entity id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management)."
+            ),
         ] = None,
         application_id: Annotated[
             Optional[StrictStr],
@@ -838,10 +892,10 @@ class SmsApi:
                 description="Application id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management)."
             ),
         ] = None,
-        entity_id: Annotated[
-            Optional[StrictStr],
+        campaign_reference_id: Annotated[
+            Optional[List[StrictStr]],
             Field(
-                description="Entity id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management)."
+                description="ID of a campaign that was sent in the message. May contain multiple comma-separated values."
             ),
         ] = None,
         _request_timeout: Union[
@@ -858,32 +912,34 @@ class SmsApi:
     ) -> SmsLogsResponse:
         """Get outbound SMS message logs
 
-        Use this method for displaying logs for example in the user interface. Available are the logs for the last 48 hours and you can only retrieve maximum of 1000 logs per call. See [message delivery reports](#channels/sms/get-outbound-sms-message-delivery-reports) if your use case is to verify message delivery.
+        Use this method for displaying logs, for example, in the user interface. Available are the logs for the last 48 hours and you can only retrieve maximum of 1000 logs per call. See [message delivery reports](#channels/sms/get-outbound-sms-message-delivery-reports-v3) if your use case is to verify message delivery.
 
-        :param var_from: The sender ID which can be alphanumeric or numeric.
-        :type var_from: str
-        :param to: Message destination address.
-        :type to: str
+        :param mcc: Mobile Country Code.
+        :type mcc: str
+        :param mnc: Mobile Network Code. Mobile Country Code is required if this property is used.
+        :type mnc: str
+        :param sender: The sender ID which can be alphanumeric or numeric.
+        :type sender: str
+        :param destination: Message destination address.
+        :type destination: str
         :param bulk_id: Unique ID assigned to the request if messaging multiple recipients or sending multiple messages via a single API request. May contain multiple comma-separated values. Maximum length 2048 characters.
         :type bulk_id: List[str]
         :param message_id: Unique message ID for which a log is requested. May contain multiple comma-separated values. Maximum length 2048 characters.
         :type message_id: List[str]
-        :param general_status: Sent [message status](https://www.infobip.com/docs/essentials/response-status-and-error-codes#api-status-codes). Possible values: `ACCEPTED`, `PENDING`, `UNDELIVERABLE`, `DELIVERED`, `REJECTED`, `EXPIRED`.
-        :type general_status: str
-        :param sent_since: The logs will only include messages sent after this date. Use it together with `sentUntil` to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.
+        :param general_status:
+        :type general_status: MessageGeneralStatus
+        :param sent_since: The logs will only include messages sent after this date. Use it together with sentUntil to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: yyyy-MM-dd'T'HH:mm:ss.SSSZ.
         :type sent_since: datetime
-        :param sent_until: The logs will only include messages sent before this date. Use it together with `sentBefore` to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.
+        :param sent_until: The logs will only include messages sent before this date. Use it together with sentSince to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: yyyy-MM-dd'T'HH:mm:ss.SSSZ.
         :type sent_until: datetime
-        :param limit: Maximum number of messages to include in logs. If not set, the latest 50 records are returned. Maximum limit value is `1000` and you can only access logs for the last 48h. If you want to fetch more than 1000 logs allowed per call, use `sentBefore` and `sentUntil` to retrieve them in pages.
+        :param limit: Maximum number of messages to include in logs. If not set, the latest 50 records are returned. Maximum limit value is 1000 and you can only access logs for the last 48h. If you want to fetch more than 1000 logs allowed per call, use sentBefore and sentUntil to retrieve them in pages.
         :type limit: int
-        :param mcc: Mobile Country Code.
-        :type mcc: str
-        :param mnc: Mobile Network Code.
-        :type mnc: str
-        :param application_id: Application id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
-        :type application_id: str
         :param entity_id: Entity id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
         :type entity_id: str
+        :param application_id: Application id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
+        :type application_id: str
+        :param campaign_reference_id: ID of a campaign that was sent in the message. May contain multiple comma-separated values.
+        :type campaign_reference_id: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -907,18 +963,19 @@ class SmsApi:
         """  # noqa: E501
 
         _param = self._get_outbound_sms_message_logs_serialize(
-            var_from=var_from,
-            to=to,
+            mcc=mcc,
+            mnc=mnc,
+            sender=sender,
+            destination=destination,
             bulk_id=bulk_id,
             message_id=message_id,
             general_status=general_status,
             sent_since=sent_since,
             sent_until=sent_until,
             limit=limit,
-            mcc=mcc,
-            mnc=mnc,
-            application_id=application_id,
             entity_id=entity_id,
+            application_id=application_id,
+            campaign_reference_id=campaign_reference_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -927,11 +984,10 @@ class SmsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "SmsLogsResponse",
-            "401": "ApiException",
-            "429": "ApiException",
-            "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
+            "401": "ApiError",
+            "403": "ApiError",
+            "429": "ApiError",
+            "500": "ApiError",
         }
 
         response_data = self.api_client.call_api(
@@ -946,11 +1002,20 @@ class SmsApi:
     @validate_call
     def get_outbound_sms_message_logs_with_http_info(
         self,
-        var_from: Annotated[
+        mcc: Annotated[
+            Optional[StrictStr], Field(description="Mobile Country Code.")
+        ] = None,
+        mnc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Mobile Network Code. Mobile Country Code is required if this property is used."
+            ),
+        ] = None,
+        sender: Annotated[
             Optional[StrictStr],
             Field(description="The sender ID which can be alphanumeric or numeric."),
         ] = None,
-        to: Annotated[
+        destination: Annotated[
             Optional[StrictStr], Field(description="Message destination address.")
         ] = None,
         bulk_id: Annotated[
@@ -965,35 +1030,30 @@ class SmsApi:
                 description="Unique message ID for which a log is requested. May contain multiple comma-separated values. Maximum length 2048 characters."
             ),
         ] = None,
-        general_status: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Sent [message status](https://www.infobip.com/docs/essentials/response-status-and-error-codes#api-status-codes). Possible values: `ACCEPTED`, `PENDING`, `UNDELIVERABLE`, `DELIVERED`, `REJECTED`, `EXPIRED`."
-            ),
-        ] = None,
+        general_status: Optional[MessageGeneralStatus] = None,
         sent_since: Annotated[
             Optional[datetime],
             Field(
-                description="The logs will only include messages sent after this date. Use it together with `sentUntil` to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`."
+                description="The logs will only include messages sent after this date. Use it together with sentUntil to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: yyyy-MM-dd'T'HH:mm:ss.SSSZ."
             ),
         ] = None,
         sent_until: Annotated[
             Optional[datetime],
             Field(
-                description="The logs will only include messages sent before this date. Use it together with `sentBefore` to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`."
+                description="The logs will only include messages sent before this date. Use it together with sentSince to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: yyyy-MM-dd'T'HH:mm:ss.SSSZ."
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt],
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
             Field(
-                description="Maximum number of messages to include in logs. If not set, the latest 50 records are returned. Maximum limit value is `1000` and you can only access logs for the last 48h. If you want to fetch more than 1000 logs allowed per call, use `sentBefore` and `sentUntil` to retrieve them in pages."
+                description="Maximum number of messages to include in logs. If not set, the latest 50 records are returned. Maximum limit value is 1000 and you can only access logs for the last 48h. If you want to fetch more than 1000 logs allowed per call, use sentBefore and sentUntil to retrieve them in pages."
             ),
         ] = None,
-        mcc: Annotated[
-            Optional[StrictStr], Field(description="Mobile Country Code.")
-        ] = None,
-        mnc: Annotated[
-            Optional[StrictStr], Field(description="Mobile Network Code.")
+        entity_id: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Entity id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management)."
+            ),
         ] = None,
         application_id: Annotated[
             Optional[StrictStr],
@@ -1001,10 +1061,10 @@ class SmsApi:
                 description="Application id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management)."
             ),
         ] = None,
-        entity_id: Annotated[
-            Optional[StrictStr],
+        campaign_reference_id: Annotated[
+            Optional[List[StrictStr]],
             Field(
-                description="Entity id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management)."
+                description="ID of a campaign that was sent in the message. May contain multiple comma-separated values."
             ),
         ] = None,
         _request_timeout: Union[
@@ -1021,32 +1081,34 @@ class SmsApi:
     ) -> ApiResponse[SmsLogsResponse]:
         """Get outbound SMS message logs
 
-        Use this method for displaying logs for example in the user interface. Available are the logs for the last 48 hours and you can only retrieve maximum of 1000 logs per call. See [message delivery reports](#channels/sms/get-outbound-sms-message-delivery-reports) if your use case is to verify message delivery.
+        Use this method for displaying logs, for example, in the user interface. Available are the logs for the last 48 hours and you can only retrieve maximum of 1000 logs per call. See [message delivery reports](#channels/sms/get-outbound-sms-message-delivery-reports-v3) if your use case is to verify message delivery.
 
-        :param var_from: The sender ID which can be alphanumeric or numeric.
-        :type var_from: str
-        :param to: Message destination address.
-        :type to: str
+        :param mcc: Mobile Country Code.
+        :type mcc: str
+        :param mnc: Mobile Network Code. Mobile Country Code is required if this property is used.
+        :type mnc: str
+        :param sender: The sender ID which can be alphanumeric or numeric.
+        :type sender: str
+        :param destination: Message destination address.
+        :type destination: str
         :param bulk_id: Unique ID assigned to the request if messaging multiple recipients or sending multiple messages via a single API request. May contain multiple comma-separated values. Maximum length 2048 characters.
         :type bulk_id: List[str]
         :param message_id: Unique message ID for which a log is requested. May contain multiple comma-separated values. Maximum length 2048 characters.
         :type message_id: List[str]
-        :param general_status: Sent [message status](https://www.infobip.com/docs/essentials/response-status-and-error-codes#api-status-codes). Possible values: `ACCEPTED`, `PENDING`, `UNDELIVERABLE`, `DELIVERED`, `REJECTED`, `EXPIRED`.
-        :type general_status: str
-        :param sent_since: The logs will only include messages sent after this date. Use it together with `sentUntil` to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.
+        :param general_status:
+        :type general_status: MessageGeneralStatus
+        :param sent_since: The logs will only include messages sent after this date. Use it together with sentUntil to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: yyyy-MM-dd'T'HH:mm:ss.SSSZ.
         :type sent_since: datetime
-        :param sent_until: The logs will only include messages sent before this date. Use it together with `sentBefore` to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.
+        :param sent_until: The logs will only include messages sent before this date. Use it together with sentSince to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: yyyy-MM-dd'T'HH:mm:ss.SSSZ.
         :type sent_until: datetime
-        :param limit: Maximum number of messages to include in logs. If not set, the latest 50 records are returned. Maximum limit value is `1000` and you can only access logs for the last 48h. If you want to fetch more than 1000 logs allowed per call, use `sentBefore` and `sentUntil` to retrieve them in pages.
+        :param limit: Maximum number of messages to include in logs. If not set, the latest 50 records are returned. Maximum limit value is 1000 and you can only access logs for the last 48h. If you want to fetch more than 1000 logs allowed per call, use sentBefore and sentUntil to retrieve them in pages.
         :type limit: int
-        :param mcc: Mobile Country Code.
-        :type mcc: str
-        :param mnc: Mobile Network Code.
-        :type mnc: str
-        :param application_id: Application id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
-        :type application_id: str
         :param entity_id: Entity id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
         :type entity_id: str
+        :param application_id: Application id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
+        :type application_id: str
+        :param campaign_reference_id: ID of a campaign that was sent in the message. May contain multiple comma-separated values.
+        :type campaign_reference_id: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1070,18 +1132,19 @@ class SmsApi:
         """  # noqa: E501
 
         _param = self._get_outbound_sms_message_logs_serialize(
-            var_from=var_from,
-            to=to,
+            mcc=mcc,
+            mnc=mnc,
+            sender=sender,
+            destination=destination,
             bulk_id=bulk_id,
             message_id=message_id,
             general_status=general_status,
             sent_since=sent_since,
             sent_until=sent_until,
             limit=limit,
-            mcc=mcc,
-            mnc=mnc,
-            application_id=application_id,
             entity_id=entity_id,
+            application_id=application_id,
+            campaign_reference_id=campaign_reference_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1090,11 +1153,10 @@ class SmsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "SmsLogsResponse",
-            "401": "ApiException",
-            "429": "ApiException",
-            "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
+            "401": "ApiError",
+            "403": "ApiError",
+            "429": "ApiError",
+            "500": "ApiError",
         }
 
         response_data = self.api_client.call_api(
@@ -1109,11 +1171,20 @@ class SmsApi:
     @validate_call
     def get_outbound_sms_message_logs_without_preload_content(
         self,
-        var_from: Annotated[
+        mcc: Annotated[
+            Optional[StrictStr], Field(description="Mobile Country Code.")
+        ] = None,
+        mnc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Mobile Network Code. Mobile Country Code is required if this property is used."
+            ),
+        ] = None,
+        sender: Annotated[
             Optional[StrictStr],
             Field(description="The sender ID which can be alphanumeric or numeric."),
         ] = None,
-        to: Annotated[
+        destination: Annotated[
             Optional[StrictStr], Field(description="Message destination address.")
         ] = None,
         bulk_id: Annotated[
@@ -1128,35 +1199,30 @@ class SmsApi:
                 description="Unique message ID for which a log is requested. May contain multiple comma-separated values. Maximum length 2048 characters."
             ),
         ] = None,
-        general_status: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Sent [message status](https://www.infobip.com/docs/essentials/response-status-and-error-codes#api-status-codes). Possible values: `ACCEPTED`, `PENDING`, `UNDELIVERABLE`, `DELIVERED`, `REJECTED`, `EXPIRED`."
-            ),
-        ] = None,
+        general_status: Optional[MessageGeneralStatus] = None,
         sent_since: Annotated[
             Optional[datetime],
             Field(
-                description="The logs will only include messages sent after this date. Use it together with `sentUntil` to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`."
+                description="The logs will only include messages sent after this date. Use it together with sentUntil to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: yyyy-MM-dd'T'HH:mm:ss.SSSZ."
             ),
         ] = None,
         sent_until: Annotated[
             Optional[datetime],
             Field(
-                description="The logs will only include messages sent before this date. Use it together with `sentBefore` to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`."
+                description="The logs will only include messages sent before this date. Use it together with sentSince to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: yyyy-MM-dd'T'HH:mm:ss.SSSZ."
             ),
         ] = None,
         limit: Annotated[
-            Optional[StrictInt],
+            Optional[Annotated[int, Field(le=1000, strict=True)]],
             Field(
-                description="Maximum number of messages to include in logs. If not set, the latest 50 records are returned. Maximum limit value is `1000` and you can only access logs for the last 48h. If you want to fetch more than 1000 logs allowed per call, use `sentBefore` and `sentUntil` to retrieve them in pages."
+                description="Maximum number of messages to include in logs. If not set, the latest 50 records are returned. Maximum limit value is 1000 and you can only access logs for the last 48h. If you want to fetch more than 1000 logs allowed per call, use sentBefore and sentUntil to retrieve them in pages."
             ),
         ] = None,
-        mcc: Annotated[
-            Optional[StrictStr], Field(description="Mobile Country Code.")
-        ] = None,
-        mnc: Annotated[
-            Optional[StrictStr], Field(description="Mobile Network Code.")
+        entity_id: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Entity id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management)."
+            ),
         ] = None,
         application_id: Annotated[
             Optional[StrictStr],
@@ -1164,10 +1230,10 @@ class SmsApi:
                 description="Application id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management)."
             ),
         ] = None,
-        entity_id: Annotated[
-            Optional[StrictStr],
+        campaign_reference_id: Annotated[
+            Optional[List[StrictStr]],
             Field(
-                description="Entity id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management)."
+                description="ID of a campaign that was sent in the message. May contain multiple comma-separated values."
             ),
         ] = None,
         _request_timeout: Union[
@@ -1184,32 +1250,34 @@ class SmsApi:
     ) -> RESTResponseType:
         """Get outbound SMS message logs
 
-        Use this method for displaying logs for example in the user interface. Available are the logs for the last 48 hours and you can only retrieve maximum of 1000 logs per call. See [message delivery reports](#channels/sms/get-outbound-sms-message-delivery-reports) if your use case is to verify message delivery.
+        Use this method for displaying logs, for example, in the user interface. Available are the logs for the last 48 hours and you can only retrieve maximum of 1000 logs per call. See [message delivery reports](#channels/sms/get-outbound-sms-message-delivery-reports-v3) if your use case is to verify message delivery.
 
-        :param var_from: The sender ID which can be alphanumeric or numeric.
-        :type var_from: str
-        :param to: Message destination address.
-        :type to: str
+        :param mcc: Mobile Country Code.
+        :type mcc: str
+        :param mnc: Mobile Network Code. Mobile Country Code is required if this property is used.
+        :type mnc: str
+        :param sender: The sender ID which can be alphanumeric or numeric.
+        :type sender: str
+        :param destination: Message destination address.
+        :type destination: str
         :param bulk_id: Unique ID assigned to the request if messaging multiple recipients or sending multiple messages via a single API request. May contain multiple comma-separated values. Maximum length 2048 characters.
         :type bulk_id: List[str]
         :param message_id: Unique message ID for which a log is requested. May contain multiple comma-separated values. Maximum length 2048 characters.
         :type message_id: List[str]
-        :param general_status: Sent [message status](https://www.infobip.com/docs/essentials/response-status-and-error-codes#api-status-codes). Possible values: `ACCEPTED`, `PENDING`, `UNDELIVERABLE`, `DELIVERED`, `REJECTED`, `EXPIRED`.
-        :type general_status: str
-        :param sent_since: The logs will only include messages sent after this date. Use it together with `sentUntil` to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.
+        :param general_status:
+        :type general_status: MessageGeneralStatus
+        :param sent_since: The logs will only include messages sent after this date. Use it together with sentUntil to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: yyyy-MM-dd'T'HH:mm:ss.SSSZ.
         :type sent_since: datetime
-        :param sent_until: The logs will only include messages sent before this date. Use it together with `sentBefore` to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.
+        :param sent_until: The logs will only include messages sent before this date. Use it together with sentSince to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: yyyy-MM-dd'T'HH:mm:ss.SSSZ.
         :type sent_until: datetime
-        :param limit: Maximum number of messages to include in logs. If not set, the latest 50 records are returned. Maximum limit value is `1000` and you can only access logs for the last 48h. If you want to fetch more than 1000 logs allowed per call, use `sentBefore` and `sentUntil` to retrieve them in pages.
+        :param limit: Maximum number of messages to include in logs. If not set, the latest 50 records are returned. Maximum limit value is 1000 and you can only access logs for the last 48h. If you want to fetch more than 1000 logs allowed per call, use sentBefore and sentUntil to retrieve them in pages.
         :type limit: int
-        :param mcc: Mobile Country Code.
-        :type mcc: str
-        :param mnc: Mobile Network Code.
-        :type mnc: str
-        :param application_id: Application id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
-        :type application_id: str
         :param entity_id: Entity id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
         :type entity_id: str
+        :param application_id: Application id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
+        :type application_id: str
+        :param campaign_reference_id: ID of a campaign that was sent in the message. May contain multiple comma-separated values.
+        :type campaign_reference_id: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1233,18 +1301,19 @@ class SmsApi:
         """  # noqa: E501
 
         _param = self._get_outbound_sms_message_logs_serialize(
-            var_from=var_from,
-            to=to,
+            mcc=mcc,
+            mnc=mnc,
+            sender=sender,
+            destination=destination,
             bulk_id=bulk_id,
             message_id=message_id,
             general_status=general_status,
             sent_since=sent_since,
             sent_until=sent_until,
             limit=limit,
-            mcc=mcc,
-            mnc=mnc,
-            application_id=application_id,
             entity_id=entity_id,
+            application_id=application_id,
+            campaign_reference_id=campaign_reference_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1253,11 +1322,10 @@ class SmsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "SmsLogsResponse",
-            "401": "ApiException",
-            "429": "ApiException",
-            "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
+            "401": "ApiError",
+            "403": "ApiError",
+            "429": "ApiError",
+            "500": "ApiError",
         }
 
         response_data = self.api_client.call_api(
@@ -1267,18 +1335,19 @@ class SmsApi:
 
     def _get_outbound_sms_message_logs_serialize(
         self,
-        var_from,
-        to,
+        mcc,
+        mnc,
+        sender,
+        destination,
         bulk_id,
         message_id,
         general_status,
         sent_since,
         sent_until,
         limit,
-        mcc,
-        mnc,
-        application_id,
         entity_id,
+        application_id,
+        campaign_reference_id,
         _request_auth,
         _content_type,
         _headers,
@@ -1290,6 +1359,7 @@ class SmsApi:
         _collection_formats: Dict[str, str] = {
             "bulkId": "multi",
             "messageId": "multi",
+            "campaignReferenceId": "multi",
         }
 
         _path_params: Dict[str, str] = {}
@@ -1301,13 +1371,21 @@ class SmsApi:
 
         # process the path parameters
         # process the query parameters
-        if var_from is not None:
+        if mcc is not None:
 
-            _query_params.append(("from", var_from))
+            _query_params.append(("mcc", mcc))
 
-        if to is not None:
+        if mnc is not None:
 
-            _query_params.append(("to", to))
+            _query_params.append(("mnc", mnc))
+
+        if sender is not None:
+
+            _query_params.append(("sender", sender))
+
+        if destination is not None:
+
+            _query_params.append(("destination", destination))
 
         if bulk_id is not None:
 
@@ -1319,7 +1397,7 @@ class SmsApi:
 
         if general_status is not None:
 
-            _query_params.append(("generalStatus", general_status))
+            _query_params.append(("generalStatus", general_status.value))
 
         if sent_since is not None:
             if isinstance(sent_since, datetime):
@@ -1351,21 +1429,17 @@ class SmsApi:
 
             _query_params.append(("limit", limit))
 
-        if mcc is not None:
+        if entity_id is not None:
 
-            _query_params.append(("mcc", mcc))
-
-        if mnc is not None:
-
-            _query_params.append(("mnc", mnc))
+            _query_params.append(("entityId", entity_id))
 
         if application_id is not None:
 
             _query_params.append(("applicationId", application_id))
 
-        if entity_id is not None:
+        if campaign_reference_id is not None:
 
-            _query_params.append(("entityId", entity_id))
+            _query_params.append(("campaignReferenceId", campaign_reference_id))
 
         # process the header parameters
         # process the form parameters
@@ -1381,7 +1455,7 @@ class SmsApi:
 
         return self.api_client.param_serialize(
             method="GET",
-            resource_path="/sms/1/logs",
+            resource_path="/sms/3/logs",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1449,6 +1523,7 @@ class SmsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "SmsBulkResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -1518,6 +1593,7 @@ class SmsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "SmsBulkResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -1587,6 +1663,7 @@ class SmsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "SmsBulkResponse",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -1706,6 +1783,7 @@ class SmsApi:
             "200": "SmsBulkStatusResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "500": "ApiException",
         }
@@ -1775,6 +1853,7 @@ class SmsApi:
             "200": "SmsBulkStatusResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "500": "ApiException",
         }
@@ -1844,6 +1923,7 @@ class SmsApi:
             "200": "SmsBulkStatusResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "404": "ApiException",
             "500": "ApiException",
         }
@@ -1962,6 +2042,7 @@ class SmsApi:
             "200": "SmsPreviewResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
         }
 
@@ -2030,6 +2111,7 @@ class SmsApi:
             "200": "SmsPreviewResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
         }
 
@@ -2098,6 +2180,7 @@ class SmsApi:
             "200": "SmsPreviewResponse",
             "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
         }
 
@@ -2225,7 +2308,9 @@ class SmsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "SmsBulkResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -2298,7 +2383,9 @@ class SmsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "SmsBulkResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -2371,7 +2458,9 @@ class SmsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "SmsBulkResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -2449,9 +2538,9 @@ class SmsApi:
         )
 
     @validate_call
-    def send_binary_sms_message(
+    def send_sms_messages(
         self,
-        sms_advanced_binary_request: SmsAdvancedBinaryRequest,
+        sms_request: SmsRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2464,12 +2553,12 @@ class SmsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> SmsResponse:
-        """Send binary SMS message
+        """Send SMS message
 
-        Send single or multiple binary messages to one or more destination address. The API response will not contain the final delivery status, use [Delivery Reports](https://www.infobip.com/docs/api/channels/sms/sms-messaging/logs-and-status-reports/receive-outbound-sms-message-report) instead.
+        With this API method, you can do anything from sending a basic message to one person, all the way to sending customized messages to thousands of recipients in one go. It comes with a range of useful features like transliteration, scheduling, and tracking in a unified way.\\ If utilizing Message Delivery Reports webhook, please consult the documentation provided at [Receive outbound SMS message reports](#channels/sms/receive-outbound-sms-message-report-v3).\\ This endpoint is the successor of [Send SMS message](#channels/sms/send-sms-message) and [Send binary SMS message](#channels/sms/send-binary-sms-message).
 
-        :param sms_advanced_binary_request: (required)
-        :type sms_advanced_binary_request: SmsAdvancedBinaryRequest
+        :param sms_request: (required)
+        :type sms_request: SmsRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2492,8 +2581,8 @@ class SmsApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._send_binary_sms_message_serialize(
-            sms_advanced_binary_request=sms_advanced_binary_request,
+        _param = self._send_sms_messages_serialize(
+            sms_request=sms_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2502,9 +2591,10 @@ class SmsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "SmsResponse",
-            "400": "ApiException",
-            "401": "ApiException",
-            "500": "ApiException",
+            "400": "ApiError",
+            "401": "ApiError",
+            "403": "ApiError",
+            "500": "ApiError",
         }
 
         response_data = self.api_client.call_api(
@@ -2517,9 +2607,9 @@ class SmsApi:
         ).data
 
     @validate_call
-    def send_binary_sms_message_with_http_info(
+    def send_sms_messages_with_http_info(
         self,
-        sms_advanced_binary_request: SmsAdvancedBinaryRequest,
+        sms_request: SmsRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2532,12 +2622,12 @@ class SmsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[SmsResponse]:
-        """Send binary SMS message
+        """Send SMS message
 
-        Send single or multiple binary messages to one or more destination address. The API response will not contain the final delivery status, use [Delivery Reports](https://www.infobip.com/docs/api/channels/sms/sms-messaging/logs-and-status-reports/receive-outbound-sms-message-report) instead.
+        With this API method, you can do anything from sending a basic message to one person, all the way to sending customized messages to thousands of recipients in one go. It comes with a range of useful features like transliteration, scheduling, and tracking in a unified way.\\ If utilizing Message Delivery Reports webhook, please consult the documentation provided at [Receive outbound SMS message reports](#channels/sms/receive-outbound-sms-message-report-v3).\\ This endpoint is the successor of [Send SMS message](#channels/sms/send-sms-message) and [Send binary SMS message](#channels/sms/send-binary-sms-message).
 
-        :param sms_advanced_binary_request: (required)
-        :type sms_advanced_binary_request: SmsAdvancedBinaryRequest
+        :param sms_request: (required)
+        :type sms_request: SmsRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2560,8 +2650,8 @@ class SmsApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._send_binary_sms_message_serialize(
-            sms_advanced_binary_request=sms_advanced_binary_request,
+        _param = self._send_sms_messages_serialize(
+            sms_request=sms_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2570,9 +2660,10 @@ class SmsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "SmsResponse",
-            "400": "ApiException",
-            "401": "ApiException",
-            "500": "ApiException",
+            "400": "ApiError",
+            "401": "ApiError",
+            "403": "ApiError",
+            "500": "ApiError",
         }
 
         response_data = self.api_client.call_api(
@@ -2585,9 +2676,9 @@ class SmsApi:
         )
 
     @validate_call
-    def send_binary_sms_message_without_preload_content(
+    def send_sms_messages_without_preload_content(
         self,
-        sms_advanced_binary_request: SmsAdvancedBinaryRequest,
+        sms_request: SmsRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2600,12 +2691,12 @@ class SmsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Send binary SMS message
+        """Send SMS message
 
-        Send single or multiple binary messages to one or more destination address. The API response will not contain the final delivery status, use [Delivery Reports](https://www.infobip.com/docs/api/channels/sms/sms-messaging/logs-and-status-reports/receive-outbound-sms-message-report) instead.
+        With this API method, you can do anything from sending a basic message to one person, all the way to sending customized messages to thousands of recipients in one go. It comes with a range of useful features like transliteration, scheduling, and tracking in a unified way.\\ If utilizing Message Delivery Reports webhook, please consult the documentation provided at [Receive outbound SMS message reports](#channels/sms/receive-outbound-sms-message-report-v3).\\ This endpoint is the successor of [Send SMS message](#channels/sms/send-sms-message) and [Send binary SMS message](#channels/sms/send-binary-sms-message).
 
-        :param sms_advanced_binary_request: (required)
-        :type sms_advanced_binary_request: SmsAdvancedBinaryRequest
+        :param sms_request: (required)
+        :type sms_request: SmsRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2628,8 +2719,8 @@ class SmsApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._send_binary_sms_message_serialize(
-            sms_advanced_binary_request=sms_advanced_binary_request,
+        _param = self._send_sms_messages_serialize(
+            sms_request=sms_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2638,9 +2729,10 @@ class SmsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "SmsResponse",
-            "400": "ApiException",
-            "401": "ApiException",
-            "500": "ApiException",
+            "400": "ApiError",
+            "401": "ApiError",
+            "403": "ApiError",
+            "500": "ApiError",
         }
 
         response_data = self.api_client.call_api(
@@ -2648,9 +2740,9 @@ class SmsApi:
         )
         return response_data.response
 
-    def _send_binary_sms_message_serialize(
+    def _send_sms_messages_serialize(
         self,
-        sms_advanced_binary_request,
+        sms_request,
         _request_auth,
         _content_type,
         _headers,
@@ -2673,8 +2765,8 @@ class SmsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if sms_advanced_binary_request is not None:
-            _body_params = sms_advanced_binary_request
+        if sms_request is not None:
+            _body_params = sms_request
 
         # set the HTTP header `Accept`
         _header_params["Accept"] = self.api_client.select_header_accept(
@@ -2696,268 +2788,7 @@ class SmsApi:
 
         return self.api_client.param_serialize(
             method="POST",
-            resource_path="/sms/2/binary/advanced",
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth,
-        )
-
-    @validate_call
-    def send_sms_message(
-        self,
-        sms_advanced_textual_request: SmsAdvancedTextualRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> SmsResponse:
-        """Send SMS message
-
-        Use this endpoint to send an SMS and set up a rich set of features, such as batch sending with a single API request, scheduling, URL tracking, language and transliteration configuration, etc. The API response will not contain the final delivery status, use [Delivery Reports](https://www.infobip.com/docs/api/channels/sms/sms-messaging/logs-and-status-reports/receive-outbound-sms-message-report) instead.
-
-        :param sms_advanced_textual_request: (required)
-        :type sms_advanced_textual_request: SmsAdvancedTextualRequest
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._send_sms_message_serialize(
-            sms_advanced_textual_request=sms_advanced_textual_request,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "SmsResponse",
-            "400": "ApiException",
-            "401": "ApiException",
-            "500": "ApiException",
-        }
-
-        response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-    @validate_call
-    def send_sms_message_with_http_info(
-        self,
-        sms_advanced_textual_request: SmsAdvancedTextualRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[SmsResponse]:
-        """Send SMS message
-
-        Use this endpoint to send an SMS and set up a rich set of features, such as batch sending with a single API request, scheduling, URL tracking, language and transliteration configuration, etc. The API response will not contain the final delivery status, use [Delivery Reports](https://www.infobip.com/docs/api/channels/sms/sms-messaging/logs-and-status-reports/receive-outbound-sms-message-report) instead.
-
-        :param sms_advanced_textual_request: (required)
-        :type sms_advanced_textual_request: SmsAdvancedTextualRequest
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._send_sms_message_serialize(
-            sms_advanced_textual_request=sms_advanced_textual_request,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "SmsResponse",
-            "400": "ApiException",
-            "401": "ApiException",
-            "500": "ApiException",
-        }
-
-        response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    @validate_call
-    def send_sms_message_without_preload_content(
-        self,
-        sms_advanced_textual_request: SmsAdvancedTextualRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Send SMS message
-
-        Use this endpoint to send an SMS and set up a rich set of features, such as batch sending with a single API request, scheduling, URL tracking, language and transliteration configuration, etc. The API response will not contain the final delivery status, use [Delivery Reports](https://www.infobip.com/docs/api/channels/sms/sms-messaging/logs-and-status-reports/receive-outbound-sms-message-report) instead.
-
-        :param sms_advanced_textual_request: (required)
-        :type sms_advanced_textual_request: SmsAdvancedTextualRequest
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._send_sms_message_serialize(
-            sms_advanced_textual_request=sms_advanced_textual_request,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "SmsResponse",
-            "400": "ApiException",
-            "401": "ApiException",
-            "500": "ApiException",
-        }
-
-        response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-    def _send_sms_message_serialize(
-        self,
-        sms_advanced_textual_request,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {}
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        # process the query parameters
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-        if sms_advanced_textual_request is not None:
-            _body_params = sms_advanced_textual_request
-
-        # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )
-
-        # set the HTTP header `Content-Type`
-        if _content_type:
-            _header_params["Content-Type"] = _content_type
-        else:
-            _default_content_type = self.api_client.select_header_content_type(
-                ["application/json"]
-            )
-            if _default_content_type is not None:
-                _header_params["Content-Type"] = _default_content_type
-
-        # authentication setting
-        _auth_settings: List[str] = ["APIKeyHeader"]
-
-        return self.api_client.param_serialize(
-            method="POST",
-            resource_path="/sms/2/text/advanced",
+            resource_path="/sms/3/messages",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -3028,7 +2859,9 @@ class SmsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "SmsBulkStatusResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -3101,7 +2934,9 @@ class SmsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "SmsBulkStatusResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
@@ -3174,7 +3009,9 @@ class SmsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "SmsBulkStatusResponse",
+            "400": "ApiException",
             "401": "ApiException",
+            "403": "ApiException",
             "500": "ApiException",
             "4XX": "ApiException",
             "5XX": "ApiException",
