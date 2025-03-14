@@ -21,7 +21,6 @@ from pydantic import ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from infobip_api_client.models.calls_genesys_cloud_region import CallsGenesysCloudRegion
 from infobip_api_client.models.calls_provider import CallsProvider
-from infobip_api_client.models.calls_provider_trunk_type import CallsProviderTrunkType
 from typing import Optional, Set
 from typing_extensions import Self
 

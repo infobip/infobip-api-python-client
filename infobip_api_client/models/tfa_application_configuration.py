@@ -43,12 +43,12 @@ class TfaApplicationConfiguration(BaseModel):
     )
     send_pin_per_application_limit: Optional[StrictStr] = Field(
         default="10000/1d",
-        description="Overall number of requests over a specififed time period for generating a PIN and sending an SMS using a single application. Required format: `{attempts}/{timeLength}{timeUnit}`. `attempts` and `timeunit` are mandatory and `timeLength` is optional with a default value of 1. `timeUnit` is one of: `ms`, `s`, `m`, `h` or `d` representing milliseconds, seconds, minutes, hours, and days respectively. Must not exceed one year, although much lower value is recommended.",
+        description="Overall number of requests over a specified time period for generating a PIN and sending a message using a single application. Required format: `{attempts}/{timeLength}{timeUnit}`. `attempts` and `timeunit` are mandatory and `timeLength` is optional with a default value of 1. `timeUnit` is one of: `ms`, `s`, `m`, `h` or `d` representing milliseconds, seconds, minutes, hours, and days respectively. Must not exceed one year, although much lower value is recommended.",
         alias="sendPinPerApplicationLimit",
     )
     send_pin_per_phone_number_limit: Optional[StrictStr] = Field(
         default="3/1d",
-        description="Number of requests over a specififed time period for generating a PIN and sending an SMS to one phone number (MSISDN). Required format: `{attempts}/{timeLength}{timeUnit}`. `attempts` and `timeunit` are mandatory and `timeLength` is optional with a default value of 1. `timeUnit` is one of: `ms`, `s`, `m`, `h` or `d` representing milliseconds, seconds, minutes, hours, and days respectively. Must not exceed one year, although much lower value is recommended.",
+        description="Number of requests over a specified time period for generating a PIN and sending a message to one destination. Required format: `{attempts}/{timeLength}{timeUnit}`. `attempts` and `timeunit` are mandatory and `timeLength` is optional with a default value of 1. `timeUnit` is one of: `ms`, `s`, `m`, `h` or `d` representing milliseconds, seconds, minutes, hours, and days respectively. Must not exceed one year, although much lower value is recommended.",
         alias="sendPinPerPhoneNumberLimit",
     )
     verify_pin_limit: Optional[StrictStr] = Field(

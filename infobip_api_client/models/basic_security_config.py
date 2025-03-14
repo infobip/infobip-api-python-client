@@ -20,7 +20,6 @@ import json
 from pydantic import ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
 from infobip_api_client.models.security_config import SecurityConfig
-from infobip_api_client.models.url_security_config_type import UrlSecurityConfigType
 from typing import Optional, Set
 from typing_extensions import Self
 

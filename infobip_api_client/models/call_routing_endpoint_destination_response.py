@@ -19,9 +19,6 @@ import json
 
 from pydantic import ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
-from infobip_api_client.models.call_routing_destination_type import (
-    CallRoutingDestinationType,
-)
 from infobip_api_client.models.call_routing_endpoint import CallRoutingEndpoint
 from infobip_api_client.models.call_routing_recording import CallRoutingRecording
 from infobip_api_client.models.call_routing_url_destination_response import (

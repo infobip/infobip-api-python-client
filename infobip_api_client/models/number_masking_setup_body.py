@@ -52,7 +52,7 @@ class NumberMaskingSetupBody(BaseModel):
         alias="backupStatusUrl",
     )
     description: Optional[Annotated[str, Field(strict=True)]] = Field(
-        default=None, description="Masking configuration description"
+        default=None, description="Masking configuration description."
     )
     __properties: ClassVar[List[str]] = [
         "name",

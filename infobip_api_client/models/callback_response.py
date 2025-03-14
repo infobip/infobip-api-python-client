@@ -21,7 +21,6 @@ from importlib import import_module
 from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Union
 from typing import Optional, Set
-from typing_extensions import Self
 
 from typing import TYPE_CHECKING
 

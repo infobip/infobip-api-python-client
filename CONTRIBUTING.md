@@ -80,7 +80,7 @@ Afterward, you can use pip to build the project locally:
 pip install .
 ```
 
-Install the required test packages and run the tests that are in repository, all test should pass.
+Install the required test packages and run the tests that are in repository, all tests should pass.
 
 ```bash
 pip install -r test-requirements.txt

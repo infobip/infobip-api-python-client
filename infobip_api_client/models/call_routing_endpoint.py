@@ -22,7 +22,6 @@ from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Union
 from infobip_api_client.models.call_routing_endpoint_type import CallRoutingEndpointType
 from typing import Optional, Set
-from typing_extensions import Self
 
 from typing import TYPE_CHECKING
 
@@ -38,6 +37,9 @@ if TYPE_CHECKING:
     )
     from infobip_api_client.models.call_routing_web_rtc_endpoint import (
         CallRoutingWebRtcEndpoint,
+    )
+    from infobip_api_client.models.call_routing_web_socket_endpoint import (
+        CallRoutingWebSocketEndpoint,
     )
 
 
@@ -64,6 +66,7 @@ class CallRoutingEndpoint(BaseModel):
         "SIP": "CallRoutingSipEndpoint",
         "VIBER": "CallRoutingViberEndpoint",
         "WEBRTC": "CallRoutingWebRtcEndpoint",
+        "WEBSOCKET": "CallRoutingWebSocketEndpoint",
     }
 
     @classmethod
@@ -93,6 +96,7 @@ class CallRoutingEndpoint(BaseModel):
             CallRoutingSipEndpoint,
             CallRoutingViberEndpoint,
             CallRoutingWebRtcEndpoint,
+            CallRoutingWebSocketEndpoint,
         ]
     ]:
         """Create an instance of CallRoutingEndpoint from a JSON string"""
@@ -126,6 +130,7 @@ class CallRoutingEndpoint(BaseModel):
             CallRoutingSipEndpoint,
             CallRoutingViberEndpoint,
             CallRoutingWebRtcEndpoint,
+            CallRoutingWebSocketEndpoint,
         ]
     ]:
         """Create an instance of CallRoutingEndpoint from a dict"""
@@ -147,6 +152,10 @@ class CallRoutingEndpoint(BaseModel):
             return import_module(
                 "infobip_api_client.models.call_routing_web_rtc_endpoint"
             ).CallRoutingWebRtcEndpoint.from_dict(obj)
+        if object_type == "CallRoutingWebSocketEndpoint":
+            return import_module(
+                "infobip_api_client.models.call_routing_web_socket_endpoint"
+            ).CallRoutingWebSocketEndpoint.from_dict(obj)
 
         raise ValueError(
             "CallRoutingEndpoint failed to lookup discriminator value from "

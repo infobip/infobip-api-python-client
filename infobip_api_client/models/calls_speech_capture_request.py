@@ -20,7 +20,9 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from infobip_api_client.models.calls_language import CallsLanguage
+from infobip_api_client.models.call_transcription_language import (
+    CallTranscriptionLanguage,
+)
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -30,7 +32,7 @@ class CallsSpeechCaptureRequest(BaseModel):
     CallsSpeechCaptureRequest
     """  # noqa: E501
 
-    language: CallsLanguage
+    language: CallTranscriptionLanguage
     timeout: Annotated[int, Field(le=30, strict=True, ge=1)] = Field(
         description="The maximum duration of speech capture."
     )

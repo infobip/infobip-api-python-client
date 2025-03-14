@@ -74,6 +74,21 @@ class EmailWebhookTrackReport(BaseModel):
     geo_location: Optional[EmailWebhookGeoLocation] = Field(
         default=None, alias="geoLocation"
     )
+    campaign_reference_id: Optional[StrictStr] = Field(
+        default=None,
+        description="ID of a campaign that was sent in the message.",
+        alias="campaignReferenceId",
+    )
+    entity_id: Optional[StrictStr] = Field(
+        default=None,
+        description="Used when specifying an entity in outbound send requests. It is also returned in notification events. For detailed usage, refer to the [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).",
+        alias="entityId",
+    )
+    application_id: Optional[StrictStr] = Field(
+        default=None,
+        description="Used when specifying an application in outbound send requests. It is also returned in notification events. For detailed usage, refer to the [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).",
+        alias="applicationId",
+    )
     __properties: ClassVar[List[str]] = [
         "notificationType",
         "domain",
@@ -85,6 +100,9 @@ class EmailWebhookTrackReport(BaseModel):
         "callbackData",
         "recipientInfo",
         "geoLocation",
+        "campaignReferenceId",
+        "entityId",
+        "applicationId",
     ]
 
     model_config = ConfigDict(
@@ -159,6 +177,9 @@ class EmailWebhookTrackReport(BaseModel):
                 "geoLocation": EmailWebhookGeoLocation.from_dict(obj["geoLocation"])
                 if obj.get("geoLocation") is not None
                 else None,
+                "campaignReferenceId": obj.get("campaignReferenceId"),
+                "entityId": obj.get("entityId"),
+                "applicationId": obj.get("applicationId"),
             }
         )
         return _obj

@@ -20,9 +20,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
 from typing_extensions import Annotated
-from infobip_api_client.models.email_add_delete_suppression_type import (
-    EmailAddDeleteSuppressionType,
-)
+from infobip_api_client.models.email_add_suppression_type import EmailAddSuppressionType
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -41,7 +39,7 @@ class EmailAddSuppression(BaseModel):
     ] = Field(
         description="Email addresses to add to suppression list.", alias="emailAddress"
     )
-    type: EmailAddDeleteSuppressionType
+    type: EmailAddSuppressionType
     __properties: ClassVar[List[str]] = ["domainName", "emailAddress", "type"]
 
     model_config = ConfigDict(

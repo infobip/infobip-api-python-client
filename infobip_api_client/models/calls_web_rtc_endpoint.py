@@ -20,7 +20,6 @@ import json
 from pydantic import ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from infobip_api_client.models.call_endpoint import CallEndpoint
-from infobip_api_client.models.call_endpoint_type import CallEndpointType
 from typing import Optional, Set
 from typing_extensions import Self
 

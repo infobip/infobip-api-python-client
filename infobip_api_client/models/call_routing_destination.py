@@ -18,13 +18,13 @@ import re  # noqa: F401
 import json
 
 from importlib import import_module
-from pydantic import BaseModel, ConfigDict, StrictInt
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing_extensions import Annotated
 from infobip_api_client.models.call_routing_destination_type import (
     CallRoutingDestinationType,
 )
 from typing import Optional, Set
-from typing_extensions import Self
 
 from typing import TYPE_CHECKING
 
@@ -42,9 +42,15 @@ class CallRoutingDestination(BaseModel):
     List of destinations. First destination in the list is the first one to be executed. Subsequent destinations are executed only if the previous one fails.
     """  # noqa: E501
 
-    priority: Optional[StrictInt] = None
+    priority: Optional[Annotated[int, Field(le=100, strict=True, ge=1)]] = Field(
+        default=None,
+        description="Priority of the destination within a route. Destinations with lower value have higher priority. Either all or no destination need to have this value defined.",
+    )
     type: CallRoutingDestinationType
-    weight: Optional[StrictInt] = None
+    weight: Optional[Annotated[int, Field(le=100, strict=True, ge=1)]] = Field(
+        default=None,
+        description="Weight of the destination within a route. It specifies how much traffic is handled by destination relative to other destinations within the same priority level. Values are evaluated relative to each other and they don't need to add up to 100. Either all or no destination need to have this value defined.",
+    )
     __properties: ClassVar[List[str]] = ["priority", "type", "weight"]
 
     model_config = ConfigDict(

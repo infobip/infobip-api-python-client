@@ -17,6 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
+from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
@@ -35,7 +36,7 @@ class EmailSuppressionInfo(BaseModel):
         description="Email address that is suppressed.", alias="emailAddress"
     )
     type: StrictStr = Field(description="Type of suppression.")
-    created_date: StrictStr = Field(
+    created_date: datetime = Field(
         description="Date and time when email address was suppressed.",
         alias="createdDate",
     )

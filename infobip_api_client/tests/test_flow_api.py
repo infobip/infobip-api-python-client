@@ -1,4 +1,3 @@
-from statistics import variance
 
 import pytest
 from infobip_api_client import (

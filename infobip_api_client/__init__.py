@@ -14,7 +14,7 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-__version__ = "5.0.0"
+__version__ = "5.1.0"
 
 # import apis into sdk package
 from infobip_api_client.api.call_routing_api import CallRoutingApi
@@ -123,7 +123,13 @@ from infobip_api_client.models.call_routing_web_rtc_criteria import (
 from infobip_api_client.models.call_routing_web_rtc_endpoint import (
     CallRoutingWebRtcEndpoint,
 )
+from infobip_api_client.models.call_routing_web_socket_endpoint import (
+    CallRoutingWebSocketEndpoint,
+)
 from infobip_api_client.models.call_state import CallState
+from infobip_api_client.models.call_transcription_language import (
+    CallTranscriptionLanguage,
+)
 from infobip_api_client.models.call_transfer import CallTransfer
 from infobip_api_client.models.call_voice import CallVoice
 from infobip_api_client.models.callback_response import CallbackResponse
@@ -166,13 +172,9 @@ from infobip_api_client.models.calls_bulk_request import CallsBulkRequest
 from infobip_api_client.models.calls_bulk_response import CallsBulkResponse
 from infobip_api_client.models.calls_bulk_status import CallsBulkStatus
 from infobip_api_client.models.calls_bulk_status_response import CallsBulkStatusResponse
-from infobip_api_client.models.calls_call_api import CallsCallApi
-from infobip_api_client.models.calls_call_api_options import CallsCallApiOptions
-from infobip_api_client.models.calls_capture import CallsCapture
 from infobip_api_client.models.calls_capture_dtmf_callback_response import (
     CallsCaptureDtmfCallbackResponse,
 )
-from infobip_api_client.models.calls_case_object import CallsCaseObject
 from infobip_api_client.models.calls_cisco_webex_provider import CallsCiscoWebexProvider
 from infobip_api_client.models.calls_click_to_call_message import (
     CallsClickToCallMessage,
@@ -180,8 +182,6 @@ from infobip_api_client.models.calls_click_to_call_message import (
 from infobip_api_client.models.calls_click_to_call_message_body import (
     CallsClickToCallMessageBody,
 )
-from infobip_api_client.models.calls_collect import CallsCollect
-from infobip_api_client.models.calls_collect_options import CallsCollectOptions
 from infobip_api_client.models.calls_conference import CallsConference
 from infobip_api_client.models.calls_conference_and_call import CallsConferenceAndCall
 from infobip_api_client.models.calls_conference_broadcast_webrtc_text_request import (
@@ -209,11 +209,20 @@ from infobip_api_client.models.calls_conference_recording_request import (
     CallsConferenceRecordingRequest,
 )
 from infobip_api_client.models.calls_conference_request import CallsConferenceRequest
+from infobip_api_client.models.calls_configuration_create_request import (
+    CallsConfigurationCreateRequest,
+)
+from infobip_api_client.models.calls_configuration_page import CallsConfigurationPage
+from infobip_api_client.models.calls_configuration_response import (
+    CallsConfigurationResponse,
+)
+from infobip_api_client.models.calls_configuration_update_request import (
+    CallsConfigurationUpdateRequest,
+)
 from infobip_api_client.models.calls_connect_request import CallsConnectRequest
 from infobip_api_client.models.calls_connect_with_new_call_request import (
     CallsConnectWithNewCallRequest,
 )
-from infobip_api_client.models.calls_country_list import CallsCountryList
 from infobip_api_client.models.calls_create_provider_sip_trunk_response import (
     CallsCreateProviderSipTrunkResponse,
 )
@@ -229,23 +238,9 @@ from infobip_api_client.models.calls_create_static_sip_trunk_response import (
 from infobip_api_client.models.calls_creation_method import CallsCreationMethod
 from infobip_api_client.models.calls_destination import CallsDestination
 from infobip_api_client.models.calls_detection_result import CallsDetectionResult
-from infobip_api_client.models.calls_dial import CallsDial
 from infobip_api_client.models.calls_dial_callback_response import (
     CallsDialCallbackResponse,
 )
-from infobip_api_client.models.calls_dial_options import CallsDialOptions
-from infobip_api_client.models.calls_dial_to_conversations import (
-    CallsDialToConversations,
-)
-from infobip_api_client.models.calls_dial_to_conversations_data import (
-    CallsDialToConversationsData,
-)
-from infobip_api_client.models.calls_dial_to_conversations_options import (
-    CallsDialToConversationsOptions,
-)
-from infobip_api_client.models.calls_dial_to_many import CallsDialToMany
-from infobip_api_client.models.calls_dial_to_many_options import CallsDialToManyOptions
-from infobip_api_client.models.calls_dial_to_web_rtc import CallsDialToWebRTC
 from infobip_api_client.models.calls_dialog_broadcast_webrtc_text_request import (
     CallsDialogBroadcastWebrtcTextRequest,
 )
@@ -278,7 +273,6 @@ from infobip_api_client.models.calls_dialog_with_existing_call_request import (
     CallsDialogWithExistingCallRequest,
 )
 from infobip_api_client.models.calls_dtmf_capture_request import CallsDtmfCaptureRequest
-from infobip_api_client.models.calls_dtmf_options import CallsDtmfOptions
 from infobip_api_client.models.calls_dtmf_send_request import CallsDtmfSendRequest
 from infobip_api_client.models.calls_dtmf_termination import CallsDtmfTermination
 from infobip_api_client.models.calls_dtmf_type import CallsDtmfType
@@ -292,7 +286,6 @@ from infobip_api_client.models.calls_file import CallsFile
 from infobip_api_client.models.calls_file_format import CallsFileFormat
 from infobip_api_client.models.calls_file_page import CallsFilePage
 from infobip_api_client.models.calls_file_play_content import CallsFilePlayContent
-from infobip_api_client.models.calls_for_each import CallsForEach
 from infobip_api_client.models.calls_freshworks_provider import CallsFreshworksProvider
 from infobip_api_client.models.calls_gender import CallsGender
 from infobip_api_client.models.calls_genesys_cloud_provider import (
@@ -300,13 +293,8 @@ from infobip_api_client.models.calls_genesys_cloud_provider import (
 )
 from infobip_api_client.models.calls_genesys_cloud_region import CallsGenesysCloudRegion
 from infobip_api_client.models.calls_get_voices_response import CallsGetVoicesResponse
-from infobip_api_client.models.calls_go_to import CallsGoTo
-from infobip_api_client.models.calls_go_to_options import CallsGoToOptions
-from infobip_api_client.models.calls_hangup import CallsHangup
 from infobip_api_client.models.calls_hangup_request import CallsHangupRequest
 from infobip_api_client.models.calls_hangup_source import CallsHangupSource
-from infobip_api_client.models.calls_http_method import CallsHttpMethod
-from infobip_api_client.models.calls_if_then_else import CallsIfThenElse
 from infobip_api_client.models.calls_ip_core_general_status import (
     CallsIpCoreGeneralStatus,
 )
@@ -318,7 +306,6 @@ from infobip_api_client.models.calls_launch_scenario_request import (
 )
 from infobip_api_client.models.calls_logs_report import CallsLogsReport
 from infobip_api_client.models.calls_logs_response import CallsLogsResponse
-from infobip_api_client.models.calls_machine_detection import CallsMachineDetection
 from infobip_api_client.models.calls_machine_detection_properties import (
     CallsMachineDetectionProperties,
 )
@@ -339,25 +326,27 @@ from infobip_api_client.models.calls_media_stream_config_request import (
 from infobip_api_client.models.calls_media_stream_config_response import (
     CallsMediaStreamConfigResponse,
 )
+from infobip_api_client.models.calls_media_streaming_config_request import (
+    CallsMediaStreamingConfigRequest,
+)
+from infobip_api_client.models.calls_media_streaming_config_response import (
+    CallsMediaStreamingConfigResponse,
+)
 from infobip_api_client.models.calls_multi_body import CallsMultiBody
 from infobip_api_client.models.calls_multi_channel import CallsMultiChannel
 from infobip_api_client.models.calls_multi_message import CallsMultiMessage
 from infobip_api_client.models.calls_number_presentation_format import (
     CallsNumberPresentationFormat,
 )
-from infobip_api_client.models.calls_numbers import CallsNumbers
 from infobip_api_client.models.calls_on_demand_composition import (
     CallsOnDemandComposition,
 )
 from infobip_api_client.models.calls_participant import CallsParticipant
 from infobip_api_client.models.calls_participant_session import CallsParticipantSession
 from infobip_api_client.models.calls_participant_state import CallsParticipantState
-from infobip_api_client.models.calls_pause import CallsPause
 from infobip_api_client.models.calls_phone_endpoint import CallsPhoneEndpoint
-from infobip_api_client.models.calls_play import CallsPlay
 from infobip_api_client.models.calls_play_content import CallsPlayContent
 from infobip_api_client.models.calls_play_content_type import CallsPlayContentType
-from infobip_api_client.models.calls_play_from_recording import CallsPlayFromRecording
 from infobip_api_client.models.calls_play_request import CallsPlayRequest
 from infobip_api_client.models.calls_pre_answer_request import CallsPreAnswerRequest
 from infobip_api_client.models.calls_price import CallsPrice
@@ -380,8 +369,6 @@ from infobip_api_client.models.calls_public_sip_trunk_service_address import (
 from infobip_api_client.models.calls_public_sip_trunk_service_address_request import (
     CallsPublicSipTrunkServiceAddressRequest,
 )
-from infobip_api_client.models.calls_record import CallsRecord
-from infobip_api_client.models.calls_record_options import CallsRecordOptions
 from infobip_api_client.models.calls_recorded_audio_files_response import (
     CallsRecordedAudioFilesResponse,
 )
@@ -411,26 +398,23 @@ from infobip_api_client.models.calls_registered_sip_trunk_response import (
 from infobip_api_client.models.calls_registered_sip_trunk_update_request import (
     CallsRegisteredSipTrunkUpdateRequest,
 )
-from infobip_api_client.models.calls_repeat_until import CallsRepeatUntil
-from infobip_api_client.models.calls_repeat_while import CallsRepeatWhile
 from infobip_api_client.models.calls_report import CallsReport
 from infobip_api_client.models.calls_report_response import CallsReportResponse
+from infobip_api_client.models.calls_request_media_stream_config_type import (
+    CallsRequestMediaStreamConfigType,
+)
 from infobip_api_client.models.calls_reschedule_request import CallsRescheduleRequest
+from infobip_api_client.models.calls_response_media_stream_config_type import (
+    CallsResponseMediaStreamConfigType,
+)
 from infobip_api_client.models.calls_retry import CallsRetry
 from infobip_api_client.models.calls_retry_options import CallsRetryOptions
-from infobip_api_client.models.calls_say import CallsSay
-from infobip_api_client.models.calls_say_options import CallsSayOptions
 from infobip_api_client.models.calls_say_request import CallsSayRequest
 from infobip_api_client.models.calls_sbc_hosts import CallsSbcHosts
 from infobip_api_client.models.calls_scheduling_options import CallsSchedulingOptions
-from infobip_api_client.models.calls_script_inner import CallsScriptInner
 from infobip_api_client.models.calls_search_response import CallsSearchResponse
 from infobip_api_client.models.calls_selection_strategy import CallsSelectionStrategy
-from infobip_api_client.models.calls_send_sms import CallsSendSms
-from infobip_api_client.models.calls_send_sms_data import CallsSendSmsData
-from infobip_api_client.models.calls_send_to_reports import CallsSendToReports
 from infobip_api_client.models.calls_sending_speed import CallsSendingSpeed
-from infobip_api_client.models.calls_set_variable import CallsSetVariable
 from infobip_api_client.models.calls_sftp_upload_status import CallsSftpUploadStatus
 from infobip_api_client.models.calls_single_body import CallsSingleBody
 from infobip_api_client.models.calls_single_message_status import (
@@ -447,7 +431,6 @@ from infobip_api_client.models.calls_sip_trunk_action_status_response import (
 from infobip_api_client.models.calls_sip_trunk_admin_status import (
     CallsSipTrunkAdminStatus,
 )
-from infobip_api_client.models.calls_sip_trunk_location import CallsSipTrunkLocation
 from infobip_api_client.models.calls_sip_trunk_page import CallsSipTrunkPage
 from infobip_api_client.models.calls_sip_trunk_registration_credentials import (
     CallsSipTrunkRegistrationCredentials,
@@ -473,7 +456,6 @@ from infobip_api_client.models.calls_sip_trunk_update_request import (
 from infobip_api_client.models.calls_speech_capture_request import (
     CallsSpeechCaptureRequest,
 )
-from infobip_api_client.models.calls_speech_options import CallsSpeechOptions
 from infobip_api_client.models.calls_start_media_stream_request import (
     CallsStartMediaStreamRequest,
 )
@@ -491,8 +473,7 @@ from infobip_api_client.models.calls_static_sip_trunk_update_request import (
 )
 from infobip_api_client.models.calls_status import CallsStatus
 from infobip_api_client.models.calls_stop_play_request import CallsStopPlayRequest
-from infobip_api_client.models.calls_switch_case import CallsSwitchCase
-from infobip_api_client.models.calls_tag_identifier_type import CallsTagIdentifierType
+from infobip_api_client.models.calls_synthesis_voice import CallsSynthesisVoice
 from infobip_api_client.models.calls_termination import CallsTermination
 from infobip_api_client.models.calls_termination_type import CallsTerminationType
 from infobip_api_client.models.calls_text_play_content import CallsTextPlayContent
@@ -516,25 +497,28 @@ from infobip_api_client.models.calls_video_media_properties import (
 from infobip_api_client.models.calls_voice import CallsVoice
 from infobip_api_client.models.calls_voice_data import CallsVoiceData
 from infobip_api_client.models.calls_voice_error import CallsVoiceError
-from infobip_api_client.models.calls_voice_options import CallsVoiceOptions
 from infobip_api_client.models.calls_voice_preferences import CallsVoicePreferences
 from infobip_api_client.models.calls_voice_response import CallsVoiceResponse
 from infobip_api_client.models.calls_voice_response_details import (
     CallsVoiceResponseDetails,
 )
 from infobip_api_client.models.calls_web_rtc_endpoint import CallsWebRtcEndpoint
-from infobip_api_client.models.calls_while_do import CallsWhileDo
+from infobip_api_client.models.calls_websocket_endpoint import CallsWebsocketEndpoint
+from infobip_api_client.models.calls_websocket_endpoint_config_request import (
+    CallsWebsocketEndpointConfigRequest,
+)
+from infobip_api_client.models.calls_websocket_endpoint_config_response import (
+    CallsWebsocketEndpointConfigResponse,
+)
 from infobip_api_client.models.delivery_day import DeliveryDay
 from infobip_api_client.models.delivery_time import DeliveryTime
 from infobip_api_client.models.delivery_time_window import DeliveryTimeWindow
-from infobip_api_client.models.email_add_delete_suppression_type import (
-    EmailAddDeleteSuppressionType,
-)
 from infobip_api_client.models.email_add_domain_request import EmailAddDomainRequest
 from infobip_api_client.models.email_add_suppression import EmailAddSuppression
 from infobip_api_client.models.email_add_suppression_request import (
     EmailAddSuppressionRequest,
 )
+from infobip_api_client.models.email_add_suppression_type import EmailAddSuppressionType
 from infobip_api_client.models.email_all_domains_response import EmailAllDomainsResponse
 from infobip_api_client.models.email_bulk_info import EmailBulkInfo
 from infobip_api_client.models.email_bulk_reschedule_request import (
@@ -565,25 +549,21 @@ from infobip_api_client.models.email_domain_info import EmailDomainInfo
 from infobip_api_client.models.email_domain_info_page_response import (
     EmailDomainInfoPageResponse,
 )
-from infobip_api_client.models.email_domain_ip import EmailDomainIp
-from infobip_api_client.models.email_domain_ip_pool import EmailDomainIpPool
-from infobip_api_client.models.email_domain_ip_pool_assign_request import (
-    EmailDomainIpPoolAssignRequest,
+from infobip_api_client.models.email_domain_ip_api_pool import EmailDomainIpApiPool
+from infobip_api_client.models.email_domain_ip_pool_assign_api_request import (
+    EmailDomainIpPoolAssignApiRequest,
 )
-from infobip_api_client.models.email_domain_ip_pool_update_request import (
-    EmailDomainIpPoolUpdateRequest,
+from infobip_api_client.models.email_domain_ip_pool_update_api_request import (
+    EmailDomainIpPoolUpdateApiRequest,
 )
-from infobip_api_client.models.email_domain_ip_request import EmailDomainIpRequest
-from infobip_api_client.models.email_domain_ip_response import EmailDomainIpResponse
 from infobip_api_client.models.email_domain_response import EmailDomainResponse
-from infobip_api_client.models.email_get_suppression_type import EmailGetSuppressionType
 from infobip_api_client.models.email_ip_detail_response import EmailIpDetailResponse
 from infobip_api_client.models.email_ip_domain_response import EmailIpDomainResponse
-from infobip_api_client.models.email_ip_pool_assign_ip_request import (
-    EmailIpPoolAssignIpRequest,
+from infobip_api_client.models.email_ip_pool_assign_ip_api_request import (
+    EmailIpPoolAssignIpApiRequest,
 )
-from infobip_api_client.models.email_ip_pool_create_request import (
-    EmailIpPoolCreateRequest,
+from infobip_api_client.models.email_ip_pool_create_api_request import (
+    EmailIpPoolCreateApiRequest,
 )
 from infobip_api_client.models.email_ip_pool_detail_response import (
     EmailIpPoolDetailResponse,
@@ -601,11 +581,11 @@ from infobip_api_client.models.email_return_path_address_request import (
     EmailReturnPathAddressRequest,
 )
 from infobip_api_client.models.email_send_response import EmailSendResponse
-from infobip_api_client.models.email_simple_api_response import EmailSimpleApiResponse
 from infobip_api_client.models.email_suppression_info import EmailSuppressionInfo
 from infobip_api_client.models.email_suppression_info_page_response import (
     EmailSuppressionInfoPageResponse,
 )
+from infobip_api_client.models.email_suppression_type import EmailSuppressionType
 from infobip_api_client.models.email_tracking_event_request import (
     EmailTrackingEventRequest,
 )
@@ -638,11 +618,6 @@ from infobip_api_client.models.flow_add_flow_participants_request import (
 from infobip_api_client.models.flow_add_flow_participants_response import (
     FlowAddFlowParticipantsResponse,
 )
-from infobip_api_client.models.flow_api_exception import FlowApiException
-from infobip_api_client.models.flow_api_request_error import FlowApiRequestError
-from infobip_api_client.models.flow_api_request_error_details import (
-    FlowApiRequestErrorDetails,
-)
 from infobip_api_client.models.flow_common_ott_contact import FlowCommonOttContact
 from infobip_api_client.models.flow_common_push_contact import FlowCommonPushContact
 from infobip_api_client.models.flow_email_contact import FlowEmailContact
@@ -674,11 +649,6 @@ from infobip_api_client.models.forms_action_after_submission_type import (
 from infobip_api_client.models.forms_component_type import FormsComponentType
 from infobip_api_client.models.forms_element import FormsElement
 from infobip_api_client.models.forms_element_option import FormsElementOption
-from infobip_api_client.models.forms_exception import FormsException
-from infobip_api_client.models.forms_request_error import FormsRequestError
-from infobip_api_client.models.forms_request_error_details import (
-    FormsRequestErrorDetails,
-)
 from infobip_api_client.models.forms_response import FormsResponse
 from infobip_api_client.models.forms_response_content import FormsResponseContent
 from infobip_api_client.models.forms_status import FormsStatus
@@ -689,6 +659,7 @@ from infobip_api_client.models.hmac_algorithm import HmacAlgorithm
 from infobip_api_client.models.hmac_security_config import HmacSecurityConfig
 from infobip_api_client.models.iys_recipient_type import IysRecipientType
 from infobip_api_client.models.message_error import MessageError
+from infobip_api_client.models.message_error_group import MessageErrorGroup
 from infobip_api_client.models.message_general_status import MessageGeneralStatus
 from infobip_api_client.models.message_price import MessagePrice
 from infobip_api_client.models.message_status import MessageStatus
@@ -719,6 +690,8 @@ from infobip_api_client.models.page_info import PageInfo
 from infobip_api_client.models.platform import Platform
 from infobip_api_client.models.ringback_generation import RingbackGeneration
 from infobip_api_client.models.security_config import SecurityConfig
+from infobip_api_client.models.security_config_type import SecurityConfigType
+from infobip_api_client.models.sending_speed_limit import SendingSpeedLimit
 from infobip_api_client.models.sms_binary_content import SmsBinaryContent
 from infobip_api_client.models.sms_bulk_request import SmsBulkRequest
 from infobip_api_client.models.sms_bulk_response import SmsBulkResponse
@@ -736,14 +709,13 @@ from infobip_api_client.models.sms_language_configuration import (
     SmsLanguageConfiguration,
 )
 from infobip_api_client.models.sms_log import SmsLog
-from infobip_api_client.models.sms_message_content import SmsMessageContent
 from infobip_api_client.models.sms_logs_response import SmsLogsResponse
 from infobip_api_client.models.sms_message import SmsMessage
+from infobip_api_client.models.sms_message_content import SmsMessageContent
 from infobip_api_client.models.sms_message_delivery_reporting import (
     SmsMessageDeliveryReporting,
 )
 from infobip_api_client.models.sms_message_error import SmsMessageError
-from infobip_api_client.models.sms_message_error_group import SmsMessageErrorGroup
 from infobip_api_client.models.sms_message_options import SmsMessageOptions
 from infobip_api_client.models.sms_message_request_options import (
     SmsMessageRequestOptions,
@@ -763,7 +735,6 @@ from infobip_api_client.models.sms_request_scheduling_settings import (
 )
 from infobip_api_client.models.sms_response import SmsResponse
 from infobip_api_client.models.sms_response_details import SmsResponseDetails
-from infobip_api_client.models.sms_sending_speed_limit import SmsSendingSpeedLimit
 from infobip_api_client.models.sms_south_korea_options import SmsSouthKoreaOptions
 from infobip_api_client.models.sms_text_content import SmsTextContent
 from infobip_api_client.models.sms_tracking import SmsTracking
@@ -814,7 +785,6 @@ from infobip_api_client.models.tfa_verify_pin_request import TfaVerifyPinRequest
 from infobip_api_client.models.tfa_verify_pin_response import TfaVerifyPinResponse
 from infobip_api_client.models.turkey_iys_options import TurkeyIysOptions
 from infobip_api_client.models.url_options import UrlOptions
-from infobip_api_client.models.url_security_config_type import UrlSecurityConfigType
 from infobip_api_client.models.validity_period import ValidityPeriod
 from infobip_api_client.models.validity_period_time_unit import ValidityPeriodTimeUnit
 from infobip_api_client.models.webhook_message_count import WebhookMessageCount

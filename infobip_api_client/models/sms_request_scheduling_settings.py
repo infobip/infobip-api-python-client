@@ -20,7 +20,7 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from infobip_api_client.models.sms_sending_speed_limit import SmsSendingSpeedLimit
+from infobip_api_client.models.sending_speed_limit import SendingSpeedLimit
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -40,7 +40,7 @@ class SmsRequestSchedulingSettings(BaseModel):
         description="Date and time when the message is to be sent. Used for scheduled messages. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`, and can only be scheduled for no later than 180 days in advance.",
         alias="sendAt",
     )
-    sending_speed_limit: Optional[SmsSendingSpeedLimit] = Field(
+    sending_speed_limit: Optional[SendingSpeedLimit] = Field(
         default=None, alias="sendingSpeedLimit"
     )
     __properties: ClassVar[List[str]] = ["bulkId", "sendAt", "sendingSpeedLimit"]
@@ -100,7 +100,7 @@ class SmsRequestSchedulingSettings(BaseModel):
             {
                 "bulkId": obj.get("bulkId"),
                 "sendAt": obj.get("sendAt"),
-                "sendingSpeedLimit": SmsSendingSpeedLimit.from_dict(
+                "sendingSpeedLimit": SendingSpeedLimit.from_dict(
                     obj["sendingSpeedLimit"]
                 )
                 if obj.get("sendingSpeedLimit") is not None

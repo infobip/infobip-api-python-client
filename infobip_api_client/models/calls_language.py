@@ -86,6 +86,7 @@ class CallsLanguage(str, Enum):
     WLS = "wls"
     AR_MINUS_MA = "ar-ma"
     UR_MINUS_PK = "ur-pk"
+    MR_MINUS_IN = "mr-in"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

@@ -19,11 +19,7 @@ import json
 
 from pydantic import ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
 from infobip_api_client.models.call_routing_destination import CallRoutingDestination
-from infobip_api_client.models.call_routing_destination_type import (
-    CallRoutingDestinationType,
-)
 from infobip_api_client.models.call_routing_endpoint import CallRoutingEndpoint
 from infobip_api_client.models.call_routing_recording import CallRoutingRecording
 from infobip_api_client.models.delivery_time_window import DeliveryTimeWindow
@@ -37,14 +33,6 @@ class CallRoutingEndpointDestination(CallRoutingDestination):
     """  # noqa: E501
 
     value: CallRoutingEndpoint
-    priority: Optional[Annotated[int, Field(le=100, strict=True, ge=1)]] = Field(
-        default=None,
-        description="Priority of the destination within a route. Destinations with lower value have higher priority. Either all or no destination need to have this value defined.",
-    )
-    weight: Optional[Annotated[int, Field(le=100, strict=True, ge=1)]] = Field(
-        default=None,
-        description="Weight of the destination within a route. It specifies how much traffic is handled by destination relative to other destinations within the same priority level. Values are evaluated relative to each other and they don't need to add up to 100. Either all or no destination need to have this value defined.",
-    )
     connect_timeout: Optional[StrictInt] = Field(
         default=None,
         description="Time to wait, in seconds, to establish a call toward the destination endpoint. The call will be terminated if it is not answered within the specified time.",

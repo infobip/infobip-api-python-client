@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
+from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
@@ -39,13 +39,11 @@ class CallsSearchResponse(BaseModel):
         default=None, description="Scenario key. It is used for launching IVR scenario."
     )
     name: Optional[StrictStr] = Field(default=None, description="Scenario name.")
-    script: Optional[Dict[str, Any]] = Field(
-        default=None, description="The list of scenario actions."
-    )
+    script: Optional[StrictStr] = None
     update_time: Optional[datetime] = Field(
         default=None, description="Update timestamp", alias="updateTime"
     )
-    last_usage_date: Optional[datetime] = Field(
+    last_usage_date: Optional[date] = Field(
         default=None,
         description="Last usage date. `null` for scenarios that are used last time before `2024-01-01`.",
         alias="lastUsageDate",
@@ -97,6 +95,12 @@ class CallsSearchResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        if "script" in _dict:
+            try:
+                _dict["script"] = json.loads(self.script)
+            except json.JSONDecodeError:
+                pass
+
         return _dict
 
     @classmethod
@@ -108,13 +112,17 @@ class CallsSearchResponse(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
+        script_value = obj.get("script")
+        if isinstance(script_value, (list, dict)):
+            script_value = json.dumps(script_value)
+
         _obj = cls.model_validate(
             {
                 "createTime": obj.get("createTime"),
                 "description": obj.get("description"),
                 "id": obj.get("id"),
                 "name": obj.get("name"),
-                "script": obj.get("script"),
+                "script": script_value,
                 "updateTime": obj.get("updateTime"),
                 "lastUsageDate": obj.get("lastUsageDate"),
             }

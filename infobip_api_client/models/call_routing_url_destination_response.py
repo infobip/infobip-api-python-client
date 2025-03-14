@@ -24,7 +24,6 @@ from infobip_api_client.models.call_routing_destination_type import (
     CallRoutingDestinationType,
 )
 from typing import Optional, Set
-from typing_extensions import Self
 
 from typing import TYPE_CHECKING
 

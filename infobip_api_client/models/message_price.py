@@ -25,11 +25,13 @@ from typing_extensions import Self
 
 class MessagePrice(BaseModel):
     """
-    Sent message price.
+    Sent email price.
     """  # noqa: E501
 
     price_per_message: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, description="Price per one message.", alias="pricePerMessage"
+        default=None,
+        description="Price per one email request.",
+        alias="pricePerMessage",
     )
     currency: Optional[StrictStr] = Field(
         default=None, description="The currency in which the price is expressed."

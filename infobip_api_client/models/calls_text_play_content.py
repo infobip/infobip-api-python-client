@@ -22,7 +22,6 @@ from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from infobip_api_client.models.calls_language import CallsLanguage
 from infobip_api_client.models.calls_play_content import CallsPlayContent
-from infobip_api_client.models.calls_play_content_type import CallsPlayContentType
 from infobip_api_client.models.calls_voice_preferences import CallsVoicePreferences
 from typing import Optional, Set
 from typing_extensions import Self

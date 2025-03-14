@@ -30,10 +30,8 @@ from infobip_api_client.models.calls_number_presentation_format import (
 )
 from infobip_api_client.models.calls_sbc_hosts import CallsSbcHosts
 from infobip_api_client.models.calls_sip_options import CallsSipOptions
-from infobip_api_client.models.calls_sip_trunk_location import CallsSipTrunkLocation
 from infobip_api_client.models.calls_sip_trunk_type import CallsSipTrunkType
 from typing import Optional, Set
-from typing_extensions import Self
 
 from typing import TYPE_CHECKING
 
@@ -57,7 +55,9 @@ class CallsSipTrunkResponse(BaseModel):
     id: Optional[StrictStr] = Field(default=None, description="SIP trunk ID.")
     type: Optional[CallsSipTrunkType] = None
     name: Optional[StrictStr] = Field(default=None, description="SIP trunk name.")
-    location: Optional[CallsSipTrunkLocation] = None
+    location: Optional[StrictStr] = Field(
+        default=None, description="SIP trunk location."
+    )
     tls: Optional[StrictBool] = Field(
         default=None,
         description="Indicates whether communication is secured by the TLS protocol.",

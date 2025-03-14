@@ -22,7 +22,6 @@ from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from infobip_api_client.models.calls_bulk_endpoint_type import CallsBulkEndpointType
 from typing import Optional, Set
-from typing_extensions import Self
 
 from typing import TYPE_CHECKING
 

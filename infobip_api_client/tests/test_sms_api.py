@@ -22,11 +22,7 @@ from infobip_api_client import (
     SmsLog,
     SmsInboundMessageResult,
     SmsInboundMessage,
-    SmsLanguage,
-    SmsSendingSpeedLimit,
     SmsTracking,
-    SmsRegionalOptions,
-    SmsIndiaDltOptions,
     SmsBinaryContent,
     SmsPreviewRequest,
     SmsPreviewResponse,
@@ -42,7 +38,6 @@ from infobip_api_client import (
     MessageGeneralStatus,
     SmsMessageResponseDetails,
     SmsTransliterationCode,
-    SmsLanguageCode,
     ValidityPeriod,
     ValidityPeriodTimeUnit,
     SmsWebhooks,
@@ -56,7 +51,7 @@ from infobip_api_client import (
     SmsPreviewLanguage,
     SmsDeliveryReport,
     SmsMessageError,
-    SmsMessageErrorGroup,
+    MessageErrorGroup,
 )
 
 sms_messages = "/sms/3/messages"
@@ -203,7 +198,7 @@ def test_send_fully_featured_sms(httpserver: HTTPServer, sms_api_client):
     delivery_to_hour = 15
     delivery_to_minute = 30
     bulk_id = "BULK-ID-123-xyz"
-    send_at = "2023-08-01T16:10:00+05:30"
+    send_at = "2023-08-01T16:10:00.000+05:30"
 
     send_at_offset = datetime.datetime(
         2023,
@@ -450,7 +445,7 @@ def test_send_fully_featured_binary_sms(httpserver: HTTPServer, sms_api_client):
     delivery_to_hour = 15
     delivery_to_minute = 30
     bulk_id = "BULK-ID-123-xyz"
-    send_at = "2023-08-01T16:10:00+05:30"
+    send_at = "2023-08-01T16:10:00.000+05:30"
     data_coding = 0
     esm_class = 0
     given_hex = "41 20 6C 6F 6E 67 20 74 …20 45 6D 70 69 72 65 2E"
@@ -774,7 +769,7 @@ def test_get_scheduled_sms_messages(httpserver: HTTPServer, sms_api_client):
 
 def test_reschedule_sms_messages(httpserver: HTTPServer, sms_api_client):
     given_bulk_id = "BULK-ID-123-xyz"
-    given_send_at_message_request = "2023-03-08T17:42:05.390000+01:00"
+    given_send_at_message_request = "2023-03-08T17:42:05.390+01:00"
     given_send_at_message_response = "2023-03-08T17:42:05.390+0100"
     given_send_at_message_datetime = datetime.datetime(
         2023, 3, 8, 17, 42, 5, 390000, tzinfo=tzoffset(None, 3600)
@@ -894,7 +889,7 @@ def test_outbound_delivery_reports_webhook_model():
                 ),
                 error=SmsMessageError(
                     group_id=0,
-                    group_name=SmsMessageErrorGroup.OK,
+                    group_name=MessageErrorGroup.OK,
                     id=0,
                     name="NO_ERROR",
                     description="No Error",
@@ -1058,7 +1053,7 @@ def test_outbound_delivery_reports(httpserver: HTTPServer, sms_api_client):
     status_description = "Message delivered to handset"
 
     error_group_id = 0
-    error_group_name = SmsMessageErrorGroup.OK
+    error_group_name = MessageErrorGroup.OK
     error_id = 0
     error_name = "NO_ERROR"
     error_description = "No Error"
@@ -1294,7 +1289,7 @@ def test_outbound_logs(httpserver: HTTPServer, sms_api_client):
     status_description = "Message delivered to handset"
 
     error_group_id = 0
-    error_group_name = SmsMessageErrorGroup.OK
+    error_group_name = MessageErrorGroup.OK
     error_id = 0
     error_name = "NO_ERROR"
     error_description = "No Error"

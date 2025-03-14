@@ -20,7 +20,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
 from typing_extensions import Annotated
-from infobip_api_client.models.email_domain_ip_pool import EmailDomainIpPool
+from infobip_api_client.models.email_domain_ip_api_pool import EmailDomainIpApiPool
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -34,7 +34,7 @@ class EmailIpDomainResponse(BaseModel):
         description="Domain identifier."
     )
     name: StrictStr = Field(description="Domain name.")
-    pools: Annotated[List[EmailDomainIpPool], Field(min_length=0)]
+    pools: Annotated[List[EmailDomainIpApiPool], Field(min_length=0)]
     __properties: ClassVar[List[str]] = ["id", "name", "pools"]
 
     model_config = ConfigDict(
@@ -96,7 +96,9 @@ class EmailIpDomainResponse(BaseModel):
             {
                 "id": obj.get("id"),
                 "name": obj.get("name"),
-                "pools": [EmailDomainIpPool.from_dict(_item) for _item in obj["pools"]]
+                "pools": [
+                    EmailDomainIpApiPool.from_dict(_item) for _item in obj["pools"]
+                ]
                 if obj.get("pools") is not None
                 else None,
             }

@@ -54,6 +54,9 @@ class EmailDomainInfo(BaseModel):
     read_overquotas: StrictBool = Field(
         description="Read overquotas permission.", alias="readOverquotas"
     )
+    delete_overquotas: StrictBool = Field(
+        description="Delete overquotas permission.", alias="deleteOverquotas"
+    )
     __properties: ClassVar[List[str]] = [
         "domainName",
         "dataAccess",
@@ -64,6 +67,7 @@ class EmailDomainInfo(BaseModel):
         "createComplaints",
         "deleteComplaints",
         "readOverquotas",
+        "deleteOverquotas",
     ]
 
     model_config = ConfigDict(
@@ -125,6 +129,7 @@ class EmailDomainInfo(BaseModel):
                 "createComplaints": obj.get("createComplaints"),
                 "deleteComplaints": obj.get("deleteComplaints"),
                 "readOverquotas": obj.get("readOverquotas"),
+                "deleteOverquotas": obj.get("deleteOverquotas"),
             }
         )
         return _obj

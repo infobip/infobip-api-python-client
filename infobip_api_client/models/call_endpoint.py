@@ -22,7 +22,6 @@ from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from infobip_api_client.models.call_endpoint_type import CallEndpointType
 from typing import Optional, Set
-from typing_extensions import Self
 
 from typing import TYPE_CHECKING
 
@@ -31,6 +30,9 @@ if TYPE_CHECKING:
     from infobip_api_client.models.calls_sip_endpoint import CallsSipEndpoint
     from infobip_api_client.models.calls_viber_endpoint import CallsViberEndpoint
     from infobip_api_client.models.calls_web_rtc_endpoint import CallsWebRtcEndpoint
+    from infobip_api_client.models.calls_websocket_endpoint import (
+        CallsWebsocketEndpoint,
+    )
 
 
 class CallEndpoint(BaseModel):
@@ -56,6 +58,7 @@ class CallEndpoint(BaseModel):
         "SIP": "CallsSipEndpoint",
         "VIBER": "CallsViberEndpoint",
         "WEBRTC": "CallsWebRtcEndpoint",
+        "WEBSOCKET": "CallsWebsocketEndpoint",
     }
 
     @classmethod
@@ -85,6 +88,7 @@ class CallEndpoint(BaseModel):
             CallsSipEndpoint,
             CallsViberEndpoint,
             CallsWebRtcEndpoint,
+            CallsWebsocketEndpoint,
         ]
     ]:
         """Create an instance of CallEndpoint from a JSON string"""
@@ -118,6 +122,7 @@ class CallEndpoint(BaseModel):
             CallsSipEndpoint,
             CallsViberEndpoint,
             CallsWebRtcEndpoint,
+            CallsWebsocketEndpoint,
         ]
     ]:
         """Create an instance of CallEndpoint from a dict"""
@@ -139,6 +144,10 @@ class CallEndpoint(BaseModel):
             return import_module(
                 "infobip_api_client.models.calls_web_rtc_endpoint"
             ).CallsWebRtcEndpoint.from_dict(obj)
+        if object_type == "CallsWebsocketEndpoint":
+            return import_module(
+                "infobip_api_client.models.calls_websocket_endpoint"
+            ).CallsWebsocketEndpoint.from_dict(obj)
 
         raise ValueError(
             "CallEndpoint failed to lookup discriminator value from "
