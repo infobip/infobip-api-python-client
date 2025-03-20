@@ -79,6 +79,7 @@ If you find out that something was not addressed properly, please submit an issu
   - `calls_set_variable`
   - `calls_switch_case`
   - `calls_while_do`
+
 - **Removed** `DISCONNECTED` option from `call_state`.
 
 These changes align the SDK with the current API specification, ensuring consistency and reliability in future updates.
