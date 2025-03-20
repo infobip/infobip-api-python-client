@@ -11,13 +11,11 @@
 
     Do not edit the class manually.
 """  # noqa: E501
-import warnings
-from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
-from typing import Any, Dict, List, Optional, Tuple, Union
-from typing_extensions import Annotated
+from pydantic import validate_call, StrictFloat, StrictInt
+from typing import Any, Dict, Optional, Tuple, Union
 
 from pydantic import Field, StrictStr
-from typing import Any, Dict, List
+from typing import List
 from typing_extensions import Annotated
 from infobip_api_client.models.number_masking_credentials_body import (
     NumberMaskingCredentialsBody,
@@ -372,7 +370,7 @@ class NumberMaskingApi:
             "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
-            "409": None,
+            "409": "ApiException",
             "500": "ApiException",
         }
 
@@ -442,7 +440,7 @@ class NumberMaskingApi:
             "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
-            "409": None,
+            "409": "ApiException",
             "500": "ApiException",
         }
 
@@ -512,7 +510,7 @@ class NumberMaskingApi:
             "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
-            "409": None,
+            "409": "ApiException",
             "500": "ApiException",
         }
 
@@ -638,10 +636,10 @@ class NumberMaskingApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": None,
-            "400": None,
+            "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
-            "404": None,
+            "404": "ApiException",
             "500": "ApiException",
         }
 
@@ -710,10 +708,10 @@ class NumberMaskingApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": None,
-            "400": None,
+            "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
-            "404": None,
+            "404": "ApiException",
             "500": "ApiException",
         }
 
@@ -782,10 +780,10 @@ class NumberMaskingApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": None,
-            "400": None,
+            "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
-            "404": None,
+            "404": "ApiException",
             "500": "ApiException",
         }
 
@@ -859,7 +857,7 @@ class NumberMaskingApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> object:
+    ) -> None:
         """Delete number masking credentials
 
         This method allows you to delete Voice number masking credentials.
@@ -894,10 +892,10 @@ class NumberMaskingApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "204": "object",
+            "204": None,
             "401": "ApiException",
             "403": "ApiException",
-            "404": None,
+            "404": "ApiException",
             "500": "ApiException",
         }
 
@@ -924,7 +922,7 @@ class NumberMaskingApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
+    ) -> ApiResponse[None]:
         """Delete number masking credentials
 
         This method allows you to delete Voice number masking credentials.
@@ -959,10 +957,10 @@ class NumberMaskingApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "204": "object",
+            "204": None,
             "401": "ApiException",
             "403": "ApiException",
-            "404": None,
+            "404": "ApiException",
             "500": "ApiException",
         }
 
@@ -1024,10 +1022,10 @@ class NumberMaskingApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "204": "object",
+            "204": None,
             "401": "ApiException",
             "403": "ApiException",
-            "404": None,
+            "404": "ApiException",
             "500": "ApiException",
         }
 
@@ -1140,9 +1138,10 @@ class NumberMaskingApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "NumberMaskingSetupResponse",
+            "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
-            "404": None,
+            "404": "ApiException",
             "500": "ApiException",
         }
 
@@ -1211,9 +1210,10 @@ class NumberMaskingApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "NumberMaskingSetupResponse",
+            "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
-            "404": None,
+            "404": "ApiException",
             "500": "ApiException",
         }
 
@@ -1282,9 +1282,10 @@ class NumberMaskingApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "NumberMaskingSetupResponse",
+            "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
-            "404": None,
+            "404": "ApiException",
             "500": "ApiException",
         }
 
@@ -1396,7 +1397,7 @@ class NumberMaskingApi:
             "200": "List[NumberMaskingSetupResponse]",
             "401": "ApiException",
             "403": "ApiException",
-            "404": None,
+            "404": "ApiException",
             "500": "ApiException",
         }
 
@@ -1461,7 +1462,7 @@ class NumberMaskingApi:
             "200": "List[NumberMaskingSetupResponse]",
             "401": "ApiException",
             "403": "ApiException",
-            "404": None,
+            "404": "ApiException",
             "500": "ApiException",
         }
 
@@ -1526,7 +1527,7 @@ class NumberMaskingApi:
             "200": "List[NumberMaskingSetupResponse]",
             "401": "ApiException",
             "403": "ApiException",
-            "404": None,
+            "404": "ApiException",
             "500": "ApiException",
         }
 
@@ -1635,7 +1636,7 @@ class NumberMaskingApi:
             "200": "NumberMaskingCredentialsResponse",
             "401": "ApiException",
             "403": "ApiException",
-            "404": None,
+            "404": "ApiException",
             "500": "ApiException",
         }
 
@@ -1700,7 +1701,7 @@ class NumberMaskingApi:
             "200": "NumberMaskingCredentialsResponse",
             "401": "ApiException",
             "403": "ApiException",
-            "404": None,
+            "404": "ApiException",
             "500": "ApiException",
         }
 
@@ -1765,7 +1766,7 @@ class NumberMaskingApi:
             "200": "NumberMaskingCredentialsResponse",
             "401": "ApiException",
             "403": "ApiException",
-            "404": None,
+            "404": "ApiException",
             "500": "ApiException",
         }
 
@@ -1885,7 +1886,7 @@ class NumberMaskingApi:
             "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
-            "404": None,
+            "404": "ApiException",
             "500": "ApiException",
         }
 
@@ -1961,7 +1962,7 @@ class NumberMaskingApi:
             "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
-            "404": None,
+            "404": "ApiException",
             "500": "ApiException",
         }
 
@@ -2037,7 +2038,7 @@ class NumberMaskingApi:
             "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
-            "404": None,
+            "404": "ApiException",
             "500": "ApiException",
         }
 
@@ -2164,7 +2165,7 @@ class NumberMaskingApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "NumberMaskingCredentialsResponse",
-            "400": None,
+            "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
             "500": "ApiException",
@@ -2233,7 +2234,7 @@ class NumberMaskingApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "NumberMaskingCredentialsResponse",
-            "400": None,
+            "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
             "500": "ApiException",
@@ -2302,7 +2303,7 @@ class NumberMaskingApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "NumberMaskingCredentialsResponse",
-            "400": None,
+            "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
             "500": "ApiException",
@@ -2428,7 +2429,7 @@ class NumberMaskingApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "NumberMaskingUploadResponse",
-            "400": None,
+            "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
             "500": "ApiException",
@@ -2497,7 +2498,7 @@ class NumberMaskingApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "NumberMaskingUploadResponse",
-            "400": None,
+            "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
             "500": "ApiException",
@@ -2566,7 +2567,7 @@ class NumberMaskingApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "NumberMaskingUploadResponse",
-            "400": None,
+            "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
             "500": "ApiException",

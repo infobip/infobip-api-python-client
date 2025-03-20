@@ -19,7 +19,6 @@ import json
 
 from pydantic import ConfigDict
 from typing import Any, ClassVar, Dict, List
-from infobip_api_client.models.calls_sip_trunk_type import CallsSipTrunkType
 from infobip_api_client.models.calls_sip_trunk_update_request import (
     CallsSipTrunkUpdateRequest,
 )

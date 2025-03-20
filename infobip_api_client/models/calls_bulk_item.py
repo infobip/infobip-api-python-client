@@ -19,6 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from infobip_api_client.models.call_rate import CallRate
 from infobip_api_client.models.call_recording_request import CallRecordingRequest
 from infobip_api_client.models.calls_bulk_call_request import CallsBulkCallRequest
@@ -36,7 +37,8 @@ class CallsBulkItem(BaseModel):
     Bulk item list.
     """  # noqa: E501
 
-    var_from: StrictStr = Field(
+    var_from: Optional[StrictStr] = Field(
+        default=None,
         description="Caller identifier. Must be a number in the [E.164](https://en.wikipedia.org/wiki/E.164) format.",
         alias="from",
     )
@@ -52,7 +54,7 @@ class CallsBulkItem(BaseModel):
         description="Maximum call duration in seconds. Once exceeded, the call terminates automatically.",
         alias="maxDuration",
     )
-    connect_timeout: Optional[StrictInt] = Field(
+    connect_timeout: Optional[Annotated[int, Field(le=60, strict=True)]] = Field(
         default=None,
         description="Time to wait, in seconds, before the called party answers the call. Once exceeded, the call terminates automatically.",
         alias="connectTimeout",

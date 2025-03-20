@@ -22,10 +22,8 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, Strict
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from infobip_api_client.models.calls_billing_package import CallsBillingPackage
 from infobip_api_client.models.calls_sbc_hosts import CallsSbcHosts
-from infobip_api_client.models.calls_sip_trunk_location import CallsSipTrunkLocation
 from infobip_api_client.models.calls_sip_trunk_type import CallsSipTrunkType
 from typing import Optional, Set
-from typing_extensions import Self
 
 from typing import TYPE_CHECKING
 
@@ -49,7 +47,9 @@ class CallsCreateSipTrunkResponse(BaseModel):
     id: Optional[StrictStr] = Field(default=None, description="SIP trunk ID.")
     type: Optional[CallsSipTrunkType] = None
     name: Optional[StrictStr] = Field(default=None, description="SIP trunk name.")
-    location: Optional[CallsSipTrunkLocation] = None
+    location: Optional[StrictStr] = Field(
+        default=None, description="SIP trunk location."
+    )
     international_calls_allowed: Optional[StrictBool] = Field(
         default=None,
         description="Indicates whether international calls should be allowed. Calls between different countries are considered international.",

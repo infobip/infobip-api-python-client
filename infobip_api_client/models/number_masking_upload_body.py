@@ -32,7 +32,7 @@ class NumberMaskingUploadBody(BaseModel):
         default=None,
         description="URL of your voice file location. Max size of the file is 4MB. The acceptable file format is mp3.",
     )
-    content: Optional[List[Union[StrictBytes, StrictStr]]] = Field(
+    content: Optional[Union[StrictBytes, StrictStr]] = Field(
         default=None,
         description="Encoded (Base64) value of mp3 file can be included instead of the file location URL.",
     )

@@ -19,6 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from infobip_api_client.models.call_endpoint import CallEndpoint
 from infobip_api_client.models.call_recording_request import CallRecordingRequest
 from infobip_api_client.models.calls_machine_detection_request import (
@@ -34,8 +35,9 @@ class CallsActionCallRequest(BaseModel):
     """  # noqa: E501
 
     endpoint: CallEndpoint
-    var_from: StrictStr = Field(
-        description="Caller identifier. Must be a number in the [E.164](https://en.wikipedia.org/wiki/E.164) format for calls to `PHONE`, a string for calls to `WEBRTC` or `SIP`, and a Viber Voice number for calls to `VIBER`.",
+    var_from: Optional[StrictStr] = Field(
+        default=None,
+        description="Caller identifier. Must be a number in the [E.164](https://en.wikipedia.org/wiki/E.164) format for calls to `PHONE`, a string for calls to `WEBRTC` or `SIP`, and a Viber Voice number for calls to `VIBER`. Field is mandatory for `VIBER` endpoint and calls to emergency numbers.",
         alias="from",
     )
     from_display_name: Optional[StrictStr] = Field(
@@ -43,7 +45,7 @@ class CallsActionCallRequest(BaseModel):
         description="Display name to show when placing calls towards WEBRTC endpoints. Can be any alphanumeric string.",
         alias="fromDisplayName",
     )
-    connect_timeout: Optional[StrictInt] = Field(
+    connect_timeout: Optional[Annotated[int, Field(le=60, strict=True)]] = Field(
         default=None,
         description="Time to wait, in seconds, before the called party answers the call.",
         alias="connectTimeout",

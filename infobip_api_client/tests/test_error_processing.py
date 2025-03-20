@@ -21,7 +21,6 @@ from infobip_api_client.exceptions import (
     ServiceException,
     BadRequestException,
 )
-from infobip_api_client.tests.test_sms_api import sms_messages
 
 sms_messages = "sms/3/messages"
 sms_advanced_textual_endpoint = "/sms/2/text/advanced"

@@ -11,10 +11,8 @@
 
     Do not edit the class manually.
 """  # noqa: E501
-import warnings
-from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
-from typing import Any, Dict, List, Optional, Tuple, Union
-from typing_extensions import Annotated
+from pydantic import validate_call, StrictFloat
+from typing import Any, Dict, Tuple
 
 from datetime import datetime
 from pydantic import Field, StrictBool, StrictBytes, StrictInt, StrictStr
@@ -47,23 +45,20 @@ from infobip_api_client.models.email_delete_suppression_request import (
 from infobip_api_client.models.email_domain_info_page_response import (
     EmailDomainInfoPageResponse,
 )
-from infobip_api_client.models.email_domain_ip_pool_assign_request import (
-    EmailDomainIpPoolAssignRequest,
+from infobip_api_client.models.email_domain_ip_pool_assign_api_request import (
+    EmailDomainIpPoolAssignApiRequest,
 )
-from infobip_api_client.models.email_domain_ip_pool_update_request import (
-    EmailDomainIpPoolUpdateRequest,
+from infobip_api_client.models.email_domain_ip_pool_update_api_request import (
+    EmailDomainIpPoolUpdateApiRequest,
 )
-from infobip_api_client.models.email_domain_ip_request import EmailDomainIpRequest
-from infobip_api_client.models.email_domain_ip_response import EmailDomainIpResponse
 from infobip_api_client.models.email_domain_response import EmailDomainResponse
-from infobip_api_client.models.email_get_suppression_type import EmailGetSuppressionType
 from infobip_api_client.models.email_ip_detail_response import EmailIpDetailResponse
 from infobip_api_client.models.email_ip_domain_response import EmailIpDomainResponse
-from infobip_api_client.models.email_ip_pool_assign_ip_request import (
-    EmailIpPoolAssignIpRequest,
+from infobip_api_client.models.email_ip_pool_assign_ip_api_request import (
+    EmailIpPoolAssignIpApiRequest,
 )
-from infobip_api_client.models.email_ip_pool_create_request import (
-    EmailIpPoolCreateRequest,
+from infobip_api_client.models.email_ip_pool_create_api_request import (
+    EmailIpPoolCreateApiRequest,
 )
 from infobip_api_client.models.email_ip_pool_detail_response import (
     EmailIpPoolDetailResponse,
@@ -76,10 +71,10 @@ from infobip_api_client.models.email_return_path_address_request import (
     EmailReturnPathAddressRequest,
 )
 from infobip_api_client.models.email_send_response import EmailSendResponse
-from infobip_api_client.models.email_simple_api_response import EmailSimpleApiResponse
 from infobip_api_client.models.email_suppression_info_page_response import (
     EmailSuppressionInfoPageResponse,
 )
+from infobip_api_client.models.email_suppression_type import EmailSuppressionType
 from infobip_api_client.models.email_tracking_event_request import (
     EmailTrackingEventRequest,
 )
@@ -641,277 +636,10 @@ class EmailApi:
         )
 
     @validate_call
-    def assign_ip_to_domain(
-        self,
-        email_domain_ip_request: EmailDomainIpRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> EmailSimpleApiResponse:
-        """Assign dedicated ip address to the provided domain for the account id
-
-        Assign dedicated ip address to the provided domain for the account id.
-
-        :param email_domain_ip_request: (required)
-        :type email_domain_ip_request: EmailDomainIpRequest
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._assign_ip_to_domain_serialize(
-            email_domain_ip_request=email_domain_ip_request,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "EmailSimpleApiResponse",
-            "400": "ApiException",
-            "401": "ApiException",
-            "403": "ApiException",
-            "429": "ApiException",
-            "500": "ApiException",
-        }
-
-        response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-    @validate_call
-    def assign_ip_to_domain_with_http_info(
-        self,
-        email_domain_ip_request: EmailDomainIpRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[EmailSimpleApiResponse]:
-        """Assign dedicated ip address to the provided domain for the account id
-
-        Assign dedicated ip address to the provided domain for the account id.
-
-        :param email_domain_ip_request: (required)
-        :type email_domain_ip_request: EmailDomainIpRequest
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._assign_ip_to_domain_serialize(
-            email_domain_ip_request=email_domain_ip_request,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "EmailSimpleApiResponse",
-            "400": "ApiException",
-            "401": "ApiException",
-            "403": "ApiException",
-            "429": "ApiException",
-            "500": "ApiException",
-        }
-
-        response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    @validate_call
-    def assign_ip_to_domain_without_preload_content(
-        self,
-        email_domain_ip_request: EmailDomainIpRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Assign dedicated ip address to the provided domain for the account id
-
-        Assign dedicated ip address to the provided domain for the account id.
-
-        :param email_domain_ip_request: (required)
-        :type email_domain_ip_request: EmailDomainIpRequest
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._assign_ip_to_domain_serialize(
-            email_domain_ip_request=email_domain_ip_request,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "EmailSimpleApiResponse",
-            "400": "ApiException",
-            "401": "ApiException",
-            "403": "ApiException",
-            "429": "ApiException",
-            "500": "ApiException",
-        }
-
-        response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-    def _assign_ip_to_domain_serialize(
-        self,
-        email_domain_ip_request,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {}
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        # process the query parameters
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-        if email_domain_ip_request is not None:
-            _body_params = email_domain_ip_request
-
-        # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )
-
-        # set the HTTP header `Content-Type`
-        if _content_type:
-            _header_params["Content-Type"] = _content_type
-        else:
-            _default_content_type = self.api_client.select_header_content_type(
-                ["application/json"]
-            )
-            if _default_content_type is not None:
-                _header_params["Content-Type"] = _default_content_type
-
-        # authentication setting
-        _auth_settings: List[str] = ["APIKeyHeader"]
-
-        return self.api_client.param_serialize(
-            method="POST",
-            resource_path="/email/1/domain-ips",
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth,
-        )
-
-    @validate_call
     def assign_ip_to_pool(
         self,
         pool_id: Annotated[StrictStr, Field(description="IP pool identifier.")],
-        email_ip_pool_assign_ip_request: EmailIpPoolAssignIpRequest,
+        email_ip_pool_assign_ip_api_request: EmailIpPoolAssignIpApiRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -930,8 +658,8 @@ class EmailApi:
 
         :param pool_id: IP pool identifier. (required)
         :type pool_id: str
-        :param email_ip_pool_assign_ip_request: (required)
-        :type email_ip_pool_assign_ip_request: EmailIpPoolAssignIpRequest
+        :param email_ip_pool_assign_ip_api_request: (required)
+        :type email_ip_pool_assign_ip_api_request: EmailIpPoolAssignIpApiRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -956,7 +684,7 @@ class EmailApi:
 
         _param = self._assign_ip_to_pool_serialize(
             pool_id=pool_id,
-            email_ip_pool_assign_ip_request=email_ip_pool_assign_ip_request,
+            email_ip_pool_assign_ip_api_request=email_ip_pool_assign_ip_api_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -986,7 +714,7 @@ class EmailApi:
     def assign_ip_to_pool_with_http_info(
         self,
         pool_id: Annotated[StrictStr, Field(description="IP pool identifier.")],
-        email_ip_pool_assign_ip_request: EmailIpPoolAssignIpRequest,
+        email_ip_pool_assign_ip_api_request: EmailIpPoolAssignIpApiRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1005,8 +733,8 @@ class EmailApi:
 
         :param pool_id: IP pool identifier. (required)
         :type pool_id: str
-        :param email_ip_pool_assign_ip_request: (required)
-        :type email_ip_pool_assign_ip_request: EmailIpPoolAssignIpRequest
+        :param email_ip_pool_assign_ip_api_request: (required)
+        :type email_ip_pool_assign_ip_api_request: EmailIpPoolAssignIpApiRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1031,7 +759,7 @@ class EmailApi:
 
         _param = self._assign_ip_to_pool_serialize(
             pool_id=pool_id,
-            email_ip_pool_assign_ip_request=email_ip_pool_assign_ip_request,
+            email_ip_pool_assign_ip_api_request=email_ip_pool_assign_ip_api_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1061,7 +789,7 @@ class EmailApi:
     def assign_ip_to_pool_without_preload_content(
         self,
         pool_id: Annotated[StrictStr, Field(description="IP pool identifier.")],
-        email_ip_pool_assign_ip_request: EmailIpPoolAssignIpRequest,
+        email_ip_pool_assign_ip_api_request: EmailIpPoolAssignIpApiRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1080,8 +808,8 @@ class EmailApi:
 
         :param pool_id: IP pool identifier. (required)
         :type pool_id: str
-        :param email_ip_pool_assign_ip_request: (required)
-        :type email_ip_pool_assign_ip_request: EmailIpPoolAssignIpRequest
+        :param email_ip_pool_assign_ip_api_request: (required)
+        :type email_ip_pool_assign_ip_api_request: EmailIpPoolAssignIpApiRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1106,7 +834,7 @@ class EmailApi:
 
         _param = self._assign_ip_to_pool_serialize(
             pool_id=pool_id,
-            email_ip_pool_assign_ip_request=email_ip_pool_assign_ip_request,
+            email_ip_pool_assign_ip_api_request=email_ip_pool_assign_ip_api_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1131,7 +859,7 @@ class EmailApi:
     def _assign_ip_to_pool_serialize(
         self,
         pool_id,
-        email_ip_pool_assign_ip_request,
+        email_ip_pool_assign_ip_api_request,
         _request_auth,
         _content_type,
         _headers,
@@ -1156,8 +884,8 @@ class EmailApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if email_ip_pool_assign_ip_request is not None:
-            _body_params = email_ip_pool_assign_ip_request
+        if email_ip_pool_assign_ip_api_request is not None:
+            _body_params = email_ip_pool_assign_ip_api_request
 
         # set the HTTP header `Accept`
         _header_params["Accept"] = self.api_client.select_header_accept(
@@ -1198,7 +926,7 @@ class EmailApi:
         domain_id: Annotated[
             int, Field(strict=True, ge=1, description="Domain identifier.")
         ],
-        email_domain_ip_pool_assign_request: EmailDomainIpPoolAssignRequest,
+        email_domain_ip_pool_assign_api_request: EmailDomainIpPoolAssignApiRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1217,8 +945,8 @@ class EmailApi:
 
         :param domain_id: Domain identifier. (required)
         :type domain_id: int
-        :param email_domain_ip_pool_assign_request: (required)
-        :type email_domain_ip_pool_assign_request: EmailDomainIpPoolAssignRequest
+        :param email_domain_ip_pool_assign_api_request: (required)
+        :type email_domain_ip_pool_assign_api_request: EmailDomainIpPoolAssignApiRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1243,7 +971,7 @@ class EmailApi:
 
         _param = self._assign_pool_to_domain_serialize(
             domain_id=domain_id,
-            email_domain_ip_pool_assign_request=email_domain_ip_pool_assign_request,
+            email_domain_ip_pool_assign_api_request=email_domain_ip_pool_assign_api_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1275,7 +1003,7 @@ class EmailApi:
         domain_id: Annotated[
             int, Field(strict=True, ge=1, description="Domain identifier.")
         ],
-        email_domain_ip_pool_assign_request: EmailDomainIpPoolAssignRequest,
+        email_domain_ip_pool_assign_api_request: EmailDomainIpPoolAssignApiRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1294,8 +1022,8 @@ class EmailApi:
 
         :param domain_id: Domain identifier. (required)
         :type domain_id: int
-        :param email_domain_ip_pool_assign_request: (required)
-        :type email_domain_ip_pool_assign_request: EmailDomainIpPoolAssignRequest
+        :param email_domain_ip_pool_assign_api_request: (required)
+        :type email_domain_ip_pool_assign_api_request: EmailDomainIpPoolAssignApiRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1320,7 +1048,7 @@ class EmailApi:
 
         _param = self._assign_pool_to_domain_serialize(
             domain_id=domain_id,
-            email_domain_ip_pool_assign_request=email_domain_ip_pool_assign_request,
+            email_domain_ip_pool_assign_api_request=email_domain_ip_pool_assign_api_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1352,7 +1080,7 @@ class EmailApi:
         domain_id: Annotated[
             int, Field(strict=True, ge=1, description="Domain identifier.")
         ],
-        email_domain_ip_pool_assign_request: EmailDomainIpPoolAssignRequest,
+        email_domain_ip_pool_assign_api_request: EmailDomainIpPoolAssignApiRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1371,8 +1099,8 @@ class EmailApi:
 
         :param domain_id: Domain identifier. (required)
         :type domain_id: int
-        :param email_domain_ip_pool_assign_request: (required)
-        :type email_domain_ip_pool_assign_request: EmailDomainIpPoolAssignRequest
+        :param email_domain_ip_pool_assign_api_request: (required)
+        :type email_domain_ip_pool_assign_api_request: EmailDomainIpPoolAssignApiRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1397,7 +1125,7 @@ class EmailApi:
 
         _param = self._assign_pool_to_domain_serialize(
             domain_id=domain_id,
-            email_domain_ip_pool_assign_request=email_domain_ip_pool_assign_request,
+            email_domain_ip_pool_assign_api_request=email_domain_ip_pool_assign_api_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1422,7 +1150,7 @@ class EmailApi:
     def _assign_pool_to_domain_serialize(
         self,
         domain_id,
-        email_domain_ip_pool_assign_request,
+        email_domain_ip_pool_assign_api_request,
         _request_auth,
         _content_type,
         _headers,
@@ -1447,8 +1175,8 @@ class EmailApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if email_domain_ip_pool_assign_request is not None:
-            _body_params = email_domain_ip_pool_assign_request
+        if email_domain_ip_pool_assign_api_request is not None:
+            _body_params = email_domain_ip_pool_assign_api_request
 
         # set the HTTP header `Accept`
         _header_params["Accept"] = self.api_client.select_header_accept(
@@ -1486,7 +1214,7 @@ class EmailApi:
     @validate_call
     def create_ip_pool(
         self,
-        email_ip_pool_create_request: EmailIpPoolCreateRequest,
+        email_ip_pool_create_api_request: EmailIpPoolCreateApiRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1503,8 +1231,8 @@ class EmailApi:
 
         Create a new IP pool.
 
-        :param email_ip_pool_create_request: (required)
-        :type email_ip_pool_create_request: EmailIpPoolCreateRequest
+        :param email_ip_pool_create_api_request: (required)
+        :type email_ip_pool_create_api_request: EmailIpPoolCreateApiRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1528,7 +1256,7 @@ class EmailApi:
         """  # noqa: E501
 
         _param = self._create_ip_pool_serialize(
-            email_ip_pool_create_request=email_ip_pool_create_request,
+            email_ip_pool_create_api_request=email_ip_pool_create_api_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1556,7 +1284,7 @@ class EmailApi:
     @validate_call
     def create_ip_pool_with_http_info(
         self,
-        email_ip_pool_create_request: EmailIpPoolCreateRequest,
+        email_ip_pool_create_api_request: EmailIpPoolCreateApiRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1573,8 +1301,8 @@ class EmailApi:
 
         Create a new IP pool.
 
-        :param email_ip_pool_create_request: (required)
-        :type email_ip_pool_create_request: EmailIpPoolCreateRequest
+        :param email_ip_pool_create_api_request: (required)
+        :type email_ip_pool_create_api_request: EmailIpPoolCreateApiRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1598,7 +1326,7 @@ class EmailApi:
         """  # noqa: E501
 
         _param = self._create_ip_pool_serialize(
-            email_ip_pool_create_request=email_ip_pool_create_request,
+            email_ip_pool_create_api_request=email_ip_pool_create_api_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1626,7 +1354,7 @@ class EmailApi:
     @validate_call
     def create_ip_pool_without_preload_content(
         self,
-        email_ip_pool_create_request: EmailIpPoolCreateRequest,
+        email_ip_pool_create_api_request: EmailIpPoolCreateApiRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1643,8 +1371,8 @@ class EmailApi:
 
         Create a new IP pool.
 
-        :param email_ip_pool_create_request: (required)
-        :type email_ip_pool_create_request: EmailIpPoolCreateRequest
+        :param email_ip_pool_create_api_request: (required)
+        :type email_ip_pool_create_api_request: EmailIpPoolCreateApiRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1668,7 +1396,7 @@ class EmailApi:
         """  # noqa: E501
 
         _param = self._create_ip_pool_serialize(
-            email_ip_pool_create_request=email_ip_pool_create_request,
+            email_ip_pool_create_api_request=email_ip_pool_create_api_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1691,7 +1419,7 @@ class EmailApi:
 
     def _create_ip_pool_serialize(
         self,
-        email_ip_pool_create_request,
+        email_ip_pool_create_api_request,
         _request_auth,
         _content_type,
         _headers,
@@ -1714,8 +1442,8 @@ class EmailApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if email_ip_pool_create_request is not None:
-            _body_params = email_ip_pool_create_request
+        if email_ip_pool_create_api_request is not None:
+            _body_params = email_ip_pool_create_api_request
 
         # set the HTTP header `Accept`
         _header_params["Accept"] = self.api_client.select_header_accept(
@@ -2541,262 +2269,6 @@ class EmailApi:
         )
 
     @validate_call
-    def get_all_domain_ips(
-        self,
-        domain_name: Annotated[StrictStr, Field(description="Name of the domain.")],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> EmailDomainIpResponse:
-        """List all dedicated ips for domain and for provided account id
-
-        Fetch all dedicated ips for domain and provided account id.
-
-        :param domain_name: Name of the domain. (required)
-        :type domain_name: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_all_domain_ips_serialize(
-            domain_name=domain_name,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "EmailDomainIpResponse",
-            "401": "ApiException",
-            "403": "ApiException",
-            "429": "ApiException",
-            "500": "ApiException",
-        }
-
-        response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-    @validate_call
-    def get_all_domain_ips_with_http_info(
-        self,
-        domain_name: Annotated[StrictStr, Field(description="Name of the domain.")],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[EmailDomainIpResponse]:
-        """List all dedicated ips for domain and for provided account id
-
-        Fetch all dedicated ips for domain and provided account id.
-
-        :param domain_name: Name of the domain. (required)
-        :type domain_name: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_all_domain_ips_serialize(
-            domain_name=domain_name,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "EmailDomainIpResponse",
-            "401": "ApiException",
-            "403": "ApiException",
-            "429": "ApiException",
-            "500": "ApiException",
-        }
-
-        response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    @validate_call
-    def get_all_domain_ips_without_preload_content(
-        self,
-        domain_name: Annotated[StrictStr, Field(description="Name of the domain.")],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """List all dedicated ips for domain and for provided account id
-
-        Fetch all dedicated ips for domain and provided account id.
-
-        :param domain_name: Name of the domain. (required)
-        :type domain_name: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_all_domain_ips_serialize(
-            domain_name=domain_name,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "EmailDomainIpResponse",
-            "401": "ApiException",
-            "403": "ApiException",
-            "429": "ApiException",
-            "500": "ApiException",
-        }
-
-        response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-    def _get_all_domain_ips_serialize(
-        self,
-        domain_name,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {}
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        # process the query parameters
-        if domain_name is not None:
-
-            _query_params.append(("domainName", domain_name))
-
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-
-        # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )
-
-        # authentication setting
-        _auth_settings: List[str] = ["APIKeyHeader"]
-
-        return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/email/1/domain-ips",
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth,
-        )
-
-    @validate_call
     def get_all_domains(
         self,
         size: Annotated[
@@ -3110,248 +2582,6 @@ class EmailApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> EmailDomainIpResponse:
-        """List all dedicated ips for provided account id
-
-        Fetch all dedicated ips for the provided account id.
-
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_all_ips_serialize(
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "EmailDomainIpResponse",
-            "400": "ApiException",
-            "401": "ApiException",
-            "403": "ApiException",
-            "429": "ApiException",
-            "500": "ApiException",
-        }
-
-        response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-    @validate_call
-    def get_all_ips_with_http_info(
-        self,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[EmailDomainIpResponse]:
-        """List all dedicated ips for provided account id
-
-        Fetch all dedicated ips for the provided account id.
-
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_all_ips_serialize(
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "EmailDomainIpResponse",
-            "400": "ApiException",
-            "401": "ApiException",
-            "403": "ApiException",
-            "429": "ApiException",
-            "500": "ApiException",
-        }
-
-        response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    @validate_call
-    def get_all_ips_without_preload_content(
-        self,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """List all dedicated ips for provided account id
-
-        Fetch all dedicated ips for the provided account id.
-
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_all_ips_serialize(
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "EmailDomainIpResponse",
-            "400": "ApiException",
-            "401": "ApiException",
-            "403": "ApiException",
-            "429": "ApiException",
-            "500": "ApiException",
-        }
-
-        response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-    def _get_all_ips_serialize(
-        self,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {}
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        # process the query parameters
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-
-        # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )
-
-        # authentication setting
-        _auth_settings: List[str] = ["APIKeyHeader"]
-
-        return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/email/1/ips",
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth,
-        )
-
-    @validate_call
-    def get_all_ips_management(
-        self,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[EmailIpResponse]:
         """Get IPs
 
@@ -3379,7 +2609,7 @@ class EmailApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_all_ips_management_serialize(
+        _param = self._get_all_ips_serialize(
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3404,7 +2634,7 @@ class EmailApi:
         ).data
 
     @validate_call
-    def get_all_ips_management_with_http_info(
+    def get_all_ips_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -3444,7 +2674,7 @@ class EmailApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_all_ips_management_serialize(
+        _param = self._get_all_ips_serialize(
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3469,7 +2699,7 @@ class EmailApi:
         )
 
     @validate_call
-    def get_all_ips_management_without_preload_content(
+    def get_all_ips_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -3509,7 +2739,7 @@ class EmailApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_all_ips_management_serialize(
+        _param = self._get_all_ips_serialize(
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3529,7 +2759,7 @@ class EmailApi:
         )
         return response_data.response
 
-    def _get_all_ips_management_serialize(
+    def _get_all_ips_serialize(
         self,
         _request_auth,
         _content_type,
@@ -6705,7 +5935,7 @@ class EmailApi:
             StrictStr, Field(description="Name of the requested domain.")
         ],
         type: Annotated[
-            EmailGetSuppressionType, Field(description="Type of suppression.")
+            EmailSuppressionType, Field(description="Type of suppression.")
         ],
         email_address: Annotated[
             Optional[StrictStr], Field(description="Email address that is suppressed.")
@@ -6749,7 +5979,7 @@ class EmailApi:
         :param domain_name: Name of the requested domain. (required)
         :type domain_name: str
         :param type: Type of suppression. (required)
-        :type type: EmailGetSuppressionType
+        :type type: EmailSuppressionType
         :param email_address: Email address that is suppressed.
         :type email_address: str
         :param recipient_domain: Recipient domain that is suppressed.
@@ -6824,7 +6054,7 @@ class EmailApi:
             StrictStr, Field(description="Name of the requested domain.")
         ],
         type: Annotated[
-            EmailGetSuppressionType, Field(description="Type of suppression.")
+            EmailSuppressionType, Field(description="Type of suppression.")
         ],
         email_address: Annotated[
             Optional[StrictStr], Field(description="Email address that is suppressed.")
@@ -6868,7 +6098,7 @@ class EmailApi:
         :param domain_name: Name of the requested domain. (required)
         :type domain_name: str
         :param type: Type of suppression. (required)
-        :type type: EmailGetSuppressionType
+        :type type: EmailSuppressionType
         :param email_address: Email address that is suppressed.
         :type email_address: str
         :param recipient_domain: Recipient domain that is suppressed.
@@ -6943,7 +6173,7 @@ class EmailApi:
             StrictStr, Field(description="Name of the requested domain.")
         ],
         type: Annotated[
-            EmailGetSuppressionType, Field(description="Type of suppression.")
+            EmailSuppressionType, Field(description="Type of suppression.")
         ],
         email_address: Annotated[
             Optional[StrictStr], Field(description="Email address that is suppressed.")
@@ -6987,7 +6217,7 @@ class EmailApi:
         :param domain_name: Name of the requested domain. (required)
         :type domain_name: str
         :param type: Type of suppression. (required)
-        :type type: EmailGetSuppressionType
+        :type type: EmailSuppressionType
         :param email_address: Email address that is suppressed.
         :type email_address: str
         :param recipient_domain: Recipient domain that is suppressed.
@@ -7145,282 +6375,6 @@ class EmailApi:
         return self.api_client.param_serialize(
             method="GET",
             resource_path="/email/1/suppressions",
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth,
-        )
-
-    @validate_call
-    def remove_ip_from_domain(
-        self,
-        domain_name: Annotated[StrictStr, Field(description="Name of the domain.")],
-        ip_address: Annotated[StrictStr, Field(description="Dedicated ip address.")],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> EmailSimpleApiResponse:
-        """Remove dedicated ip address from the provided domain
-
-        Remove dedicated ip address from the provided domain.
-
-        :param domain_name: Name of the domain. (required)
-        :type domain_name: str
-        :param ip_address: Dedicated ip address. (required)
-        :type ip_address: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._remove_ip_from_domain_serialize(
-            domain_name=domain_name,
-            ip_address=ip_address,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "EmailSimpleApiResponse",
-            "400": "ApiException",
-            "401": "ApiException",
-            "403": "ApiException",
-            "429": "ApiException",
-            "500": "ApiException",
-        }
-
-        response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-    @validate_call
-    def remove_ip_from_domain_with_http_info(
-        self,
-        domain_name: Annotated[StrictStr, Field(description="Name of the domain.")],
-        ip_address: Annotated[StrictStr, Field(description="Dedicated ip address.")],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[EmailSimpleApiResponse]:
-        """Remove dedicated ip address from the provided domain
-
-        Remove dedicated ip address from the provided domain.
-
-        :param domain_name: Name of the domain. (required)
-        :type domain_name: str
-        :param ip_address: Dedicated ip address. (required)
-        :type ip_address: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._remove_ip_from_domain_serialize(
-            domain_name=domain_name,
-            ip_address=ip_address,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "EmailSimpleApiResponse",
-            "400": "ApiException",
-            "401": "ApiException",
-            "403": "ApiException",
-            "429": "ApiException",
-            "500": "ApiException",
-        }
-
-        response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    @validate_call
-    def remove_ip_from_domain_without_preload_content(
-        self,
-        domain_name: Annotated[StrictStr, Field(description="Name of the domain.")],
-        ip_address: Annotated[StrictStr, Field(description="Dedicated ip address.")],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Remove dedicated ip address from the provided domain
-
-        Remove dedicated ip address from the provided domain.
-
-        :param domain_name: Name of the domain. (required)
-        :type domain_name: str
-        :param ip_address: Dedicated ip address. (required)
-        :type ip_address: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._remove_ip_from_domain_serialize(
-            domain_name=domain_name,
-            ip_address=ip_address,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "EmailSimpleApiResponse",
-            "400": "ApiException",
-            "401": "ApiException",
-            "403": "ApiException",
-            "429": "ApiException",
-            "500": "ApiException",
-        }
-
-        response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-    def _remove_ip_from_domain_serialize(
-        self,
-        domain_name,
-        ip_address,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {}
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        # process the query parameters
-        if domain_name is not None:
-
-            _query_params.append(("domainName", domain_name))
-
-        if ip_address is not None:
-
-            _query_params.append(("ipAddress", ip_address))
-
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-
-        # set the HTTP header `Accept`
-        _header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )
-
-        # authentication setting
-        _auth_settings: List[str] = ["APIKeyHeader"]
-
-        return self.api_client.param_serialize(
-            method="DELETE",
-            resource_path="/email/1/domain-ips",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -8610,7 +7564,6 @@ class EmailApi:
             "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
-            "429": "ApiException",
             "500": "ApiException",
         }
 
@@ -8966,7 +7919,6 @@ class EmailApi:
             "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
-            "429": "ApiException",
             "500": "ApiException",
         }
 
@@ -9322,7 +8274,6 @@ class EmailApi:
             "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
-            "429": "ApiException",
             "500": "ApiException",
         }
 
@@ -9501,7 +8452,7 @@ class EmailApi:
             int, Field(strict=True, ge=1, description="Domain identifier.")
         ],
         pool_id: Annotated[StrictStr, Field(description="IP pool identifier.")],
-        email_domain_ip_pool_update_request: EmailDomainIpPoolUpdateRequest,
+        email_domain_ip_pool_update_api_request: EmailDomainIpPoolUpdateApiRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -9522,8 +8473,8 @@ class EmailApi:
         :type domain_id: int
         :param pool_id: IP pool identifier. (required)
         :type pool_id: str
-        :param email_domain_ip_pool_update_request: (required)
-        :type email_domain_ip_pool_update_request: EmailDomainIpPoolUpdateRequest
+        :param email_domain_ip_pool_update_api_request: (required)
+        :type email_domain_ip_pool_update_api_request: EmailDomainIpPoolUpdateApiRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -9549,7 +8500,7 @@ class EmailApi:
         _param = self._update_domain_pool_priority_serialize(
             domain_id=domain_id,
             pool_id=pool_id,
-            email_domain_ip_pool_update_request=email_domain_ip_pool_update_request,
+            email_domain_ip_pool_update_api_request=email_domain_ip_pool_update_api_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -9582,7 +8533,7 @@ class EmailApi:
             int, Field(strict=True, ge=1, description="Domain identifier.")
         ],
         pool_id: Annotated[StrictStr, Field(description="IP pool identifier.")],
-        email_domain_ip_pool_update_request: EmailDomainIpPoolUpdateRequest,
+        email_domain_ip_pool_update_api_request: EmailDomainIpPoolUpdateApiRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -9603,8 +8554,8 @@ class EmailApi:
         :type domain_id: int
         :param pool_id: IP pool identifier. (required)
         :type pool_id: str
-        :param email_domain_ip_pool_update_request: (required)
-        :type email_domain_ip_pool_update_request: EmailDomainIpPoolUpdateRequest
+        :param email_domain_ip_pool_update_api_request: (required)
+        :type email_domain_ip_pool_update_api_request: EmailDomainIpPoolUpdateApiRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -9630,7 +8581,7 @@ class EmailApi:
         _param = self._update_domain_pool_priority_serialize(
             domain_id=domain_id,
             pool_id=pool_id,
-            email_domain_ip_pool_update_request=email_domain_ip_pool_update_request,
+            email_domain_ip_pool_update_api_request=email_domain_ip_pool_update_api_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -9663,7 +8614,7 @@ class EmailApi:
             int, Field(strict=True, ge=1, description="Domain identifier.")
         ],
         pool_id: Annotated[StrictStr, Field(description="IP pool identifier.")],
-        email_domain_ip_pool_update_request: EmailDomainIpPoolUpdateRequest,
+        email_domain_ip_pool_update_api_request: EmailDomainIpPoolUpdateApiRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -9684,8 +8635,8 @@ class EmailApi:
         :type domain_id: int
         :param pool_id: IP pool identifier. (required)
         :type pool_id: str
-        :param email_domain_ip_pool_update_request: (required)
-        :type email_domain_ip_pool_update_request: EmailDomainIpPoolUpdateRequest
+        :param email_domain_ip_pool_update_api_request: (required)
+        :type email_domain_ip_pool_update_api_request: EmailDomainIpPoolUpdateApiRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -9711,7 +8662,7 @@ class EmailApi:
         _param = self._update_domain_pool_priority_serialize(
             domain_id=domain_id,
             pool_id=pool_id,
-            email_domain_ip_pool_update_request=email_domain_ip_pool_update_request,
+            email_domain_ip_pool_update_api_request=email_domain_ip_pool_update_api_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -9737,7 +8688,7 @@ class EmailApi:
         self,
         domain_id,
         pool_id,
-        email_domain_ip_pool_update_request,
+        email_domain_ip_pool_update_api_request,
         _request_auth,
         _content_type,
         _headers,
@@ -9764,8 +8715,8 @@ class EmailApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if email_domain_ip_pool_update_request is not None:
-            _body_params = email_domain_ip_pool_update_request
+        if email_domain_ip_pool_update_api_request is not None:
+            _body_params = email_domain_ip_pool_update_api_request
 
         # set the HTTP header `Accept`
         _header_params["Accept"] = self.api_client.select_header_accept(
@@ -9804,7 +8755,7 @@ class EmailApi:
     def update_ip_pool(
         self,
         pool_id: Annotated[StrictStr, Field(description="IP pool identifier.")],
-        email_ip_pool_create_request: EmailIpPoolCreateRequest,
+        email_ip_pool_create_api_request: EmailIpPoolCreateApiRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -9823,8 +8774,8 @@ class EmailApi:
 
         :param pool_id: IP pool identifier. (required)
         :type pool_id: str
-        :param email_ip_pool_create_request: (required)
-        :type email_ip_pool_create_request: EmailIpPoolCreateRequest
+        :param email_ip_pool_create_api_request: (required)
+        :type email_ip_pool_create_api_request: EmailIpPoolCreateApiRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -9849,7 +8800,7 @@ class EmailApi:
 
         _param = self._update_ip_pool_serialize(
             pool_id=pool_id,
-            email_ip_pool_create_request=email_ip_pool_create_request,
+            email_ip_pool_create_api_request=email_ip_pool_create_api_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -9879,7 +8830,7 @@ class EmailApi:
     def update_ip_pool_with_http_info(
         self,
         pool_id: Annotated[StrictStr, Field(description="IP pool identifier.")],
-        email_ip_pool_create_request: EmailIpPoolCreateRequest,
+        email_ip_pool_create_api_request: EmailIpPoolCreateApiRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -9898,8 +8849,8 @@ class EmailApi:
 
         :param pool_id: IP pool identifier. (required)
         :type pool_id: str
-        :param email_ip_pool_create_request: (required)
-        :type email_ip_pool_create_request: EmailIpPoolCreateRequest
+        :param email_ip_pool_create_api_request: (required)
+        :type email_ip_pool_create_api_request: EmailIpPoolCreateApiRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -9924,7 +8875,7 @@ class EmailApi:
 
         _param = self._update_ip_pool_serialize(
             pool_id=pool_id,
-            email_ip_pool_create_request=email_ip_pool_create_request,
+            email_ip_pool_create_api_request=email_ip_pool_create_api_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -9954,7 +8905,7 @@ class EmailApi:
     def update_ip_pool_without_preload_content(
         self,
         pool_id: Annotated[StrictStr, Field(description="IP pool identifier.")],
-        email_ip_pool_create_request: EmailIpPoolCreateRequest,
+        email_ip_pool_create_api_request: EmailIpPoolCreateApiRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -9973,8 +8924,8 @@ class EmailApi:
 
         :param pool_id: IP pool identifier. (required)
         :type pool_id: str
-        :param email_ip_pool_create_request: (required)
-        :type email_ip_pool_create_request: EmailIpPoolCreateRequest
+        :param email_ip_pool_create_api_request: (required)
+        :type email_ip_pool_create_api_request: EmailIpPoolCreateApiRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -9999,7 +8950,7 @@ class EmailApi:
 
         _param = self._update_ip_pool_serialize(
             pool_id=pool_id,
-            email_ip_pool_create_request=email_ip_pool_create_request,
+            email_ip_pool_create_api_request=email_ip_pool_create_api_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -10024,7 +8975,7 @@ class EmailApi:
     def _update_ip_pool_serialize(
         self,
         pool_id,
-        email_ip_pool_create_request,
+        email_ip_pool_create_api_request,
         _request_auth,
         _content_type,
         _headers,
@@ -10049,8 +9000,8 @@ class EmailApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if email_ip_pool_create_request is not None:
-            _body_params = email_ip_pool_create_request
+        if email_ip_pool_create_api_request is not None:
+            _body_params = email_ip_pool_create_api_request
 
         # set the HTTP header `Accept`
         _header_params["Accept"] = self.api_client.select_header_accept(

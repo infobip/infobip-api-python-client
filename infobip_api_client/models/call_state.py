@@ -35,7 +35,6 @@ class CallState(str, Enum):
     CANCELLED = "CANCELLED"
     NO_ANSWER = "NO_ANSWER"
     BUSY = "BUSY"
-    DISCONNECTED = "DISCONNECTED"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

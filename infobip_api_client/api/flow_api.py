@@ -11,10 +11,8 @@
 
     Do not edit the class manually.
 """  # noqa: E501
-import warnings
-from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
-from typing import Any, Dict, List, Optional, Tuple, Union
-from typing_extensions import Annotated
+from pydantic import validate_call, StrictFloat
+from typing import Any, Dict, List, Tuple, Union
 
 from pydantic import Field, StrictInt, StrictStr
 from typing import Optional
@@ -109,12 +107,12 @@ class FlowApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "FlowAddFlowParticipantsResponse",
-            "400": "FlowApiException",
-            "401": "FlowApiException",
-            "403": "FlowApiException",
-            "404": "FlowApiException",
-            "429": "FlowApiException",
-            "500": "FlowApiException",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -189,12 +187,12 @@ class FlowApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "FlowAddFlowParticipantsResponse",
-            "400": "FlowApiException",
-            "401": "FlowApiException",
-            "403": "FlowApiException",
-            "404": "FlowApiException",
-            "429": "FlowApiException",
-            "500": "FlowApiException",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -269,12 +267,12 @@ class FlowApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "FlowAddFlowParticipantsResponse",
-            "400": "FlowApiException",
-            "401": "FlowApiException",
-            "403": "FlowApiException",
-            "404": "FlowApiException",
-            "429": "FlowApiException",
-            "500": "FlowApiException",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -411,11 +409,11 @@ class FlowApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "FlowParticipantsReportResponse",
-            "401": "FlowApiException",
-            "403": "FlowApiException",
+            "401": "ApiException",
+            "403": "ApiException",
             "404": None,
-            "429": "FlowApiException",
-            "500": "FlowApiException",
+            "429": "ApiException",
+            "500": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -492,11 +490,11 @@ class FlowApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "FlowParticipantsReportResponse",
-            "401": "FlowApiException",
-            "403": "FlowApiException",
+            "401": "ApiException",
+            "403": "ApiException",
             "404": None,
-            "429": "FlowApiException",
-            "500": "FlowApiException",
+            "429": "ApiException",
+            "500": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -573,11 +571,11 @@ class FlowApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "FlowParticipantsReportResponse",
-            "401": "FlowApiException",
-            "403": "FlowApiException",
+            "401": "ApiException",
+            "403": "ApiException",
             "404": None,
-            "429": "FlowApiException",
-            "500": "FlowApiException",
+            "429": "ApiException",
+            "500": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -720,11 +718,11 @@ class FlowApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": None,
             "400": "FlowExceptionResponse",
-            "401": "FlowApiException",
-            "403": "FlowApiException",
+            "401": "ApiException",
+            "403": "ApiException",
             "404": "FlowExceptionResponse",
-            "429": "FlowApiException",
-            "500": "FlowApiException",
+            "429": "ApiException",
+            "500": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -815,11 +813,11 @@ class FlowApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": None,
             "400": "FlowExceptionResponse",
-            "401": "FlowApiException",
-            "403": "FlowApiException",
+            "401": "ApiException",
+            "403": "ApiException",
             "404": "FlowExceptionResponse",
-            "429": "FlowApiException",
-            "500": "FlowApiException",
+            "429": "ApiException",
+            "500": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -910,11 +908,11 @@ class FlowApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": None,
             "400": "FlowExceptionResponse",
-            "401": "FlowApiException",
-            "403": "FlowApiException",
+            "401": "ApiException",
+            "403": "ApiException",
             "404": "FlowExceptionResponse",
-            "429": "FlowApiException",
-            "500": "FlowApiException",
+            "429": "ApiException",
+            "500": "ApiException",
         }
 
         response_data = self.api_client.call_api(

@@ -151,6 +151,9 @@ class CallVoice(str, Enum):
     MAI_LEFT_PARENTHESIS_BETA_RIGHT_PARENTHESIS = "Mai (beta)"
     TUAN_LEFT_PARENTHESIS_BETA_RIGHT_PARENTHESIS = "Tuan (beta)"
     GWYNETH = "Gwyneth"
+    AARYA = "Aarya"
+    ARJUN = "Arjun"
+    REVATI = "Revati"
     HAMED_LEFT_PARENTHESIS_NEURAL_RIGHT_PARENTHESIS = "Hamed (neural)"
     SALMA_LEFT_PARENTHESIS_NEURAL_RIGHT_PARENTHESIS = "Salma (neural)"
     SHAKIR_LEFT_PARENTHESIS_NEURAL_RIGHT_PARENTHESIS = "Shakir (neural)"
@@ -440,6 +443,8 @@ class CallVoice(str, Enum):
     JAMAL_LEFT_PARENTHESIS_NEURAL_RIGHT_PARENTHESIS = "Jamal (neural)"
     UZMA_LEFT_PARENTHESIS_NEURAL_RIGHT_PARENTHESIS = "Uzma (neural)"
     ASAD_LEFT_PARENTHESIS_NEURAL_RIGHT_PARENTHESIS = "Asad (neural)"
+    AAROHI_LEFT_PARENTHESIS_NEURAL_RIGHT_PARENTHESIS = "Aarohi (neural)"
+    MANOHAR_LEFT_PARENTHESIS_NEURAL_RIGHT_PARENTHESIS = "Manohar (neural)"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

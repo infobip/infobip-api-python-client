@@ -11,18 +11,17 @@
 
     Do not edit the class manually.
 """  # noqa: E501
-import warnings
-from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
-from typing import Any, Dict, List, Optional, Tuple, Union
-from typing_extensions import Annotated
+from pydantic import validate_call, StrictFloat
+from typing import List, Tuple, Union
 
-from pydantic import Field, StrictInt, StrictStr, field_validator
+from pydantic import Field, StrictInt, StrictStr
 from typing import Any, Dict, Optional
 from typing_extensions import Annotated
 from infobip_api_client.models.forms_response import FormsResponse
 from infobip_api_client.models.forms_response_content import FormsResponseContent
 from infobip_api_client.models.forms_status import FormsStatus
 from infobip_api_client.models.forms_status_response import FormsStatusResponse
+from infobip_api_client.models.forms_type import FormsType
 
 from infobip_api_client.api_client import ApiClient, RequestSerialized
 from infobip_api_client.api_response import ApiResponse
@@ -95,10 +94,10 @@ class FormsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "FormsResponseContent",
-            "401": "FormsException",
-            "403": "FormsException",
-            "404": "FormsException",
-            "500": "FormsException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "500": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -164,10 +163,10 @@ class FormsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "FormsResponseContent",
-            "401": "FormsException",
-            "403": "FormsException",
-            "404": "FormsException",
-            "500": "FormsException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "500": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -233,10 +232,10 @@ class FormsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "FormsResponseContent",
-            "401": "FormsException",
-            "403": "FormsException",
-            "404": "FormsException",
-            "500": "FormsException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "500": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -309,7 +308,7 @@ class FormsApi:
             ),
         ] = None,
         form_type: Annotated[
-            Optional[StrictStr], Field(description="The type of returned forms.")
+            Optional[FormsType], Field(description="The type of returned forms.")
         ] = None,
         form_status: Annotated[
             Optional[FormsStatus], Field(description="The status of returned forms.")
@@ -335,7 +334,7 @@ class FormsApi:
         :param limit: The maximum number of returned forms. Maximum value is `100`.
         :type limit: int
         :param form_type: The type of returned forms.
-        :type form_type: str
+        :type form_type: FormsType
         :param form_status: The status of returned forms.
         :type form_status: FormsStatus
         :param _request_timeout: timeout setting for this request. If one
@@ -373,10 +372,10 @@ class FormsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "FormsResponse",
-            "400": "FormsException",
-            "401": "FormsException",
-            "403": "FormsException",
-            "500": "FormsException",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "500": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -402,7 +401,7 @@ class FormsApi:
             ),
         ] = None,
         form_type: Annotated[
-            Optional[StrictStr], Field(description="The type of returned forms.")
+            Optional[FormsType], Field(description="The type of returned forms.")
         ] = None,
         form_status: Annotated[
             Optional[FormsStatus], Field(description="The status of returned forms.")
@@ -428,7 +427,7 @@ class FormsApi:
         :param limit: The maximum number of returned forms. Maximum value is `100`.
         :type limit: int
         :param form_type: The type of returned forms.
-        :type form_type: str
+        :type form_type: FormsType
         :param form_status: The status of returned forms.
         :type form_status: FormsStatus
         :param _request_timeout: timeout setting for this request. If one
@@ -466,10 +465,10 @@ class FormsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "FormsResponse",
-            "400": "FormsException",
-            "401": "FormsException",
-            "403": "FormsException",
-            "500": "FormsException",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "500": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -495,7 +494,7 @@ class FormsApi:
             ),
         ] = None,
         form_type: Annotated[
-            Optional[StrictStr], Field(description="The type of returned forms.")
+            Optional[FormsType], Field(description="The type of returned forms.")
         ] = None,
         form_status: Annotated[
             Optional[FormsStatus], Field(description="The status of returned forms.")
@@ -521,7 +520,7 @@ class FormsApi:
         :param limit: The maximum number of returned forms. Maximum value is `100`.
         :type limit: int
         :param form_type: The type of returned forms.
-        :type form_type: str
+        :type form_type: FormsType
         :param form_status: The status of returned forms.
         :type form_status: FormsStatus
         :param _request_timeout: timeout setting for this request. If one
@@ -559,10 +558,10 @@ class FormsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "FormsResponse",
-            "400": "FormsException",
-            "401": "FormsException",
-            "403": "FormsException",
-            "500": "FormsException",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "500": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -605,7 +604,7 @@ class FormsApi:
 
         if form_type is not None:
 
-            _query_params.append(("formType", form_type))
+            _query_params.append(("formType", form_type.value))
 
         if form_status is not None:
 
@@ -692,10 +691,10 @@ class FormsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "FormsStatusResponse",
-            "401": "FormsException",
-            "403": "FormsException",
-            "404": "FormsException",
-            "500": "FormsException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "500": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -761,10 +760,10 @@ class FormsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "FormsStatusResponse",
-            "401": "FormsException",
-            "403": "FormsException",
-            "404": "FormsException",
-            "500": "FormsException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "500": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -830,10 +829,10 @@ class FormsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "FormsStatusResponse",
-            "401": "FormsException",
-            "403": "FormsException",
-            "404": "FormsException",
-            "500": "FormsException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "500": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -896,7 +895,9 @@ class FormsApi:
     def submit_form_data(
         self,
         id: Annotated[StrictStr, Field(description="ID of a form")],
-        body: Annotated[Dict[str, Any], Field(description="Form Data")],
+        request_body: Annotated[
+            Dict[str, Dict[str, Any]], Field(description="Form Data")
+        ],
         ib_submission_source: Annotated[
             Optional[StrictStr],
             Field(
@@ -927,8 +928,8 @@ class FormsApi:
 
         :param id: ID of a form (required)
         :type id: str
-        :param body: Form Data (required)
-        :type body: object
+        :param request_body: Form Data (required)
+        :type request_body: Dict[str, object]
         :param ib_submission_source: By sending source information you will be able to see Analytics by Source – It reflects the submission rates by source if your form is present in numerous places.
         :type ib_submission_source: str
         :param ib_submission_form_campaign: By sending campaign information you will be able to see Analytics by Campaign – It reflects the submission rates by campaign if your form is included in multiple campaigns.
@@ -957,7 +958,7 @@ class FormsApi:
 
         _param = self._submit_form_data_serialize(
             id=id,
-            body=body,
+            request_body=request_body,
             ib_submission_source=ib_submission_source,
             ib_submission_form_campaign=ib_submission_form_campaign,
             _request_auth=_request_auth,
@@ -968,12 +969,12 @@ class FormsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "FormsStatusResponse",
-            "400": "FormsException",
-            "401": "FormsException",
-            "403": "FormsException",
-            "404": "FormsException",
-            "429": "FormsException",
-            "500": "FormsException",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -989,7 +990,9 @@ class FormsApi:
     def submit_form_data_with_http_info(
         self,
         id: Annotated[StrictStr, Field(description="ID of a form")],
-        body: Annotated[Dict[str, Any], Field(description="Form Data")],
+        request_body: Annotated[
+            Dict[str, Dict[str, Any]], Field(description="Form Data")
+        ],
         ib_submission_source: Annotated[
             Optional[StrictStr],
             Field(
@@ -1020,8 +1023,8 @@ class FormsApi:
 
         :param id: ID of a form (required)
         :type id: str
-        :param body: Form Data (required)
-        :type body: object
+        :param request_body: Form Data (required)
+        :type request_body: Dict[str, object]
         :param ib_submission_source: By sending source information you will be able to see Analytics by Source – It reflects the submission rates by source if your form is present in numerous places.
         :type ib_submission_source: str
         :param ib_submission_form_campaign: By sending campaign information you will be able to see Analytics by Campaign – It reflects the submission rates by campaign if your form is included in multiple campaigns.
@@ -1050,7 +1053,7 @@ class FormsApi:
 
         _param = self._submit_form_data_serialize(
             id=id,
-            body=body,
+            request_body=request_body,
             ib_submission_source=ib_submission_source,
             ib_submission_form_campaign=ib_submission_form_campaign,
             _request_auth=_request_auth,
@@ -1061,12 +1064,12 @@ class FormsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "FormsStatusResponse",
-            "400": "FormsException",
-            "401": "FormsException",
-            "403": "FormsException",
-            "404": "FormsException",
-            "429": "FormsException",
-            "500": "FormsException",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -1082,7 +1085,9 @@ class FormsApi:
     def submit_form_data_without_preload_content(
         self,
         id: Annotated[StrictStr, Field(description="ID of a form")],
-        body: Annotated[Dict[str, Any], Field(description="Form Data")],
+        request_body: Annotated[
+            Dict[str, Dict[str, Any]], Field(description="Form Data")
+        ],
         ib_submission_source: Annotated[
             Optional[StrictStr],
             Field(
@@ -1113,8 +1118,8 @@ class FormsApi:
 
         :param id: ID of a form (required)
         :type id: str
-        :param body: Form Data (required)
-        :type body: object
+        :param request_body: Form Data (required)
+        :type request_body: Dict[str, object]
         :param ib_submission_source: By sending source information you will be able to see Analytics by Source – It reflects the submission rates by source if your form is present in numerous places.
         :type ib_submission_source: str
         :param ib_submission_form_campaign: By sending campaign information you will be able to see Analytics by Campaign – It reflects the submission rates by campaign if your form is included in multiple campaigns.
@@ -1143,7 +1148,7 @@ class FormsApi:
 
         _param = self._submit_form_data_serialize(
             id=id,
-            body=body,
+            request_body=request_body,
             ib_submission_source=ib_submission_source,
             ib_submission_form_campaign=ib_submission_form_campaign,
             _request_auth=_request_auth,
@@ -1154,12 +1159,12 @@ class FormsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "FormsStatusResponse",
-            "400": "FormsException",
-            "401": "FormsException",
-            "403": "FormsException",
-            "404": "FormsException",
-            "429": "FormsException",
-            "500": "FormsException",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -1170,7 +1175,7 @@ class FormsApi:
     def _submit_form_data_serialize(
         self,
         id,
-        body,
+        request_body,
         ib_submission_source,
         ib_submission_form_campaign,
         _request_auth,
@@ -1201,8 +1206,8 @@ class FormsApi:
             _header_params["ib-submission-form-campaign"] = ib_submission_form_campaign
         # process the form parameters
         # process the body parameter
-        if body is not None:
-            _body_params = body
+        if request_body is not None:
+            _body_params = request_body
 
         # set the HTTP header `Accept`
         _header_params["Accept"] = self.api_client.select_header_accept(

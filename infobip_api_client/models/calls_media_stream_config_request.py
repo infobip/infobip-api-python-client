@@ -17,12 +17,24 @@ import pprint
 import re  # noqa: F401
 import json
 
+from importlib import import_module
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
-from infobip_api_client.models.security_config import SecurityConfig
+from infobip_api_client.models.calls_request_media_stream_config_type import (
+    CallsRequestMediaStreamConfigType,
+)
 from typing import Optional, Set
-from typing_extensions import Self
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from infobip_api_client.models.calls_media_streaming_config_request import (
+        CallsMediaStreamingConfigRequest,
+    )
+    from infobip_api_client.models.calls_websocket_endpoint_config_request import (
+        CallsWebsocketEndpointConfigRequest,
+    )
 
 
 class CallsMediaStreamConfigRequest(BaseModel):
@@ -30,20 +42,36 @@ class CallsMediaStreamConfigRequest(BaseModel):
     CallsMediaStreamConfigRequest
     """  # noqa: E501
 
+    type: Optional[CallsRequestMediaStreamConfigType] = None
     name: Annotated[str, Field(min_length=0, strict=True, max_length=128)] = Field(
         description="Media-stream configuration name."
     )
     url: StrictStr = Field(description="Destination websocket or load balancer URL.")
-    security_config: Optional[SecurityConfig] = Field(
-        default=None, alias="securityConfig"
-    )
-    __properties: ClassVar[List[str]] = ["name", "url", "securityConfig"]
+    __properties: ClassVar[List[str]] = ["type", "name", "url"]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
+
+    # JSON field name that stores the object type
+    __discriminator_property_name: ClassVar[str] = "type"
+
+    # discriminator mappings
+    __discriminator_value_class_map: ClassVar[Dict[str, str]] = {
+        "MEDIA_STREAMING": "CallsMediaStreamingConfigRequest",
+        "WEBSOCKET_ENDPOINT": "CallsWebsocketEndpointConfigRequest",
+    }
+
+    @classmethod
+    def get_discriminator_value(cls, obj: Dict[str, Any]) -> Optional[str]:
+        """Returns the discriminator value (object type) of the data"""
+        discriminator_value = obj[cls.__discriminator_property_name]
+        if discriminator_value:
+            return cls.__discriminator_value_class_map.get(discriminator_value)
+        else:
+            return None
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -55,7 +83,11 @@ class CallsMediaStreamConfigRequest(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Optional[Self]:
+    def from_json(
+        cls, json_str: str
+    ) -> Optional[
+        Union[CallsMediaStreamingConfigRequest, CallsWebsocketEndpointConfigRequest]
+    ]:
         """Create an instance of CallsMediaStreamConfigRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
@@ -76,27 +108,31 @@ class CallsMediaStreamConfigRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of security_config
-        if self.security_config:
-            _dict["securityConfig"] = self.security_config.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
+    def from_dict(
+        cls, obj: Dict[str, Any]
+    ) -> Optional[
+        Union[CallsMediaStreamingConfigRequest, CallsWebsocketEndpointConfigRequest]
+    ]:
         """Create an instance of CallsMediaStreamConfigRequest from a dict"""
-        if obj is None:
-            return None
+        # look up the object type based on discriminator mapping
+        object_type = cls.get_discriminator_value(obj)
+        if object_type == "CallsMediaStreamingConfigRequest":
+            return import_module(
+                "infobip_api_client.models.calls_media_streaming_config_request"
+            ).CallsMediaStreamingConfigRequest.from_dict(obj)
+        if object_type == "CallsWebsocketEndpointConfigRequest":
+            return import_module(
+                "infobip_api_client.models.calls_websocket_endpoint_config_request"
+            ).CallsWebsocketEndpointConfigRequest.from_dict(obj)
 
-        if not isinstance(obj, dict):
-            return cls.model_validate(obj)
-
-        _obj = cls.model_validate(
-            {
-                "name": obj.get("name"),
-                "url": obj.get("url"),
-                "securityConfig": SecurityConfig.from_dict(obj["securityConfig"])
-                if obj.get("securityConfig") is not None
-                else None,
-            }
+        raise ValueError(
+            "CallsMediaStreamConfigRequest failed to lookup discriminator value from "
+            + json.dumps(obj)
+            + ". Discriminator property name: "
+            + cls.__discriminator_property_name
+            + ", mapping: "
+            + json.dumps(cls.__discriminator_value_class_map)
         )
-        return _obj

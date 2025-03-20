@@ -1,8 +1,6 @@
 import tempfile
-import datetime
 
 import pytest
-from dateutil.tz import tzoffset
 from pytest_httpserver import HTTPServer
 
 from infobip_api_client import (
@@ -58,9 +56,6 @@ from infobip_api_client import (
     CallsFilePage,
     CallsFile,
     CallsMediaStreamConfigPage,
-    CallsMediaStreamConfigResponse,
-    CallsMediaStreamConfigRequest,
-    SecurityConfig,
     CallRecordingPage,
     CallRecording,
     CallsRecordingFile,
@@ -89,6 +84,13 @@ from infobip_api_client import (
     CallsPlayContentType,
     CallsConferencePlayRequest,
     CallsParticipantState,
+    CallTranscriptionLanguage,
+    CallsResponseMediaStreamConfigType,
+    CallsMediaStreamingConfigResponse,
+    CallsWebsocketEndpointConfigResponse,
+    CallsMediaStreamingConfigRequest,
+    BasicSecurityConfig,
+    SecurityConfigType,
 )
 
 CALLS = "/calls/1/calls"
@@ -1325,7 +1327,7 @@ def test_should_capture_dtmf(httpserver: HTTPServer, get_api_client):
 
 
 def test_should_capture_speech(httpserver: HTTPServer, get_api_client):
-    given_langauge = "en-gb"
+    given_langauge = CallTranscriptionLanguage.EN_MINUS_US
     given_timeout = 30
     given_max_silence = 4
     given_key_phrases = ["phrase", "word"]
@@ -3583,23 +3585,43 @@ def test_should_delete_file(httpserver: HTTPServer, get_api_client):
 
 
 def test_should_get_media_stream_configs(httpserver: HTTPServer, get_api_client):
-    given_id = "string"
-    given_url = "string"
-    given_type = "BASIC"
+    given_id_1 = "63467c6e2885a5389ba11d80"
+    given_type_1 = CallsResponseMediaStreamConfigType.MEDIA_STREAMING
+    given_name_1 = "Media-stream config"
+    given_url_1 = "ws://example-web-socket.com:3001"
+
+    given_id_2 = "63467c6e2885a5389ba11d81"
+    given_type_2 = CallsResponseMediaStreamConfigType.WEBSOCKET_ENDPOINT
+    given_name_2 = "Media-stream config"
+    given_url_2 = "ws://example-web-socket.com:3001"
+    given_sample_rate_2 = "8000"
+
     given_page = 0
-    given_page_size = 1
-    given_page_total_pages = 0
-    given_page_total_results = 0
+    given_size = 2
+    given_total_pages = 1
+    given_total_results = 2
 
     given_response = {
         "results": [
-            {"id": given_id, "url": given_url, "securityConfig": {"type": given_type}}
+            {
+                "id": given_id_1,
+                "type": given_type_1,
+                "name": given_name_1,
+                "url": given_url_1,
+            },
+            {
+                "id": given_id_2,
+                "type": given_type_2,
+                "name": given_name_2,
+                "url": given_url_2,
+                "sampleRate": given_sample_rate_2,
+            },
         ],
         "paging": {
             "page": given_page,
-            "size": given_page_size,
-            "totalPages": given_page_total_pages,
-            "totalResults": given_page_total_results,
+            "size": given_size,
+            "totalPages": given_total_pages,
+            "totalResults": given_total_results,
         },
     }
 
@@ -3610,12 +3632,23 @@ def test_should_get_media_stream_configs(httpserver: HTTPServer, get_api_client)
     api_response = api_instance.get_media_stream_configs()
 
     expected_response = CallsMediaStreamConfigPage(
-        results=[CallsMediaStreamConfigResponse(id=given_id, url=given_url)],
+        results=[
+            CallsMediaStreamingConfigResponse(
+                id=given_id_1, type=given_type_1, name=given_name_1, url=given_url_1
+            ),
+            CallsWebsocketEndpointConfigResponse(
+                id=given_id_2,
+                type=given_type_2,
+                name=given_name_2,
+                url=given_url_2,
+                sample_rate=given_sample_rate_2,
+            ),
+        ],
         paging=PageInfo(
             page=given_page,
-            size=given_page_size,
-            total_pages=given_page_total_pages,
-            total_results=given_page_total_results,
+            size=given_size,
+            total_pages=given_total_pages,
+            total_results=given_total_results,
         ),
     )
 
@@ -3625,26 +3658,29 @@ def test_should_get_media_stream_configs(httpserver: HTTPServer, get_api_client)
 def test_should_create_media_stream_config(httpserver: HTTPServer, get_api_client):
     given_url = "string"
     given_name = "Media-stream config"
-    given_type = "BASIC"
     given_username = "user"
     given_password = "passw"
     given_id = "string"
+    given_type = CallsResponseMediaStreamConfigType.MEDIA_STREAMING
+    given_security_type = SecurityConfigType.BASIC
 
     given_response = {
         "id": given_id,
         "name": given_name,
         "url": given_url,
+        "type": given_type,
     }
 
     setup_request(httpserver, MEDIA_STREAM_CONFIGS, given_response, "POST", 201, None)
 
     api_instance = CallsApi(get_api_client)
 
-    request: CallsMediaStreamConfigRequest = CallsMediaStreamConfigRequest(
+    request: CallsMediaStreamingConfigRequest = CallsMediaStreamingConfigRequest(
         name=given_name,
         url=given_url,
-        security_config=SecurityConfig(
-            username=given_username, password=given_password, type=given_type
+        type=given_type,
+        security_config=BasicSecurityConfig(
+            username=given_username, password=given_password, type=given_security_type
         ),
     )
 
@@ -3652,8 +3688,8 @@ def test_should_create_media_stream_config(httpserver: HTTPServer, get_api_clien
         calls_media_stream_config_request=request
     )
 
-    expected_response = CallsMediaStreamConfigResponse(
-        id=given_id, url=given_url, name=given_name
+    expected_response = CallsMediaStreamingConfigResponse(
+        id=given_id, url=given_url, name=given_name, type=given_type
     )
     assert api_response == expected_response
 
@@ -3662,10 +3698,12 @@ def test_should_get_media_stream_config(httpserver: HTTPServer, get_api_client):
     given_url = "string"
     given_name = "Media-stream config"
     given_id = "string"
+    given_type = CallsResponseMediaStreamConfigType.MEDIA_STREAMING
 
     given_response = {
         "id": given_id,
         "name": given_name,
+        "type": given_type,
         "url": given_url,
     }
 
@@ -3677,8 +3715,8 @@ def test_should_get_media_stream_config(httpserver: HTTPServer, get_api_client):
 
     api_response = api_instance.get_media_stream_config(media_stream_config_id=given_id)
 
-    expected_response = CallsMediaStreamConfigResponse(
-        id=given_id, url=given_url, name=given_name
+    expected_response = CallsMediaStreamingConfigResponse(
+        id=given_id, url=given_url, type=given_type, name=given_name
     )
     assert api_response == expected_response
 
@@ -3686,14 +3724,16 @@ def test_should_get_media_stream_config(httpserver: HTTPServer, get_api_client):
 def test_should_update_media_stream_config(httpserver: HTTPServer, get_api_client):
     given_url = "string"
     given_name = "Media-stream config"
-    given_type = "BASIC"
+    given_security_type = SecurityConfigType.BASIC
     given_username = "user"
     given_password = "passw"
     given_id = "string"
+    given_type = CallsResponseMediaStreamConfigType.MEDIA_STREAMING
 
     given_response = {
         "id": given_id,
         "name": given_name,
+        "type": given_type,
         "url": given_url,
     }
 
@@ -3703,11 +3743,11 @@ def test_should_update_media_stream_config(httpserver: HTTPServer, get_api_clien
 
     api_instance = CallsApi(get_api_client)
 
-    request: CallsMediaStreamConfigRequest = CallsMediaStreamConfigRequest(
+    request: CallsMediaStreamingConfigRequest = CallsMediaStreamingConfigRequest(
         name=given_name,
         url=given_url,
-        security_config=SecurityConfig(
-            username=given_username, password=given_password, type=given_type
+        security_config=BasicSecurityConfig(
+            username=given_username, password=given_password, type=given_security_type
         ),
     )
 
@@ -3715,8 +3755,8 @@ def test_should_update_media_stream_config(httpserver: HTTPServer, get_api_clien
         calls_media_stream_config_request=request, media_stream_config_id=given_id
     )
 
-    expected_response = CallsMediaStreamConfigResponse(
-        id=given_id, url=given_url, name=given_name
+    expected_response = CallsMediaStreamingConfigResponse(
+        id=given_id, url=given_url, type=given_type, name=given_name
     )
     assert api_response == expected_response
 
@@ -3725,9 +3765,11 @@ def test_should_delete_media_stream_config(httpserver: HTTPServer, get_api_clien
     given_url = "string"
     given_name = "Media-stream config"
     given_id = "string"
+    given_type = CallsResponseMediaStreamConfigType.MEDIA_STREAMING
 
     given_response = {
         "id": given_id,
+        "type": given_type,
         "name": given_name,
         "url": given_url,
     }
@@ -3742,8 +3784,8 @@ def test_should_delete_media_stream_config(httpserver: HTTPServer, get_api_clien
         media_stream_config_id=given_id
     )
 
-    expected_response = CallsMediaStreamConfigResponse(
-        id=given_id, url=given_url, name=given_name
+    expected_response = CallsMediaStreamingConfigResponse(
+        id=given_id, url=given_url, name=given_name, type=given_type
     )
     assert api_response == expected_response
 

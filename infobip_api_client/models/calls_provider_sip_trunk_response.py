@@ -19,20 +19,11 @@ import json
 
 from pydantic import ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional
-from infobip_api_client.models.calls_anonymization_type import CallsAnonymizationType
-from infobip_api_client.models.calls_audio_codec import CallsAudioCodec
 from infobip_api_client.models.calls_billing_package import CallsBillingPackage
-from infobip_api_client.models.calls_dtmf_type import CallsDtmfType
-from infobip_api_client.models.calls_fax_type import CallsFaxType
-from infobip_api_client.models.calls_number_presentation_format import (
-    CallsNumberPresentationFormat,
-)
 from infobip_api_client.models.calls_provider import CallsProvider
 from infobip_api_client.models.calls_sbc_hosts import CallsSbcHosts
 from infobip_api_client.models.calls_sip_options import CallsSipOptions
-from infobip_api_client.models.calls_sip_trunk_location import CallsSipTrunkLocation
 from infobip_api_client.models.calls_sip_trunk_response import CallsSipTrunkResponse
-from infobip_api_client.models.calls_sip_trunk_type import CallsSipTrunkType
 from typing import Optional, Set
 from typing_extensions import Self
 

@@ -1,5 +1,3 @@
-from infobip_api_client import SmsMessageContent
-
 # Infobip API Python Client
 
 <img src="https://cdn-web.infobip.com/uploads/2023/01/Infobip-logo.svg" height="93px" alt="Infobip" />
@@ -15,7 +13,7 @@ We use [OpenAPI Generator](https://openapi-generator.tech/) to generate the pack
 
 
 #### Table of contents:
-* [API documentation](#documentation)
+* [API documentation](#api-documentation)
 * [General Info](#general-info)
 * [Installation](#installation)
 * [Quickstart](#quickstart)
@@ -75,7 +73,7 @@ Now you are ready use the API.
 Here's a basic example of sending the SMS message.
 
 ```python
-    from infobip_api_client.models import SmsAdvancedTextualRequest, SmsTextualMessage, SmsDestination, SmsResponse
+    from infobip_api_client.models import SmsRequest, SmsMessage, SmsMessageContent, SmsTextContent, SmsDestination, SmsResponse
     from infobip_api_client.api.sms_api import SmsApi
 
     sms_request = SmsRequest(
@@ -128,7 +126,7 @@ Bulk ID will be received only when you send a message to more than one destinati
 ```
 
 #### Receive sent SMS report
-For each SMS that you send out, we can send you a message delivery report in real time. All you need to do is specify your endpoint when sending SMS in `notify_url` field of `SmsTextualMessage`, or subscribe for reports by contacting our support team.
+All you need to do is specify your endpoint when sending SMS in the `webhooks.delivery.url` field of your request, or subscribe for reports by contacting our support team at support@infobip.com.
 e.g. `https://{yourDomain}/delivery-reports`
 
 Example of webhook implementation using Flask:
@@ -145,7 +143,7 @@ Example of webhook implementation using Flask:
         for result in delivery_results.results:
             print("message {0} sent at {1}".format(result.message_id, result.sent_at))
 ```
-If you prefer to use your own serializer, please pay attention to the supported [date format](https://www.infobip.com/docs/essentials/integration-best-practices#date-formats).
+If you prefer to use your own serializer, please pay attention to the supported [date format](https://www.infobip.com/docs/essentials/api-essentials/integration-best-practices#date-formats-backward-compatibility).
 
 #### Fetching delivery reports
 If you are for any reason unable to receive real time delivery reports on your endpoint, you can use `message_id` or `bulk_id` to fetch them.
@@ -194,7 +192,7 @@ Example of webhook implementation using Flask:
 For 2FA quick start guide please check [these examples](two-factor-authentication.md).
 
 #### Calls
-For Calls quick start guide please check [these_examples](calls.md)
+For Calls quick start guide please check [these examples](calls.md)
 
 ## Ask for help
 

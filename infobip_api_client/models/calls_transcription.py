@@ -19,7 +19,9 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool
 from typing import Any, ClassVar, Dict, List, Optional
-from infobip_api_client.models.calls_language import CallsLanguage
+from infobip_api_client.models.call_transcription_language import (
+    CallTranscriptionLanguage,
+)
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,7 +31,7 @@ class CallsTranscription(BaseModel):
     CallsTranscription
     """  # noqa: E501
 
-    language: CallsLanguage
+    language: CallTranscriptionLanguage
     send_interim_results: Optional[StrictBool] = Field(
         default=False,
         description="Flag indicating whether interim transcription results should be sent.",

@@ -25,7 +25,7 @@ from typing_extensions import Self
 
 class MessageStatus(BaseModel):
     """
-    Indicates whether the initiated email has been successfully sent, not sent, delivered, not delivered, waiting for delivery or any other possible status.
+    Indicates the message status.
     """  # noqa: E501
 
     group_id: Optional[StrictInt] = Field(
@@ -37,16 +37,14 @@ class MessageStatus(BaseModel):
     id: Optional[StrictInt] = Field(default=None, description="Status ID.")
     name: Optional[StrictStr] = Field(default=None, description="Status name.")
     description: Optional[StrictStr] = Field(
-        default=None, description="Human-readable description of the status."
+        default=None, description="Status description."
     )
-    action: Optional[StrictStr] = Field(default=None, description="Action name.")
     __properties: ClassVar[List[str]] = [
         "groupId",
         "groupName",
         "id",
         "name",
         "description",
-        "action",
     ]
 
     model_config = ConfigDict(
@@ -104,7 +102,6 @@ class MessageStatus(BaseModel):
                 "id": obj.get("id"),
                 "name": obj.get("name"),
                 "description": obj.get("description"),
-                "action": obj.get("action"),
             }
         )
         return _obj

@@ -19,23 +19,22 @@ from pydantic import (
     BaseModel,
     ConfigDict,
     Field,
-    StrictStr,
     ValidationError,
     field_validator,
 )
-from typing import Any, List, Optional
+from typing import Any, Optional
 from infobip_api_client.models.sms_binary_content import SmsBinaryContent
 from infobip_api_client.models.sms_text_content import SmsTextContent
-from pydantic import StrictStr, Field
-from typing import Union, List, Set, Optional, Dict
-from typing_extensions import Literal, Self
+from pydantic import Field
+from typing import Union, Set, Optional, Dict
+from typing_extensions import Self
 
-SMSLOGCONTENT_ONE_OF_SCHEMAS = ["SmsBinaryContent", "SmsTextContent"]
+SMSMESSAGECONTENT_ONE_OF_SCHEMAS = ["SmsBinaryContent", "SmsTextContent"]
 
 
 class SmsMessageContent(BaseModel):
     """
-    SmsLogContent
+    Message content.
     """
 
     # data type: SmsBinaryContent
@@ -88,13 +87,13 @@ class SmsMessageContent(BaseModel):
         if match > 1:
             # more than 1 match
             raise ValueError(
-                "Multiple matches found when setting `actual_instance` in SmsLogContent with oneOf schemas: SmsBinaryContent, SmsTextContent. Details: "
+                "Multiple matches found when setting `actual_instance` in SmsMessageContent with oneOf schemas: SmsBinaryContent, SmsTextContent. Details: "
                 + ", ".join(error_messages)
             )
         elif match == 0:
             # no match
             raise ValueError(
-                "No match found when setting `actual_instance` in SmsLogContent with oneOf schemas: SmsBinaryContent, SmsTextContent. Details: "
+                "No match found when setting `actual_instance` in SmsMessageContent with oneOf schemas: SmsBinaryContent, SmsTextContent. Details: "
                 + ", ".join(error_messages)
             )
         else:
@@ -127,13 +126,13 @@ class SmsMessageContent(BaseModel):
         if match > 1:
             # more than 1 match
             raise ValueError(
-                "Multiple matches found when deserializing the JSON string into SmsLogContent with oneOf schemas: SmsBinaryContent, SmsTextContent. Details: "
+                "Multiple matches found when deserializing the JSON string into SmsMessageContent with oneOf schemas: SmsBinaryContent, SmsTextContent. Details: "
                 + ", ".join(error_messages)
             )
         elif match == 0:
             # no match
             raise ValueError(
-                "No match found when deserializing the JSON string into SmsLogContent with oneOf schemas: SmsBinaryContent, SmsTextContent. Details: "
+                "No match found when deserializing the JSON string into SmsMessageContent with oneOf schemas: SmsBinaryContent, SmsTextContent. Details: "
                 + ", ".join(error_messages)
             )
         else:

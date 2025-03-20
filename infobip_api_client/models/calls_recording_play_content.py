@@ -20,7 +20,6 @@ import json
 from pydantic import ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
 from infobip_api_client.models.calls_play_content import CallsPlayContent
-from infobip_api_client.models.calls_play_content_type import CallsPlayContentType
 from typing import Optional, Set
 from typing_extensions import Self
 

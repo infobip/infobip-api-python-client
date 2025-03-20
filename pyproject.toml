@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "infobip_api_client"
-version = "5.0.0"
+version = "5.1.0"
 description = "This is a Python package for Infobip API and you can use it as a dependency to add Infobip APIs to your application."
 authors = ["Infobip support <support@infobip.com>"]
 license = "MIT License"
@@ -12,17 +12,18 @@ include = ["infobip_api_client/py.typed"]
 [tool.poetry.dependencies]
 python = "^3.8"
 
-urllib3 = ">= 1.25.3"
-python-dateutil = ">=2.8.2"
+python_dateutil = ">=2.5.3"
+setuptools = ">=72.1.0"
+urllib3 = ">=1.25.3, < 2.1.0"
 pydantic = ">=2"
 typing-extensions = ">=4.7.1"
 
 [tool.poetry.dev-dependencies]
-pytest = ">=7.2.1"
-tox = ">=3.9.0"
-flake8 = ">=4.0.0"
-types-python-dateutil = ">=2.8.19.14"
-mypy = "1.4.1"
+pytest="6.2.5"
+pytest-httpserver="1.0.8"
+pytest-cases="3.6.8"
+pytest-cov="3.0.0"
+werkzeug="3.0.3"
 
 
 [build-system]

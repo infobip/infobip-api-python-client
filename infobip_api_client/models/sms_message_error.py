@@ -19,7 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from infobip_api_client.models.sms_message_error_group import SmsMessageErrorGroup
+from infobip_api_client.models.message_error_group import MessageErrorGroup
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -32,7 +32,7 @@ class SmsMessageError(BaseModel):
     group_id: Optional[StrictInt] = Field(
         default=None, description="Error group ID.", alias="groupId"
     )
-    group_name: Optional[SmsMessageErrorGroup] = Field(default=None, alias="groupName")
+    group_name: Optional[MessageErrorGroup] = Field(default=None, alias="groupName")
     id: Optional[StrictInt] = Field(default=None, description="Error ID.")
     name: Optional[StrictStr] = Field(
         default=None,

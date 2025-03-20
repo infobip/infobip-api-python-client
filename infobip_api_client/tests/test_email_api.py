@@ -1,17 +1,12 @@
 import datetime
 import os
-import pytest
-from pathlib import Path
-from pytest_httpserver import HTTPServer
 
+import pytest
+from pytest_httpserver import HTTPServer
 from infobip_api_client import (
     ApiClient,
     Configuration,
     EmailApi,
-    EmailDomainIpRequest,
-    EmailDomainIpResponse,
-    EmailDomainIp,
-    EmailSimpleApiResponse,
     EmailAddDomainRequest,
     EmailDomainResponse,
     EmailTrackingResponse,
@@ -35,25 +30,32 @@ from infobip_api_client import (
     MessagePrice,
     MessageError,
     EmailReturnPathAddressRequest,
-    EmailGetSuppressionType,
     EmailSuppressionInfoPageResponse,
     EmailSuppressionInfo,
     EmailPageDetails,
-    EmailAddDeleteSuppressionType,
     EmailAddSuppressionRequest,
     EmailAddSuppression,
     EmailDeleteSuppressionRequest,
     EmailDeleteSuppression,
     EmailDomainAccess,
     EmailDomainInfoPageResponse,
-    EmailDomainInfo, EmailIpResponse, EmailIpDetailResponse, EmailIpPoolResponse, EmailIpPoolCreateRequest,
+    EmailDomainInfo,
+    EmailAddSuppressionType,
+    EmailSuppressionType,
+    EmailIpResponse,
+    EmailIpDetailResponse,
+    EmailIpPoolResponse,
+    EmailIpPoolDetailResponse,
+    EmailIpPoolAssignIpApiRequest,
+    EmailIpDomainResponse,
+    EmailDomainIpApiPool,
+    EmailDomainIpPoolAssignApiRequest,
 )
 
-DOMAIN_IPS = "/email/1/domain-ips"
 DOMAINS = "/email/1/domains"
 DOMAIN = "/email/1/domains/{domainName}"
 DOMAIN_VERIFY = "/email/1/domains/{domainName}/verify"
-IPS = "/email/1/ips"
+
 VALIDATION = "/email/2/validation"
 BULKS = "/email/1/bulks"
 BULKS_STATUS = "/email/1/bulks/status"
@@ -62,92 +64,15 @@ REPORTS = "/email/1/reports"
 RETURN_PATH = "/email/1/domains/{domainName}/return-path"
 EMAIL_SUPPRESSION = "/email/1/suppressions"
 EMAIL_SUPPRESSION_DOMAINS = "/email/1/suppressions/domains"
-EMAIL_MANAGEMENT_IPS = "/email/1/ip-management/ips"
-EMAIL_MANAGEMENT_IP = "/email/1/ip-management/ips/{ipId}"
-EMAIL_MANAGEMENT_POOLS = "/email/1/ip-management/pools"
-EMAIL_MANAGEMENT_POOL = "/email/1/ip-management/pools/{poolId}"
 
-TEMP_FILE_PATH = Path(os.path.dirname(__file__)) / "temp"
+EMAIL_IPS = "/email/1/ip-management/ips"
+EMAIL_IP = "/email/1/ip-management/ips/{ipId}"
+EMAIL_IP_POOLS = "/email/1/ip-management/pools"
+EMAIL_IP_POOL = "/email/1/ip-management/pools/{poolId}"
+EMAIL_ASSIGN_IP_POOL = "/email/1/ip-management/pools/{poolId}/ips"
+EMAIL_IP_DOMAIN = "/email/1/ip-management/domains/{domainId}"
+EMAIL_ASSIGN_IP_DOMAIN_POOL = "/email/1/ip-management/domains/{domainId}/pools"
 
-
-def test_should_get_all_domain_ips(httpserver: HTTPServer, get_api_client):
-    given_domain_name = "example.com"
-    given_ip_address = "given_ip"
-    given_dedicated = True
-    given_assigned_domain_count = 1
-    given_status = "ASSIGNABLE"
-
-    given_response = {
-        "result": [
-            {
-                "ipAddress": given_ip_address,
-                "dedicated": given_dedicated,
-                "assignedDomainCount": given_assigned_domain_count,
-                "status": given_status,
-            }
-        ]
-    }
-
-    setup_request(httpserver, DOMAIN_IPS, given_response)
-
-    api_instance = EmailApi(get_api_client)
-    api_response = api_instance.get_all_domain_ips(given_domain_name)
-
-    expected_response = EmailDomainIpResponse(
-        result=[
-            EmailDomainIp(
-                ip_address=given_ip_address,
-                dedicated=given_dedicated,
-                assigned_domain_count=given_assigned_domain_count,
-                status=given_status,
-            )
-        ]
-    )
-
-    assert api_response == expected_response
-
-
-def test_should_assign_ip_to_domain(httpserver: HTTPServer, get_api_client):
-    given_result = "OK"
-    given_domain_name = "example.com"
-    given_ip_address = "given_ip"
-
-    given_response = {"result": given_result}
-
-    expected_request = {"domainName": given_domain_name, "ipAddress": given_ip_address}
-
-    setup_request(
-        httpserver, DOMAIN_IPS, given_response, "POST", request_body=expected_request
-    )
-
-    api_instance = EmailApi(get_api_client)
-    request = EmailDomainIpRequest(
-        domain_name=given_domain_name, ip_address=given_ip_address
-    )
-    api_response = api_instance.assign_ip_to_domain(request)
-
-    expected_response = EmailSimpleApiResponse(result=given_result)
-
-    assert api_response == expected_response
-
-
-def test_should_remove_ip_from_domain(httpserver: HTTPServer, get_api_client):
-    given_result = "OK"
-    given_domain_name = "example.com"
-    given_ip_address = "given_ip"
-
-    given_response = {"result": given_result}
-
-    setup_request(httpserver, DOMAIN_IPS, given_response, "DELETE")
-
-    api_instance = EmailApi(get_api_client)
-    api_response = api_instance.remove_ip_from_domain(
-        given_domain_name, given_ip_address
-    )
-
-    expected_response = EmailSimpleApiResponse(result=given_result)
-
-    assert api_response == expected_response
 
 
 def test_should_add_domain(httpserver: HTTPServer, get_api_client):
@@ -416,44 +341,8 @@ def test_should_verify_domain(httpserver: HTTPServer, get_api_client):
     assert api_response == None
 
 
-def test_should_get_all_ips(httpserver: HTTPServer, get_api_client):
-    given_ip_address = "given_ip"
-    given_dedicated = True
-    given_assigned_domain_count = 1
-    given_status = "ASSIGNABLE"
-
-    given_response = {
-        "result": [
-            {
-                "ipAddress": given_ip_address,
-                "dedicated": given_dedicated,
-                "assignedDomainCount": given_assigned_domain_count,
-                "status": given_status,
-            }
-        ]
-    }
-
-    setup_request(httpserver, IPS, given_response)
-
-    api_instance = EmailApi(get_api_client)
-    api_response = api_instance.get_all_ips()
-
-    expected_response = EmailDomainIpResponse(
-        result=[
-            EmailDomainIp(
-                ip_address=given_ip_address,
-                dedicated=given_dedicated,
-                assigned_domain_count=given_assigned_domain_count,
-                status=given_status,
-            )
-        ]
-    )
-
-    assert api_response == expected_response
-
-
 def test_should_validate_email(httpserver: HTTPServer, get_api_client):
-    given_to = "john.smith@example.com"
+    given_to = "john.smith@abc.com"
     given_valid_syntax = True
     given_did_you_mean = None
 
@@ -544,7 +433,7 @@ def test_should_get_scheduled_emails_statuses(httpserver: HTTPServer, get_api_cl
 
 def test_should_reschedule_emails(httpserver: HTTPServer, get_api_client):
     given_bulk_id = "BULK-ID-123-xyz"
-    given_send_at = "2023-08-01T16:10:00+05:30"
+    given_send_at = "2023-08-01T16:10:00.000+05:30"
     given_send_at_datetime = datetime.datetime(
         2023,
         8,
@@ -594,8 +483,8 @@ def test_should_update_scheduled_email_statuses(httpserver: HTTPServer, get_api_
 
 
 def test_should_send_fully_featured_email(httpserver: HTTPServer, get_api_client):
-    given_to = "john.smith@example.com"
-    given_another_to = "alice.grey@example.com"
+    given_to = "john.smith@somedomain.com"
+    given_another_to = "alice.grey@somecompany.com"
     given_bulk_id = "snxemd8u52v7v84iiu69"
     given_group_id = 1
     given_group_name = "PENDING"
@@ -605,8 +494,8 @@ def test_should_send_fully_featured_email(httpserver: HTTPServer, get_api_client
     given_attachment_text = "Test file text"
     given_message_id = "somExternalMessageId0"
     given_another_message_id = "someExternalMessageId1"
-    given_from = "Jane Smith <jane.smith@example.com>"
-    given_reply_to = "all.replies@example.com"
+    given_from = "Jane Smith <jane.smith@somecompany.com>"
+    given_reply_to = "all.replies@somedomain.com"
     given_subject = "Mail subject text"
     given_text = "Mail body text"
     given_html = "<h1>Html body</h1><p>Rich HTML message body.</p>"
@@ -614,6 +503,11 @@ def test_should_send_fully_featured_email(httpserver: HTTPServer, get_api_client
     given_notify_url = "https://www.example.com/email/advanced"
     given_notify_content_type = "application/json"
     given_callback_data = "DLR callback data"
+
+    temp_file_name = "attachment.txt"
+    temp_file_content = create_temp_file_with_content(
+        temp_file_name, given_attachment_text
+    )
 
     given_response = {
         "bulkId": given_bulk_id,
@@ -645,28 +539,22 @@ def test_should_send_fully_featured_email(httpserver: HTTPServer, get_api_client
 
     setup_multipart_request(httpserver, EMAIL_SEND, given_response, 200)
 
-    temp_path = Path(TEMP_FILE_PATH)
-    temp_path.mkdir(parents=True, exist_ok=True)
-    attachment_file_path = create_temp_file_with_content(temp_path, "attachment.txt", given_attachment_text)
+    api_instance = EmailApi(get_api_client)
+    api_response = api_instance.send_email(
+        to=[given_to, given_another_to],
+        var_from=given_from,
+        subject=given_subject,
+        reply_to=given_reply_to,
+        html=given_html,
+        text=given_text,
+        attachment=[temp_file_content],
+        intermediate_report=intermediate_report,
+        notify_url=given_notify_url,
+        notify_content_type=given_notify_content_type,
+        callback_data=given_callback_data,
+    )
 
-    try:
-        api_instance = EmailApi(get_api_client)
-        api_response = api_instance.send_email(
-            to=[given_to, given_another_to],
-            var_from=given_from,
-            subject=given_subject,
-            reply_to=given_reply_to,
-            html=given_html,
-            text=given_text,
-            attachment=[read_temp_file(attachment_file_path)],
-            intermediate_report=intermediate_report,
-            notify_url=given_notify_url,
-            notify_content_type=given_notify_content_type,
-            callback_data=given_callback_data,
-        )
-    finally:
-        attachment_file_path.unlink()
-        temp_path.rmdir()
+    os.remove(temp_file_name)
 
     assert api_response.bulk_id == given_bulk_id
 
@@ -698,7 +586,7 @@ def test_should_get_email_delivery_reports(httpserver: HTTPServer, get_api_clien
 
     given_bulk_id = "csdstgteet4fath2pclbq"
     given_message_id = "45653761-3a88-4060-869e-ae372adc7a51"
-    given_to = "john.doe@example.com"
+    given_to = "john.doe@email.com"
 
     given_response = {
         "results": [
@@ -857,10 +745,10 @@ def test_should_update_return_path(httpserver: HTTPServer, get_api_client):
 
 def test_should_get_email_suppressions(httpserver: HTTPServer, get_api_client):
     given_domain_name = "example.com"
-    given_email_address = "jane.smith@example.com"
-    given_type = EmailGetSuppressionType.BOUNCE
+    given_email_address = "jane.smith@somecompany.com"
+    given_type = "BOUNCE"
     given_created_date = "2024-08-14T14:02:17.366"
-    given_reason = "550 5.1.1 <jane.smith@example.com>: user does not exist"
+    given_reason = "550 5.1.1 <jane.smith@somecompany.com>: user does not exist"
     given_page = 0
     given_size = 100
 
@@ -869,7 +757,7 @@ def test_should_get_email_suppressions(httpserver: HTTPServer, get_api_client):
             {
                 "domainName": given_domain_name,
                 "emailAddress": given_email_address,
-                "type": given_type.value,
+                "type": given_type,
                 "createdDate": given_created_date,
                 "reason": given_reason,
             }
@@ -900,11 +788,11 @@ def test_should_get_email_suppressions(httpserver: HTTPServer, get_api_client):
 
 def test_should_add_email_suppressions(httpserver: HTTPServer, get_api_client):
     given_domain_name1 = "example.com"
-    given_email_addresses1 = ["jane.smith@example.com", "john.doe@example.com"]
-    given_type = EmailAddDeleteSuppressionType.BOUNCE
+    given_email_addresses1 = ["jane.smith@somecompany.com", "john.doe@somecompany.com"]
+    given_type = EmailAddSuppressionType.BOUNCE
 
     given_domain_name2 = "example.com"
-    given_email_addresses2 = ["john.smith@example.com", "john.perry@example.com"]
+    given_email_addresses2 = ["john.smith@somecompany.com", "john.perry@gmail.com"]
 
     expected_request = {
         "suppressions": [
@@ -946,11 +834,11 @@ def test_should_add_email_suppressions(httpserver: HTTPServer, get_api_client):
 
 def test_should_delete_email_suppressions(httpserver: HTTPServer, get_api_client):
     given_domain_name1 = "example.com"
-    given_email_addresses1 = ["jane.smith@example.com", "john.doe@xample.com"]
-    given_type = EmailAddDeleteSuppressionType.BOUNCE
+    given_email_addresses1 = ["jane.smith@somecompany.com", "john.doe@somecompany.com"]
+    given_type = EmailSuppressionType.BOUNCE
 
     given_domain_name2 = "example.com"
-    given_email_addresses2 = ["john.smith@example.com", "john.perry@example.com"]
+    given_email_addresses2 = ["john.smith@somecompany.com", "john.perry@gmail.com"]
 
     expected_request = {
         "suppressions": [
@@ -1006,6 +894,7 @@ def test_should_get_suppression_domains(httpserver: HTTPServer, get_api_client):
     given_create_complaints1 = True
     given_delete_complaints1 = True
     given_read_overquotas1 = True
+    given_delete_overquotas1 = True
 
     given_domain_name2 = "example.com"
     given_data_access2 = EmailDomainAccess.GRANTED
@@ -1016,6 +905,7 @@ def test_should_get_suppression_domains(httpserver: HTTPServer, get_api_client):
     given_create_complaints2 = False
     given_delete_complaints2 = False
     given_read_overquotas2 = False
+    given_delete_overquotas2 = False
 
     given_page = 0
     given_size = 100
@@ -1032,6 +922,7 @@ def test_should_get_suppression_domains(httpserver: HTTPServer, get_api_client):
                 "createComplaints": given_create_complaints1,
                 "deleteComplaints": given_delete_complaints1,
                 "readOverquotas": given_read_overquotas1,
+                "deleteOverquotas": given_delete_overquotas1,
             },
             {
                 "domainName": given_domain_name2,
@@ -1043,6 +934,7 @@ def test_should_get_suppression_domains(httpserver: HTTPServer, get_api_client):
                 "createComplaints": given_create_complaints2,
                 "deleteComplaints": given_delete_complaints2,
                 "readOverquotas": given_read_overquotas2,
+                "deleteOverquotas": given_delete_overquotas2,
             },
         ],
         "paging": {"page": given_page, "size": given_size},
@@ -1065,6 +957,7 @@ def test_should_get_suppression_domains(httpserver: HTTPServer, get_api_client):
                 create_complaints=given_create_complaints1,
                 delete_complaints=given_delete_complaints1,
                 read_overquotas=given_read_overquotas1,
+                delete_overquotas=given_delete_overquotas1,
             ),
             EmailDomainInfo(
                 domain_name=given_domain_name2,
@@ -1076,6 +969,7 @@ def test_should_get_suppression_domains(httpserver: HTTPServer, get_api_client):
                 create_complaints=given_create_complaints2,
                 delete_complaints=given_delete_complaints2,
                 read_overquotas=given_read_overquotas2,
+                delete_overquotas=given_delete_overquotas2,
             ),
         ],
         paging=EmailPageDetails(page=given_page, size=given_size),
@@ -1083,38 +977,33 @@ def test_should_get_suppression_domains(httpserver: HTTPServer, get_api_client):
 
     assert response == expected_response
 
-
-def test_get_all_ips_management(httpserver: HTTPServer, get_api_client):
-    given_id = "DB3F9D439088BF73F5560443C8054AC4"
-    given_ip = "given_ip"
+def test_should_get_ips(httpserver: HTTPServer, get_api_client):
     given_response = [
         {
-            "id": given_id,
-            "ip": given_ip
+            "id": "DB3F9D439088BF73F5560443C8054AC4",
+            "ip": "198.51.100.0"
         }
     ]
 
-    setup_request(httpserver, EMAIL_MANAGEMENT_IPS, given_response)
+    setup_request(httpserver, EMAIL_IPS, given_response, "GET", 200)
 
     api_instance = EmailApi(get_api_client)
-    response = api_instance.get_all_ips_management()
+
+    api_response = api_instance.get_all_ips()
 
     expected_response = [
         EmailIpResponse(
-            id=given_id,
-            ip=given_ip
+            id="DB3F9D439088BF73F5560443C8054AC4",
+            ip="198.51.100.0"
         )
     ]
 
-    assert response == expected_response
+    assert api_response == expected_response
 
-
-def test_get_ip_management(httpserver: HTTPServer, get_api_client):
-    given_id = "DB3F9D439088BF73F5560443C8054AC4"
-
+def test_should_get_ip_details(httpserver: HTTPServer, get_api_client):
     given_response = {
-        "id": given_id,
-        "ip": "given_ip",
+        "id": "DB3F9D439088BF73F5560443C8054AC4",
+        "ip": "198.51.100.0",
         "pools": [
             {
                 "id": "08A3A7608750CC6E6080325A6ADF45B6",
@@ -1123,14 +1012,16 @@ def test_get_ip_management(httpserver: HTTPServer, get_api_client):
         ]
     }
 
-    setup_request(httpserver, EMAIL_MANAGEMENT_IP.replace("{ipId}", given_id), given_response)
+    ip_id = "DB3F9D439088BF73F5560443C8054AC4"
+    setup_request(httpserver, EMAIL_IP.replace("{ipId}", ip_id), given_response, "GET", 200)
 
     api_instance = EmailApi(get_api_client)
-    response = api_instance.get_ip_details(ip_id=given_id)
+
+    api_response = api_instance.get_ip_details(ip_id)
 
     expected_response = EmailIpDetailResponse(
-        id=given_id,
-        ip="given_ip",
+        id="DB3F9D439088BF73F5560443C8054AC4",
+        ip="198.51.100.0",
         pools=[
             EmailIpPoolResponse(
                 id="08A3A7608750CC6E6080325A6ADF45B6",
@@ -1139,96 +1030,188 @@ def test_get_ip_management(httpserver: HTTPServer, get_api_client):
         ]
     )
 
-    assert response == expected_response
+    assert api_response == expected_response
 
+def test_should_get_ip_pools(httpserver: HTTPServer, get_api_client):
+    given_response = [
+        {
+            "id": "08A3A7608750CC6E6080325A6ADF45B6",
+            "name": "IP pool name"
+        }
+    ]
 
-def test_create_ip_pool(httpserver: HTTPServer, get_api_client):
-    given_id = "08A3A7608750CC6E6080325A6ADF45B6"
-    given_name = "IP pool name"
-
-    given_response = {
-        "id": given_id,
-        "name": given_name
-    }
-
-    expected_request = {
-        "name": given_name
-    }
-
-    setup_request(httpserver, EMAIL_MANAGEMENT_POOLS, given_response, "POST", "201", request_body=expected_request)
+    setup_request(httpserver, EMAIL_IP_POOLS, given_response, "GET", 200)
 
     api_instance = EmailApi(get_api_client)
-    request = EmailIpPoolCreateRequest(name=given_name)
-    response = api_instance.create_ip_pool(email_ip_pool_create_request=request)
 
-    expected_response = EmailIpPoolResponse(
-        id=given_id,
-        name=given_name
-    )
+    api_response = api_instance.get_ip_pools()
 
-    assert response == expected_response
+    expected_response = [
+        EmailIpPoolResponse(
+            id="08A3A7608750CC6E6080325A6ADF45B6",
+            name="IP pool name"
+        )
+    ]
 
+    assert api_response == expected_response
 
-def test_update_ip_pool(httpserver: HTTPServer, get_api_client):
-    given_id = "08A3A7608750CC6E6080325A6ADF45B6"
-    given_name = "IP pool name"
-
+def test_should_get_ip_pool_details(httpserver: HTTPServer, get_api_client):
     given_response = {
-        "id": given_id,
-        "name": given_name
+        "id": "08A3A7608750CC6E6080325A6ADF45B6",
+        "name": "IP pool name",
+        "ips": [
+            {
+                "id": "DB3F9D439088BF73F5560443C8054AC4",
+                "ip": "example.com"
+            }
+        ]
     }
 
+    pool_id = "08A3A7608750CC6E6080325A6ADF45B6"
+    setup_request(httpserver, EMAIL_IP_POOL.replace("{poolId}", pool_id), given_response, "GET", 200)
+
+    api_instance = EmailApi(get_api_client)
+
+    api_response = api_instance.get_ip_pool(pool_id)
+
+    expected_response = EmailIpPoolDetailResponse(
+        id="08A3A7608750CC6E6080325A6ADF45B6",
+        name="IP pool name",
+        ips=[
+            EmailIpResponse(
+                id="DB3F9D439088BF73F5560443C8054AC4",
+                ip="example.com"
+            )
+        ]
+    )
+
+    assert api_response == expected_response
+
+def test_should_assign_ip_to_pool(httpserver: HTTPServer, get_api_client):
+    pool_id = "08A3A7608750CC6E6080325A6ADF45B6"
+    ip_id = "DB3F9D439088BF73F5560443C8054AC4"
+
     expected_request = {
-        "name": given_name
+        "ipId": ip_id
     }
 
     setup_request(
         httpserver,
-        EMAIL_MANAGEMENT_POOL.replace("{poolId}", given_id),
-        given_response, "PUT", "200", request_body=expected_request)
+        EMAIL_ASSIGN_IP_POOL.replace("{poolId}", pool_id),
+        None,
+        "POST",
+        204,
+        request_body=expected_request
+    )
+
+    given_request = EmailIpPoolAssignIpApiRequest(
+        ip_id=ip_id
+    )
 
     api_instance = EmailApi(get_api_client)
-    request = EmailIpPoolCreateRequest(name=given_name)
-    response = api_instance.update_ip_pool(
-        pool_id=given_id,
-        email_ip_pool_create_request=request
+    response = api_instance.assign_ip_to_pool(pool_id, given_request)
+
+    assert response is None
+
+def test_should_get_ip_domain_details(httpserver: HTTPServer, get_api_client):
+    given_response = {
+        "id": 1,
+        "name": "example.com",
+        "pools": [
+            {
+                "id": "08A3A7608750CC6E6080325A6ADF45B6",
+                "name": "IP pool name",
+                "priority": 0,
+                "ips": [
+                    {
+                        "id": "DB3F9D439088BF73F5560443C8054AC4",
+                        "ip": "198.51.100.0"
+                    }
+                ]
+            }
+        ]
+    }
+
+    domain_id = 1
+    setup_request(httpserver, EMAIL_IP_DOMAIN.replace("{domainId}", str(domain_id)), given_response, "GET", 200)
+
+    api_instance = EmailApi(get_api_client)
+
+    api_response = api_instance.get_ip_domain(domain_id)
+
+    expected_response = EmailIpDomainResponse(
+        id=1,
+        name="example.com",
+        pools=[
+            EmailDomainIpApiPool(
+                id="08A3A7608750CC6E6080325A6ADF45B6",
+                name="IP pool name",
+                priority=0,
+                ips=[
+                    EmailIpResponse(
+                        id="DB3F9D439088BF73F5560443C8054AC4",
+                        ip="198.51.100.0"
+                    )
+                ]
+            )
+        ]
     )
 
-    expected_response = EmailIpPoolResponse(
-        id=given_id,
-        name=given_name
+    assert api_response == expected_response
+
+def test_should_assign_pool_to_domain(httpserver: HTTPServer, get_api_client):
+    domain_id = 1
+    pool_id = "08A3A7608750CC6E6080325A6ADF45B6"
+    priority = 0
+
+    expected_request = {
+        "poolId": pool_id,
+        "priority": priority
+    }
+
+    setup_request(
+        httpserver,
+        EMAIL_ASSIGN_IP_DOMAIN_POOL.replace("{domainId}", str(domain_id)),
+        None,
+        "POST",
+        204,
+        request_body=expected_request
     )
 
-    assert response == expected_response
+    given_request = EmailDomainIpPoolAssignApiRequest(
+        pool_id=pool_id,
+        priority=priority
+    )
+
+
+    api_instance = EmailApi(get_api_client)
+    response = api_instance.assign_pool_to_domain(domain_id, given_request)
+
+    assert response is None
 
 
 def setup_multipart_request(
-        httpserver, endpoint: str, expected_response=None, status_code: int = 200
+    httpserver, endpoint: str, expected_response=None, status_code: int = 200
 ):
     httpserver.expect_request(uri=endpoint, method="POST").respond_with_json(
         expected_response, status=status_code
     )
 
 
-def create_temp_file_with_content(temp_path: Path, filename: str, content: str):
-    temp_file_path = temp_path / filename
-    with open(temp_file_path, "w") as temp_file:
+def create_temp_file_with_content(filename: str, content: str):
+    with open(filename, "w") as temp_file:
         temp_file.write(content)
-    return temp_file_path
-
-
-def read_temp_file(temp_file_path: str):
-    with open(temp_file_path, "rb") as temp_file:
+    with open(filename, "rb") as temp_file:
         return temp_file.read()
 
 
 def setup_request(
-        httpserver,
-        endpoint: str,
-        expected_response=None,
-        http_verb: str = "GET",
-        status_code: int = 200,
-        request_body=None,
+    httpserver,
+    endpoint: str,
+    expected_response=None,
+    http_verb: str = "GET",
+    status_code: int = 200,
+    request_body=None,
 ):
     if request_body is not None:
         httpserver.expect_request(

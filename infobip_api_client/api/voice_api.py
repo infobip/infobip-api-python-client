@@ -11,14 +11,12 @@
 
     Do not edit the class manually.
 """  # noqa: E501
-import warnings
-from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
-from typing import Any, Dict, List, Optional, Tuple, Union
-from typing_extensions import Annotated
+from pydantic import validate_call, StrictFloat
+from typing import Any, Dict, Tuple
 
-from datetime import datetime
+from datetime import date, datetime
 from pydantic import Field, StrictBool, StrictInt, StrictStr
-from typing import List, Optional
+from typing import List, Optional, Union
 from typing_extensions import Annotated
 from infobip_api_client.models.calls_advanced_body import CallsAdvancedBody
 from infobip_api_client.models.calls_bulk_request import CallsBulkRequest
@@ -126,8 +124,6 @@ class VoiceApi:
             "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -198,8 +194,6 @@ class VoiceApi:
             "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -270,8 +264,6 @@ class VoiceApi:
             "403": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -360,7 +352,7 @@ class VoiceApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> str:
+    ) -> None:
         """Delete Voice IVR Scenarios
 
         This method allows you to delete a Voice IVR Scenario.
@@ -398,13 +390,11 @@ class VoiceApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "str",
+            "200": None,
             "401": "ApiException",
             "403": "ApiException",
             "404": "ApiException",
             "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -436,7 +426,7 @@ class VoiceApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[str]:
+    ) -> ApiResponse[None]:
         """Delete Voice IVR Scenarios
 
         This method allows you to delete a Voice IVR Scenario.
@@ -474,13 +464,11 @@ class VoiceApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "str",
+            "200": None,
             "401": "ApiException",
             "403": "ApiException",
             "404": "ApiException",
             "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -550,13 +538,11 @@ class VoiceApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "str",
+            "200": None,
             "401": "ApiException",
             "403": "ApiException",
             "404": "ApiException",
             "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -603,6 +589,260 @@ class VoiceApi:
         return self.api_client.param_serialize(
             method="DELETE",
             resource_path="/voice/ivr/1/scenarios/{id}",
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth,
+        )
+
+    @validate_call
+    def download_voice_ivr_recorded_file(
+        self,
+        id: Annotated[StrictStr, Field(description="File ID to download.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> bytearray:
+        """Download Voice IVR Recorded File.
+
+        This method allows you to download Voice IVR Recorded Audio File. The returned audio data is encoded as PCM 16bit 8kHz WAVE audio. The files are available on Infobip servers for 2 months.
+
+        :param id: File ID to download. (required)
+        :type id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._download_voice_ivr_recorded_file_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "bytearray",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+    @validate_call
+    def download_voice_ivr_recorded_file_with_http_info(
+        self,
+        id: Annotated[StrictStr, Field(description="File ID to download.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[bytearray]:
+        """Download Voice IVR Recorded File.
+
+        This method allows you to download Voice IVR Recorded Audio File. The returned audio data is encoded as PCM 16bit 8kHz WAVE audio. The files are available on Infobip servers for 2 months.
+
+        :param id: File ID to download. (required)
+        :type id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._download_voice_ivr_recorded_file_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "bytearray",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+    @validate_call
+    def download_voice_ivr_recorded_file_without_preload_content(
+        self,
+        id: Annotated[StrictStr, Field(description="File ID to download.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Download Voice IVR Recorded File.
+
+        This method allows you to download Voice IVR Recorded Audio File. The returned audio data is encoded as PCM 16bit 8kHz WAVE audio. The files are available on Infobip servers for 2 months.
+
+        :param id: File ID to download. (required)
+        :type id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._download_voice_ivr_recorded_file_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "bytearray",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+    def _download_voice_ivr_recorded_file_serialize(
+        self,
+        id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {}
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if id is not None:
+            _path_params["id"] = id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+        # set the HTTP header `Accept`
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/octet-stream", "application/json"]
+        )
+
+        # authentication setting
+        _auth_settings: List[str] = ["APIKeyHeader"]
+
+        return self.api_client.param_serialize(
+            method="GET",
+            resource_path="/voice/ivr/1/files/{id}",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -673,8 +913,6 @@ class VoiceApi:
             "403": "ApiException",
             "404": "ApiException",
             "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -744,8 +982,6 @@ class VoiceApi:
             "403": "ApiException",
             "404": "ApiException",
             "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -815,8 +1051,6 @@ class VoiceApi:
             "403": "ApiException",
             "404": "ApiException",
             "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -3177,7 +3411,7 @@ class VoiceApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[CallsRecordedAudioFilesResponse]:
+    ) -> CallsRecordedAudioFilesResponse:
         """Search Voice IVR Recorded Files
 
         This method allows you to search Voice IVR Recorded Audio Files.
@@ -3224,12 +3458,10 @@ class VoiceApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[CallsRecordedAudioFilesResponse]",
+            "200": "CallsRecordedAudioFilesResponse",
             "401": "ApiException",
             "403": "ApiException",
             "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -3268,7 +3500,7 @@ class VoiceApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[CallsRecordedAudioFilesResponse]]:
+    ) -> ApiResponse[CallsRecordedAudioFilesResponse]:
         """Search Voice IVR Recorded Files
 
         This method allows you to search Voice IVR Recorded Audio Files.
@@ -3315,12 +3547,10 @@ class VoiceApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[CallsRecordedAudioFilesResponse]",
+            "200": "CallsRecordedAudioFilesResponse",
             "401": "ApiException",
             "403": "ApiException",
             "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -3406,12 +3636,10 @@ class VoiceApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[CallsRecordedAudioFilesResponse]",
+            "200": "CallsRecordedAudioFilesResponse",
             "401": "ApiException",
             "403": "ApiException",
             "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -3506,13 +3734,13 @@ class VoiceApi:
             Field(description="The label of scenario to search by."),
         ] = None,
         last_usage_date_since: Annotated[
-            Optional[datetime],
+            Optional[date],
             Field(
                 description="Lower limit of last usage date in `yyyy-MM-dd` format. Note: For scenarios where `lastUsageDate` is `null`, filtering matches `createTime`."
             ),
         ] = None,
         last_usage_date_until: Annotated[
-            Optional[datetime],
+            Optional[date],
             Field(
                 description="Upper limit of last usage date `yyyy-MM-dd` format. Note: For scenarios where `lastUsageDate` is `null`, filtering matches `createTime`."
             ),
@@ -3542,9 +3770,9 @@ class VoiceApi:
         :param label: The label of scenario to search by.
         :type label: str
         :param last_usage_date_since: Lower limit of last usage date in `yyyy-MM-dd` format. Note: For scenarios where `lastUsageDate` is `null`, filtering matches `createTime`.
-        :type last_usage_date_since: datetime
+        :type last_usage_date_since: date
         :param last_usage_date_until: Upper limit of last usage date `yyyy-MM-dd` format. Note: For scenarios where `lastUsageDate` is `null`, filtering matches `createTime`.
-        :type last_usage_date_until: datetime
+        :type last_usage_date_until: date
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3585,8 +3813,6 @@ class VoiceApi:
             "401": "ApiException",
             "403": "ApiException",
             "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -3617,13 +3843,13 @@ class VoiceApi:
             Field(description="The label of scenario to search by."),
         ] = None,
         last_usage_date_since: Annotated[
-            Optional[datetime],
+            Optional[date],
             Field(
                 description="Lower limit of last usage date in `yyyy-MM-dd` format. Note: For scenarios where `lastUsageDate` is `null`, filtering matches `createTime`."
             ),
         ] = None,
         last_usage_date_until: Annotated[
-            Optional[datetime],
+            Optional[date],
             Field(
                 description="Upper limit of last usage date `yyyy-MM-dd` format. Note: For scenarios where `lastUsageDate` is `null`, filtering matches `createTime`."
             ),
@@ -3653,9 +3879,9 @@ class VoiceApi:
         :param label: The label of scenario to search by.
         :type label: str
         :param last_usage_date_since: Lower limit of last usage date in `yyyy-MM-dd` format. Note: For scenarios where `lastUsageDate` is `null`, filtering matches `createTime`.
-        :type last_usage_date_since: datetime
+        :type last_usage_date_since: date
         :param last_usage_date_until: Upper limit of last usage date `yyyy-MM-dd` format. Note: For scenarios where `lastUsageDate` is `null`, filtering matches `createTime`.
-        :type last_usage_date_until: datetime
+        :type last_usage_date_until: date
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3696,8 +3922,6 @@ class VoiceApi:
             "401": "ApiException",
             "403": "ApiException",
             "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -3728,13 +3952,13 @@ class VoiceApi:
             Field(description="The label of scenario to search by."),
         ] = None,
         last_usage_date_since: Annotated[
-            Optional[datetime],
+            Optional[date],
             Field(
                 description="Lower limit of last usage date in `yyyy-MM-dd` format. Note: For scenarios where `lastUsageDate` is `null`, filtering matches `createTime`."
             ),
         ] = None,
         last_usage_date_until: Annotated[
-            Optional[datetime],
+            Optional[date],
             Field(
                 description="Upper limit of last usage date `yyyy-MM-dd` format. Note: For scenarios where `lastUsageDate` is `null`, filtering matches `createTime`."
             ),
@@ -3764,9 +3988,9 @@ class VoiceApi:
         :param label: The label of scenario to search by.
         :type label: str
         :param last_usage_date_since: Lower limit of last usage date in `yyyy-MM-dd` format. Note: For scenarios where `lastUsageDate` is `null`, filtering matches `createTime`.
-        :type last_usage_date_since: datetime
+        :type last_usage_date_since: date
         :param last_usage_date_until: Upper limit of last usage date `yyyy-MM-dd` format. Note: For scenarios where `lastUsageDate` is `null`, filtering matches `createTime`.
-        :type last_usage_date_until: datetime
+        :type last_usage_date_until: date
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3807,8 +4031,6 @@ class VoiceApi:
             "401": "ApiException",
             "403": "ApiException",
             "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -3860,12 +4082,12 @@ class VoiceApi:
             _query_params.append(("label", label))
 
         if last_usage_date_since is not None:
-            if isinstance(last_usage_date_since, datetime):
+            if isinstance(last_usage_date_since, date):
                 _query_params.append(
                     (
                         "lastUsageDateSince",
                         last_usage_date_since.strftime(
-                            self.api_client.configuration.datetime_format
+                            self.api_client.configuration.date_format
                         ),
                     )
                 )
@@ -3873,12 +4095,12 @@ class VoiceApi:
                 _query_params.append(("lastUsageDateSince", last_usage_date_since))
 
         if last_usage_date_until is not None:
-            if isinstance(last_usage_date_until, datetime):
+            if isinstance(last_usage_date_until, date):
                 _query_params.append(
                     (
                         "lastUsageDateUntil",
                         last_usage_date_until.strftime(
-                            self.api_client.configuration.datetime_format
+                            self.api_client.configuration.date_format
                         ),
                     )
                 )
@@ -4780,8 +5002,6 @@ class VoiceApi:
             "401": "ApiException",
             "403": "ApiException",
             "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -4851,8 +5071,6 @@ class VoiceApi:
             "401": "ApiException",
             "403": "ApiException",
             "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -4922,8 +5140,6 @@ class VoiceApi:
             "401": "ApiException",
             "403": "ApiException",
             "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -5056,8 +5272,6 @@ class VoiceApi:
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -5133,8 +5347,6 @@ class VoiceApi:
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
         }
 
         response_data = self.api_client.call_api(
@@ -5210,8 +5422,6 @@ class VoiceApi:
             "404": "ApiException",
             "429": "ApiException",
             "500": "ApiException",
-            "4XX": "ApiException",
-            "5XX": "ApiException",
         }
 
         response_data = self.api_client.call_api(

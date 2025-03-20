@@ -19,7 +19,6 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from infobip_api_client.models.calls_script_inner import CallsScriptInner
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -33,9 +32,7 @@ class CallsUpdateScenarioRequest(BaseModel):
     description: Optional[StrictStr] = Field(
         default=None, description="Description of IVR scenario."
     )
-    script: List[CallsScriptInner] = Field(
-        description="Array of IVR actions defining scenario. NOTE: Answering Machine Detection, Call Recording and Speech Recognition (used for Capture action) are add-on features. To enable these add-ons, please contact our [sales](https://www.infobip.com/contact) organisation."
-    )
+    script: StrictStr
     __properties: ClassVar[List[str]] = ["name", "description", "script"]
 
     model_config = ConfigDict(
@@ -75,13 +72,12 @@ class CallsUpdateScenarioRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in script (list)
-        _items = []
-        if self.script:
-            for _item in self.script:
-                if _item:
-                    _items.append(_item.to_dict())
-            _dict["script"] = _items
+        if "script" in _dict:
+            try:
+                _dict["script"] = json.loads(self.script)
+            except json.JSONDecodeError:
+                pass
+
         return _dict
 
     @classmethod
@@ -93,13 +89,15 @@ class CallsUpdateScenarioRequest(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
+        script_value = obj.get("script")
+        if isinstance(script_value, (list, dict)):
+            script_value = json.dumps(script_value)
+
         _obj = cls.model_validate(
             {
                 "name": obj.get("name"),
                 "description": obj.get("description"),
-                "script": [CallsScriptInner.from_dict(_item) for _item in obj["script"]]
-                if obj.get("script") is not None
-                else None,
+                "script": script_value,
             }
         )
         return _obj

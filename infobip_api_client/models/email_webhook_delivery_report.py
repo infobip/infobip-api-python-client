@@ -66,6 +66,16 @@ class EmailWebhookDeliveryReport(BaseModel):
         description="The IP address that was used to send out the email.",
         alias="sendingIp",
     )
+    attempt_count: Optional[StrictInt] = Field(
+        default=None,
+        description="Number of times delivery was attempted for the email.",
+        alias="attemptCount",
+    )
+    time_to_first_attempt: Optional[StrictInt] = Field(
+        default=None,
+        description="This is the time in milliseconds between accepting the request and making the first delivery attempt to the destination.",
+        alias="timeToFirstAttempt",
+    )
     callback_data: Optional[StrictStr] = Field(
         default=None,
         description="Callback data sent through `callbackData` field in fully featured email.",
@@ -73,6 +83,21 @@ class EmailWebhookDeliveryReport(BaseModel):
     )
     to: Optional[StrictStr] = Field(
         default=None, description="Destination email address."
+    )
+    campaign_reference_id: Optional[StrictStr] = Field(
+        default=None,
+        description="ID of a campaign that was sent in the message.",
+        alias="campaignReferenceId",
+    )
+    entity_id: Optional[StrictStr] = Field(
+        default=None,
+        description="Used when specifying an entity in outbound send requests. It is also returned in notification events. For detailed usage, refer to the [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).",
+        alias="entityId",
+    )
+    application_id: Optional[StrictStr] = Field(
+        default=None,
+        description="Used when specifying an application in outbound send requests. It is also returned in notification events. For detailed usage, refer to the [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).",
+        alias="applicationId",
     )
     __properties: ClassVar[List[str]] = [
         "bulkId",
@@ -85,8 +110,13 @@ class EmailWebhookDeliveryReport(BaseModel):
         "sentAt",
         "browserLink",
         "sendingIp",
+        "attemptCount",
+        "timeToFirstAttempt",
         "callbackData",
         "to",
+        "campaignReferenceId",
+        "entityId",
+        "applicationId",
     ]
 
     model_config = ConfigDict(
@@ -164,8 +194,13 @@ class EmailWebhookDeliveryReport(BaseModel):
                 "sentAt": obj.get("sentAt"),
                 "browserLink": obj.get("browserLink"),
                 "sendingIp": obj.get("sendingIp"),
+                "attemptCount": obj.get("attemptCount"),
+                "timeToFirstAttempt": obj.get("timeToFirstAttempt"),
                 "callbackData": obj.get("callbackData"),
                 "to": obj.get("to"),
+                "campaignReferenceId": obj.get("campaignReferenceId"),
+                "entityId": obj.get("entityId"),
+                "applicationId": obj.get("applicationId"),
             }
         )
         return _obj

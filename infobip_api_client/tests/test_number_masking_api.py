@@ -1,6 +1,7 @@
 import datetime
 
 import pytest
+from unittest.mock import patch
 from pytest_httpserver import HTTPServer
 
 
@@ -44,8 +45,8 @@ number_masking_credentials = "/voice/masking/2/credentials"
 def test_should_get_voice_masking_config(httpserver: HTTPServer, get_api_client):
     given_key = "string"
     given_name = "string"
-    given_callback_url = "https://example.com"
-    given_status_url = "https://example.com"
+    given_callback_url = "string"
+    given_status_url = "string"
     given_backup_callback_url = "string"
     given_backup_status_url = "string"
     given_description = "string"
@@ -107,10 +108,77 @@ def test_should_get_voice_masking_config(httpserver: HTTPServer, get_api_client)
     assert response == expected_response
 
 
+def test_get_number_masking_configuration_when_utc_date_is_returned_regardless_of_default_timezone(httpserver: HTTPServer, get_api_client):
+    test_default_timezone = datetime.timezone(datetime.timedelta(hours=1))  # Europe/Zagreb is UTC+1
+
+    given_key = "string"
+    given_name = "string"
+    given_callback_url = "string"
+    given_status_url = "string"
+    given_backup_callback_url = "string"
+    given_backup_status_url = "string"
+    given_description = "string"
+    given_insert_date_time = "2023-08-01T16:10:00.00"
+    given_update_date_time = "2023-08-01T16:10:00.00"
+    given_insert_date_time_offset = datetime.datetime(
+        2023,
+        8,
+        1,
+        16,
+        10,
+        0,
+        tzinfo=datetime.timezone.utc,
+    )
+    given_update_date_time_offset = datetime.datetime(
+        2023,
+        8,
+        1,
+        16,
+        10,
+        0,
+        tzinfo=datetime.timezone.utc,
+    )
+
+    given_response = [
+        {
+            "key": given_key,
+            "name": given_name,
+            "callbackUrl": given_callback_url,
+            "statusUrl": given_status_url,
+            "backupCallbackUrl": given_backup_callback_url,
+            "backupStatusUrl": given_backup_status_url,
+            "description": given_description,
+            "insertDateTime": given_insert_date_time,
+            "updateDateTime": given_update_date_time,
+        }
+    ]
+
+    setup_request(httpserver, number_masking_configurations, given_response)
+
+    api = NumberMaskingApi(get_api_client)
+
+    expected_response = [
+        NumberMaskingSetupResponse(
+            key=given_key,
+            name=given_name,
+            callback_url=given_callback_url,
+            status_url=given_status_url,
+            backup_callback_url=given_backup_callback_url,
+            backup_status_url=given_backup_status_url,
+            description=given_description,
+            insert_date_time=given_insert_date_time_offset,
+            update_date_time=given_update_date_time_offset,
+        )
+    ]
+
+    with patch("datetime.timezone", test_default_timezone):
+        response = api.get_number_masking_configurations()
+        assert response == expected_response
+
 def test_should_create_voice_masking_config(httpserver: HTTPServer, get_api_client):
     given_name = "UniqueConfigurationName"
-    given_callback_url = "https://example.com"
-    given_status_url = "https://example.com"
+    given_callback_url = "http://xyz.com/1/callback"
+    given_status_url = "http://xyz.com/1/status"
     given_insert_date_time = "2019-08-16T09:11:36.573"
     given_update_date_time = "2019-08-16T09:11:36.573"
     given_insert_date_time_offset = datetime.datetime.fromisoformat(
@@ -169,8 +237,8 @@ def test_should_get_number_masking_configuration(
 ):
     given_key = "3FC0C9CB4AFAEAC67E8FC6BA3B1E044A"
     given_name = "UniqueConfigurationName"
-    given_callback_url = "https://example.com"
-    given_status_url = "https://example.com"
+    given_callback_url = "http://xyz.com/1/callback"
+    given_status_url = "http://xyz.com/1/status"
     given_insert_date_time = "2019-08-16T09:11:36.573"
     given_update_date_time = "2019-08-16T09:11:36.573"
     given_insert_date_time_offset = datetime.datetime.fromisoformat(
@@ -213,8 +281,8 @@ def test_should_update_number_masking_configuration(
 ):
     given_key = "3FC0C9CB4AFAEAC67E8FC6BA3B1E044A"
     given_name = "UniqueConfigurationName"
-    given_callback_url = "https://example.com"
-    given_status_url = "https://example.com"
+    given_callback_url = "http://xyz.com/1/callback"
+    given_status_url = "http://xyz.com/1/status"
     given_insert_date_time = "2019-08-16T09:11:36.573"
     given_update_date_time = "2019-08-16T09:11:36.573"
     given_insert_date_time_offset = datetime.datetime.fromisoformat(
@@ -263,7 +331,7 @@ def test_should_update_number_masking_configuration(
 
 
 def test_should_upload_audio_file(httpserver: HTTPServer, get_api_client):
-    given_url = "https://example.com"
+    given_url = "http://www.winhistory.de/more/winstart/mp3/winxp.mp3"
     given_file_id = "cb702ae4-f356-4efd-b2dd-7a667b570af5"
 
     given_request = {"url": given_url}

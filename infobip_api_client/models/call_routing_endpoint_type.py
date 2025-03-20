@@ -30,6 +30,7 @@ class CallRoutingEndpointType(str, Enum):
     SIP = "SIP"
     WEBRTC = "WEBRTC"
     VIBER = "VIBER"
+    WEBSOCKET = "WEBSOCKET"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

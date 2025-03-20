@@ -20,9 +20,8 @@ import json
 from importlib import import_module
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from infobip_api_client.models.url_security_config_type import UrlSecurityConfigType
+from infobip_api_client.models.security_config_type import SecurityConfigType
 from typing import Optional, Set
-from typing_extensions import Self
 
 from typing import TYPE_CHECKING
 
@@ -36,7 +35,7 @@ class SecurityConfig(BaseModel):
     Webhook security config.
     """  # noqa: E501
 
-    type: Optional[UrlSecurityConfigType] = None
+    type: Optional[SecurityConfigType] = None
     __properties: ClassVar[List[str]] = ["type"]
 
     model_config = ConfigDict(

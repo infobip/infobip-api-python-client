@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from datetime import datetime, timezone
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -62,12 +62,12 @@ class NumberMaskingSetupResponse(BaseModel):
     )
     insert_date_time: Optional[datetime] = Field(
         default=None,
-        description="Date and time when masking configuration is created.",
+        description="Date and time (UTC timezone) when masking configuration is created.",
         alias="insertDateTime",
     )
     update_date_time: Optional[datetime] = Field(
         default=None,
-        description="Date and time when masking configuration was last modified.",
+        description="Date and time (UTC timezone) when masking configuration was last modified.",
         alias="updateDateTime",
     )
     __properties: ClassVar[List[str]] = [
@@ -101,6 +101,14 @@ class NumberMaskingSetupResponse(BaseModel):
     def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of NumberMaskingSetupResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
+
+    @field_validator("insert_date_time", "update_date_time")
+    def ensure_utc(cls, value: Optional[datetime]) -> Optional[datetime]:
+        if value is None:
+            return None
+        if value.tzinfo is None or value.tzinfo.utcoffset(value) is None:
+            return value.replace(tzinfo=timezone.utc)
+        return value
 
     def to_dict(self) -> Dict[str, Any]:
         """Return the dictionary representation of the model using alias.

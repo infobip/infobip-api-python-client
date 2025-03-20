@@ -19,7 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
-from infobip_api_client.models.calls_voice import CallsVoice
+from infobip_api_client.models.calls_synthesis_voice import CallsSynthesisVoice
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,7 +29,7 @@ class CallsGetVoicesResponse(BaseModel):
     CallsGetVoicesResponse
     """  # noqa: E501
 
-    voices: Optional[List[CallsVoice]] = Field(
+    voices: Optional[List[CallsSynthesisVoice]] = Field(
         default=None, description="Array of voices belonging to the specified language."
     )
     __properties: ClassVar[List[str]] = ["voices"]
@@ -91,7 +91,9 @@ class CallsGetVoicesResponse(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "voices": [CallsVoice.from_dict(_item) for _item in obj["voices"]]
+                "voices": [
+                    CallsSynthesisVoice.from_dict(_item) for _item in obj["voices"]
+                ]
                 if obj.get("voices") is not None
                 else None
             }

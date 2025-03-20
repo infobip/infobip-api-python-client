@@ -19,11 +19,7 @@ import json
 
 from pydantic import ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
 from infobip_api_client.models.call_routing_destination import CallRoutingDestination
-from infobip_api_client.models.call_routing_destination_type import (
-    CallRoutingDestinationType,
-)
 from infobip_api_client.models.security_config import SecurityConfig
 from typing import Optional, Set
 from typing_extensions import Self
@@ -34,14 +30,6 @@ class CallRoutingUrlDestination(CallRoutingDestination):
     CallRoutingUrlDestination
     """  # noqa: E501
 
-    priority: Optional[Annotated[int, Field(le=100, strict=True, ge=1)]] = Field(
-        default=None,
-        description="Priority of the destination within a route. Destinations with lower value have higher priority. Either all or no destination need to have this value defined.",
-    )
-    weight: Optional[Annotated[int, Field(le=100, strict=True, ge=1)]] = Field(
-        default=None,
-        description="Weight of the destination within a route. It specifies how much traffic is handled by destination relative to other destinations within the same priority level. Values are evaluated relative to each other and they don't need to add up to 100. Either all or no destination need to have this value defined.",
-    )
     url: StrictStr = Field(
         description="URL endpoint which provides next destination to be tried in a route as a response to `POST` HTTP request sent by the Infobip Platform. Returned destination must be of `ENDPOINT_DESTINATION` type."
     )

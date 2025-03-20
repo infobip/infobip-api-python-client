@@ -11,14 +11,13 @@
 
     Do not edit the class manually.
 """  # noqa: E501
-import warnings
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from datetime import datetime
 from pydantic import Field, StrictBool, StrictBytes, StrictStr
-from typing import Optional, Union
+from typing import List, Optional, Union
 from typing_extensions import Annotated
 from infobip_api_client.models.call import Call
 from infobip_api_client.models.call_bulk_request import CallBulkRequest
@@ -63,11 +62,20 @@ from infobip_api_client.models.calls_conference_recording_request import (
     CallsConferenceRecordingRequest,
 )
 from infobip_api_client.models.calls_conference_request import CallsConferenceRequest
+from infobip_api_client.models.calls_configuration_create_request import (
+    CallsConfigurationCreateRequest,
+)
+from infobip_api_client.models.calls_configuration_page import CallsConfigurationPage
+from infobip_api_client.models.calls_configuration_response import (
+    CallsConfigurationResponse,
+)
+from infobip_api_client.models.calls_configuration_update_request import (
+    CallsConfigurationUpdateRequest,
+)
 from infobip_api_client.models.calls_connect_request import CallsConnectRequest
 from infobip_api_client.models.calls_connect_with_new_call_request import (
     CallsConnectWithNewCallRequest,
 )
-from infobip_api_client.models.calls_country_list import CallsCountryList
 from infobip_api_client.models.calls_create_sip_trunk_response import (
     CallsCreateSipTrunkResponse,
 )
@@ -116,6 +124,7 @@ from infobip_api_client.models.calls_on_demand_composition import (
 )
 from infobip_api_client.models.calls_play_request import CallsPlayRequest
 from infobip_api_client.models.calls_pre_answer_request import CallsPreAnswerRequest
+from infobip_api_client.models.calls_public_country import CallsPublicCountry
 from infobip_api_client.models.calls_public_sip_trunk_service_address import (
     CallsPublicSipTrunkServiceAddress,
 )
@@ -8335,6 +8344,273 @@ class CallsApi:
         )
 
     @validate_call
+    def create_calls_configuration(
+        self,
+        calls_configuration_create_request: CallsConfigurationCreateRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> CallsConfigurationResponse:
+        """Create calls configuration
+
+        Create calls configuration.
+
+        :param calls_configuration_create_request: (required)
+        :type calls_configuration_create_request: CallsConfigurationCreateRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._create_calls_configuration_serialize(
+            calls_configuration_create_request=calls_configuration_create_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "201": "CallsConfigurationResponse",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+    @validate_call
+    def create_calls_configuration_with_http_info(
+        self,
+        calls_configuration_create_request: CallsConfigurationCreateRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[CallsConfigurationResponse]:
+        """Create calls configuration
+
+        Create calls configuration.
+
+        :param calls_configuration_create_request: (required)
+        :type calls_configuration_create_request: CallsConfigurationCreateRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._create_calls_configuration_serialize(
+            calls_configuration_create_request=calls_configuration_create_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "201": "CallsConfigurationResponse",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+    @validate_call
+    def create_calls_configuration_without_preload_content(
+        self,
+        calls_configuration_create_request: CallsConfigurationCreateRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Create calls configuration
+
+        Create calls configuration.
+
+        :param calls_configuration_create_request: (required)
+        :type calls_configuration_create_request: CallsConfigurationCreateRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._create_calls_configuration_serialize(
+            calls_configuration_create_request=calls_configuration_create_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "201": "CallsConfigurationResponse",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+    def _create_calls_configuration_serialize(
+        self,
+        calls_configuration_create_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {}
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if calls_configuration_create_request is not None:
+            _body_params = calls_configuration_create_request
+
+        # set the HTTP header `Accept`
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params["Content-Type"] = _content_type
+        else:
+            _default_content_type = self.api_client.select_header_content_type(
+                ["application/json"]
+            )
+            if _default_content_type is not None:
+                _header_params["Content-Type"] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = ["APIKeyHeader"]
+
+        return self.api_client.param_serialize(
+            method="POST",
+            resource_path="/calls/1/configurations",
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth,
+        )
+
+    @validate_call
     def create_conference(
         self,
         calls_conference_request: CallsConferenceRequest,
@@ -10273,6 +10549,269 @@ class CallsApi:
         return self.api_client.param_serialize(
             method="DELETE",
             resource_path="/calls/1/recordings/calls/{callId}",
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth,
+        )
+
+    @validate_call
+    def delete_calls_configuration(
+        self,
+        calls_configuration_id: Annotated[
+            StrictStr, Field(description="Calls configuration ID.")
+        ],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> CallsConfigurationResponse:
+        """Delete calls configuration
+
+        Delete calls configuration.
+
+        :param calls_configuration_id: Calls configuration ID. (required)
+        :type calls_configuration_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._delete_calls_configuration_serialize(
+            calls_configuration_id=calls_configuration_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "CallsConfigurationResponse",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+    @validate_call
+    def delete_calls_configuration_with_http_info(
+        self,
+        calls_configuration_id: Annotated[
+            StrictStr, Field(description="Calls configuration ID.")
+        ],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[CallsConfigurationResponse]:
+        """Delete calls configuration
+
+        Delete calls configuration.
+
+        :param calls_configuration_id: Calls configuration ID. (required)
+        :type calls_configuration_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._delete_calls_configuration_serialize(
+            calls_configuration_id=calls_configuration_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "CallsConfigurationResponse",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+    @validate_call
+    def delete_calls_configuration_without_preload_content(
+        self,
+        calls_configuration_id: Annotated[
+            StrictStr, Field(description="Calls configuration ID.")
+        ],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Delete calls configuration
+
+        Delete calls configuration.
+
+        :param calls_configuration_id: Calls configuration ID. (required)
+        :type calls_configuration_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._delete_calls_configuration_serialize(
+            calls_configuration_id=calls_configuration_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "CallsConfigurationResponse",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+    def _delete_calls_configuration_serialize(
+        self,
+        calls_configuration_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {}
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if calls_configuration_id is not None:
+            _path_params["callsConfigurationId"] = calls_configuration_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+        # set the HTTP header `Accept`
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )
+
+        # authentication setting
+        _auth_settings: List[str] = ["APIKeyHeader"]
+
+        return self.api_client.param_serialize(
+            method="DELETE",
+            resource_path="/calls/1/configurations/{callsConfigurationId}",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -14673,7 +15212,7 @@ class CallsApi:
     ) -> CallLog:
         """Get call history
 
-        Get a single call history. Call history retention period is 3 months.
+        Get a single call history. Call history retention period is 5 days.
 
         :param call_id: Call ID. (required)
         :type call_id: str
@@ -14743,7 +15282,7 @@ class CallsApi:
     ) -> ApiResponse[CallLog]:
         """Get call history
 
-        Get a single call history. Call history retention period is 3 months.
+        Get a single call history. Call history retention period is 5 days.
 
         :param call_id: Call ID. (required)
         :type call_id: str
@@ -14813,7 +15352,7 @@ class CallsApi:
     ) -> RESTResponseType:
         """Get call history
 
-        Get a single call history. Call history retention period is 3 months.
+        Get a single call history. Call history retention period is 5 days.
 
         :param call_id: Call ID. (required)
         :type call_id: str
@@ -15746,6 +16285,563 @@ class CallsApi:
         )
 
     @validate_call
+    def get_calls_configuration(
+        self,
+        calls_configuration_id: Annotated[
+            StrictStr, Field(description="Calls configuration ID.")
+        ],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> CallsConfigurationResponse:
+        """Get calls configuration
+
+        Get a single calls configuration.
+
+        :param calls_configuration_id: Calls configuration ID. (required)
+        :type calls_configuration_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._get_calls_configuration_serialize(
+            calls_configuration_id=calls_configuration_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "CallsConfigurationResponse",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+    @validate_call
+    def get_calls_configuration_with_http_info(
+        self,
+        calls_configuration_id: Annotated[
+            StrictStr, Field(description="Calls configuration ID.")
+        ],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[CallsConfigurationResponse]:
+        """Get calls configuration
+
+        Get a single calls configuration.
+
+        :param calls_configuration_id: Calls configuration ID. (required)
+        :type calls_configuration_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._get_calls_configuration_serialize(
+            calls_configuration_id=calls_configuration_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "CallsConfigurationResponse",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+    @validate_call
+    def get_calls_configuration_without_preload_content(
+        self,
+        calls_configuration_id: Annotated[
+            StrictStr, Field(description="Calls configuration ID.")
+        ],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get calls configuration
+
+        Get a single calls configuration.
+
+        :param calls_configuration_id: Calls configuration ID. (required)
+        :type calls_configuration_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._get_calls_configuration_serialize(
+            calls_configuration_id=calls_configuration_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "CallsConfigurationResponse",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+    def _get_calls_configuration_serialize(
+        self,
+        calls_configuration_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {}
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if calls_configuration_id is not None:
+            _path_params["callsConfigurationId"] = calls_configuration_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+        # set the HTTP header `Accept`
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )
+
+        # authentication setting
+        _auth_settings: List[str] = ["APIKeyHeader"]
+
+        return self.api_client.param_serialize(
+            method="GET",
+            resource_path="/calls/1/configurations/{callsConfigurationId}",
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth,
+        )
+
+    @validate_call
+    def get_calls_configurations(
+        self,
+        page: Annotated[
+            Optional[Annotated[int, Field(strict=True, ge=0)]],
+            Field(description="Results page to retrieve (0..N)."),
+        ] = None,
+        size: Annotated[
+            Optional[Annotated[int, Field(le=100, strict=True, ge=1)]],
+            Field(description="Number of records per page."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> CallsConfigurationPage:
+        """Get calls configurations
+
+        Get calls configurations.
+
+        :param page: Results page to retrieve (0..N).
+        :type page: int
+        :param size: Number of records per page.
+        :type size: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._get_calls_configurations_serialize(
+            page=page,
+            size=size,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "CallsConfigurationPage",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+    @validate_call
+    def get_calls_configurations_with_http_info(
+        self,
+        page: Annotated[
+            Optional[Annotated[int, Field(strict=True, ge=0)]],
+            Field(description="Results page to retrieve (0..N)."),
+        ] = None,
+        size: Annotated[
+            Optional[Annotated[int, Field(le=100, strict=True, ge=1)]],
+            Field(description="Number of records per page."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[CallsConfigurationPage]:
+        """Get calls configurations
+
+        Get calls configurations.
+
+        :param page: Results page to retrieve (0..N).
+        :type page: int
+        :param size: Number of records per page.
+        :type size: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._get_calls_configurations_serialize(
+            page=page,
+            size=size,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "CallsConfigurationPage",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+    @validate_call
+    def get_calls_configurations_without_preload_content(
+        self,
+        page: Annotated[
+            Optional[Annotated[int, Field(strict=True, ge=0)]],
+            Field(description="Results page to retrieve (0..N)."),
+        ] = None,
+        size: Annotated[
+            Optional[Annotated[int, Field(le=100, strict=True, ge=1)]],
+            Field(description="Number of records per page."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get calls configurations
+
+        Get calls configurations.
+
+        :param page: Results page to retrieve (0..N).
+        :type page: int
+        :param size: Number of records per page.
+        :type size: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._get_calls_configurations_serialize(
+            page=page,
+            size=size,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "CallsConfigurationPage",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+    def _get_calls_configurations_serialize(
+        self,
+        page,
+        size,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {}
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if page is not None:
+
+            _query_params.append(("page", page))
+
+        if size is not None:
+
+            _query_params.append(("size", size))
+
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+        # set the HTTP header `Accept`
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )
+
+        # authentication setting
+        _auth_settings: List[str] = ["APIKeyHeader"]
+
+        return self.api_client.param_serialize(
+            method="GET",
+            resource_path="/calls/1/configurations",
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth,
+        )
+
+    @validate_call
     def get_calls_file(
         self,
         file_id: Annotated[StrictStr, Field(description="File ID.")],
@@ -16359,7 +17455,7 @@ class CallsApi:
     ) -> CallLogPage:
         """Get calls history
 
-        Get calls history with pagination. Calls history retention period is 3 months.
+        Get calls history with pagination. Calls history retention period is 5 days.
 
         :param type: Call endpoint type.
         :type type: CallEndpointType
@@ -16513,7 +17609,7 @@ class CallsApi:
     ) -> ApiResponse[CallLogPage]:
         """Get calls history
 
-        Get calls history with pagination. Calls history retention period is 3 months.
+        Get calls history with pagination. Calls history retention period is 5 days.
 
         :param type: Call endpoint type.
         :type type: CallEndpointType
@@ -16667,7 +17763,7 @@ class CallsApi:
     ) -> RESTResponseType:
         """Get calls history
 
-        Get calls history with pagination. Calls history retention period is 3 months.
+        Get calls history with pagination. Calls history retention period is 5 days.
 
         :param type: Call endpoint type.
         :type type: CallEndpointType
@@ -17707,7 +18803,7 @@ class CallsApi:
     ) -> CallsConferenceLog:
         """Get conference history
 
-        Get a single conference history. Conference history retention period is 3 months.
+        Get a single conference history. Conference history retention period is 5 days.
 
         :param conference_id: Conference ID. (required)
         :type conference_id: str
@@ -17777,7 +18873,7 @@ class CallsApi:
     ) -> ApiResponse[CallsConferenceLog]:
         """Get conference history
 
-        Get a single conference history. Conference history retention period is 3 months.
+        Get a single conference history. Conference history retention period is 5 days.
 
         :param conference_id: Conference ID. (required)
         :type conference_id: str
@@ -17847,7 +18943,7 @@ class CallsApi:
     ) -> RESTResponseType:
         """Get conference history
 
-        Get a single conference history. Conference history retention period is 3 months.
+        Get a single conference history. Conference history retention period is 5 days.
 
         :param conference_id: Conference ID. (required)
         :type conference_id: str
@@ -18694,7 +19790,7 @@ class CallsApi:
     ) -> CallsConferenceLogPage:
         """Get conferences history
 
-        Get conferences history with pagination. Conferences history retention period is 3 months.
+        Get conferences history with pagination. Conferences history retention period is 5 days.
 
         :param name: Conference name.
         :type name: str
@@ -18814,7 +19910,7 @@ class CallsApi:
     ) -> ApiResponse[CallsConferenceLogPage]:
         """Get conferences history
 
-        Get conferences history with pagination. Conferences history retention period is 3 months.
+        Get conferences history with pagination. Conferences history retention period is 5 days.
 
         :param name: Conference name.
         :type name: str
@@ -18934,7 +20030,7 @@ class CallsApi:
     ) -> RESTResponseType:
         """Get conferences history
 
-        Get conferences history with pagination. Conferences history retention period is 3 months.
+        Get conferences history with pagination. Conferences history retention period is 5 days.
 
         :param name: Conference name.
         :type name: str
@@ -19765,7 +20861,7 @@ class CallsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CallsCountryList:
+    ) -> List[CallsPublicCountry]:
         """Get countries
 
         Get countries with shortcodes you'd need for a SIP trunk address.
@@ -19800,7 +20896,7 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsCountryList",
+            "200": "List[CallsPublicCountry]",
             "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
@@ -19831,7 +20927,7 @@ class CallsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CallsCountryList]:
+    ) -> ApiResponse[List[CallsPublicCountry]]:
         """Get countries
 
         Get countries with shortcodes you'd need for a SIP trunk address.
@@ -19866,7 +20962,7 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsCountryList",
+            "200": "List[CallsPublicCountry]",
             "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
@@ -19932,7 +21028,7 @@ class CallsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CallsCountryList",
+            "200": "List[CallsPublicCountry]",
             "400": "ApiException",
             "401": "ApiException",
             "403": "ApiException",
@@ -20268,7 +21364,7 @@ class CallsApi:
     ) -> CallsDialogLogResponse:
         """Get dialog history
 
-        Get a single dialog history. Dialog history retention period is 3 months.
+        Get a single dialog history. Dialog history retention period is 5 days.
 
         :param dialog_id: Dialog ID. (required)
         :type dialog_id: str
@@ -20338,7 +21434,7 @@ class CallsApi:
     ) -> ApiResponse[CallsDialogLogResponse]:
         """Get dialog history
 
-        Get a single dialog history. Dialog history retention period is 3 months.
+        Get a single dialog history. Dialog history retention period is 5 days.
 
         :param dialog_id: Dialog ID. (required)
         :type dialog_id: str
@@ -20408,7 +21504,7 @@ class CallsApi:
     ) -> RESTResponseType:
         """Get dialog history
 
-        Get a single dialog history. Dialog history retention period is 3 months.
+        Get a single dialog history. Dialog history retention period is 5 days.
 
         :param dialog_id: Dialog ID. (required)
         :type dialog_id: str
@@ -21289,7 +22385,7 @@ class CallsApi:
     ) -> CallsDialogLogPage:
         """Get dialogs history
 
-        Get dialogs history with pagination. Dialogs history retention period is 3 months.
+        Get dialogs history with pagination. Dialogs history retention period is 5 days.
 
         :param calls_configuration_id: Calls Configuration ID.
         :type calls_configuration_id: str
@@ -21417,7 +22513,7 @@ class CallsApi:
     ) -> ApiResponse[CallsDialogLogPage]:
         """Get dialogs history
 
-        Get dialogs history with pagination. Dialogs history retention period is 3 months.
+        Get dialogs history with pagination. Dialogs history retention period is 5 days.
 
         :param calls_configuration_id: Calls Configuration ID.
         :type calls_configuration_id: str
@@ -21545,7 +22641,7 @@ class CallsApi:
     ) -> RESTResponseType:
         """Get dialogs history
 
-        Get dialogs history with pagination. Dialogs history retention period is 3 months.
+        Get dialogs history with pagination. Dialogs history retention period is 5 days.
 
         :param calls_configuration_id: Calls Configuration ID.
         :type calls_configuration_id: str
@@ -28041,6 +29137,297 @@ class CallsApi:
         return self.api_client.param_serialize(
             method="POST",
             resource_path="/calls/1/calls/{callId}/stop-media-stream",
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth,
+        )
+
+    @validate_call
+    def update_calls_configuration(
+        self,
+        calls_configuration_id: Annotated[
+            StrictStr, Field(description="Calls configuration ID.")
+        ],
+        calls_configuration_update_request: CallsConfigurationUpdateRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> CallsConfigurationResponse:
+        """Update calls configuration
+
+        Update calls configuration.
+
+        :param calls_configuration_id: Calls configuration ID. (required)
+        :type calls_configuration_id: str
+        :param calls_configuration_update_request: (required)
+        :type calls_configuration_update_request: CallsConfigurationUpdateRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._update_calls_configuration_serialize(
+            calls_configuration_id=calls_configuration_id,
+            calls_configuration_update_request=calls_configuration_update_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "CallsConfigurationResponse",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+    @validate_call
+    def update_calls_configuration_with_http_info(
+        self,
+        calls_configuration_id: Annotated[
+            StrictStr, Field(description="Calls configuration ID.")
+        ],
+        calls_configuration_update_request: CallsConfigurationUpdateRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[CallsConfigurationResponse]:
+        """Update calls configuration
+
+        Update calls configuration.
+
+        :param calls_configuration_id: Calls configuration ID. (required)
+        :type calls_configuration_id: str
+        :param calls_configuration_update_request: (required)
+        :type calls_configuration_update_request: CallsConfigurationUpdateRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._update_calls_configuration_serialize(
+            calls_configuration_id=calls_configuration_id,
+            calls_configuration_update_request=calls_configuration_update_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "CallsConfigurationResponse",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+    @validate_call
+    def update_calls_configuration_without_preload_content(
+        self,
+        calls_configuration_id: Annotated[
+            StrictStr, Field(description="Calls configuration ID.")
+        ],
+        calls_configuration_update_request: CallsConfigurationUpdateRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Update calls configuration
+
+        Update calls configuration.
+
+        :param calls_configuration_id: Calls configuration ID. (required)
+        :type calls_configuration_id: str
+        :param calls_configuration_update_request: (required)
+        :type calls_configuration_update_request: CallsConfigurationUpdateRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._update_calls_configuration_serialize(
+            calls_configuration_id=calls_configuration_id,
+            calls_configuration_update_request=calls_configuration_update_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "CallsConfigurationResponse",
+            "400": "ApiException",
+            "401": "ApiException",
+            "403": "ApiException",
+            "404": "ApiException",
+            "429": "ApiException",
+            "500": "ApiException",
+        }
+
+        response_data = self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+    def _update_calls_configuration_serialize(
+        self,
+        calls_configuration_id,
+        calls_configuration_update_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {}
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if calls_configuration_id is not None:
+            _path_params["callsConfigurationId"] = calls_configuration_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if calls_configuration_update_request is not None:
+            _body_params = calls_configuration_update_request
+
+        # set the HTTP header `Accept`
+        _header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params["Content-Type"] = _content_type
+        else:
+            _default_content_type = self.api_client.select_header_content_type(
+                ["application/json"]
+            )
+            if _default_content_type is not None:
+                _header_params["Content-Type"] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = ["APIKeyHeader"]
+
+        return self.api_client.param_serialize(
+            method="PUT",
+            resource_path="/calls/1/configurations/{callsConfigurationId}",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

@@ -22,7 +22,6 @@ from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Union
 from infobip_api_client.models.call_routing_criteria_type import CallRoutingCriteriaType
 from typing import Optional, Set
-from typing_extensions import Self
 
 from typing import TYPE_CHECKING
 

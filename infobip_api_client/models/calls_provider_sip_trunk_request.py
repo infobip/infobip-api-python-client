@@ -21,9 +21,7 @@ from pydantic import ConfigDict
 from typing import Any, ClassVar, Dict, List
 from infobip_api_client.models.calls_billing_package import CallsBillingPackage
 from infobip_api_client.models.calls_provider import CallsProvider
-from infobip_api_client.models.calls_sip_trunk_location import CallsSipTrunkLocation
 from infobip_api_client.models.calls_sip_trunk_request import CallsSipTrunkRequest
-from infobip_api_client.models.calls_sip_trunk_type import CallsSipTrunkType
 from typing import Optional, Set
 from typing_extensions import Self
 

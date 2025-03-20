@@ -18,14 +18,12 @@ import re  # noqa: F401
 import json
 
 from importlib import import_module
-from pydantic import BaseModel, ConfigDict, Field, StrictBool
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from infobip_api_client.models.calls_billing_package import CallsBillingPackage
-from infobip_api_client.models.calls_sip_trunk_location import CallsSipTrunkLocation
 from infobip_api_client.models.calls_sip_trunk_type import CallsSipTrunkType
 from typing import Optional, Set
-from typing_extensions import Self
 
 from typing import TYPE_CHECKING
 
@@ -50,7 +48,9 @@ class CallsSipTrunkRequest(BaseModel):
     name: Annotated[str, Field(min_length=0, strict=True, max_length=128)] = Field(
         description="SIP trunk name."
     )
-    location: Optional[CallsSipTrunkLocation] = None
+    location: Optional[StrictStr] = Field(
+        default=None, description="SIP trunk location."
+    )
     tls: Optional[StrictBool] = Field(
         default=False,
         description="Indicates whether communication is secured by the TLS protocol.",
