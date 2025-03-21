@@ -177,8 +177,8 @@ def test_get_number_masking_configuration_when_utc_date_is_returned_regardless_o
 
 def test_should_create_voice_masking_config(httpserver: HTTPServer, get_api_client):
     given_name = "UniqueConfigurationName"
-    given_callback_url = "http://xyz.com/1/callback"
-    given_status_url = "http://xyz.com/1/status"
+    given_callback_url = "https://example.com/1/callback"
+    given_status_url = "https://example.com/1/status"
     given_insert_date_time = "2019-08-16T09:11:36.573"
     given_update_date_time = "2019-08-16T09:11:36.573"
     given_insert_date_time_offset = datetime.datetime.fromisoformat(
@@ -237,8 +237,8 @@ def test_should_get_number_masking_configuration(
 ):
     given_key = "3FC0C9CB4AFAEAC67E8FC6BA3B1E044A"
     given_name = "UniqueConfigurationName"
-    given_callback_url = "http://xyz.com/1/callback"
-    given_status_url = "http://xyz.com/1/status"
+    given_callback_url = "https://example.com/1/callback"
+    given_status_url = "https://example.com/1/status"
     given_insert_date_time = "2019-08-16T09:11:36.573"
     given_update_date_time = "2019-08-16T09:11:36.573"
     given_insert_date_time_offset = datetime.datetime.fromisoformat(
@@ -281,8 +281,8 @@ def test_should_update_number_masking_configuration(
 ):
     given_key = "3FC0C9CB4AFAEAC67E8FC6BA3B1E044A"
     given_name = "UniqueConfigurationName"
-    given_callback_url = "http://xyz.com/1/callback"
-    given_status_url = "http://xyz.com/1/status"
+    given_callback_url = "https://example.com/1/callback"
+    given_status_url = "https://example.com/1/status"
     given_insert_date_time = "2019-08-16T09:11:36.573"
     given_update_date_time = "2019-08-16T09:11:36.573"
     given_insert_date_time_offset = datetime.datetime.fromisoformat(
@@ -331,7 +331,7 @@ def test_should_update_number_masking_configuration(
 
 
 def test_should_upload_audio_file(httpserver: HTTPServer, get_api_client):
-    given_url = "http://www.winhistory.de/more/winstart/mp3/winxp.mp3"
+    given_url = "https://www.example.com/example-audio-file.mp3"
     given_file_id = "cb702ae4-f356-4efd-b2dd-7a667b570af5"
 
     given_request = {"url": given_url}
