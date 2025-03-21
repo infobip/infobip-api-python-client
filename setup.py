@@ -58,4 +58,5 @@ setup(
     OpenAPI specification containing public endpoints supported in client API libraries.
     """,  # noqa: E501
     package_data={"infobip_api_client": ["py.typed"]},
+    cmdclass={"bdist_egg": None},
 )
