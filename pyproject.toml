@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "infobip_api_client"
-version = "5.1.0"
+version = "5.1.1"
 description = "This is a Python package for Infobip API and you can use it as a dependency to add Infobip APIs to your application."
 authors = ["Infobip support <support@infobip.com>"]
 license = "MIT License"
