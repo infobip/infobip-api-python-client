@@ -83,6 +83,7 @@ from infobip_api_client.models.email_validation_response import EmailValidationR
 
 from infobip_api_client.api_client import ApiClient, RequestSerialized
 from infobip_api_client.api_response import ApiResponse
+from infobip_api_client.models.file_parameter import FileParameter
 from infobip_api_client.rest import RESTResponseType
 
 
@@ -324,7 +325,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -591,7 +592,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -874,7 +875,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1165,7 +1166,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1434,7 +1435,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1710,7 +1711,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1967,7 +1968,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -2224,7 +2225,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -2528,7 +2529,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -2775,7 +2776,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -3039,7 +3040,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -3324,7 +3325,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -3724,7 +3725,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -4259,7 +4260,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -4579,7 +4580,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -4842,7 +4843,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -5099,7 +5100,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -5362,7 +5363,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -5627,7 +5628,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -5892,7 +5893,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -6305,7 +6306,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -6623,7 +6624,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -6901,7 +6902,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -7173,7 +7174,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -7272,15 +7273,15 @@ class EmailApi:
         template_id: Annotated[
             Optional[StrictInt],
             Field(
-                description="Template ID used for generating email content. The template is created over Infobip web interface. If `templateId` is present, then `html` and `text` values are ignored.  Note: `templateId` only supports the value of `Broadcast`. `Content` and `Flow` are not supported."
+                description="Template ID used for generating email content. The template is created over Infobip web interface or via the [Infobip Templates API](https://www.infobip.com/docs/api/channels/email/templates). If `templateId` is present, then `html` and `text` values are ignored.  Note: `templateId` only supports the value of `Broadcast`. `Content` and `Flow` are not supported."
             ),
         ] = None,
         attachment: Annotated[
-            Optional[List[Union[StrictBytes, StrictStr]]],
+            Optional[List[Union[StrictBytes, StrictStr, FileParameter]]],
             Field(description="File attachment."),
         ] = None,
         inline_image: Annotated[
-            Optional[List[Union[StrictBytes, StrictStr]]],
+            Optional[List[Union[StrictBytes, StrictStr, FileParameter]]],
             Field(
                 description="Allows for inserting an image file inside the HTML code of the email by using `cid:FILENAME` instead of providing an external link to the image."
             ),
@@ -7324,6 +7325,12 @@ class EmailApi:
         track_opens: Annotated[
             Optional[StrictBool],
             Field(description="This parameter enables or disables track open feature."),
+        ] = None,
+        tracking_pixel_position: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="This parameter specifies the position of the open tracking pixel within the email content. Allowed values are `TOP` and `BOTTOM`. If no value is provided, the default is `TOP`."
+            ),
         ] = None,
         tracking_url: Annotated[
             Optional[StrictStr],
@@ -7447,7 +7454,7 @@ class EmailApi:
         :type html: str
         :param amp_html: Amp HTML body of the message. If `ampHtml` is present, `html` is mandatory. Amp HTML is not supported by all the email clients. Please check this link for configuring gmail client https://developers.google.com/gmail/ampemail/.
         :type amp_html: str
-        :param template_id: Template ID used for generating email content. The template is created over Infobip web interface. If `templateId` is present, then `html` and `text` values are ignored.  Note: `templateId` only supports the value of `Broadcast`. `Content` and `Flow` are not supported.
+        :param template_id: Template ID used for generating email content. The template is created over Infobip web interface or via the [Infobip Templates API](https://www.infobip.com/docs/api/channels/email/templates). If `templateId` is present, then `html` and `text` values are ignored.  Note: `templateId` only supports the value of `Broadcast`. `Content` and `Flow` are not supported.
         :type template_id: int
         :param attachment: File attachment.
         :type attachment: List[bytearray]
@@ -7467,6 +7474,8 @@ class EmailApi:
         :type track_clicks: bool
         :param track_opens: This parameter enables or disables track open feature.
         :type track_opens: bool
+        :param tracking_pixel_position: This parameter specifies the position of the open tracking pixel within the email content. Allowed values are `TOP` and `BOTTOM`. If no value is provided, the default is `TOP`.
+        :type tracking_pixel_position: str
         :param tracking_url: The URL on your callback server on which the open and click notifications will be sent. See [Tracking Notifications](https://www.infobip.com/docs/email/send-email-over-api#tracking-notifications) for details.
         :type tracking_url: str
         :param bulk_id: The ID uniquely identifies the sent email request. This filter will enable you to query delivery reports for all the messages using just one request. You will receive a `bulkId` in the response after sending an email request. If you don't set your own `bulkId`, unique ID will be generated by our system and returned in the API response. (Optional Field)
@@ -7495,7 +7504,7 @@ class EmailApi:
         :type application_id: str
         :param entity_id: Required for entity use in a send request for outbound traffic. Returned in notification events.
         :type entity_id: str
-        :param headers: Additional email headers for customization that can be provided in a form of JSON. Example: `headers={\\\"X-CustomHeader\\\": \\\"Header value\\\"}`.  There are a few exceptions of headers which are not adjustable through this option: `To`, `Cc`, `Bcc`, `From`, `Subject`,`Content-Type`, `DKIM-Signature`, `Content-Transfer-Encoding`, `Return-Path`, `MIME-Version`
+        :param headers: Additional email headers for customization that can be provided in a form of JSON. For example, you can override List-Unsubscribe header and provide your own custom one: `headers={\\\"List-Unsubscribe\\\": \\\"your unsubscribe link\\\", \\\"X-CustomHeader\\\": \\\"Header value\\\"}`.  There are a few exceptions of headers which are not adjustable through this option: `To`, `Cc`, `Bcc`, `From`, `Subject`,`Content-Type`, `DKIM-Signature`, `Content-Transfer-Encoding`, `Return-Path`, `MIME-Version`
         :type headers: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -7538,6 +7547,7 @@ class EmailApi:
             track=track,
             track_clicks=track_clicks,
             track_opens=track_opens,
+            tracking_pixel_position=tracking_pixel_position,
             tracking_url=tracking_url,
             bulk_id=bulk_id,
             message_id=message_id,
@@ -7627,15 +7637,15 @@ class EmailApi:
         template_id: Annotated[
             Optional[StrictInt],
             Field(
-                description="Template ID used for generating email content. The template is created over Infobip web interface. If `templateId` is present, then `html` and `text` values are ignored.  Note: `templateId` only supports the value of `Broadcast`. `Content` and `Flow` are not supported."
+                description="Template ID used for generating email content. The template is created over Infobip web interface or via the [Infobip Templates API](https://www.infobip.com/docs/api/channels/email/templates). If `templateId` is present, then `html` and `text` values are ignored.  Note: `templateId` only supports the value of `Broadcast`. `Content` and `Flow` are not supported."
             ),
         ] = None,
         attachment: Annotated[
-            Optional[List[Union[StrictBytes, StrictStr]]],
+            Optional[List[Union[StrictBytes, StrictStr, FileParameter]]],
             Field(description="File attachment."),
         ] = None,
         inline_image: Annotated[
-            Optional[List[Union[StrictBytes, StrictStr]]],
+            Optional[List[Union[StrictBytes, StrictStr, FileParameter]]],
             Field(
                 description="Allows for inserting an image file inside the HTML code of the email by using `cid:FILENAME` instead of providing an external link to the image."
             ),
@@ -7679,6 +7689,12 @@ class EmailApi:
         track_opens: Annotated[
             Optional[StrictBool],
             Field(description="This parameter enables or disables track open feature."),
+        ] = None,
+        tracking_pixel_position: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="This parameter specifies the position of the open tracking pixel within the email content. Allowed values are `TOP` and `BOTTOM`. If no value is provided, the default is `TOP`."
+            ),
         ] = None,
         tracking_url: Annotated[
             Optional[StrictStr],
@@ -7767,7 +7783,7 @@ class EmailApi:
         headers: Annotated[
             Optional[StrictStr],
             Field(
-                description='Additional email headers for customization that can be provided in a form of JSON. Example: `headers={\\"X-CustomHeader\\": \\"Header value\\"}`.  There are a few exceptions of headers which are not adjustable through this option: `To`, `Cc`, `Bcc`, `From`, `Subject`,`Content-Type`, `DKIM-Signature`, `Content-Transfer-Encoding`, `Return-Path`, `MIME-Version`'
+                description='Additional email headers for customization that can be provided in a form of JSON. For example, you can override List-Unsubscribe header and provide your own custom one: `headers={\\"List-Unsubscribe\\": \\"your unsubscribe link\\", \\"X-CustomHeader\\": \\"Header value\\"}`.  There are a few exceptions of headers which are not adjustable through this option: `To`, `Cc`, `Bcc`, `From`, `Subject`,`Content-Type`, `DKIM-Signature`, `Content-Transfer-Encoding`, `Return-Path`, `MIME-Version`'
             ),
         ] = None,
         _request_timeout: Union[
@@ -7802,7 +7818,7 @@ class EmailApi:
         :type html: str
         :param amp_html: Amp HTML body of the message. If `ampHtml` is present, `html` is mandatory. Amp HTML is not supported by all the email clients. Please check this link for configuring gmail client https://developers.google.com/gmail/ampemail/.
         :type amp_html: str
-        :param template_id: Template ID used for generating email content. The template is created over Infobip web interface. If `templateId` is present, then `html` and `text` values are ignored.  Note: `templateId` only supports the value of `Broadcast`. `Content` and `Flow` are not supported.
+        :param template_id: Template ID used for generating email content. The template is created over Infobip web interface or via the [Infobip Templates API](https://www.infobip.com/docs/api/channels/email/templates). If `templateId` is present, then `html` and `text` values are ignored.  Note: `templateId` only supports the value of `Broadcast`. `Content` and `Flow` are not supported.
         :type template_id: int
         :param attachment: File attachment.
         :type attachment: List[bytearray]
@@ -7822,6 +7838,8 @@ class EmailApi:
         :type track_clicks: bool
         :param track_opens: This parameter enables or disables track open feature.
         :type track_opens: bool
+        :param tracking_pixel_position: This parameter specifies the position of the open tracking pixel within the email content. Allowed values are `TOP` and `BOTTOM`. If no value is provided, the default is `TOP`.
+        :type tracking_pixel_position: str
         :param tracking_url: The URL on your callback server on which the open and click notifications will be sent. See [Tracking Notifications](https://www.infobip.com/docs/email/send-email-over-api#tracking-notifications) for details.
         :type tracking_url: str
         :param bulk_id: The ID uniquely identifies the sent email request. This filter will enable you to query delivery reports for all the messages using just one request. You will receive a `bulkId` in the response after sending an email request. If you don't set your own `bulkId`, unique ID will be generated by our system and returned in the API response. (Optional Field)
@@ -7850,7 +7868,7 @@ class EmailApi:
         :type application_id: str
         :param entity_id: Required for entity use in a send request for outbound traffic. Returned in notification events.
         :type entity_id: str
-        :param headers: Additional email headers for customization that can be provided in a form of JSON. Example: `headers={\\\"X-CustomHeader\\\": \\\"Header value\\\"}`.  There are a few exceptions of headers which are not adjustable through this option: `To`, `Cc`, `Bcc`, `From`, `Subject`,`Content-Type`, `DKIM-Signature`, `Content-Transfer-Encoding`, `Return-Path`, `MIME-Version`
+        :param headers: Additional email headers for customization that can be provided in a form of JSON. For example, you can override List-Unsubscribe header and provide your own custom one: `headers={\\\"List-Unsubscribe\\\": \\\"your unsubscribe link\\\", \\\"X-CustomHeader\\\": \\\"Header value\\\"}`.  There are a few exceptions of headers which are not adjustable through this option: `To`, `Cc`, `Bcc`, `From`, `Subject`,`Content-Type`, `DKIM-Signature`, `Content-Transfer-Encoding`, `Return-Path`, `MIME-Version`
         :type headers: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -7893,6 +7911,7 @@ class EmailApi:
             track=track,
             track_clicks=track_clicks,
             track_opens=track_opens,
+            tracking_pixel_position=tracking_pixel_position,
             tracking_url=tracking_url,
             bulk_id=bulk_id,
             message_id=message_id,
@@ -7982,15 +8001,15 @@ class EmailApi:
         template_id: Annotated[
             Optional[StrictInt],
             Field(
-                description="Template ID used for generating email content. The template is created over Infobip web interface. If `templateId` is present, then `html` and `text` values are ignored.  Note: `templateId` only supports the value of `Broadcast`. `Content` and `Flow` are not supported."
+                description="Template ID used for generating email content. The template is created over Infobip web interface or via the [Infobip Templates API](https://www.infobip.com/docs/api/channels/email/templates). If `templateId` is present, then `html` and `text` values are ignored.  Note: `templateId` only supports the value of `Broadcast`. `Content` and `Flow` are not supported."
             ),
         ] = None,
         attachment: Annotated[
-            Optional[List[Union[StrictBytes, StrictStr]]],
+            Optional[List[Union[StrictBytes, StrictStr, FileParameter]]],
             Field(description="File attachment."),
         ] = None,
         inline_image: Annotated[
-            Optional[List[Union[StrictBytes, StrictStr]]],
+            Optional[List[Union[StrictBytes, StrictStr, FileParameter]]],
             Field(
                 description="Allows for inserting an image file inside the HTML code of the email by using `cid:FILENAME` instead of providing an external link to the image."
             ),
@@ -8034,6 +8053,12 @@ class EmailApi:
         track_opens: Annotated[
             Optional[StrictBool],
             Field(description="This parameter enables or disables track open feature."),
+        ] = None,
+        tracking_pixel_position: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="This parameter specifies the position of the open tracking pixel within the email content. Allowed values are `TOP` and `BOTTOM`. If no value is provided, the default is `TOP`."
+            ),
         ] = None,
         tracking_url: Annotated[
             Optional[StrictStr],
@@ -8122,7 +8147,7 @@ class EmailApi:
         headers: Annotated[
             Optional[StrictStr],
             Field(
-                description='Additional email headers for customization that can be provided in a form of JSON. Example: `headers={\\"X-CustomHeader\\": \\"Header value\\"}`.  There are a few exceptions of headers which are not adjustable through this option: `To`, `Cc`, `Bcc`, `From`, `Subject`,`Content-Type`, `DKIM-Signature`, `Content-Transfer-Encoding`, `Return-Path`, `MIME-Version`'
+                description='Additional email headers for customization that can be provided in a form of JSON. For example, you can override List-Unsubscribe header and provide your own custom one: `headers={\\"List-Unsubscribe\\": \\"your unsubscribe link\\", \\"X-CustomHeader\\": \\"Header value\\"}`.  There are a few exceptions of headers which are not adjustable through this option: `To`, `Cc`, `Bcc`, `From`, `Subject`,`Content-Type`, `DKIM-Signature`, `Content-Transfer-Encoding`, `Return-Path`, `MIME-Version`'
             ),
         ] = None,
         _request_timeout: Union[
@@ -8157,7 +8182,7 @@ class EmailApi:
         :type html: str
         :param amp_html: Amp HTML body of the message. If `ampHtml` is present, `html` is mandatory. Amp HTML is not supported by all the email clients. Please check this link for configuring gmail client https://developers.google.com/gmail/ampemail/.
         :type amp_html: str
-        :param template_id: Template ID used for generating email content. The template is created over Infobip web interface. If `templateId` is present, then `html` and `text` values are ignored.  Note: `templateId` only supports the value of `Broadcast`. `Content` and `Flow` are not supported.
+        :param template_id: Template ID used for generating email content. The template is created over Infobip web interface or via the [Infobip Templates API](https://www.infobip.com/docs/api/channels/email/templates). If `templateId` is present, then `html` and `text` values are ignored.  Note: `templateId` only supports the value of `Broadcast`. `Content` and `Flow` are not supported.
         :type template_id: int
         :param attachment: File attachment.
         :type attachment: List[bytearray]
@@ -8177,6 +8202,8 @@ class EmailApi:
         :type track_clicks: bool
         :param track_opens: This parameter enables or disables track open feature.
         :type track_opens: bool
+        :param tracking_pixel_position: This parameter specifies the position of the open tracking pixel within the email content. Allowed values are `TOP` and `BOTTOM`. If no value is provided, the default is `TOP`.
+        :type tracking_pixel_position: str
         :param tracking_url: The URL on your callback server on which the open and click notifications will be sent. See [Tracking Notifications](https://www.infobip.com/docs/email/send-email-over-api#tracking-notifications) for details.
         :type tracking_url: str
         :param bulk_id: The ID uniquely identifies the sent email request. This filter will enable you to query delivery reports for all the messages using just one request. You will receive a `bulkId` in the response after sending an email request. If you don't set your own `bulkId`, unique ID will be generated by our system and returned in the API response. (Optional Field)
@@ -8205,7 +8232,7 @@ class EmailApi:
         :type application_id: str
         :param entity_id: Required for entity use in a send request for outbound traffic. Returned in notification events.
         :type entity_id: str
-        :param headers: Additional email headers for customization that can be provided in a form of JSON. Example: `headers={\\\"X-CustomHeader\\\": \\\"Header value\\\"}`.  There are a few exceptions of headers which are not adjustable through this option: `To`, `Cc`, `Bcc`, `From`, `Subject`,`Content-Type`, `DKIM-Signature`, `Content-Transfer-Encoding`, `Return-Path`, `MIME-Version`
+        :param headers: Additional email headers for customization that can be provided in a form of JSON. For example, you can override List-Unsubscribe header and provide your own custom one: `headers={\\\"List-Unsubscribe\\\": \\\"your unsubscribe link\\\", \\\"X-CustomHeader\\\": \\\"Header value\\\"}`.  There are a few exceptions of headers which are not adjustable through this option: `To`, `Cc`, `Bcc`, `From`, `Subject`,`Content-Type`, `DKIM-Signature`, `Content-Transfer-Encoding`, `Return-Path`, `MIME-Version`
         :type headers: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -8248,6 +8275,7 @@ class EmailApi:
             track=track,
             track_clicks=track_clicks,
             track_opens=track_opens,
+            tracking_pixel_position=tracking_pixel_position,
             tracking_url=tracking_url,
             bulk_id=bulk_id,
             message_id=message_id,
@@ -8302,6 +8330,7 @@ class EmailApi:
         track,
         track_clicks,
         track_opens,
+        tracking_pixel_position,
         tracking_url,
         bulk_id,
         message_id,
@@ -8337,7 +8366,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -8380,6 +8409,8 @@ class EmailApi:
             _form_params.append(("trackClicks", track_clicks))
         if track_opens is not None:
             _form_params.append(("trackOpens", track_opens))
+        if tracking_pixel_position is not None:
+            _form_params.append(("trackingPixelPosition", tracking_pixel_position))
         if tracking_url is not None:
             _form_params.append(("trackingUrl", tracking_url))
         if bulk_id is not None:
@@ -8703,7 +8734,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -8990,7 +9021,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -9290,7 +9321,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -9581,7 +9612,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -9883,7 +9914,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -10152,7 +10183,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -10428,7 +10459,7 @@ class EmailApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[str, Union[str, bytes, List[Union[str, bytes, FileParameter]]]] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters

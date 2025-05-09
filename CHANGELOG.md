@@ -5,6 +5,14 @@ All notable changes to the library will be documented in this file.
 The format of the file is based on [Keep a Changelog](http://keepachangelog.com/)
 and this library adheres to [Semantic Versioning](http://semver.org/) as mentioned in [README.md][readme] file.
 
+## [ [5.1.1](https://github.com/infobip/infobip-api-python-client/releases/tag/5.1.1) ] - 2025-05-09
+
+### Added
+* [FileParameter](https://github.com/infobip/infobip-api-python-client/blob/master/infobip_api_client/models/file_parameter.py) class that represents a File passed to the API as a Parameter, allows using different backends for files.
+
+### Fixed
+* Adding trackingPixelPosition to Send fully featured email API method (https://github.com/infobip/infobip-api-python-client/issues/29).
+
 ## [ [5.1.0](https://github.com/infobip/infobip-api-python-client/releases/tag/5.1.0) ] - 2025-03-21
 
 ⚠️ **IMPORTANT NOTE:** This release contains breaking changes.

@@ -14,7 +14,7 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-__version__ = "5.1.0"
+__version__ = "5.1.1"
 
 # import apis into sdk package
 from infobip_api_client.api.call_routing_api import CallRoutingApi

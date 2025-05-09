@@ -26,6 +26,7 @@ from urllib.parse import quote
 from typing import Tuple, Optional, List, Dict, Union
 from pydantic import SecretStr
 
+from infobip_api_client.models.file_parameter import FileParameter
 from infobip_api_client.configuration import Configuration
 from infobip_api_client.api_response import ApiResponse, T as ApiResponseT
 import infobip_api_client.models
@@ -82,7 +83,7 @@ class ApiClient:
             self.default_headers[header_name] = header_value
         self.cookie = cookie
         # Set default User-Agent.
-        self.user_agent = "infobip-api-client-python/5.1.0"
+        self.user_agent = "infobip-api-client-python/5.1.1"
         self.client_side_validation = configuration.client_side_validation
 
     def __enter__(self):
@@ -525,7 +526,7 @@ class ApiClient:
 
     def files_parameters(
         self,
-        files: Dict[str, Union[str, bytes, List[str], List[bytes], Tuple[str, bytes]]],
+        files: Dict[str, Union[str, bytes, List[str], List[bytes], Tuple[str, bytes], List[Union[str, bytes, FileParameter]]]],
     ):
         """Builds form parameters.
 
@@ -541,14 +542,22 @@ class ApiClient:
                     with open(file_param_content, "rb") as f:
                         filename = os.path.basename(f.name)
                         filedata = f.read()
+                        mimetype = (
+                            mimetypes.guess_type(filename)[0]
+                            or "application/octet-stream"
+                        )
                 elif isinstance(file_param_content, bytes):
                     filename = k
                     filedata = file_param_content
+                    mimetype = (
+                        mimetypes.guess_type(filename)[0] or "application/octet-stream"
+                    )
+                elif isinstance(file_param_content, FileParameter):
+                    filename = file_param_content.name
+                    filedata = file_param_content.content.read()
+                    mimetype = file_param_content.content_type
                 else:
                     raise ValueError("Unsupported file value")
-                mimetype = (
-                    mimetypes.guess_type(filename)[0] or "application/octet-stream"
-                )
                 params.append(tuple([k, tuple([filename, filedata, mimetype])]))
         return params
 
