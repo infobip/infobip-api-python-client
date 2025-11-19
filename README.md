@@ -192,7 +192,13 @@ Example of webhook implementation using Flask:
 For 2FA quick start guide please check [these examples](two-factor-authentication.md).
 
 #### Calls
-For Calls quick start guide please check [these examples](calls.md)
+For Calls quick start guide please check [these examples](calls.md).
+
+#### Email
+For Email quick start guide, view [these examples](email.md).
+
+#### Moments
+For Moments quick start guide, view [these examples](moments.md).
 
 ## Ask for help
 
