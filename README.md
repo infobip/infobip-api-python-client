@@ -189,24 +189,23 @@ Example of webhook implementation using Flask:
 
 ```
 #### Two-Factor Authentication (2FA)
-For 2FA quick start guide please check [these examples](two-factor-authentication.md).
+For the 2FA quick start guide please check [these examples](two-factor-authentication.md).
 
 #### Calls
-For Calls quick start guide please check [these examples](calls.md).
+For the Calls quick start guide please check [these examples](calls.md)
 
-#### Email
-For Email quick start guide, view [these examples](email.md).
+## Versioning
 
-#### Moments
-For Moments quick start guide, view [these examples](moments.md).
+This project follows a pragmatic Semantic Versioning approach.  
+For full details on how versions are managed, please see our [Versioning guide][versioning].
 
 ## Ask for help
 
-Feel free to open issues on the repository for any encountered problem or feature request.
+Feel free to open an issue on the repository if you see any problem or want to request a feature.
 
 If you want to contribute to this library in any way, please follow the guidelines in [CONTRIBUTING][contributing] file.
 
-For anything that requires our imminent attention, contact us @ [support@infobip.com](mailto:support@infobip.com).
+For anything that requires our immediate attention, contact us @ [support@infobip.com](mailto:support@infobip.com).
 
 [apidocs]: https://www.infobip.com/docs/api
 [freetrial]: https://www.infobip.com/docs/essentials/getting-started/free-trial
@@ -214,3 +213,4 @@ For anything that requires our imminent attention, contact us @ [support@infobip
 [semver]: https://semver.org
 [license]: LICENSE
 [contributing]: CONTRIBUTING.md
+[versioning]: VERSIONING.md
