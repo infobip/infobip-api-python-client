@@ -194,6 +194,12 @@ For the 2FA quick start guide please check [these examples](two-factor-authentic
 #### Calls
 For the Calls quick start guide please check [these examples](calls.md)
 
+#### Email
+For Email quick start guide, view [these examples](email.md).
+
+#### Moments
+For Moments quick start guide, view [these examples](moments.md).
+
 ## Versioning
 
 This project follows a pragmatic Semantic Versioning approach.  

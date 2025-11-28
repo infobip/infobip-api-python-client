@@ -41,7 +41,7 @@ MINOR versions introduce:
 
 * New endpoints, webhooks, or new request/response fields.
 * Support for new message types, enums, or capabilities.
-* Fixing wrong field types (e.g., `string` → `int32`).
+* Fixing wrong field types (e.g., `string` → `int`).
 * Removing fields or models when upstream endpoints no longer support them.
 * Unifying models (e.g., platform enums, validity windows, message statuses).
 * Replacing request/response classes due to upstream schema changes.
