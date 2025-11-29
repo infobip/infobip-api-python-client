@@ -24,7 +24,7 @@ NAME = "infobip-api-python-client"
 VERSION = "5.1.1"
 PYTHON_REQUIRES = ">=3.8"
 REQUIRES = [
-    "urllib3 >= 1.25.3, < 2.1.0",
+    "urllib3 >= 1.25.3, < 3.0.0",
     "python_dateutil >= 2.5.3",
     "setuptools >= 72.1.0",
     "pydantic >= 2",
