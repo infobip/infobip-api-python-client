@@ -37,7 +37,7 @@ From this point onward Python 3.8 is no longer supported. The minimum supported 
 
 **General / Dependencies:**
 * **Breaking Change:** The minimum Python supported version bumped to `3.9`.
-* **Breaking Change:** Deprecated `API_KEY_PREFIX` in client configuration. It is no longer needed when providing `API_KEY` and `BASE_URL`.[See latest configuration quickstart](README.md#quickstart)
+* Deprecated `API_KEY_PREFIX` in client configuration. It is no longer needed when providing `API_KEY` and `BASE_URL`.[See latest configuration quickstart](README.md#quickstart)
 * Bumped `urllib` version support (>= 2.1.0). This should resolve the following issue: [#21](https://github.com/infobip/infobip-api-python-client/issues/21) and close the related pull requests: [#36](https://github.com/infobip/infobip-api-python-client/pull/36), [#35](https://github.com/infobip/infobip-api-python-client/pull/35), [#33](https://github.com/infobip/infobip-api-python-client/pull/33).
 * Bumped `python-dateutil` to `2.8.2`.
 * Extended `ApiException` for handling `409` and `422` exceptions.
