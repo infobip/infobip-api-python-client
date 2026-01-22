@@ -1,22 +1,20 @@
 [tool.poetry]
 name = "infobip_api_client"
-version = "5.1.1"
+version = "6.0.0"
 description = "This is a Python package for Infobip API and you can use it as a dependency to add Infobip APIs to your application."
 authors = ["Infobip support <support@infobip.com>"]
-license = "MIT License"
 readme = "README.md"
 repository = "https://github.com/infobip/infobip-api-python-client.git"
 keywords = ["infobip", "sms", "tfa", "2fa", "calls", "voice", "sdk", "rest", "api",  "openapi"]
 include = ["infobip_api_client/py.typed"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
-
-python_dateutil = ">=2.5.3"
+python = "^3.9"
+urllib3 = ">= 2.1.0, < 3.0.0"
 setuptools = ">=72.1.0"
-urllib3 = ">=1.25.3, < 2.1.0"
-pydantic = ">=2"
-typing-extensions = ">=4.7.1"
+python-dateutil = ">= 2.8.2"
+pydantic = ">= 2"
+typing-extensions = ">= 4.7.1"
 
 [tool.poetry.dev-dependencies]
 pytest="6.2.5"
@@ -49,7 +47,7 @@ warn_unused_ignores = true
 
 ## Getting these passing should be easy
 strict_equality = true
-strict_concatenate = true
+extra_checks = true
 
 ## Strongly recommend enabling this one as soon as you can
 check_untyped_defs = true

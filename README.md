@@ -28,13 +28,15 @@ Detailed documentation about Infobip API can be found here. The current version 
 * [Voice](https://www.infobip.com/docs/api/channels/voice)
 * [Moments](https://www.infobip.com/docs/api/customer-engagement/moments).
 * [Email](https://www.infobip.com/docs/api/channels/email)
+* [Viber](https://www.infobip.com/docs/api/channels/viber)
+* [Messages API](https://www.infobip.com/docs/api/platform/messages-api)
 
 ## General Info
 For `infobip-api-python-client` versioning we use [Semantic Versioning][semver] scheme.
 
 Published under [MIT License][license].
 
-Python 3.8 is minimum supported version by this library.
+Python 3.9 is minimum supported version by this library.
 
 ## Installation
 Pull the library by using the following command:
@@ -55,8 +57,7 @@ To see your base URL, log in to the [Infobip API Resource][apidocs] hub with you
 
     client_config = Configuration(
         host="<YOUR_BASE_URL>",
-        api_key={"APIKeyHeader": "<YOUR_API_KEY>"},
-        api_key_prefix={"APIKeyHeader": "<YOUR_API_PREFIX>"},
+        api_key="<YOUR_API_KEY>",
     )
 ```
 
@@ -189,20 +190,20 @@ Example of webhook implementation using Flask:
 
 ```
 #### Two-Factor Authentication (2FA)
-For the 2FA quick start guide please check [these examples](two-factor-authentication.md).
+For the 2FA quick start guide please check [these examples](docs/two-factor-authentication.md).
 
 #### Calls
-For the Calls quick start guide please check [these examples](calls.md)
+For the Calls quick start guide please check [these examples](docs/calls.md)
 
 #### Email
-For Email quick start guide, view [these examples](email.md).
+For Email quick start guide, view [these examples](docs/email.md).
 
 #### Moments
-For Moments quick start guide, view [these examples](moments.md).
+For Moments quick start guide, view [these examples](docs/moments.md).
 
 ## Versioning
 
-This project follows a pragmatic Semantic Versioning approach.  
+This project follows a pragmatic Semantic Versioning approach.
 For full details on how versions are managed, please see our [Versioning guide][versioning].
 
 ## Ask for help
