@@ -20,7 +20,7 @@ class FileParameter(BaseModel):
         self,
         content: Union[bytes, io.IOBase],
         name: Optional[str] = None,
-        content_type: Optional[str] = None
+        content_type: Optional[str] = None,
     ):
         """
         Initialize FileParameter with content, name, and content_type.
@@ -35,7 +35,7 @@ class FileParameter(BaseModel):
         if not isinstance(content, io.IOBase):
             raise TypeError("content must be bytes or a file-like IOBase stream")
 
-        inferred_name = name or getattr(content, 'name', None)
+        inferred_name = name or getattr(content, "name", None)
         if inferred_name:
             inferred_name = os.path.basename(inferred_name)
         else:
@@ -44,7 +44,7 @@ class FileParameter(BaseModel):
         super().__init__(
             content=content,
             name=inferred_name,
-            content_type=content_type or "application/octet-stream"
+            content_type=content_type or "application/octet-stream",
         )
 
     def __repr__(self):

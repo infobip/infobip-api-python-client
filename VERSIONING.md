@@ -1,6 +1,6 @@
 # Versioning Strategy
 
-This document defines the versioning strategy for the Infobip PHP API Client.
+This document defines the versioning strategy for the Infobip Python API Client.
 
 ---
 
