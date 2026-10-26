@@ -52,14 +52,14 @@ def test_send_viber_text_message(httpserver: HTTPServer, viber_api_client):
     given_id = 7
     given_name = "PENDING_ENROUTE"
     given_description = "Message sent to next instance"
-    given_destination = "441134960001"
+    given_destination = "44xxxxxxxx47"
 
-    expected_sender = "441134960000"
-    expected_to = "441134960001"
+    expected_sender = "44xxxxxxxx46"
+    expected_to = "44xxxxxxxx47"
     expected_text = "Some text"
     expected_title = "Button title"
     expected_action = "https://www.example.com/action"
-    expected_sms_failover_sender = "441134960000"
+    expected_sms_failover_sender = "44xxxxxxxx46"
     expected_sms_failover_text = "Some failover text"
     expected_label = "TRANSACTIONAL"
     expected_apply_session_rate = False
@@ -166,10 +166,10 @@ def test_send_viber_image_message(httpserver: HTTPServer, viber_api_client):
     given_id = 7
     given_name = "PENDING_ENROUTE"
     given_description = "Message sent to next instance"
-    given_destination = "441134960001"
+    given_destination = "44xxxxxxxx47"
 
-    expected_sender = "441134960000"
-    expected_to = "441134960001"
+    expected_sender = "44xxxxxxxx46"
+    expected_to = "44xxxxxxxx47"
     expected_text = "Some text"
     expected_media_url = "https://www.example.com/image.jpg"
     expected_title = "Button title"
@@ -261,10 +261,10 @@ def test_send_viber_video_message(httpserver: HTTPServer, viber_api_client):
     given_id = 7
     given_name = "PENDING_ENROUTE"
     given_description = "Message sent to next instance"
-    given_destination = "441134960001"
+    given_destination = "44xxxxxxxx47"
 
-    expected_sender = "441134960000"
-    expected_to = "441134960001"
+    expected_sender = "44xxxxxxxx46"
+    expected_to = "44xxxxxxxx47"
     expected_text = "Some text"
     expected_media_url = "https://www.example.com/video.mp4"
     expected_media_duration = "PT5S"
@@ -360,10 +360,10 @@ def test_send_viber_file_message(httpserver: HTTPServer, viber_api_client):
     given_id = 7
     given_name = "PENDING_ENROUTE"
     given_description = "Message sent to next instance"
-    given_destination = "441134960001"
+    given_destination = "44xxxxxxxx47"
 
-    expected_sender = "441134960000"
-    expected_to = "441134960001"
+    expected_sender = "44xxxxxxxx46"
+    expected_to = "44xxxxxxxx47"
     expected_file_name = "file.xlsx"
     expected_media_url = "https://www.example.com/file.xlsx"
 
@@ -713,8 +713,8 @@ def test_parse_viber_delivery_reports():
     given_error_description = "No Error"
     given_error_permanent = False
     given_message_id = "2250be2d4219-3af1-78856-aabe-1362af1edfd2"
-    given_to = "441134960001"
-    given_sender = "441134960000"
+    given_to = "44xxxxxxxx47"
+    given_sender = "44xxxxxxxx46"
     given_sent_at = "2019-04-09T16:00:58.000-0300"
     given_done_at = "2019-04-09T16:01:56.000-0300"
     given_message_count = 1
@@ -800,7 +800,7 @@ def test_parse_viber_delivery_reports():
 
 
 def test_parse_viber_inbound_text_message():
-    given_from = "385912345678"
+    given_from = "44xxxxxxxx40"
     given_to = "givenClient"
     given_integration_type = "VIBER"
     given_received_at = "2020-04-01T11:02:43.594+0000"
@@ -874,7 +874,7 @@ def test_parse_viber_inbound_text_message():
 
 
 def test_parse_viber_inbound_file_message():
-    given_from = "385912345678"
+    given_from = "44xxxxxxxx40"
     given_to = "givenClient"
     given_integration_type = "VIBER"
     given_received_at = "2020-04-01T11:02:43.594+0000"
@@ -951,8 +951,8 @@ def test_parse_viber_inbound_file_message():
 
 def test_parse_viber_seen_reports():
     given_message_id = "1215f543ab19-345f-adbd-12ad31451ed25f35"
-    given_from = "385919998888"
-    given_to = "41793026731"
+    given_from = "44xxxxxxxx42"
+    given_to = "41xxxxxxx26"
     given_sent_at = "2023-04-05T11:21:57.793+0000"
     given_seen_at = "2023-04-05T11:22:10.251+0000"
     given_application_id = "applicationId"

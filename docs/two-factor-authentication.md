@@ -64,7 +64,7 @@ After setting up the application and message template, you can start generating 
     start_auth_request = TfaStartAuthenticationRequest(
         application_id=application_id,
         message_id=message_id,
-        to="41793026727",
+        to="41xxxxxxx25",
         _from="InfoSMS",
         placeholders={"firstName": "John"}
     )

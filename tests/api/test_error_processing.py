@@ -107,7 +107,7 @@ def test_error_processing(
     request = SmsRequest(
         messages=[
             SmsMessage(
-                destinations=[SmsDestination(to="41793026727")],
+                destinations=[SmsDestination(to="41xxxxxxx25")],
                 sender="InfoSMS",
                 content=SmsMessageContent(
                     actual_instance=SmsTextContent(text="Test message")

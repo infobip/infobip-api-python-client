@@ -67,9 +67,9 @@ def test_send_text_messages(httpserver: HTTPServer, messages_api_client):
     given_id = 26
     given_name = "MESSAGE_ACCEPTED"
     given_description = "Message sent to next instance"
-    given_destination = "48600700800"
+    given_destination = "48xxxxxxx36"
     given_channel = "SMS"
-    given_sender = "447491163443"
+    given_sender = "44xxxxxxxx59"
     given_to = "111111111"
     given_text = "May the Force be with you."
 
@@ -161,9 +161,9 @@ def test_send_text_messages_with_reply_button(
     given_id = 26
     given_name = "MESSAGE_ACCEPTED"
     given_description = "Message sent to next instance"
-    given_destination = "48600700800"
+    given_destination = "48xxxxxxx36"
     given_channel = "SMS"
-    given_sender = "447491163443"
+    given_sender = "44xxxxxxxx59"
     given_to = "111111111"
     given_text = "May the Force be with you."
     given_button_text = "Yes, I agree!"
@@ -264,9 +264,9 @@ def test_send_text_messages_with_open_url_button(
     given_id = 26
     given_name = "MESSAGE_ACCEPTED"
     given_description = "Message sent to next instance"
-    given_destination = "48600700800"
+    given_destination = "48xxxxxxx36"
     given_channel = "SMS"
-    given_sender = "447491163443"
+    given_sender = "44xxxxxxxx59"
     given_to = "111111111"
     given_text = "May the Force be with you."
     given_button_text = "Yes, I agree!"
@@ -369,13 +369,13 @@ def test_send_text_messages_with_dial_phone_button(
     given_id = 26
     given_name = "MESSAGE_ACCEPTED"
     given_description = "Message sent to next instance"
-    given_destination = "48600700800"
+    given_destination = "48xxxxxxx36"
     given_channel = "SMS"
-    given_sender = "447491163443"
+    given_sender = "44xxxxxxxx59"
     given_to = "111111111"
     given_text = "May the Force be with you."
     given_button_text = "Yes, I agree!"
-    given_phone_number = "+1234567890"
+    given_phone_number = "+1xxxxxxx06"
 
     given_request = {
         "messages": [
@@ -440,7 +440,7 @@ def test_send_text_messages_with_dial_phone_button(
                             type=MessagesApiMessageBodyType.TEXT, text=given_text
                         ),
                         buttons=[
-                            MessagesApiMessageDialPhoneButton(
+                            MessagesApiMessageDialPhoneButton.model_construct(
                                 type=MessagesApiMessageButtonType.DIAL_PHONE,
                                 text=given_button_text,
                                 phone_number=given_phone_number,
@@ -471,9 +471,9 @@ def test_send_text_messages_with_show_location_button(
     given_id = 26
     given_name = "MESSAGE_ACCEPTED"
     given_description = "Message sent to next instance"
-    given_destination = "48600700800"
+    given_destination = "48xxxxxxx36"
     given_channel = "SMS"
-    given_sender = "447491163443"
+    given_sender = "44xxxxxxxx59"
     given_to = "111111111"
     given_text = "May the Force be with you."
     given_button_text = "Yes, I agree!"
@@ -576,9 +576,9 @@ def test_send_text_messages_with_request_location_button(
     given_id = 26
     given_name = "MESSAGE_ACCEPTED"
     given_description = "Message sent to next instance"
-    given_destination = "48600700800"
+    given_destination = "48xxxxxxx36"
     given_channel = "SMS"
-    given_sender = "447491163443"
+    given_sender = "44xxxxxxxx59"
     given_to = "111111111"
     given_text = "May the Force be with you."
     given_button_text = "Yes, I agree!"
@@ -675,9 +675,9 @@ def test_send_text_messages_with_add_calendar_event_button(
     given_id = 26
     given_name = "MESSAGE_ACCEPTED"
     given_description = "Message sent to next instance"
-    given_destination = "48600700800"
+    given_destination = "48xxxxxxx36"
     given_channel = "SMS"
-    given_sender = "447491163443"
+    given_sender = "44xxxxxxxx59"
     given_to = "111111111"
     given_text = "May the Force be with you."
     given_button_text = "Yes, I agree!"
@@ -790,9 +790,9 @@ def test_send_image_messages(httpserver: HTTPServer, messages_api_client):
     given_id = 26
     given_name = "MESSAGE_ACCEPTED"
     given_description = "Message sent to next instance"
-    given_destination = "48600700800"
+    given_destination = "48xxxxxxx36"
     given_channel = "SMS"
-    given_sender = "447491163443"
+    given_sender = "44xxxxxxxx59"
     given_to = "111111111"
     given_image_url = "https://example.com/image.jpg"
 
@@ -871,7 +871,7 @@ def test_send_image_messages(httpserver: HTTPServer, messages_api_client):
 
 def test_validate_messages_api_message(httpserver: HTTPServer, messages_api_client):
     given_channel = "SMS"
-    given_sender = "447491163443"
+    given_sender = "44xxxxxxxx59"
     given_to = "111111111"
     given_message_text = "May the Force be with you."
     given_description = "Request can be sent through '/messages' endpoint and should be accepted by our platform."
@@ -953,9 +953,9 @@ def test_send_template_message(httpserver: HTTPServer, messages_api_client):
     given_id = 26
     given_name = "MESSAGE_ACCEPTED"
     given_description = "Message sent to next instance"
-    given_destination = "48600700800"
+    given_destination = "48xxxxxxx36"
     given_channel = "WHATSAPP"
-    given_sender = "447860099299"
+    given_sender = "44xxxxxxxx65"
     given_to = "111111111"
     given_template_name = "registration_success"
     given_language = "en_GB"
@@ -1056,9 +1056,9 @@ def test_send_template_message_with_quick_reply_button(
     given_id = 26
     given_name = "MESSAGE_ACCEPTED"
     given_description = "Message sent to next instance"
-    given_destination = "48600700800"
+    given_destination = "48xxxxxxx36"
     given_channel = "WHATSAPP"
-    given_sender = "447860099299"
+    given_sender = "44xxxxxxxx65"
     given_to = "111111111"
     given_template_name = "registration_success"
     given_language = "en_GB"
@@ -1157,9 +1157,9 @@ def test_send_template_message_with_phone_number_button(
     given_id = 26
     given_name = "MESSAGE_ACCEPTED"
     given_description = "Message sent to next instance"
-    given_destination = "48600700800"
+    given_destination = "48xxxxxxx36"
     given_channel = "WHATSAPP"
-    given_sender = "447860099299"
+    given_sender = "44xxxxxxxx65"
     given_to = "111111111"
     given_template_name = "registration_success"
     given_language = "en_GB"
@@ -1254,9 +1254,9 @@ def test_send_template_message_with_copy_code_button(
     given_id = 26
     given_name = "MESSAGE_ACCEPTED"
     given_description = "Message sent to next instance"
-    given_destination = "48600700800"
+    given_destination = "48xxxxxxx36"
     given_channel = "WHATSAPP"
-    given_sender = "447860099299"
+    given_sender = "44xxxxxxxx65"
     given_to = "111111111"
     given_template_name = "registration_success"
     given_language = "en_GB"
@@ -1353,9 +1353,9 @@ def test_send_template_message_with_flow_button(
     given_id = 26
     given_name = "MESSAGE_ACCEPTED"
     given_description = "Message sent to next instance"
-    given_destination = "48600700800"
+    given_destination = "48xxxxxxx36"
     given_channel = "WHATSAPP"
-    given_sender = "447860099299"
+    given_sender = "44xxxxxxxx65"
     given_to = "111111111"
     given_template_name = "registration_success"
     given_language = "en_GB"
@@ -1452,9 +1452,9 @@ def test_send_template_message_with_catalog_button(
     given_id = 26
     given_name = "MESSAGE_ACCEPTED"
     given_description = "Message sent to next instance"
-    given_destination = "48600700800"
+    given_destination = "48xxxxxxx36"
     given_channel = "WHATSAPP"
-    given_sender = "447860099299"
+    given_sender = "44xxxxxxxx65"
     given_to = "111111111"
     given_template_name = "registration_success"
     given_language = "en_GB"
@@ -1551,9 +1551,9 @@ def test_send_template_message_with_multi_product_button(
     given_id = 26
     given_name = "MESSAGE_ACCEPTED"
     given_description = "Message sent to next instance"
-    given_destination = "48600700800"
+    given_destination = "48xxxxxxx36"
     given_channel = "WHATSAPP"
-    given_sender = "447860099299"
+    given_sender = "44xxxxxxxx65"
     given_to = "111111111"
     given_template_name = "registration_success"
     given_language = "en_GB"
@@ -1671,9 +1671,9 @@ def test_send_messages_event(httpserver: HTTPServer, messages_api_client):
     given_id = 26
     given_name = "MESSAGE_ACCEPTED"
     given_description = "Message sent to next instance"
-    given_destination = "48600700800"
+    given_destination = "48xxxxxxx36"
     given_channel = "APPLE_MB"
-    given_sender = "447491163443"
+    given_sender = "44xxxxxxxx59"
     given_to = "111111111"
 
     given_request = {
@@ -1833,8 +1833,8 @@ def test_parse_delivery_reports():
 
 def test_parse_incoming_messages():
     expected_channel = "SMS"
-    expected_sender = "48123234567"
-    expected_destination = "48123098765"
+    expected_sender = "48xxxxxxx35"
+    expected_destination = "48xxxxxxx34"
     expected_text = "Text message 123"
     expected_clean_text = "Text message"
     expected_received_at = "2020-02-06T14:18:29.797+0000"

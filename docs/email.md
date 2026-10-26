@@ -46,12 +46,12 @@ with open(image_path, "rb") as image_file:
 email_request = EmailRequest(
     messages=[
         EmailMessage(
-            sender="jenny.smith@company.com",
+            sender="jenny.smith@example.com",
             destinations=[
                 EmailGroupDestination(
                     to=[
                         EmailToDestination(
-                            destination="john.smith@company.com",
+                            destination="john.smith@example.org",
                             placeholders='{"customer_name":"John Smith"}'
                         )
                     ]

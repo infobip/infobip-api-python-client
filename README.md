@@ -82,7 +82,7 @@ Here's a basic example of sending the SMS message.
             SmsMessage(
                 destinations=[
                     SmsDestination(
-                        to="41793026727",
+                        to="41xxxxxxx25",
                     ),
                 ],
                 sender="InfoSMS",

@@ -67,7 +67,7 @@ def test_send_basic_sms_with_application_and_entity(
     httpserver: HTTPServer, sms_api_client
 ):
     given_bulk_id = "2034072219640523072"
-    given_to = "41793026727"
+    given_to = "41xxxxxxx25"
     given_message_id = "2250be2d4219-3af1-78856-aabe-1362af1edfd2"
     given_from = "InfoSMS"
     given_text = "This is a sample message"
@@ -171,10 +171,10 @@ def test_send_basic_sms_with_application_and_entity(
 
 def test_send_fully_featured_sms(httpserver: HTTPServer, sms_api_client):
     sender_1 = "InfoSMS"
-    sender_2 = "41793026700"
-    destination_1 = "41793026727"
-    destination_2 = "41793026834"
-    destination_3 = "41793026700"
+    sender_2 = "41xxxxxxx22"
+    destination_1 = "41xxxxxxx25"
+    destination_2 = "41xxxxxxx30"
+    destination_3 = "41xxxxxxx22"
     message_id_1 = "MESSAGE-ID-123-xyz"
     text_1 = "Artık Ulusal Dil Tanımlayıcısı ile Türkçe karakterli smslerinizi rahatlıkla iletebilirsiniz."
     text_2 = "A long time ago, in a galaxy far, far away... It is a period of civil war. Rebel spaceships, striking from a hidden base, have won their first victory against the evil Galactic Empire."
@@ -421,10 +421,10 @@ def test_send_fully_featured_sms(httpserver: HTTPServer, sms_api_client):
 
 def test_send_fully_featured_binary_sms(httpserver: HTTPServer, sms_api_client):
     sender_1 = "InfoSMS"
-    sender_2 = "41793026700"
-    destination_1 = "41793026727"
-    destination_2 = "41793026834"
-    destination_3 = "41793026700"
+    sender_2 = "41xxxxxxx22"
+    destination_1 = "41xxxxxxx25"
+    destination_2 = "41xxxxxxx30"
+    destination_3 = "41xxxxxxx22"
     message_id_1 = "MESSAGE-ID-123-xyz"
     validity_period_amount = 720
     validity_period_unit = ValidityPeriodTimeUnit.HOURS
@@ -898,7 +898,7 @@ def test_outbound_delivery_reports_webhook_model():
                     permanent=False,
                 ),
                 message_id="MESSAGE-ID-123-xyz",
-                to="41793026727",
+                to="41xxxxxxx25",
                 sender="InfoSMS",
                 sent_at=send_at_offset,
                 done_at=send_at_offset,
@@ -935,7 +935,7 @@ def test_outbound_delivery_reports_webhook_model():
             "permanent": false
           },
           "messageId": "MESSAGE-ID-123-xyz",
-          "to": "41793026727",
+          "to": "41xxxxxxx25",
           "sender": "InfoSMS",
           "sentAt": "2023-08-01T16:10:00+05:30",
           "doneAt": "2023-08-01T16:10:00+05:30",
@@ -970,8 +970,8 @@ def test_inbound_reports_webhook_model():
         "results": [
         {
             "messageId": "817790313235066447",
-            "from": "385916242493",
-            "to": "385921004026",
+            "from": "44xxxxxxxx41",
+            "to": "44xxxxxxxx43",
             "text": "QUIZ Correct answer is Paris",
             "cleanText": "Correct answer is Paris",
             "keyword": "QUIZ",
@@ -993,8 +993,8 @@ def test_inbound_reports_webhook_model():
         results=[
             SmsInboundMessage(
                 message_id="817790313235066447",
-                to="385921004026",
-                var_from="385916242493",
+                to="44xxxxxxxx43",
+                var_from="44xxxxxxxx41",
                 text="QUIZ Correct answer is Paris",
                 clean_text="Correct answer is Paris",
                 keyword="QUIZ",
@@ -1017,8 +1017,8 @@ def test_outbound_delivery_reports(httpserver: HTTPServer, sms_api_client):
     bulk_id = "BULK-ID-123-xyz"
     message_id_1 = "MESSAGE-ID-123-xyz"
     message_id_2 = "12db39c3-7822-4e72-a3ec-c87442c0ffc5"
-    to_1 = "41793026727"
-    to_2 = "41793026834"
+    to_1 = "41xxxxxxx25"
+    to_2 = "41xxxxxxx30"
     sender = "InfoSMS"
     sent_at = "2023-08-01T16:10:00+05:30"
     done_at = "2023-08-01T16:10:00+05:30"
@@ -1200,8 +1200,8 @@ def test_get_inbound_sms_messages(httpserver: HTTPServer, sms_api_client):
         "results": [
             {
                 "messageId": "817790313235066447",
-                "from": "385916242493",
-                "to": "385921004026",
+                "from": "44xxxxxxxx41",
+                "to": "44xxxxxxxx43",
                 "text": "QUIZ Correct answer is Paris",
                 "cleanText": "Correct answer is Paris",
                 "keyword": "QUIZ",
@@ -1228,8 +1228,8 @@ def test_get_inbound_sms_messages(httpserver: HTTPServer, sms_api_client):
         results=[
             SmsInboundMessage(
                 message_id="817790313235066447",
-                to="385921004026",
-                var_from="385916242493",
+                to="44xxxxxxxx43",
+                var_from="44xxxxxxxx41",
                 text="QUIZ Correct answer is Paris",
                 clean_text="Correct answer is Paris",
                 keyword="QUIZ",
@@ -1252,8 +1252,8 @@ def test_outbound_logs(httpserver: HTTPServer, sms_api_client):
     bulk_id = "BULK-ID-123-xyz"
     message_id_1 = "MESSAGE-ID-123-xyz"
     message_id_2 = "12db39c3-7822-4e72-a3ec-c87442c0ffc5"
-    destination_1 = "41793026727"
-    destination_2 = "41793026834"
+    destination_1 = "41xxxxxxx25"
+    destination_2 = "41xxxxxxx30"
     sent_at = "2023-08-01T16:10:00+05:30"
     done_at = "2023-08-01T16:10:00+05:30"
 

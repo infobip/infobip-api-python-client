@@ -361,7 +361,7 @@ def test_should_verify_domain(httpserver: HTTPServer, get_api_client):
 
 
 def test_should_validate_email(httpserver: HTTPServer, get_api_client):
-    given_to = "john.smith@abc.com"
+    given_to = "john.smith@example.com"
     given_valid_syntax = True
     given_did_you_mean = None
 
@@ -507,16 +507,16 @@ def test_should_send_fully_featured_email(httpserver: HTTPServer, get_api_client
     expected_request = {
         "messages": [
             {
-                "sender": "jenny.smith@company.com",
+                "sender": "jenny.smith@example.com",
                 "destinations": [
                     {
                         "to": [
                             {
-                                "destination": "john.smith@company.com",
+                                "destination": "john.smith@example.com",
                                 "placeholders": '{"customer_name":"John Smith"}',
                             },
                             {
-                                "destination": "mike.smith@company.com",
+                                "destination": "mike.smith@example.com",
                                 "placeholders": '{"customer_name":"Mike Smith"}',
                             },
                         ],
@@ -544,7 +544,7 @@ def test_should_send_fully_featured_email(httpserver: HTTPServer, get_api_client
                     "name": "PENDING_ENROUTE",
                     "description": "Message sent to next instance",
                 },
-                "destination": "john.smith@company.com",
+                "destination": "john.smith@example.com",
             }
         ],
     }
@@ -558,16 +558,16 @@ def test_should_send_fully_featured_email(httpserver: HTTPServer, get_api_client
     email_request = EmailRequest(
         messages=[
             EmailMessage(
-                sender="jenny.smith@company.com",
+                sender="jenny.smith@example.com",
                 destinations=[
                     EmailGroupDestination(
                         to=[
                             EmailToDestination(
-                                destination="john.smith@company.com",
+                                destination="john.smith@example.com",
                                 placeholders='{"customer_name":"John Smith"}',
                             ),
                             EmailToDestination(
-                                destination="mike.smith@company.com",
+                                destination="mike.smith@example.com",
                                 placeholders='{"customer_name":"Mike Smith"}',
                             ),
                         ]
@@ -587,7 +587,7 @@ def test_should_send_fully_featured_email(httpserver: HTTPServer, get_api_client
         bulk_id="a28dd97c-2222-4fcf-99f1-0b557ed381da",
         messages=[
             EmailMessageResponseMessageResponseDetails(
-                destination="john.smith@company.com",
+                destination="john.smith@example.com",
                 message_id="a28dd97c-1ffb-4fcf-99f1-0b557ed381da",
                 status=EmailMessageStatus(
                     group_id=1,
@@ -630,7 +630,7 @@ def test_should_get_email_delivery_reports(httpserver: HTTPServer, get_api_clien
 
     given_bulk_id = "csdstgteet4fath2pclbq"
     given_message_id = "45653761-3a88-4060-869e-ae372adc7a51"
-    given_to = "john.doe@email.com"
+    given_to = "john.doe@example.com"
 
     given_response = {
         "results": [
@@ -727,10 +727,10 @@ def test_should_get_email_delivery_reports(httpserver: HTTPServer, get_api_clien
 
 def test_should_get_email_suppressions(httpserver: HTTPServer, get_api_client):
     given_domain_name = "example.com"
-    given_email_address = "jane.smith@somecompany.com"
+    given_email_address = "jane.smith@example.com"
     given_type = "BOUNCE"
     given_created_date = "2024-08-14T14:02:17.366"
-    given_reason = "550 5.1.1 <jane.smith@somecompany.com>: user does not exist"
+    given_reason = "550 5.1.1 <jane.smith@example.com>: user does not exist"
     given_page = 0
     given_size = 100
 
@@ -770,11 +770,11 @@ def test_should_get_email_suppressions(httpserver: HTTPServer, get_api_client):
 
 def test_should_add_email_suppressions(httpserver: HTTPServer, get_api_client):
     given_domain_name1 = "example.com"
-    given_email_addresses1 = ["jane.smith@somecompany.com", "john.doe@somecompany.com"]
+    given_email_addresses1 = ["jane.smith@example.com", "john.doe@example.com"]
     given_type = EmailAddSuppressionType.BOUNCE
 
     given_domain_name2 = "example.com"
-    given_email_addresses2 = ["john.smith@somecompany.com", "john.perry@gmail.com"]
+    given_email_addresses2 = ["john.smith@example.com", "john.perry@example.com"]
 
     expected_request = {
         "suppressions": [
@@ -816,11 +816,11 @@ def test_should_add_email_suppressions(httpserver: HTTPServer, get_api_client):
 
 def test_should_delete_email_suppressions(httpserver: HTTPServer, get_api_client):
     given_domain_name1 = "example.com"
-    given_email_addresses1 = ["jane.smith@somecompany.com", "john.doe@somecompany.com"]
+    given_email_addresses1 = ["jane.smith@example.com", "john.doe@example.com"]
     given_type = EmailSuppressionType.BOUNCE
 
     given_domain_name2 = "example.com"
-    given_email_addresses2 = ["john.smith@somecompany.com", "john.perry@gmail.com"]
+    given_email_addresses2 = ["john.smith@example.com", "john.perry@example.com"]
 
     expected_request = {
         "suppressions": [
@@ -1214,12 +1214,12 @@ def test_should_assign_pool_to_domain(httpserver: HTTPServer, get_api_client):
 
 def test_should_send_mime_email(httpserver: HTTPServer, get_api_client):
     given_message_id = "requestMessageId"
-    given_from = "jenny.smith@company.com"
-    given_destinations = ["john.smith@company.com"]
-    given_mime_message = "RGF0ZTogV2VkLCAxOCBKdW4gMjAyNSAxMjo0ODoyMyArMDIwMCAoQ0VTVCkNCkZyb206IGplbm55LnNtaXRoQGNvbXBhbnkuY29tDQpUbzogam9obi5zbWl0aEBjb21wYW55LmNvbQ0KTWVzc2FnZS1JRDogPG1lc3NhZ2VAaWQ+DQpTdWJqZWN0OiBUaGlzIGlzIHN1YmplY3QNCk1JTUUtVmVyc2lvbjogMS4wDQpDb250ZW50LVR5cGU6IG11bHRpcGFydC9taXhlZDsgDQoJYm91bmRhcnk9Ii0tLS09X1BhcnRfMF8xNDkzMzcyMS4xNzUwMjQzNzAzMTY0Ig0KWC1JQi1idWxrLWlkOiBkZWZhdWx0QnVsa0lkDQoNCi0tLS0tLT1fUGFydF8wXzE0OTMzNzIxLjE3NTAyNDM3MDMxNjQNCkNvbnRlbnQtVHlwZTogdGV4dC9wbGFpbjsgY2hhcnNldD11cy1hc2NpaQ0KQ29udGVudC1UcmFuc2Zlci1FbmNvZGluZzogN2JpdA0KDQpIZWxsbyB3b3JsZA0KLS0tLS0tPV9QYXJ0XzBfMTQ5MzM3MjEuMTc1MDI0MzcwMzE2NA0KQ29udGVudC1UeXBlOiB0ZXh0L2h0bWw7IGNoYXJzZXQ9dXMtYXNjaWkNCkNvbnRlbnQtVHJhbnNmZXItRW5jb2Rpbmc6IDdiaXQNCg0KPGRpdj5IZWxsbyB3b3JsZDwvZGl2Pg0KLS0tLS0tPV9QYXJ0XzBfMTQ5MzM3MjEuMTc1MDI0MzcwMzE2NC0tDQo="
+    given_from = "jenny.smith@example.com"
+    given_destinations = ["john.smith@example.com"]
+    given_mime_message = "RGF0ZTogV2VkLCAxOCBKdW4gMjAyNSAxMjo0ODoyMyArMDIwMCAoQ0VTVCkNCkZyb206IGplbm55LnNtaXRoQGV4YW1wbGUuY29tDQpUbzogam9obi5zbWl0aEBleGFtcGxlLmNvbQ0KTWVzc2FnZS1JRDogPG1lc3NhZ2VAaWQ+DQpTdWJqZWN0OiBUaGlzIGlzIHN1YmplY3QNCk1JTUUtVmVyc2lvbjogMS4wDQpDb250ZW50LVR5cGU6IG11bHRpcGFydC9taXhlZDsgDQoJYm91bmRhcnk9Ii0tLS09X1BhcnRfMF8xNDkzMzcyMS4xNzUwMjQzNzAzMTY0Ig0KWC1JQi1idWxrLWlkOiBkZWZhdWx0QnVsa0lkDQoNCi0tLS0tLT1fUGFydF8wXzE0OTMzNzIxLjE3NTAyNDM3MDMxNjQNCkNvbnRlbnQtVHlwZTogdGV4dC9wbGFpbjsgY2hhcnNldD11cy1hc2NpaQ0KQ29udGVudC1UcmFuc2Zlci1FbmNvZGluZzogN2JpdA0KDQpIZWxsbyB3b3JsZA0KLS0tLS0tPV9QYXJ0XzBfMTQ5MzM3MjEuMTc1MDI0MzcwMzE2NA0KQ29udGVudC1UeXBlOiB0ZXh0L2h0bWw7IGNoYXJzZXQ9dXMtYXNjaWkNCkNvbnRlbnQtVHJhbnNmZXItRW5jb2Rpbmc6IDdiaXQNCg0KPGRpdj5IZWxsbyB3b3JsZDwvZGl2Pg0KLS0tLS0tPV9QYXJ0XzBfMTQ5MzM3MjEuMTc1MDI0MzcwMzE2NC0tDQo="
 
     given_bulk_id = "snxemd8u52v7v84iiu69"
-    given_to = "john.smith@company.com"
+    given_to = "john.smith@example.com"
     given_response_message_id = "jgzra46v9zi1ztvd62t5"
     given_group_id = 1
     given_group_name = "PENDING"

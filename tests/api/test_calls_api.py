@@ -183,11 +183,11 @@ CANCEL_BULK = "/calls/1/bulks/{bulkId}/cancel"
 
 def test_should_get_calls(httpserver: HTTPServer, get_api_client):
     given_call_id = "string"
-    given_phone_number = "41792030000"
+    given_phone_number = "41xxxxxxx15"
     given_type = "PHONE"
     given_application_id = "61c060db2675060027d8c7a6"
-    given_from = "44790123456"
-    given_to = "44790987654"
+    given_from = "44xxxxxxx32"
+    given_to = "44xxxxxxx33"
     given_direction = "INBOUND"
     given_call_state = "CALLING"
     given_muted = True
@@ -298,9 +298,9 @@ def test_should_get_calls(httpserver: HTTPServer, get_api_client):
 
 
 def test_should_create_call(httpserver: HTTPServer, get_api_client):
-    givenPhoneNumber = "41792036727"
+    givenPhoneNumber = "41xxxxxxx17"
     givenType = "PHONE"
-    givenFrom = "41793026834"
+    givenFrom = "41xxxxxxx30"
     givenApplicationId = "61c060db2675060027d8c7a6"
     givenCallsConfigurationId = "dc5942707c704551a00cd2ea"
     givenMaxDuration = 28800
@@ -317,7 +317,7 @@ def test_should_create_call(httpserver: HTTPServer, get_api_client):
     }
 
     givenCallId = "d8d84155-3831-43fb-91c9-bb897149a79d"
-    givenTo = "44790123456"
+    givenTo = "44xxxxxxx32"
     givenDirection = "OUTBOUND"
     givenCallState = "CALLING"
     givenMuted = False
@@ -397,14 +397,14 @@ def test_should_create_call(httpserver: HTTPServer, get_api_client):
 
 
 def test_should_get_a_call(httpserver: HTTPServer, get_api_client):
-    givenPhoneNumber = "41792030000"
+    givenPhoneNumber = "41xxxxxxx15"
     givenType = "PHONE"
-    givenFrom = "44790123456"
+    givenFrom = "44xxxxxxx32"
     givenMaxDuration = 28800
     givenApplicationId = "61c060db2675060027d8c7a6"
     givenParentCallId = "3ad8805e-d401-424e-9b03-e02a2016a5e2"
     givenCallId = "d8d84155-3831-43fb-91c9-bb897149a79d"
-    givenTo = "44790987654"
+    givenTo = "44xxxxxxx33"
     givenDirection = "INBOUND"
     givenCallState = "CALLING"
     givenMuted = True
@@ -494,11 +494,11 @@ def test_should_get_a_call(httpserver: HTTPServer, get_api_client):
 
 def test_should_get_a_call_history(httpserver: HTTPServer, get_api_client):
     given_call_id = "string"
-    given_phone_number = "41792030000"
+    given_phone_number = "41xxxxxxx15"
     given_type = "PHONE"
     given_application_id = "61c060db2675060027d8c7a6"
-    given_from = "44790123456"
-    given_to = "44790987654"
+    given_from = "44xxxxxxx32"
+    given_to = "44xxxxxxx33"
     given_direction = "INBOUND"
     given_call_state = "CALLING"
     given_muted = True
@@ -627,11 +627,11 @@ def test_should_get_a_call_history(httpserver: HTTPServer, get_api_client):
 
 def test_should_get_call_history(httpserver: HTTPServer, get_api_client):
     given_call_id = "string"
-    given_phone_number = "41792030000"
+    given_phone_number = "41xxxxxxx15"
     given_type = "PHONE"
     given_application_id = "61c060db2675060027d8c7a6"
-    given_from = "44790123456"
-    given_to = "44790987654"
+    given_from = "44xxxxxxx32"
+    given_to = "44xxxxxxx33"
     given_direction = "INBOUND"
     given_call_state = "CALLING"
     given_muted = True
@@ -735,7 +735,7 @@ def test_should_connect_calls(httpserver: HTTPServer, get_api_client):
     given_name = "Example conference"
     given_call_id1 = "d6d6058c-5077-49f9-a030-2fc40e8ca195"
     given_call_id2 = "6539fcb4-4b2a-4ac9-a43a-d60807af29b0"
-    given_phone_number = "41792030000"
+    given_phone_number = "41xxxxxxx15"
     given_type = "PHONE"
     given_state = "JOINING"
     given_join_time = "2022-05-01T14:25:45.0Z"
@@ -841,7 +841,7 @@ def test_should_connect_with_new_call(httpserver: HTTPServer, get_api_client):
     given_id = "034e622a-cc7e-456d-8a10-0ba43b11aa5e"
     given_name = "Example conference"
     given_call_id = "string"
-    given_phone_number = "41792030000"
+    given_phone_number = "41xxxxxxx15"
     given_type = "PHONE"
     given_state = "JOINING"
     given_join_time = "2022-05-01T14:25:45.0Z"
@@ -851,8 +851,8 @@ def test_should_connect_with_new_call(httpserver: HTTPServer, get_api_client):
     given_video_camera = True
     given_video_screen_share = True
     given_application_id = "61c060db2675060027d8c7a6"
-    given_from = "44790123456"
-    given_to = "44790987654"
+    given_from = "44xxxxxxx32"
+    given_to = "44xxxxxxx33"
     given_direction = "INBOUND"
     given_call_state = "CALLING"
     given_muted = True
@@ -1090,10 +1090,10 @@ def test_should_hangup(httpserver: HTTPServer, get_api_client):
     givenErrorCode = "NORMAL_HANGUP"
 
     givenCallId = "d8d84155-3831-43fb-91c9-bb897149a79d"
-    givenPhoneNumber = "44790123456"
+    givenPhoneNumber = "44xxxxxxx32"
     givenType = "PHONE"
-    givenFrom = "44790123456"
-    givenTo = "44790123456"
+    givenFrom = "44xxxxxxx32"
+    givenTo = "44xxxxxxx32"
     givenDirection = "OUTBOUND"
     givenState = "CALLING"
     givenAudioMuted = False
@@ -1576,7 +1576,7 @@ def test_should_get_conferences(httpserver: HTTPServer, get_api_client):
     given_name = "Example conference"
     given_call_id = "d8d84155-3831-43fb-91c9-bb897149a79d"
     given_call_id_2 = "d8d84155-3831-43fb-91c9-bb897149a79d"
-    given_phone_number = "41792030000"
+    given_phone_number = "41xxxxxxx15"
     given_type = "PHONE"
     given_state = "JOINING"
     given_join_time = "2022-05-01T14:25:45.134Z"
@@ -1723,7 +1723,7 @@ def test_should_create_conference(httpserver: HTTPServer, get_api_client):
     given_name = "Example conference"
     given_call_id = "d8d84155-3831-43fb-91c9-bb897149a79d"
     given_call_id_2 = "d8d84155-3831-43fb-91c9-bb897149a79d"
-    given_phone_number = "41792030000"
+    given_phone_number = "41xxxxxxx15"
     given_type = "PHONE"
     given_state = "JOINING"
     given_join_time = "2022-05-01T14:25:45.134Z"
@@ -1845,7 +1845,7 @@ def test_should_get_conference(httpserver: HTTPServer, get_api_client):
     given_name = "Example conference"
     given_call_id = "d8d84155-3831-43fb-91c9-bb897149a79d"
     given_call_id_2 = "d8d84155-3831-43fb-91c9-bb897149a79d"
-    given_phone_number = "41792030000"
+    given_phone_number = "41xxxxxxx15"
     given_type = "PHONE"
     given_state = "JOINING"
     given_join_time = "2022-05-01T14:25:45.134Z"
@@ -1988,8 +1988,8 @@ def test_update_all_calls(httpserver: HTTPServer, get_api_client):
 
 def test_should_add_new_call(httpserver: HTTPServer, get_api_client):
     given_type = "PHONE"
-    given_phone_number = "41792036727"
-    given_from = "41793026834"
+    given_phone_number = "41xxxxxxx17"
+    given_from = "41xxxxxxx30"
     given_connect_on_early_media = False
 
     given_request = {
@@ -2004,7 +2004,7 @@ def test_should_add_new_call(httpserver: HTTPServer, get_api_client):
     given_id = "034e622a-cc7e-456d-8a10-0ba43b11aa5e"
     given_name = "Example conference"
     given_call_id = "string"
-    given_phone_number = "41792030000"
+    given_phone_number = "41xxxxxxx15"
     given_type = "PHONE"
     given_state = "JOINING"
     given_join_time = "2022-05-01T14:25:45.0Z"
@@ -2014,8 +2014,8 @@ def test_should_add_new_call(httpserver: HTTPServer, get_api_client):
     given_video_camera = True
     given_video_screen_share = True
     given_application_id = "61c060db2675060027d8c7a6"
-    given_from = "44790123456"
-    given_to = "44790987654"
+    given_from = "44xxxxxxx32"
+    given_to = "44xxxxxxx33"
     given_direction = "INBOUND"
     given_call_state = "CALLING"
     given_muted = True
@@ -2213,7 +2213,7 @@ def test_should_add_existing_call(httpserver: HTTPServer, get_api_client):
     given_id = "034e622a-cc7e-456d-8a10-0ba43b11aa5e"
     given_name = "Example conference"
     given_call_id = "string"
-    given_phone_number = "41792030000"
+    given_phone_number = "41xxxxxxx15"
     given_type = CallEndpointType.PHONE
     given_state = "JOINING"
     given_join_time = "2022-05-01T14:25:45.0Z"
@@ -2223,8 +2223,8 @@ def test_should_add_existing_call(httpserver: HTTPServer, get_api_client):
     given_video_camera = True
     given_video_screen_share = True
     given_application_id = "61c060db2675060027d8c7a6"
-    given_from = "44790123456"
-    given_to = "44790987654"
+    given_from = "44xxxxxxx32"
+    given_to = "44xxxxxxx33"
     given_direction = "INBOUND"
     given_call_state = "CALLING"
     given_muted = True
@@ -2410,7 +2410,7 @@ def test_should_hangup_conference(httpserver: HTTPServer, get_api_client):
     given_id = "034e622a-cc7e-456d-8a10-0ba43b11aa5e"
     given_name = "Example conference"
     given_call_id = "string"
-    given_phone_number = "41792030000"
+    given_phone_number = "41xxxxxxx15"
     given_type = CallEndpointType.PHONE
     given_state = CallsParticipantState.JOINING
     given_join_time = "2022-05-01T14:25:45.134Z"
@@ -2545,7 +2545,7 @@ def test_should_conference_stop_file(httpserver: HTTPServer, get_api_client):
 
 def test_should_get_calls_recordings(httpserver: HTTPServer, get_api_client):
     given_id = "d8d84155-3831-43fb-91c9-bb897149a79d"
-    given_phone_number = "41792030000"
+    given_phone_number = "41xxxxxxx15"
     given_type = CallEndpointType.PHONE
     given_direction = CallDirection.INBOUND
     given_file_id = "218eceba-c044-430d-9f26-8f1a7f0g2d03"
@@ -2643,7 +2643,7 @@ def test_should_get_calls_recordings(httpserver: HTTPServer, get_api_client):
 
 def test_should_get_call_recordings(httpserver: HTTPServer, get_api_client):
     given_id = "d8d84155-3831-43fb-91c9-bb897149a79d"
-    given_phone_number = "41792030000"
+    given_phone_number = "41xxxxxxx15"
     given_type = CallEndpointType.PHONE
     given_direction = CallDirection.INBOUND
     given_file_id = "218eceba-c044-430d-9f26-8f1a7f0g2d03"
@@ -2712,7 +2712,7 @@ def test_should_get_call_recordings(httpserver: HTTPServer, get_api_client):
 
 def test_should_delete_call_recordings(httpserver: HTTPServer, get_api_client):
     given_id = "d8d84155-3831-43fb-91c9-bb897149a79d"
-    given_phone_number = "41792030000"
+    given_phone_number = "41xxxxxxx15"
     given_type = "PHONE"
     given_direction = "INBOUND"
     given_file_id = "218eceba-c044-430d-9f26-8f1a7f0g2d03"
@@ -2797,7 +2797,7 @@ def test_should_get_conferences_recordings(httpserver: HTTPServer, get_api_clien
     given_end_time = "2022-05-01T14:35:45.154Z"
     given_location = CallsRecordingFileLocation.SFTP
     given_id = "d8d84155-3831-43fb-91c9-bb897149a79d"
-    given_phone_number = "41792030000"
+    given_phone_number = "41xxxxxxx15"
     given_type = "PHONE"
     given_direction = CallDirection.INBOUND
     given_status = CallsRecordingStatus.SUCCESSFUL
@@ -2943,7 +2943,7 @@ def test_should_get_conference_recordings(httpserver: HTTPServer, get_api_client
     given_end_time = "2022-05-01T14:35:45.154Z"
     given_location = CallsRecordingFileLocation.SFTP
     given_id = "d8d84155-3831-43fb-91c9-bb897149a79d"
-    given_phone_number = "41792030000"
+    given_phone_number = "41xxxxxxx15"
     given_type = "PHONE"
     given_direction = "INBOUND"
     given_status = "SUCCESSFUL"
@@ -3065,7 +3065,7 @@ def test_should_delete_conference_recordings(httpserver: HTTPServer, get_api_cli
     given_end_time = "2022-05-01T14:35:45.154Z"
     given_location = CallsRecordingFileLocation.SFTP
     given_id = "d8d84155-3831-43fb-91c9-bb897149a79d"
-    given_phone_number = "41792030000"
+    given_phone_number = "41xxxxxxx15"
     given_type = "PHONE"
     given_direction = "INBOUND"
     given_status = "SUCCESSFUL"
@@ -3799,8 +3799,8 @@ def test_should_delete_media_stream_config(httpserver: HTTPServer, get_api_clien
 def test_should_create_bulk_of_calls(httpserver: HTTPServer, get_api_client):
     given_calls_configuration_id = "dc5942707c704551a00cd2ea"
     given_application_id = "61c060db2675060027d8c7a6"
-    given_from = "41793026834"
-    given_phone_number = "41792036727"
+    given_from = "41xxxxxxx30"
+    given_phone_number = "41xxxxxxx17"
     given_type = CallsBulkEndpointType.PHONE
     given_bulk_id = "bulk"
     given_call_id = "call"

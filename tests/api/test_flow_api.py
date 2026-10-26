@@ -25,17 +25,17 @@ def test_should_add_participants_to_flow(httpserver: HTTPServer, get_api_client)
     identifier1 = "370329180020364"
     type1 = "FACEBOOK"
 
-    identifier2 = "test@infobip.com"
+    identifier2 = "test@example.com"
     type2 = "EMAIL"
     order_number2 = 1167873391
 
-    identifier3 = "test2@infobip.com"
+    identifier3 = "test2@example.com"
     type3 = "EMAIL"
     order_number3 = 1595299041
     external_id3 = "optional_external_person_id"
     contract_expiry3 = "2023-04-01"
     company3 = "Infobip"
-    email3 = "test@infobip.com"
+    email3 = "test@example.com"
 
     given_request = {
         "participants": [
@@ -105,8 +105,8 @@ def test_should_get_participants_report(httpserver: HTTPServer, get_api_client):
     campaign_id = 200000000000001
     given_operation_id = "03f2d474-0508-46bf-9f3d-d8e2c28adaea"
     given_callback_data = "Callback Data"
-    given_identifier1 = "test@infobip.com"
-    given_identifier2 = "test2@infobip.com"
+    given_identifier1 = "test@example.com"
+    given_identifier2 = "test2@example.com"
     given_type = FlowPersonUniqueFieldType.EMAIL
     given_status1 = FlowAddFlowParticipantStatus.ACCEPTED
     given_status2 = FlowAddFlowParticipantStatus.REJECTED

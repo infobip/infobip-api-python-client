@@ -26,10 +26,10 @@ click_to_call_send_message = "/voice/ctc/1/send"
 
 def test_should_send_click_to_call_message(httpserver: HTTPServer, get_api_client):
     given_bulk_id = "4fda521a-c680-470d-b134-83d468f7ac80"
-    given_from = "41793026700"
-    given_from_b = "41793026701"
-    given_destination_a = "41793026727"
-    given_destination_b = "41793026731"
+    given_from = "41xxxxxxx22"
+    given_from_b = "41xxxxxxx23"
+    given_destination_a = "41xxxxxxx25"
+    given_destination_b = "41xxxxxxx26"
     given_req_message_id = "MESSAGE-ID-123-xyz"
     given_text = "Test Voice message."
     given_language = "en"
@@ -89,7 +89,7 @@ def test_should_send_click_to_call_message(httpserver: HTTPServer, get_api_clien
         ],
     }
 
-    given_to = "41793026727"
+    given_to = "41xxxxxxx25"
     given_status_group_id = 1
     given_status_group_name = "PENDING"
     given_status_id = 26

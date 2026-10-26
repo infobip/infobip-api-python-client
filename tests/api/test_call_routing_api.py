@@ -26,7 +26,7 @@ def test_should_get_call_routes(httpserver: HTTPServer, get_api_client):
     given_id = "f8fc8aca-786d-4943-9af2-e7ec01b5e80d"
     given_name = "SIP endpoint route"
     given_status = CallRoutingRouteStatus.ENABLED
-    given_destinations_value_username = "41793026834"
+    given_destinations_value_username = "41xxxxxxx30"
     given_destinations_value_sip_trunk_id = "string"
     given_destinations_value_custom_headers_string = "string"
     given_destinations_value_type = "SIP"
@@ -39,7 +39,7 @@ def test_should_get_call_routes(httpserver: HTTPServer, get_api_client):
 
     given_second_id = "f8fc8aca-786d-4943-9af2-e7ec01b5e80d"
     given_second_name = "Phone endpoint route"
-    given_second_destinations_value_phone_number = "41793026834"
+    given_second_destinations_value_phone_number = "41xxxxxxx30"
     given_second_destinations_value_type = "PHONE"
     given_second_destinations_connect_timeout = 30
     given_second_destinations_recording_recording_type = "AUDIO"
@@ -195,7 +195,7 @@ def test_should_get_call_routes(httpserver: HTTPServer, get_api_client):
 def test_should_create_a_call_route(httpserver: HTTPServer, get_api_client):
     given_name = "SIP endpoint route"
     given_status = CallRoutingRouteStatus.ENABLED
-    given_destinations_value_username = "41793026834"
+    given_destinations_value_username = "41xxxxxxx30"
     given_destinations_value_sip_trunk_id = "string"
     given_destinations_value_custom_headers_string = "string"
     given_destinations_value_type = "SIP"
@@ -338,7 +338,7 @@ def test_should_create_a_call_route(httpserver: HTTPServer, get_api_client):
 def test_should_get_a_call_route(httpserver: HTTPServer, get_api_client):
     given_name = "SIP endpoint route"
     given_status = CallRoutingRouteStatus.ENABLED
-    given_destinations_value_username = "41793026834"
+    given_destinations_value_username = "41xxxxxxx30"
     given_destinations_value_sip_trunk_id = "string"
     given_destinations_value_custom_headers_string = "string"
     given_destinations_value_type = "SIP"
@@ -426,7 +426,7 @@ def test_should_get_a_call_route(httpserver: HTTPServer, get_api_client):
 def test_should_update_a_call_route(httpserver: HTTPServer, get_api_client):
     given_name = "SIP endpoint route"
     given_status = CallRoutingRouteStatus.ENABLED
-    given_destinations_value_username = "41793026834"
+    given_destinations_value_username = "41xxxxxxx30"
     given_destinations_value_sip_trunk_id = "string"
     given_destinations_value_custom_headers_string = "string"
     given_destinations_value_type = "SIP"
@@ -573,7 +573,7 @@ def test_should_update_a_call_route(httpserver: HTTPServer, get_api_client):
 def test_should_delete_a_call_route(httpserver: HTTPServer, get_api_client):
     given_name = "SIP endpoint route"
     given_status = CallRoutingRouteStatus.ENABLED
-    given_destinations_value_username = "41793026834"
+    given_destinations_value_username = "41xxxxxxx30"
     given_destinations_value_sip_trunk_id = "string"
     given_destinations_value_custom_headers_string = "string"
     given_destinations_value_type = "SIP"

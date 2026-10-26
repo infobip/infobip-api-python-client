@@ -543,7 +543,7 @@ def test_should_send_pin_over_sms(httpserver: HTTPServer, get_api_client):
     given_from = "Sender 1"
     given_first_name = "John"
     given_pin_id = "9C817C6F8AF3D48F9FE553282AFA2B67"
-    given_to = "41793026727"
+    given_to = "41xxxxxxx25"
     given_nc_status = "NC_DESTINATION_REACHABLE"
     given_sms_status = "MESSAGE_SENT"
 
@@ -575,7 +575,7 @@ def test_should_send_pin_over_sms(httpserver: HTTPServer, get_api_client):
 def test_should_resend_pin_over_sms(httpserver: HTTPServer, get_api_client):
     given_first_name = "John"
     given_pin_id = "9C817C6F8AF3D48F9FE553282AFA2B67"
-    given_to = "41793026727"
+    given_to = "41xxxxxxx25"
     given_nc_status = "NC_DESTINATION_REACHABLE"
     given_sms_status = "MESSAGE_SENT"
 
@@ -604,7 +604,7 @@ def test_should_send_pin_over_voice(httpserver: HTTPServer, get_api_client):
     given_from = "Sender 1"
     given_first_name = "John"
     given_pin_id = "9C817C6F8AF3D48F9FE553282AFA2B67"
-    given_to = "41793026727"
+    given_to = "41xxxxxxx25"
     given_nc_status = "NC_DESTINATION_REACHABLE"
     given_sms_status = "MESSAGE_SENT"
     given_call_status = "PENDING_ACCEPTED"
@@ -638,7 +638,7 @@ def test_should_send_pin_over_voice(httpserver: HTTPServer, get_api_client):
 def test_should_resend_pin_over_voice(httpserver: HTTPServer, get_api_client):
     given_first_name = "John"
     given_pin_id = "9C817C6F8AF3D48F9FE553282AFA2B67"
-    given_to = "41793026727"
+    given_to = "41xxxxxxx25"
     given_nc_status = "NC_DESTINATION_REACHABLE"
     given_sms_status = "MESSAGE_SENT"
     given_call_status = "PENDING_ACCEPTED"
@@ -665,7 +665,7 @@ def test_should_resend_pin_over_voice(httpserver: HTTPServer, get_api_client):
 
 def test_should_verify_phone_number(httpserver: HTTPServer, get_api_client):
     given_pin_id = "9C817C6F8AF3D48F9FE553282AFA2B67"
-    given_msisdn = "41793026727"
+    given_msisdn = "41xxxxxxx25"
     given_pin = "1598"
 
     given_response = {
@@ -690,7 +690,7 @@ def test_should_verify_phone_number(httpserver: HTTPServer, get_api_client):
 
 def test_get_tfa_verification_status(httpserver: HTTPServer, get_api_client):
     given_app_id = "16A8B5FE2BCD6CA716A2D780CB3F3390"
-    given_msisdn = "41793026727"
+    given_msisdn = "41xxxxxxx25"
 
     given_response = {
         "verifications": [
